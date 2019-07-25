@@ -4185,8 +4185,12 @@ input, select, textarea {
 .padding {
 	padding-bottom: 3px;
 }
-	
+
 
 .center {
 	text-align: center;
-}
+} 
+
+.padding1 {
+	padding: 100px;
+} 
