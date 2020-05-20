@@ -2843,11 +2843,12 @@
 }
 
 .section.works .filters label {
+	text-align: center;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 25px;
+	margin-right: 20px;
 	margin-top: 10px;
-	font-size: 16px;
+	font-size: 20px;
 	color: #eee;
 	font-weight: 400;
 	cursor: pointer;
