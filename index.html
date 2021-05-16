@@ -1,17 +1,31 @@
-
 <!doctype html>
 <html lang="en-US">
+
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-105675198-1');
+	</script>
 
 	<!-- Meta -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	
+
 	<!-- Title -->
 	<title>Anthony Smith | Front-End Web Developer</title>
 
 	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
+		rel="stylesheet">
 
 	<!-- Styles -->
 	<link rel="stylesheet" href="css/basic.css" />
@@ -29,7 +43,7 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-	 
+
 	<!--<link rel="stylesheet" href="css/theme-colors/blue.css" />
 	<link rel="stylesheet" href="css/theme-colors/green.css" />
 	<link rel="stylesheet" href="css/theme-colors/orange.css" />
@@ -40,12 +54,14 @@
 	<link rel="stylesheet" href="css/theme-colors/green_light.css" />
 	<link rel="stylesheet" href="css/theme-colors/yellow_light.css" />
 	<link rel="stylesheet" href="css/theme-colors/yellow.css" /> -->
-		
+
 	<!--[if lt IE 9]>
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+	<link
+		href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA=="
+		rel="icon" type="image/x-icon" />
 	<!-- <link rel="shortcut icon" href="images/favicons/favicon.ico"> -->
 
 </head>
@@ -63,13 +79,13 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Container -->
 	<div class="container">
 
 		<!-- Cursor -->
 		<div class="cursor-follower"></div>
-	
+
 		<!-- Header -->
 		<header class="header">
 			<div class="head-top">
@@ -84,10 +100,10 @@
 						<!-- <span class="mask-lnk mask-lnk-hover">Download <strong>CV</strong></span> -->
 					</a>
 				</div>
-				
-				<!-- top menu -->						
+
+				<!-- top menu -->
 				<div class="top-menu hover-masks animated fadeIn delay-4s">
-					<div class="top-menu-nav">	
+					<div class="top-menu-nav">
 						<div class="menu-topmenu-container">
 							<ul class="menu">
 								<li class="menu-item menu-item-has-children current-menu-item">
@@ -112,64 +128,67 @@
 								</li>
 								<li class="menu-item menu-item-has-children">
 									<a href="works_creative.html">Portfolio</a>
-									
+
 								<li class="menu-item menu-item-has-children">
 									<a href="contacts_image.html">Contact</a>
-									
+
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-			
+
 			</div>
 		</header>
-		
+
 		<!-- Wrapper -->
-		<div class="wrapper">	
+		<div class="wrapper">
 			<!-- Testing -->
 
 			<!-- Section Started -->
 			<div class="section started" id="section-started">
 
 				<!-- background -->
-				
-				<div autoplay="autoplay" loop="loop" playsinline loop muted id="started-video-bg" class="video-bg media-bg jarallax-video video-mobile-bg" data-jarallax-video="https://youtu.be/KGlWaG4N4L8" data-mobile-preview="images/started_image_p.jpg" data-volume="0">
+
+				<div autoplay="autoplay" loop="loop" playsinline loop muted id="started-video-bg"
+					class="video-bg media-bg jarallax-video video-mobile-bg"
+					data-jarallax-video="https://youtu.be/KGlWaG4N4L8" data-mobile-preview="images/started_image_p.jpg"
+					data-volume="0">
 					<div class="video-bg-mask"></div>
 					<div class="video-bg-texture" id="grained_container"></div>
 				</div>
-				
+
 				<!-- started content -->
 				<div class="centrize full-width">
 					<div class="vertical-center">
 						<div class="started-content delay-5s">
 							<h1 class="h-title animated fadeIn delay-5s">
 								Hi, I’m <strong>Anthony</strong>, a Front-End Web Developer <br />
-								and Designer based in Grand Rapids, Michigan. 
+								and Designer based in Grand Rapids, Michigan.
 							</h1>
 							<div class="h-subtitle typing-subtitle">
 								<p>Hello. </p>
-									<p>Welcome to my <strong>Portfolio </strong></p>
-									<p>My name is <strong>Anthony</strong></p>
-									<p>I code professional <strong>websites</strong></p>
-									<p>I develop useful <strong>web apps</strong></p>
-									<p>I love <strong>javascript</strong></p>
-									<p>I learn <strong>everyday</strong></p>
-									<p>I solve <strong>problems</strong></p>
+								<p>Welcome to my <strong>Portfolio </strong></p>
+								<p>My name is <strong>Anthony</strong></p>
+								<p>I code professional <strong>websites</strong></p>
+								<p>I develop useful <strong>web apps</strong></p>
+								<p>I love <strong>javascript</strong></p>
+								<p>I learn <strong>everyday</strong></p>
+								<p>I solve <strong>problems</strong></p>
 							</div>
 							<span class="typed-subtitle"></span>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 
 		</div>
-		
+
 		<!-- Footer -->
 		<footer class="footer">
 			<div class="copy">
-				<p class="animated fadeIn delay-3s">Copyright © 2020 Website by Anthony Smith</p>
+				<p class="animated fadeIn delay-3s">Copyright © 2021 Website by Anthony Smith</p>
 			</div>
 			<div class="soc-box animated flipInY delay-5s">
 				<div class="follow-label">View My Live Code on Github</div>
@@ -193,7 +212,7 @@
 			<div class="line-col"></div>
 			<div class="line-col"></div>
 		</div>
-		
+
 	</div>
 
 	<!-- Scripts -->
@@ -212,4 +231,5 @@
 	<script src="js/scripts.js"></script>
 
 </body>
+
 </html>
