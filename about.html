@@ -1,8 +1,25 @@
-
 <!doctype html>
 <html lang="en-US">
-<head>
 
+<head>
+	<!-- Google Tag Manager -->
+	<script>
+		(function (w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start': new Date().getTime(),
+				event: 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src =
+				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+	</script>
+	<!-- End Google Tag Manager -->
 	<!-- Meta -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -14,7 +31,9 @@
 	<title>Anthony Smith | Front-End Web Developer</title>
 
 	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
+		rel="stylesheet">
 
 	<!-- Styles -->
 	<link rel="stylesheet" href="css/basic.css" />
@@ -39,17 +58,22 @@
 	<link rel="stylesheet" href="css/theme-colors/yellow.css" />
 	<link rel="stylesheet" href="css/theme-colors/yellow_light.css" />
 	-->
-		
+
 	<!--[if lt IE 9]>
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+	<link
+		href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA=="
+		rel="icon" type="image/x-icon" />
 
 </head>
 
 <body>
-
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
+			style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="centrize full-width">
@@ -61,13 +85,13 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Container -->
 	<div class="container">
 
 		<!-- Cursor -->
 		<div class="cursor-follower"></div>
-	
+
 		<!-- Header -->
 		<header class="header">
 			<div class="head-top">
@@ -82,10 +106,10 @@
 						<!-- <span class="mask-lnk mask-lnk-hover">Download <strong>CV</strong></span> -->
 					</a>
 				</div>
-				
-				<!-- top menu -->						
+
+				<!-- top menu -->
 				<div class="top-menu hover-masks">
-					<div class="top-menu-nav">	
+					<div class="top-menu-nav">
 						<div class="menu-topmenu-container">
 							<ul class="menu">
 								<li class="menu-item menu-item-has-children">
@@ -100,27 +124,27 @@
 										<li class="menu-item"><a href="index_video.html">Home Video</a></li>
 									</ul> -->
 								</li>
-                                <li class="menu-item menu-item-has-children current-menu-item">
-                                        <a href="about.html">About</a>
+								<li class="menu-item menu-item-has-children current-menu-item">
+									<a href="about.html">About</a>
 								</li>
-								
-									<!-- <ul class="sub-menu">
+
+								<!-- <ul class="sub-menu">
 										<li class="menu-item"><a href="works.html">Works Default</a></li>
 										<li class="menu-item"><a href="works_creative.html">Works Creative</a></li>
 										<li class="menu-item"><a href="work_single.html">Work Single</a></li>
 										<li class="menu-item"><a href="work_single_image.html">Work Single Image</a></li>
 										<li class="menu-item"><a href="work_single_creative.html">Work Single Creative</a></li>
 									</ul> -->
-                                </li>
-                                
-                                <li class="menu-item menu-item-has-children">
-                                        <a href="works_creative.html">Portfolio</a>
-                                
-                                    
-                                    
+								</li>
+
+								<li class="menu-item menu-item-has-children">
+									<a href="works_creative.html">Portfolio</a>
+
+
+
 								<li class="menu-item menu-item-has-children">
 									<a href="contacts_image.html">Contact</a>
-									
+
 								</li>
 							</ul>
 						</div>
@@ -129,7 +153,7 @@
 
 			</div>
 		</header>
-		
+
 		<!-- Wrapper -->
 		<div class="wrapper">
 
@@ -137,7 +161,10 @@
 			<div class="section started layout-creative" id="section-started">
 
 				<!-- background -->
-				<div autoplay="autoplay" loop="loop" playsinline loop muted id="started-video-bg" class="video-bg media-bg jarallax-video video-mobile-bg" data-jarallax-video="https://youtu.be/DS5boul4QqE" data-mobile-preview="images/started_image_p.jpg" data-volume="0">
+				<div autoplay="autoplay" loop="loop" playsinline loop muted id="started-video-bg"
+					class="video-bg media-bg jarallax-video video-mobile-bg"
+					data-jarallax-video="https://youtu.be/DS5boul4QqE" data-mobile-preview="images/started_image_p.jpg"
+					data-volume="0">
 					<div class="video-bg-mask"></div>
 					<div class="video-bg-texture" id="grained_container"></div>
 				</div>
@@ -175,10 +202,14 @@
 
 					<!-- desc -->
 					<div class="desc">
-						<p class="animated fadeIn delay-5s">Hello! I'm a Front-End Web Developer that has experience working on everything from small business websites to mid-high volume media applications. I have been working professionally as a front end developer for nearly 4 years. I'm comfortable doing everything from basic HTML coding tasks all the way to custom Javascript and more.</p>
+						<p class="animated fadeIn delay-5s">Hello! I'm a Front-End Web Developer that has experience
+							working on everything from small business websites to mid-high volume media applications. I
+							have been working professionally as a front end developer for nearly 4 years. I'm
+							comfortable doing everything from basic HTML coding tasks all the way to custom Javascript
+							and more.</p>
 						<div class="info-list">
 							<ul>
-					
+
 								<li><strong>Residence:</strong> USA</li>
 								<li><strong>Address:</strong> Grand Rapids</li>
 								<li><strong>Phone:</strong> 616-272-2169</li>
@@ -213,16 +244,18 @@
 							<div class="service-item content-box">
 								<div class="icon"><span class="fas fa-code"></span></div>
 								<div class="name">Web Development</div>
-								<div class="text">Modern and mobile-ready websites that will help you reach all of your marketing goals.</div>
+								<div class="text">Modern and mobile-ready websites that will help you reach all of your
+									marketing goals.</div>
 							</div>
 						</div>
-						
+
 
 						<div class="service-col">
 							<div class="service-item content-box">
 								<div class="icon"><span class="fas fa-ad"></span></div>
 								<div class="name">HTML Email Development</div>
-								<div class="text">Advertising services such as HTML Email Development for marketing campaigns.</div>
+								<div class="text">Advertising services such as HTML Email Development for marketing
+									campaigns.</div>
 							</div>
 						</div>
 
@@ -250,7 +283,7 @@
 			</div>
 
 			<!-- Section Pricing -->
-			
+
 
 			<!-- Section Resume -->
 			<!-- <div class="section resume" id="section-history">
@@ -336,7 +369,7 @@
 					<!-- skills items -->
 					<div class="skills percent content-box">
 						<ul>
-							<li> 
+							<li>
 								<div class="name">Web Design</div>
 								<div class="progress ">
 									<div class="percentage" style="width: 90%;">
@@ -344,8 +377,8 @@
 									</div>
 								</div>
 							</li>
-							
-							<li> 
+
+							<li>
 								<div class="name">Photoshop</div>
 								<div class="progress ">
 									<div class="percentage" style="width: 95%;">
@@ -421,7 +454,7 @@
 			<!-- Section Coding Skills -->
 			<div class="section skills" id="section-skills-code">
 				<div class="content">
-					
+
 					<!-- title -->
 					<div class="title">
 						<div class="title_inner">Coding Skills</div>
@@ -430,36 +463,40 @@
 					<!-- skills items -->
 					<div class="skills circles content-box">
 						<ul>
-							<li> 
+							<li>
 								<div class="name">HTML/CSS</div>
-								<div class="progress p100"> <!-- p100 = 90% circle fill color -->
+								<div class="progress p100">
+									<!-- p100 = 90% circle fill color -->
 									<div class="percentage">
 										<span class="percent">100%</span>
 									</div>
 									<span>100%</span>
 								</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Javascript</div>
-								<div class="progress p100"> <!-- p75 = 75% circle fill color -->
+								<div class="progress p100">
+									<!-- p75 = 75% circle fill color -->
 									<div class="percentage">
 										<span class="percent">100%</span>
 									</div>
 									<span>100%</span>
 								</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">jQuery</div>
-								<div class="progress p100"> <!-- p85 = 85% circle fill color -->
+								<div class="progress p100">
+									<!-- p85 = 85% circle fill color -->
 									<div class="percentage">
 										<span class="percent">100</span>
 									</div>
 									<span>100%</span>
 								</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Wordpress</div>
-								<div class="progress p100"> <!-- p95 = 95% circle fill color -->
+								<div class="progress p100">
+									<!-- p95 = 95% circle fill color -->
 									<div class="percentage">
 										<span class="percent">100%</span>
 									</div>
@@ -473,45 +510,45 @@
 			</div>
 
 			<!-- Section Knowladge Skills -->
-			 <div class="section skills" id="section-skills-know">
+			<div class="section skills" id="section-skills-know">
 				<div class="content">
 
-					
+
 					<div class="title">
 						<div class="title_inner">Knowledge</div>
 					</div>
 
-					
+
 					<div class="skills list content-box">
 						<ul>
-							<li> 
+							<li>
 								<div class="name">HTML 5</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">CSS 3</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Javascript</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Bootstrap 3</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Bootstrap 4</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">jQuery</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Foundation 6</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Terminal</div>
 							</li>
-							<li> 
+							<li>
 								<div class="name">Git</div>
 							</li>
-							
+
 						</ul>
 					</div>
 
@@ -528,8 +565,8 @@
 						<div class="title_inner">Interests</div>
 					</div>
 				-->
-					<!-- interests items -->
-					<!-- <div class="service-items">
+			<!-- interests items -->
+			<!-- <div class="service-items">
 
 						<div class="service-col">
 							<div class="service-item content-box">
@@ -680,7 +717,7 @@
 							</div>
 						</div>
 					-->
-					<!--
+			<!--
 						<div class="swiper-nav">
 							<a class="prev swiper-button-prev fas fa-long-arrow-alt-left"></a>
 							<a class="next swiper-button-next fas fa-long-arrow-alt-right"></a>
@@ -771,53 +808,54 @@
 		</div>
 		
 	-->
-		<footer class="footer">
-			<div class="copy">
-				<p>E: anthony.smith1760@gmail.com</p>
-				
-			</div>
-			<div class="soc-box">
-				<div class="follow-label">Follow Me</div>
-				<div class="soc">
-                        <a target="_blank" href="https://github.com/anthonys1760?tab=repositories">
-                            <span class="icon fab fa-github"></span>
-					</a>
-					<a target="_blank" href="https://www.instagram.com/">
-						<span class="icon fab fa-instagram"></span>
-					</a>
-					<a target="_blank" href="https://dribbble.com/">
-						<span class="icon fab fa-dribbble"></span>
-					</a>
+			<footer class="footer">
+				<div class="copy">
+					<p>E: anthony.smith1760@gmail.com</p>
+
 				</div>
+				<div class="soc-box">
+					<div class="follow-label">Follow Me</div>
+					<div class="soc">
+						<a target="_blank" href="https://github.com/anthonys1760?tab=repositories">
+							<span class="icon fab fa-github"></span>
+						</a>
+						<a target="_blank" href="https://www.instagram.com/">
+							<span class="icon fab fa-instagram"></span>
+						</a>
+						<a target="_blank" href="https://dribbble.com/">
+							<span class="icon fab fa-dribbble"></span>
+						</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</footer>
+
+			<!-- Lines -->
+			<div class="lines">
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
 			</div>
-			<div class="clear"></div>
-		</footer>
 
-		<!-- Lines -->
-		<div class="lines">
-			<div class="line-col"></div>
-			<div class="line-col"></div>
-			<div class="line-col"></div>
-			<div class="line-col"></div>
-			<div class="line-col"></div>
 		</div>
-		
-	</div>
 
-	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery.validate.js"></script>
-	<script src="js/magnific-popup.js"></script>
-	<script src="js/simpleParallax.js"></script>
-	<script src="js/typed.js"></script>
-	<script src="js/jarallax.js"></script>
-	<script src="js/jarallax-video.js"></script>
-	<script src="js/jarallax-element.js"></script>
-	<script src="js/imagesloaded.pkgd.js"></script>
-	<script src="js/isotope.pkgd.js"></script>
-	<script src="js/swiper.js"></script>
-	<script src="js/grained.js"></script>
-	<script src="js/scripts.js"></script>
+		<!-- Scripts -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.validate.js"></script>
+		<script src="js/magnific-popup.js"></script>
+		<script src="js/simpleParallax.js"></script>
+		<script src="js/typed.js"></script>
+		<script src="js/jarallax.js"></script>
+		<script src="js/jarallax-video.js"></script>
+		<script src="js/jarallax-element.js"></script>
+		<script src="js/imagesloaded.pkgd.js"></script>
+		<script src="js/isotope.pkgd.js"></script>
+		<script src="js/swiper.js"></script>
+		<script src="js/grained.js"></script>
+		<script src="js/scripts.js"></script>
 
 </body>
+
 </html>
