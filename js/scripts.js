@@ -1,9 +1,3 @@
-/**
-*	Cvio - Resume/CV Template (HTML)
-*	Author: beshleyua
-*	Author URL: http://themeforest.net/user/beshleyua
-*	Copyright © Cvio by beshleyua. All Rights Reserved.
-**/
 
 ( function( $ ) {
 	'use strict';
