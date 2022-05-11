@@ -138,7 +138,7 @@
 </head>
 
 <body class="home">
-
+	<script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
 	<script>
 		// setTimeout(function () {
 		// 	$('.typed-subtitle').toggle();
@@ -272,7 +272,39 @@
 								<p>I create intelligent<strong> chatbots...</strong></p>
 								<p>And also other cool<strong> applications</strong></p>
 							</div>
+
+							
 							<span class="typed-subtitle animated fadeIn delay-5s"></span>
+							<script>
+								var app = document.querySelector('.typing-subtitle');
+						
+								var typewriter = new Typewriter(app, {
+									loop: true,
+									delay: 75,
+								});
+						
+								typewriter
+									.pauseFor(5000)
+									.typeString('Hi There!')
+									.pauseFor(2000)
+									.deleteChars(11)
+									.pauseFor(1000)
+									.typeString('My name is <span style="color: #4bffa5;">Anthony</span>')
+									.pauseFor(1000)
+									.deleteChars(18)
+									.pauseFor(1000)
+									.typeString('I am a Full Stack <span style="color: #4bffa5;">Developer</span>')
+									.pauseFor(1000)
+									.deleteChars(27)
+									.pauseFor(1000)
+									.typeString('I create web apps that bring you <span style="color: #4bffa5;">revenue</span>')
+									.pauseFor(1000)
+									.deleteChars(40)
+									.typeString('Click on the <span style="color: #4bffa5;">Chatbot</span> for questions')
+									.pauseFor(1000)
+									.deleteChars(34)
+									.start();
+							</script>
 						</div>
 					</div>
 				</div>
