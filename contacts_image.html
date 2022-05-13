@@ -132,6 +132,15 @@
 </head>
 
 <body>
+
+	<script src="//sheetdb.io/api/js"></script>
+	<script>
+		SheetDB.read('https://sheetdb.io/api/v1/92fvwrmzm40fo', {}).then(function (result) {
+			console.log(result);
+		}, function (error) {
+			console.log(error);
+		});
+	</script>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
 			style="display:none;visibility:hidden"></iframe></noscript>
@@ -294,25 +303,25 @@
 			</div>
 
 			<!-- Section Contacts Form -->
-			<!-- <div class="section contacts" id="section-contacts">
-				<div class="content"> -->
+			<div class="section contacts" id="section-contacts">
+				<div class="content">
 
 					<!-- title -->
-					<!-- <div class="title">
+					<div class="title">
 						<div class="title_inner">Contact Form</div>
-					</div> -->
+					</div>
 
 					<!-- form -->
-					<!-- <div class="contact_form content-box">
-						<form id="cform" method="post">
+					<div class="contact_form content-box">
+						<form action="https://sheetdb.io/api/v1/92fvwrmzm40fo" id="sheetdb-form" method="post">
 							<div class="group-val">
-								<input type="text" name="name" placeholder="Name" />
+								<input type="text" name="data[name]" placeholder="Name" />
 							</div>
 							<div class="group-val">
-								<input type="email" name="email" placeholder="Email" />
+								<input type="email" name="data[email]" placeholder="Email" />
 							</div>
 							<div class="group-val ct-gr">
-								<textarea name="message" placeholder="Message"></textarea>
+								<textarea name="data[message]" placeholder="Message"></textarea>
 							</div>
 							<div class="group-bts">
 								<button type="submit" class="btn hover-animated">
@@ -324,13 +333,29 @@
 						<div class="alert-success">
 							<p>Thanks, your message is sent successfully.</p>
 						</div>
-					</div> -->
+					</div>
 
 				</div>
 				<div class="clear"></div>
 			</div>
 
 		</div>
+
+		<script>
+			var form = document.getElementById('sheetdb-form');
+			form.addEventListener("submit", e => {
+			  e.preventDefault();
+			  fetch(form.action, {
+				  method : "POST",
+				  body: new FormData(document.getElementById("sheetdb-form")),
+			  }).then(
+				  response => response.json()
+			  ).then((html) => {
+				// you can put any JS code here
+				alert('success')
+			  });
+			});
+		  </script>
 
 		<!-- Footer -->
 		<footer class="footer">
