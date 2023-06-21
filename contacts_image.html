@@ -4,7 +4,7 @@
 <head>
 
 	<!-- Converto Chatbot -->
-	<script>
+	<!-- <script>
 		(function (p, u, s, h) {
 			p.botId = "vnrjaj";
 			s = u.createElement('script');
@@ -15,6 +15,11 @@
 			h = u.getElementsByTagName('script')[0];
 			h.parentNode.insertBefore(s, h);
 		})(window, document);
+	</script> -->
+
+	<!-- GPT 3.5 Chatbot "ChatFast" -->
+	<script src="https://chatfast.io/chat.script.js" data-chat-service="ChatFast"
+		data-bot-id="b39a8c3e-8e04-4e5c-80ef-6b980fd57af4" data-chat-width="450px" data-chat-height="600px">
 	</script>
 
 	<!-- Google Tag Manager -->
@@ -431,23 +436,25 @@
 		<script>
 			var form = document.getElementById('sheetdb-form');
 			form.addEventListener("submit", e => {
-			  e.preventDefault();
-			  fetch(form.action, {
-				  method : "POST",
-				  body: new FormData(document.getElementById("sheetdb-form")),
-			  }).then(
-				  response => response.json()
-			  ).then((html) => {
-				// you can put any JS code here
-				alert('success')
-			  });
+				e.preventDefault();
+				fetch(form.action, {
+					method: "POST",
+					body: new FormData(document.getElementById("sheetdb-form")),
+				}).then(
+					response => response.json()
+				).then((html) => {
+					// you can put any JS code here
+					alert('success')
+				});
 			});
-		  </script>
+		</script>
 
 		<!-- Footer -->
 		<footer class="footer">
 			<div class="copy">
-				<p><a href="https://www.codementor.io/@anthonys1760?refer=badge"><img src="https://www.codementor.io/m-badges/anthonys1760/book-session.svg" alt="Codementor badge"></a></p>
+				<p><a href="https://www.codementor.io/@anthonys1760?refer=badge"><img
+							src="https://www.codementor.io/m-badges/anthonys1760/book-session.svg"
+							alt="Codementor badge"></a></p>
 
 			</div>
 			<div class="soc-box">
