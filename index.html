@@ -6,13 +6,16 @@
 		0% {
 			transform: translateX(0) translateZ(0) scaleY(1)
 		}
+
 		50% {
 			transform: translateX(-25%) translateZ(0) scaleY(0.55)
 		}
+
 		100% {
 			transform: translateX(-50%) translateZ(0) scaleY(1)
 		}
 	}
+
 	.waveWrapper {
 		overflow: hidden;
 		position: absolute;
@@ -22,6 +25,11 @@
 		top: 0;
 		margin: auto;
 	}
+
+
+
+
+
 	.waveWrapperInner {
 		position: absolute;
 		width: 100%;
@@ -30,17 +38,21 @@
 		bottom: -1px;
 		background-image: linear-gradient(to top, #86377b 20%, #27273c 80%);
 	}
+
 	.bgTop {
 		z-index: 15;
 		opacity: 0.5;
 	}
+
 	.bgMiddle {
 		z-index: 10;
 		opacity: 0.75;
 	}
+
 	.bgBottom {
 		z-index: 5;
 	}
+
 	.wave {
 		position: absolute;
 		left: 0;
@@ -50,31 +62,37 @@
 		background-position: 0 bottom;
 		transform-origin: center bottom;
 	}
+
 	.waveTop {
 		background-size: 50% 100px;
 	}
+
 	.waveAnimation .waveTop {
-	  animation: move-wave 3s;
-	   -webkit-animation: move-wave 3s;
-	   -webkit-animation-delay: 1s;
-	   animation-delay: 1s;
+		animation: move-wave 3s;
+		-webkit-animation: move-wave 3s;
+		-webkit-animation-delay: 1s;
+		animation-delay: 1s;
 	}
+
 	.waveMiddle {
 		background-size: 50% 120px;
 	}
+
 	.waveAnimation .waveMiddle {
 		animation: move_wave 10s linear infinite;
 	}
+
 	.waveBottom {
 		background-size: 50% 100px;
 	}
+
 	.waveAnimation .waveBottom {
 		animation: move_wave 15s linear infinite;
 	}
 </style>
 
-	<!-- Converto Chatbot -->
-	<script>
+<!-- Converto Chatbot -->
+<!-- <script>
 			(function (p, u, s, h) {
 			p.botId = "vnrjaj";
 			s = u.createElement('script');
@@ -85,106 +103,113 @@
 			h = u.getElementsByTagName('script')[0];
 			h.parentNode.insertBefore(s, h);
 		})(window, document);
-	</script>
-	<!-- <script src="//code.tidio.co/jybbrvc7f9az8ss3jvq9cusjxz8qjsix.js" async></script> -->
-	
-	<!-- Google Tag Manager -->
-	<script>
-		(function (w, d, s, l, i) {
-			w[l] = w[l] || [];
-			w[l].push({
-				'gtm.start': new Date().getTime(),
-				event: 'gtm.js'
-			});
-			var f = d.getElementsByTagName(s)[0],
-				j = d.createElement(s),
-				dl = l != 'dataLayer' ? '&l=' + l : '';
-			j.async = true;
-			j.src =
-				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
-	</script>
-	<!-- End Google Tag Manager -->
+	</script> -->
 
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
+<!-- GPT 3.5 Chatbot "ChatFast" -->
+<script src="https://chatfast.io/chat.script.js" data-chat-service="ChatFast"
+	data-bot-id="b39a8c3e-8e04-4e5c-80ef-6b980fd57af4" data-chat-width="450px" data-chat-height="600px">
+</script>
 
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
+<!-- <script src="//code.tidio.co/jybbrvc7f9az8ss3jvq9cusjxz8qjsix.js" async></script> -->
 
-		gtag('config', 'UA-105675198-1');
-	</script>
+<!-- Google Tag Manager -->
+<script>
+	(function (w, d, s, l, i) {
+		w[l] = w[l] || [];
+		w[l].push({
+			'gtm.start': new Date().getTime(),
+			event: 'gtm.js'
+		});
+		var f = d.getElementsByTagName(s)[0],
+			j = d.createElement(s),
+			dl = l != 'dataLayer' ? '&l=' + l : '';
+		j.async = true;
+		j.src =
+			'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+		f.parentNode.insertBefore(j, f);
+	})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+</script>
+<!-- End Google Tag Manager -->
 
-	<script src="https://www.googleoptimize.com/optimize.js?id=OPT-N44SP6L"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
 
-	<!-- Mouseflow Heatmap Script -->
-	<script type="text/javascript">
-		window._mfq = window._mfq || [];
-		(function () {
-			var mf = document.createElement("script");
-			mf.type = "text/javascript";
-			mf.defer = true;
-			mf.src = "//cdn.mouseflow.com/projects/ae2e15e6-8432-4c0b-a63d-fb97184cd063.js";
-			document.getElementsByTagName("head")[0].appendChild(mf);
-		})();
-	</script>
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
 
-	<!-- Hotjar Tracking Code for www.anthonysdigital.net -->
-	<script>
-		(function (h, o, t, j, a, r) {
-			h.hj = h.hj || function () {
-				(h.hj.q = h.hj.q || []).push(arguments)
-			};
-			h._hjSettings = {
-				hjid: 2462518,
-				hjsv: 6
-			};
-			a = o.getElementsByTagName('head')[0];
-			r = o.createElement('script');
-			r.async = 1;
-			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-			a.appendChild(r);
-		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-	</script>
+	gtag('config', 'UA-105675198-1');
+</script>
 
-	<!-- Meta -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta name="monetization" content="$ilp.uphold.com/DhLxZwEiabGU">
-	<meta name="description" content="portfolio">
-	<meta name="keywords" content="portfolio, portfolio template, website portfolios, website development, web development site, jobs web development, development website">
+<script src="https://www.googleoptimize.com/optimize.js?id=OPT-N44SP6L"></script>
 
-	<!-- Title -->
-	<title>Anthony Smith | Full-Stack Web Developer</title>
+<!-- Mouseflow Heatmap Script -->
+<script type="text/javascript">
+	window._mfq = window._mfq || [];
+	(function () {
+		var mf = document.createElement("script");
+		mf.type = "text/javascript";
+		mf.defer = true;
+		mf.src = "//cdn.mouseflow.com/projects/ae2e15e6-8432-4c0b-a63d-fb97184cd063.js";
+		document.getElementsByTagName("head")[0].appendChild(mf);
+	})();
+</script>
 
-	<!-- Fonts -->
-	<link
-		href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
-		rel="stylesheet">
+<!-- Hotjar Tracking Code for www.anthonysdigital.net -->
+<script>
+	(function (h, o, t, j, a, r) {
+		h.hj = h.hj || function () {
+			(h.hj.q = h.hj.q || []).push(arguments)
+		};
+		h._hjSettings = {
+			hjid: 2462518,
+			hjsv: 6
+		};
+		a = o.getElementsByTagName('head')[0];
+		r = o.createElement('script');
+		r.async = 1;
+		r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+		a.appendChild(r);
+	})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
 
-	<!-- Styles -->
-	<link rel="stylesheet" href="css/basic.css" />
-	<link rel="stylesheet" href="css/layout.css" />
-	<link rel="stylesheet" href="css/magnific-popup.css" />
-	<link rel="stylesheet" href="css/animate.css" />
-	<link rel="stylesheet" href="css/jarallax.css" />
-	<link rel="stylesheet" href="css/swiper.css" />
-	<link rel="stylesheet" href="css/fontawesome.css" />
-	<link rel="stylesheet" href="css/brands.css" />
-	<link rel="stylesheet" href="css/solid.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<!-- Meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="monetization" content="$ilp.uphold.com/DhLxZwEiabGU">
+<meta name="description" content="portfolio">
+<meta name="keywords"
+	content="portfolio, portfolio template, website portfolios, website development, web development site, jobs web development, development website">
 
-	<!-- Favicon  -->
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+<!-- Title -->
+<title>Anthony Smith | Full-Stack Web Developer</title>
+
+<!-- Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
+	rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/basic.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/magnific-popup.css" />
+<link rel="stylesheet" href="css/animate.css" />
+<link rel="stylesheet" href="css/jarallax.css" />
+<link rel="stylesheet" href="css/swiper.css" />
+<link rel="stylesheet" href="css/fontawesome.css" />
+<link rel="stylesheet" href="css/brands.css" />
+<link rel="stylesheet" href="css/solid.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<!-- Favicon  -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
 
-	<!--<link rel="stylesheet" href="css/theme-colors/blue.css" />
+<!--<link rel="stylesheet" href="css/theme-colors/blue.css" />
 	<link rel="stylesheet" href="css/theme-colors/green.css" />
 	<link rel="stylesheet" href="css/theme-colors/orange.css" />
 	<link rel="stylesheet" href="css/theme-colors/brown.css" />
@@ -195,18 +220,18 @@
 	<link rel="stylesheet" href="css/theme-colors/yellow_light.css" />
 	<link rel="stylesheet" href="css/theme-colors/yellow.css" /> -->
 
-	<!--[if lt IE 9]>
+<!--[if lt IE 9]>
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link
-		href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA=="
-		rel="icon" type="image/x-icon" />
-	<!-- <link rel="shortcut icon" href="images/favicons/favicon.ico"> -->
+<link
+	href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTnhb/k54W/6azF/+msxf/k54W/5OeFo5zGG7/cxhu/4Idff9zGG7/DhQUFgAAAAAAAAAAAAAAAAAAAAAAAAAAprMX/6azF/8AAAAAAAAAAJOeFv+Tnhb/gowS/4KMEv9zGG7/nCKV/3MYbv9zGG7/AAAAAAAAAAAAAAAAAAAAAAIEBAOTnhb/AAAAAHMYboeCHX3/gh19/4Idff+CjBL/gowS/3MYbv+cIpX/gh19/w4UFRYAAAAAAAAAAAAAAAAAAAAAk54W/4KMEv9zGG7/gh19/5wilf+cIpX/uCiw/7gosP+CjBL/gowS/5wilf9zGG7/AAAAAAAAAAAAAAAAAAAAAAAAAACTnhaOcxhu/4Idff+cIpX/nCKV/7gosP+4KLD/uCiw/4KMEv+CjBL/cxhu/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMYbv+CHX3/nCKV/5wilf+4KLD/uCiw/7gosP+CHX3/cxhu/4KMEv+Tnha/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/gh19/5wilf+cIpX/uCiw/7gosP+cIpX/gh19/3MYbv9zGG7/k54W/5OeFo4AAAAAAAAAAAAAAAAAAAAAcxhuh3MYbv+CHX3/gh19/5wilf+cIpX/gh19/4Idff9zGG7/cxhuh5OeFo6Tnhb/AAAAAAAAAAAAAAAAAAAAAAAAAABzGG7/cxhu/4Idff+CHX3/gh19/4Idff9zGG7/cxhu/wAAAAAAAAAAprMX/6azF/8AAAAAAAAAAAAAAAAAAAAAAAAAAAoNDg5zGG7/cxhu/3MYbv9zGG7/cxhuh5OeFv+Tnhb/k54W/6azF/+msxf/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAAAD8AADAPAACgDwAAgAcAAMAHAADgAwAA4AEAAOABAADwDAAA/AAAAP//AAD//wAA//8AAA=="
+	rel="icon" type="image/x-icon" />
+<!-- <link rel="shortcut icon" href="images/favicons/favicon.ico"> -->
 
-	<!-- ManyChat -->
-	<script src="//widget.manychat.com/111058827310896.js" defer="defer"></script>
-	<script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script>
+<!-- ManyChat -->
+<script src="//widget.manychat.com/111058827310896.js" defer="defer"></script>
+<script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script>
 
 </head>
 
@@ -299,7 +324,8 @@
 									<a href="https://anthonysmith.hashnode.dev/" target="_blank">Technical Blog</a>
 								</li>
 								<li class="menu-item menu-item-has-children">
-									<a href="https://www.codegrepper.com/profile/anthony-smith" target="_blank">Code Grepper</a>
+									<a href="https://www.codegrepper.com/profile/anthony-smith" target="_blank">Code
+										Grepper</a>
 								</li>
 								<li class="menu-item menu-item-has-children">
 									<a href="contacts_image.html">Contact</a>
@@ -329,7 +355,7 @@
 					<div class="video-bg-mask"></div>
 					<div class="video-bg-texture" id="grained_container"></div>
 				</div>
-<!-- 
+				<!-- 
 				<div class="waveWrapper waveAnimation">
 					<div class="waveWrapperInner bgTop">
 					  <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
@@ -364,16 +390,16 @@
 								<p>And also other cool<strong> applications</strong></p>
 							</div>
 
-							
+
 							<span class="typed-subtitle animated fadeIn delay-5s"></span>
 							<script>
 								var app = document.querySelector('.typing-subtitle');
-						
+
 								var typewriter = new Typewriter(app, {
 									loop: true,
 									delay: 75,
 								});
-						
+
 								typewriter
 									.pauseFor(5000)
 									.typeString('Hi There!')
@@ -436,6 +462,21 @@
 		</div>
 
 	</div>
+
+	<script>
+		setTimeout(function () {
+			console.log('clicking');
+			document.querySelector("body > div:nth-child(25)").click();
+		}, 10000);
+	</script>
+
+
+
+	<script>
+		var poweredBy = document.querySelector("#__next > div > div > div.chakra-stack.css-18ar21i > div > a > p");
+		poweredBy.innerText = 'Anthony Smith';
+		// set a timer for 3 seconds
+	</script>
 
 	<!-- Scripts -->
 	<script src="js/jquery.min.js"></script>
