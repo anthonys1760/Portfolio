@@ -590,6 +590,9 @@ body.hero-themed .header .menu-btn span {
 		color: #4bffa5;
 		transform: translateX(4px);
 	}
+	body.hero-themed .header.active .top-menu .sub-menu,
+	body.hero-themed .header.active .top-menu .children { display: none !important; }
+	body.hero-themed .header.active .top-menu ul li.menu-item-has-children > a .mask-lnk:after { display: none !important; content: none !important; }
 	body.hero-themed .header.active .menu-btn {
 		position: fixed;
 		right: 28px;
@@ -670,13 +673,30 @@ body.hero-themed .section.works .content { max-width: 1100px; margin: 0 auto; }
 	gap: 8px;
 }
 .stack-chips li {
-	font-size: 12px;
-	padding: 6px 12px;
+	display: inline-flex;
+	align-items: center;
+	font-size: 13px;
+	line-height: 1;
+	padding: 10px 16px;
 	border-radius: 999px;
 	background: rgba(75, 255, 165, 0.08);
 	border: 1px solid rgba(75, 255, 165, 0.25);
 	color: #a5ffd0;
 	letter-spacing: 0.02em;
+	white-space: nowrap;
+	list-style: none;
+}
+.stack-chips li::before,
+.stack-chips li::after { display: none !important; content: none !important; }
+body.hero-themed .skills-groups .stack-chips,
+body.hero-themed .stack-chips {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+body.hero-themed .section.skills .skills-groups li {
+	background: rgba(75, 255, 165, 0.08);
+	box-shadow: none;
 }
 .project-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .project-links .hero-cta { padding: 11px 20px; font-size: 14px; }
