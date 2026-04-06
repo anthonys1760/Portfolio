@@ -698,6 +698,34 @@ body.hero-themed .section.skills .skills-groups li {
 	background: rgba(75, 255, 165, 0.08);
 	box-shadow: none;
 }
+/* Neutralize template .skills ul / li defaults bleeding into our chips */
+body.hero-themed .section.skills .skills-groups ul,
+body.hero-themed .section.skills .skills-groups ul.stack-chips {
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+}
+body.hero-themed .section.skills .skills-groups ul li,
+body.hero-themed .section.skills .skills-groups ul.stack-chips li {
+	position: static;
+	padding: 10px 16px;
+	margin: 0;
+	width: auto;
+	height: auto;
+	display: inline-flex;
+	align-items: center;
+	line-height: 1;
+	font-size: 13px;
+	border-radius: 999px;
+	background: rgba(75, 255, 165, 0.08);
+	border: 1px solid rgba(75, 255, 165, 0.25);
+	color: #a5ffd0;
+	white-space: nowrap;
+}
 .project-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .project-links .hero-cta { padding: 11px 20px; font-size: 14px; }
 .hero-cta.outline {
