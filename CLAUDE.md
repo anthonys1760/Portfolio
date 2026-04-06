@@ -5,9 +5,10 @@
 - GitHub Pages serves from `gh-pages` to www.anthonysdigital.net
 - Always push changes to `gh-pages` for them to go live
 
-## Background
-- **Homepage (`index.html`)**: uses an animated CSS radial-gradient mesh background (`.hero-gradient-bg`) — no canvas, no particle effect
-- **Inner pages (`about.html`, `works_creative.html`, `contacts_image.html`)**: use the canvas particle wave animation
-- The particle canvas must have `z-index: 1` (below `.centrize` content at `z-index: 2`)
-- Homepage hero uses a custom vanilla-JS chat-stream simulator (token-chunked, jittered delays, punctuation pauses) — no `typewriter-effect` library
-- The homepage has been trimmed of Hotjar, Mouseflow, Google Optimize, Chatbase, ManyChat, and orphaned debug scripts. Keep GTM + GA only.
+## Background & Theme
+- All four live pages share `css/hero-theme.css` (animated radial-gradient mesh + chat UI + glassmorphic card overrides scoped to `body.hero-themed`).
+- **Homepage (`index.html`)**: streamed chat hero with custom vanilla-JS LLM-style streamer (token-chunked, jittered delays, punctuation pauses). No `typewriter-effect` library.
+- **Inner pages (`about.html`, `works_creative.html`, `contacts_image.html`)**: same animated gradient background with static chat-style intros. About has a chat-bubble bio, Portfolio is a clean title hero, Contact has a chat intro above a re-skinned form.
+- Particle canvas hero has been removed from all inner pages.
+- All four pages have been trimmed of Hotjar, Mouseflow, Google Optimize, Chatbase/CustomGPT, ManyChat, and orphan debug scripts. Keep GTM + GA only.
+- Accent color is `#4bffa5`.
