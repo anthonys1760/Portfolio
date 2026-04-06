@@ -402,52 +402,38 @@
 								Hi, I’m <strong>Anthony</strong>, a Full Stack Web Developer <br />
 								from Grand Rapids, USA.
 							</h1>
-							<div class="h-subtitle typing-subtitle">
-								<p>Hi There!</p>
-								<p>Welcome to my <strong>Portfolio </strong></p>
-								<p>My name is <strong>Anthony</strong></p>
-								<p>I'm a Full Stack <strong>Developer</strong></p>
-								<p>I'm also a Code <strong>Mentor</strong></p>
-								<p>I develop useful <strong>websites and applications</strong></p>
-								<p>I love <strong>javascript</strong></p>
-								<p>I learn <strong>everyday</strong></p>
-								<p>I solve <strong>problems</strong></p>
-								<p>I create intelligent<strong> chatbots...</strong></p>
-								<p>And also other cool<strong> applications</strong></p>
-							</div>
-
-
-							<span class="typed-subtitle animated fadeIn delay-5s"></span>
+							<div class="h-subtitle typewriter-container" style="display:block;"></div>
 							<script>
-								var app = document.querySelector('.typing-subtitle');
+								document.addEventListener('DOMContentLoaded', function() {
+									var app = document.querySelector('.typewriter-container');
+									var typewriter = new Typewriter(app, {
+										loop: true,
+										delay: 75,
+									});
 
-								var typewriter = new Typewriter(app, {
-									loop: true,
-									delay: 75,
+									typewriter
+										.pauseFor(5000)
+										.typeString('Hi There!')
+										.pauseFor(2000)
+										.deleteChars(11)
+										.pauseFor(1000)
+										.typeString('My name is <span style="color: #4bffa5;">Anthony</span>')
+										.pauseFor(1000)
+										.deleteChars(18)
+										.pauseFor(1000)
+										.typeString('I am a Full Stack <span style="color: #4bffa5;">Developer</span>')
+										.pauseFor(1000)
+										.deleteChars(27)
+										.pauseFor(1000)
+										.typeString('I create web apps that bring you <span style="color: #4bffa5;">revenue</span>')
+										.pauseFor(1000)
+										.deleteChars(40)
+										.pauseFor(1000)
+										.typeString('Click on the <span style="color: #4bffa5;">Chatbot</span> for questions')
+										.pauseFor(1000)
+										.deleteChars(34)
+										.start();
 								});
-
-								typewriter
-									.pauseFor(5000)
-									.typeString('Hi There!')
-									.pauseFor(2000)
-									.deleteChars(11)
-									.pauseFor(1000)
-									.typeString('My name is <span style="color: #4bffa5;">Anthony</span>')
-									.pauseFor(1000)
-									.deleteChars(18)
-									.pauseFor(1000)
-									.typeString('I am a Full Stack <span style="color: #4bffa5;">Developer</span>')
-									.pauseFor(1000)
-									.deleteChars(27)
-									.pauseFor(1000)
-									.typeString('I create web apps that bring you <span style="color: #4bffa5;">revenue</span>')
-									.pauseFor(1000)
-									.deleteChars(40)
-									.pauseFor(1000)
-									.typeString('Click on the <span style="color: #4bffa5;">Chatbot</span> for questions')
-									.pauseFor(1000)
-									.deleteChars(34)
-									.start();
 							</script>
 						</div>
 					</div>
