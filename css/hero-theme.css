@@ -324,6 +324,18 @@ body.hero-themed button.btn {
 	font-weight: 600 !important;
 	letter-spacing: 0.02em;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	line-height: 1 !important;
+	min-height: 48px;
+}
+body.hero-themed .btn .circle { display: none !important; }
+body.hero-themed .btn .lnk {
+	position: static !important;
+	display: inline-block;
+	color: #071a10 !important;
+	line-height: 1 !important;
 }
 body.hero-themed .btn:hover {
 	transform: translateY(-2px);
