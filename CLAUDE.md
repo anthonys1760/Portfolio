@@ -6,7 +6,8 @@
 - Always push changes to `gh-pages` for them to go live
 
 ## Background
-- The homepage uses a canvas particle wave animation (no YouTube video)
-- The particle canvas must have `z-index: 3` to render above `.video-bg-mask` (z-index: 2) and `.video-bg-texture` (z-index: 2)
-- The typewriter effect uses the `typewriter-effect` library (loaded from unpkg CDN), NOT the template's built-in `typed.js`
-- The typewriter container uses class `typewriter-container` to avoid conflicts with the template's `scripts.js` which targets `.typing-subtitle`
+- **Homepage (`index.html`)**: uses an animated CSS radial-gradient mesh background (`.hero-gradient-bg`) — no canvas, no particle effect
+- **Inner pages (`about.html`, `works_creative.html`, `contacts_image.html`)**: use the canvas particle wave animation
+- The particle canvas must have `z-index: 1` (below `.centrize` content at `z-index: 2`)
+- Homepage hero uses a custom vanilla-JS chat-stream simulator (token-chunked, jittered delays, punctuation pauses) — no `typewriter-effect` library
+- The homepage has been trimmed of Hotjar, Mouseflow, Google Optimize, Chatbase, ManyChat, and orphaned debug scripts. Keep GTM + GA only.
