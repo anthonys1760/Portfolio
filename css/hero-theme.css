@@ -330,6 +330,55 @@ body.hero-themed .btn:hover {
 /* Links */
 body.hero-themed a { color: #cfcfdb; }
 body.hero-themed a:hover { color: #4bffa5; }
+body.hero-themed a.hero-cta,
+body.hero-themed a.hero-cta:hover,
+.hero-cta,
+.hero-cta:hover { color: #071a10; }
+
+/* Tightened consistency layer */
+body.hero-themed .section.started .centrize { padding: 120px 0 80px; }
+@media (max-width: 768px) {
+	body.hero-themed .section.started .centrize { padding: 90px 0 60px; }
+}
+body.hero-themed .hero-name {
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	margin-bottom: 14px;
+}
+body.hero-themed .hero-role {
+	font-size: clamp(34px, 5vw, 56px);
+	line-height: 1.1;
+	margin-bottom: 28px;
+}
+body.hero-themed .content-box { padding: 40px; border-radius: 18px; }
+body.hero-themed .service-items,
+body.hero-themed .box-items { gap: 24px; }
+body.hero-themed .service-item,
+body.hero-themed .box-item { padding: 28px; border-radius: 16px; }
+body.hero-themed .filter-menu a,
+body.hero-themed button[type="submit"] {
+	background: #4bffa5 !important;
+	color: #071a10 !important;
+	border: none !important;
+	border-radius: 999px !important;
+	padding: 12px 24px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.02em;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+body.hero-themed .filter-menu a:hover,
+body.hero-themed button[type="submit"]:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 30px rgba(75, 255, 165, 0.25);
+}
+body.hero-themed .filter-menu a.active {
+	box-shadow: inset 0 0 0 2px rgba(7, 26, 16, 0.35);
+}
+body.hero-themed h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.1; }
+body.hero-themed h2,
+body.hero-themed .title .title_inner { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.2; }
+body.hero-themed h3 { font-size: 20px; line-height: 1.3; }
+body.hero-themed p { font-size: 16px; line-height: 1.65; }
 
 /* Header / footer transparency */
 body.hero-themed .header,
