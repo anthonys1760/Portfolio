@@ -376,12 +376,10 @@
 
 				<!-- background -->
 
-				<div autoplay="autoplay" loop="loop" playsinline loop muted id="started-video-bg"
-					class="video-bg media-bg jarallax-video video-mobile-bg"
-					data-jarallax-video="https://youtu.be/AtJN0dtx2Tk" data-mobile-preview="images/started_image_p.jpg"
-					data-volume="0">
+				<div id="started-video-bg" class="video-bg media-bg">
 					<div class="video-bg-mask"></div>
 					<div class="video-bg-texture" id="grained_container"></div>
+					<canvas id="particle-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;display:block;"></canvas>
 				</div>
 				<!-- 
 				<div class="waveWrapper waveAnimation">
@@ -521,7 +519,97 @@
 	<script src="js/grained.js"></script>
 	<script src="js/scripts.js"></script>
 
+	<!-- Particle Wave Background -->
+	<script>
+	(function () {
+		var canvas = document.getElementById('particle-canvas');
+		var ctx = canvas.getContext('2d');
+		var particles = [];
+		var PARTICLE_COUNT = 130;
+		var MAX_DIST = 130;
+		var animFrame;
 
+		function resize() {
+			var bg = document.getElementById('started-video-bg');
+			canvas.width = bg.offsetWidth || window.innerWidth;
+			canvas.height = bg.offsetHeight || window.innerHeight;
+		}
+
+		function initParticles() {
+			particles = [];
+			for (var i = 0; i < PARTICLE_COUNT; i++) {
+				particles.push({
+					x: Math.random() * canvas.width,
+					y: Math.random() * canvas.height,
+					vx: (Math.random() - 0.5) * 0.4,
+					vy: (Math.random() - 0.5) * 0.4,
+					waveOffset: Math.random() * Math.PI * 2,
+					waveSpeed: 0.4 + Math.random() * 0.6,
+					waveAmp: 15 + Math.random() * 25,
+					baseY: 0,
+					size: 1.2 + Math.random() * 1.4
+				});
+				particles[i].baseY = particles[i].y;
+			}
+		}
+
+		function animate(time) {
+			var t = time * 0.001;
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			ctx.fillStyle = '#0b0c1e';
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			for (var i = 0; i < particles.length; i++) {
+				var p = particles[i];
+				p.x += p.vx;
+				p.baseY += p.vy;
+				p.y = p.baseY + Math.sin(t * p.waveSpeed + p.waveOffset) * p.waveAmp;
+
+				if (p.x < -10) p.x = canvas.width + 10;
+				if (p.x > canvas.width + 10) p.x = -10;
+				if (p.baseY < -10) p.baseY = canvas.height + 10;
+				if (p.baseY > canvas.height + 10) p.baseY = -10;
+			}
+
+			for (var i = 0; i < particles.length; i++) {
+				for (var j = i + 1; j < particles.length; j++) {
+					var dx = particles[i].x - particles[j].x;
+					var dy = particles[i].y - particles[j].y;
+					var distSq = dx * dx + dy * dy;
+					if (distSq < MAX_DIST * MAX_DIST) {
+						var alpha = (1 - Math.sqrt(distSq) / MAX_DIST) * 0.35;
+						ctx.beginPath();
+						ctx.moveTo(particles[i].x, particles[i].y);
+						ctx.lineTo(particles[j].x, particles[j].y);
+						ctx.strokeStyle = 'rgba(150,180,255,' + alpha + ')';
+						ctx.lineWidth = 0.6;
+						ctx.stroke();
+					}
+				}
+			}
+
+			for (var i = 0; i < particles.length; i++) {
+				var p = particles[i];
+				ctx.beginPath();
+				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+				ctx.fillStyle = 'rgba(200,220,255,0.85)';
+				ctx.fill();
+			}
+
+			animFrame = requestAnimationFrame(animate);
+		}
+
+		window.addEventListener('resize', function () {
+			resize();
+			initParticles();
+		});
+
+		resize();
+		initParticles();
+		animFrame = requestAnimationFrame(animate);
+	})();
+	</script>
 
 </body>
 
