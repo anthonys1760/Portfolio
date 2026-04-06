@@ -1,0 +1,12 @@
+{
+	"name": "Anthony Smith — Senior Full Stack & Solutions Architect",
+	"short_name": "Anthony Smith",
+	"description": "Senior Full Stack & Solutions Architect. 6+ years shipping scalable platforms, AI integrations, and secure systems.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#050509",
+	"theme_color": "#4bffa5",
+	"icons": [
+		{ "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+	]
+}
