@@ -513,6 +513,17 @@ body.hero-themed a.contact-pill:hover {
 	.skills-group { grid-template-columns: 1fr; gap: 12px; }
 }
 
+/* Contact form status */
+body.hero-themed .form-status {
+	margin-top: 18px;
+	font-size: 14px;
+	line-height: 1.5;
+	min-height: 20px;
+}
+body.hero-themed .form-status.success { color: #4bffa5; }
+body.hero-themed .form-status.error { color: #ff6b6b; }
+body.hero-themed .form-status.pending { color: rgba(255, 255, 255, 0.6); }
+
 /* Experience timeline */
 body.hero-themed .section.experience .content { max-width: 1100px; margin: 0 auto; }
 .exp-timeline {

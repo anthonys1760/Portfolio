@@ -310,7 +310,7 @@
 							<div class="service-item content-box">
 								<div class="icon"><span class="fas fa-phone"></span></div>
 								<div class="name">Phone</div>
-								<div class="text">Click Chatbot for number</div>
+								<div class="text"><a href="tel:+16163191728">616-319-1728</a></div>
 							</div>
 						</div>
 
@@ -356,26 +356,28 @@
 
 					<!-- form -->
 					<div class="contact_form content-box">
-						<form action="https://sheetdb.io/api/v1/92fvwrmzm40fo" id="sheetdb-form" method="post">
+						<form action="https://sheetdb.io/api/v1/92fvwrmzm40fo" id="sheetdb-form" method="post" novalidate>
 							<div class="group-val">
-								<input type="text" name="data[name]" placeholder="Name" />
+								<input type="text" name="data[name]" placeholder="Name" required aria-label="Name" />
 							</div>
 							<div class="group-val">
-								<input type="email" name="data[email]" placeholder="Email" />
+								<input type="email" name="data[email]" placeholder="Email" required aria-label="Email" />
 							</div>
 							<div class="group-val ct-gr">
-								<textarea name="data[message]" placeholder="Message"></textarea>
+								<textarea name="data[message]" placeholder="Message" required aria-label="Message"></textarea>
+							</div>
+							<!-- honeypot: bots fill this, humans don't see it -->
+							<div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+								<label>Leave this field empty<input type="text" name="data[_gotcha]" tabindex="-1" autocomplete="off" /></label>
 							</div>
 							<div class="group-bts">
-								<button type="submit" class="btn hover-animated">
+								<button type="submit" class="btn hover-animated" id="sheetdb-submit">
 									<span class="circle"></span>
 									<span class="lnk">Send Message</span>
 								</button>
 							</div>
+							<div class="form-status" id="form-status" role="status" aria-live="polite"></div>
 						</form>
-						<div class="alert-success">
-							<p>Thanks, your message is sent successfully.</p>
-						</div>
 					</div>
 
 				</div>
@@ -385,19 +387,55 @@
 		</div>
 
 		<script>
-			var form = document.getElementById('sheetdb-form');
-			form.addEventListener("submit", e => {
-				e.preventDefault();
-				fetch(form.action, {
-					method: "POST",
-					body: new FormData(document.getElementById("sheetdb-form")),
-				}).then(
-					response => response.json()
-				).then((html) => {
-					// you can put any JS code here
-					alert('success')
+			(function () {
+				var form = document.getElementById('sheetdb-form');
+				var status = document.getElementById('form-status');
+				var submit = document.getElementById('sheetdb-submit');
+				if (!form) return;
+
+				function setStatus(msg, type) {
+					status.textContent = msg;
+					status.className = 'form-status ' + (type || '');
+				}
+
+				form.addEventListener('submit', function (e) {
+					e.preventDefault();
+
+					// honeypot check
+					var gotcha = form.querySelector('input[name="data[_gotcha]"]');
+					if (gotcha && gotcha.value) { return; }
+
+					// basic validation
+					var name = form.querySelector('input[name="data[name]"]').value.trim();
+					var email = form.querySelector('input[name="data[email]"]').value.trim();
+					var message = form.querySelector('textarea[name="data[message]"]').value.trim();
+					if (!name || !email || !message) {
+						setStatus('Please fill out all fields.', 'error');
+						return;
+					}
+					if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+						setStatus('Please enter a valid email address.', 'error');
+						return;
+					}
+
+					submit.disabled = true;
+					setStatus('Sending…', 'pending');
+
+					fetch(form.action, {
+						method: 'POST',
+						body: new FormData(form)
+					})
+					.then(function (r) { return r.json(); })
+					.then(function () {
+						form.reset();
+						setStatus("Thanks — your message is on its way. I'll get back to you soon.", 'success');
+					})
+					.catch(function () {
+						setStatus('Something went wrong. Please email anthony.smith1760@gmail.com directly.', 'error');
+					})
+					.finally(function () { submit.disabled = false; });
 				});
-			});
+			})();
 		</script>
 
 		<!-- Footer -->
