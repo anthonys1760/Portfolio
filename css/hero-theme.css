@@ -513,6 +513,62 @@ body.hero-themed a.contact-pill:hover {
 	.skills-group { grid-template-columns: 1fr; gap: 12px; }
 }
 
+/* Portfolio end-of-list CTA cards */
+.project-ctas {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	margin-top: 20px;
+}
+.project-cta-card {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 28px !important;
+	text-decoration: none;
+	transition: transform 0.3s ease, border-color 0.3s ease;
+}
+body.hero-themed a.project-cta-card,
+body.hero-themed a.project-cta-card:hover { color: #e8e8ef; }
+.project-cta-card:hover {
+	transform: translateY(-4px);
+	border-color: rgba(75, 255, 165, 0.4) !important;
+}
+.cta-icon {
+	width: 52px;
+	height: 52px;
+	border-radius: 14px;
+	background: rgba(75, 255, 165, 0.1);
+	border: 1px solid rgba(75, 255, 165, 0.25);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #4bffa5;
+	font-size: 22px;
+	flex-shrink: 0;
+}
+.cta-body { flex: 1; }
+.cta-title {
+	font-size: 17px;
+	font-weight: 600;
+	color: #fff;
+	margin-bottom: 4px;
+}
+.cta-desc {
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.65);
+	line-height: 1.45;
+}
+.cta-arrow {
+	font-size: 22px;
+	color: #4bffa5;
+	transition: transform 0.3s ease;
+}
+.project-cta-card:hover .cta-arrow { transform: translateX(4px); }
+@media (max-width: 768px) {
+	.project-ctas { grid-template-columns: 1fr; gap: 16px; }
+}
+
 /* Home trusted-by row */
 .trusted-by {
 	margin-top: 48px;
