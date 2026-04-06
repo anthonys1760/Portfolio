@@ -191,6 +191,9 @@
 	.hero-role { font-size: 26px; }
 	.chat-bubble { font-size: 16px; padding: 12px 16px; }
 	.hero-chat-wrap { padding: 16px; }
+	/* Reserve space for the streamed reply so the CTA + trusted-by row
+	   below don't get shoved down as tokens stream in. */
+	.chat-bubble.assistant { min-height: 360px; }
 }
 
 /* ---------------------------------------------------------
