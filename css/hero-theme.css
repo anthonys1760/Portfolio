@@ -792,7 +792,7 @@ body.hero-themed .section.skills .skills-groups ul.stack-chips li {
 	color: #a5ffd0;
 	white-space: nowrap;
 }
-.project-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.project-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
 .project-links .hero-cta { padding: 11px 20px; font-size: 14px; }
 .hero-cta.outline {
 	background: transparent;
