@@ -539,9 +539,7 @@ function buildPostHtml(post) {
 
       <!-- Footer -->
       <footer class="footer" style="position:relative;z-index:2;">
-        <div class="copy">
-          <p><a href="https://www.codementor.io/@anthonys1760?refer=badge"><img src="https://www.codementor.io/m-badges/anthonys1760/book-session.svg" alt="Codementor badge"></a></p>
-        </div>
+        <div class="copy"></div>
         <div class="soc-box">
           <div class="follow-label">Follow Me</div>
           <div class="soc">
