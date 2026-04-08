@@ -744,7 +744,12 @@ body.hero-themed .section.experience .content { max-width: 1100px; margin: 0 aut
 }
 
 /* Header / footer transparency */
-body.hero-themed .header,
+body.hero-themed .header {
+	background: rgba(13, 12, 20, 0.6);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
 body.hero-themed .footer { background: transparent; }
 body.hero-themed .top-menu .menu li a { color: rgba(255, 255, 255, 0.7); }
 body.hero-themed .top-menu .menu li a:hover,
