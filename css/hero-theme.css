@@ -1222,3 +1222,48 @@ body.hero-themed .adr-body strong {
 	body.hero-themed .adr summary::after { position: absolute; right: 20px; top: 16px; }
 	body.hero-themed .adr { position: relative; }
 }
+
+/* Mobile-menu social strip — shown only when the header switches to
+   the hamburger dropdown (≤1199px). Hides on desktop so the top menu
+   stays clean. */
+body.hero-themed .top-menu-social { display: none; }
+@media (max-width: 1199px) {
+	body.hero-themed .top-menu-social {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+		margin-top: 24px;
+		padding-top: 20px;
+		border-top: 1px solid rgba(255,255,255,0.08);
+	}
+	body.hero-themed .top-menu-social-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 18px;
+		border-radius: 999px;
+		border: 1px solid rgba(255,255,255,0.12);
+		background: rgba(255,255,255,0.03);
+		color: #e8e8ef !important;
+		font-size: 13px;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+	}
+	body.hero-themed .top-menu-social-link:hover,
+	body.hero-themed .top-menu-social-link:focus-visible {
+		border-color: #4bffa5;
+		color: #4bffa5 !important;
+		background: rgba(75,255,165,0.06);
+	}
+	body.hero-themed .top-menu-social-link .icon { font-size: 16px; }
+}
+
+/* On mobile, retire the orphaned GitHub soc-box in the footer. The
+   link now lives in the mobile menu; the footer keeps only the
+   Codementor badge, centered. */
+@media (max-width: 720px) {
+	body.hero-themed .footer { text-align: center; }
+	body.hero-themed .footer .soc-box { display: none; }
+	body.hero-themed .footer .copy { float: none; display: inline-block; }
+}
