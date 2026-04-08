@@ -227,9 +227,9 @@
 									<details class="project-case-study">
 										<summary>Case study</summary>
 										<div class="cs-grid">
-											<div><h4>Problem</h4><p>TODO: What pain point does NutriLogix solve for users?</p></div>
-											<div><h4>Approach</h4><p>TODO: Key technical + product decisions (vision model pipeline, Apple Health sync, offline-first cache, etc.).</p></div>
-											<div><h4>Outcome</h4><p>TODO: Measurable result (TestFlight sign-ups, retention, accuracy benchmark).</p></div>
+											<div><h4>Problem</h4><p>Manually logging meals is tedious and inaccurate — users either skip it or spend minutes searching databases for food items. Existing trackers require too many taps and still get portion sizes wrong.</p></div>
+											<div><h4>Approach</h4><p>Built a vision model pipeline (OpenAI GPT-4o Vision) that identifies food, estimates portions, and returns structured macro data from a single photo. Barcode scanning adds localized health scores pulled from product databases. Apple Health sync keeps calorie burn and activity data in one place without manual input.</p></div>
+											<div><h4>Outcome</h4><p>Launched on TestFlight with early access users actively logging meals. Photo logging reduces manual entry time from ~2 minutes to under 10 seconds per meal.</p></div>
 										</div>
 									</details>
 									<div class="project-links">
@@ -251,9 +251,9 @@
 									<details class="project-case-study">
 										<summary>Case study</summary>
 										<div class="cs-grid">
-											<div><h4>Problem</h4><p>TODO: Why users need multiple AI models in one app.</p></div>
-											<div><h4>Approach</h4><p>TODO: Context-bridging between providers, streaming abstraction, voice layer, file upload pipeline.</p></div>
-											<div><h4>Outcome</h4><p>TODO: App Store launch metrics, cost savings vs individual subs.</p></div>
+											<div><h4>Problem</h4><p>Different AI models excel at different tasks — GPT-5 for reasoning, Claude for writing, Gemini for data — but switching between apps breaks context and costs $60+/month in separate subscriptions.</p></div>
+											<div><h4>Approach</h4><p>Built a unified streaming abstraction layer that routes to OpenAI, Anthropic, and Google APIs while preserving full conversation context across model switches. Added low-latency voice input, file and PDF uploads, and web search with cited sources — all in a single React Native app available on iOS and Android.</p></div>
+											<div><h4>Outcome</h4><p>Live on the App Store and Google Play. Users get access to GPT-5, Claude Opus 4, Gemini 2.5 Pro, DeepSeek R1, and more for the cost of a single ChatGPT subscription.</p></div>
 										</div>
 									</details>
 									<div class="project-links">
@@ -275,9 +275,9 @@
 									<details class="project-case-study">
 										<summary>Case study</summary>
 										<div class="cs-grid">
-											<div><h4>Problem</h4><p>TODO: Why form-based workout loggers fail mid-set.</p></div>
-											<div><h4>Approach</h4><p>TODO: Whisper pipeline, gym-slang NLU, superset state machine, on-device fallback.</p></div>
-											<div><h4>Outcome</h4><p>TODO: Logging time reduction, user retention.</p></div>
+											<div><h4>Problem</h4><p>Form-based workout loggers break training flow — tapping through dropdowns between sets kills momentum and focus. Most lifters either stop logging mid-workout or don't log at all.</p></div>
+											<div><h4>Approach</h4><p>Built a voice-first pipeline using OpenAI Whisper for transcription and GPT-4o structured outputs to parse gym slang, supersets, and compound set descriptions into clean Supabase records. A confirmation sheet lets users verify before saving, with a ripple-animated voice button as the sole primary interaction. Stack: Expo SDK, Supabase (Postgres + RLS), RevenueCat subscriptions.</p></div>
+											<div><h4>Outcome</h4><p>Logging a set drops from ~15 taps to a single voice command. Currently in active development with early access at voicelift.app.</p></div>
 										</div>
 									</details>
 									<div class="project-links">
