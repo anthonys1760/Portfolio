@@ -409,9 +409,9 @@
 								<span class="adr-meta">2025 &middot; NutriLogix AI</span>
 							</summary>
 							<div class="adr-body">
-								<p><strong>Context.</strong> TODO: Solo founder, need iOS + Android + web from one codebase, fastest path to TestFlight beta.</p>
-								<p><strong>Decision.</strong> TODO: Expo-managed React Native with EAS builds, OTA updates via expo-updates.</p>
-								<p><strong>Tradeoffs.</strong> TODO: Slightly heavier bundle and some native-module friction vs. 3&ndash;4x faster ship velocity and a single TypeScript codebase across platforms.</p>
+								<p><strong>Context.</strong> Solo founder path from zero to a shipped product. Need iOS first (the target audience lives on iPhone + Apple Health), but Android reach and a marketing web surface are table stakes for a nutrition app in 2025. Native Swift locks the product to one platform and one engineer workflow, and every marketing-site tweak becomes a second stack to maintain.</p>
+								<p><strong>Decision.</strong> Expo-managed React Native with EAS Build for native binaries and expo-updates for over-the-air JS patches. A single TypeScript codebase drives iOS and Android, with a thin HealthKit bridge as the only place I drop to native. CI ships release candidates to TestFlight on every merge to <code>main</code>.</p>
+								<p><strong>Tradeoffs.</strong> Bundle is heavier than lean Swift and SwiftUI wins on frame-perfect list scrolling. In exchange I get 3&ndash;4x faster iteration, bug fixes that land in hours instead of days, and the same TypeScript brain fixing the marketing site and the mobile app in the same PR. Clear escape hatch if the product ever outgrows Expo &mdash; drop to bare workflow or eject a hot path to native.</p>
 							</div>
 						</details>
 
@@ -421,9 +421,9 @@
 								<span class="adr-meta">2025 &middot; NutriLogix &middot; VoiceLift</span>
 							</summary>
 							<div class="adr-body">
-								<p><strong>Context.</strong> TODO: Need auth, Postgres, row-level security, and file storage without standing up a backend team.</p>
-								<p><strong>Decision.</strong> TODO: Supabase &mdash; Postgres with RLS policies, edge functions for server-side logic, storage buckets signed per user.</p>
-								<p><strong>Tradeoffs.</strong> TODO: Lose Firebase's real-time sync maturity and offline-first SDK; gain SQL, relational modeling, and an escape hatch to self-hosted Postgres later.</p>
+								<p><strong>Context.</strong> Both apps need auth, a <em>relational</em> database (meals belong to users, foods have macros, workouts have sets and supersets &mdash; this is SQL, not a document store), row-level security so clients can talk to the DB directly, and file storage for meal photos and audio blobs. All of that without running a backend team.</p>
+								<p><strong>Decision.</strong> Supabase. Postgres with RLS policies enforced at the database layer, Supabase Auth for JWT + social logins, storage buckets with per-user signed URLs, and edge functions for server-side work like calling the OpenAI Vision and Whisper APIs with a server-held key. One stack serves NutriLogix and VoiceLift, with migrations checked into git.</p>
+								<p><strong>Tradeoffs.</strong> Lose Firestore's best-in-class offline sync SDK and mature real-time listeners. The Supabase edge runtime is younger and has fewer regions. Gained: plain Postgres I can dump and restore anywhere, relational modeling I don't have to fight, auth rules that live with the schema instead of scattered across client code, and a credible self-host path if scale or pricing ever demand it.</p>
 							</div>
 						</details>
 
@@ -433,9 +433,9 @@
 								<span class="adr-meta">2025 &middot; AstroAI X</span>
 							</summary>
 							<div class="adr-body">
-								<p><strong>Context.</strong> TODO: Users want to switch between GPT-5, Claude Opus 4, and Gemini 2.5 Pro mid-conversation without losing context.</p>
-								<p><strong>Decision.</strong> TODO: Single chat-message interface + per-provider adapter that normalizes streaming, tool calls, and token accounting. Context persisted in a shared conversation store, replayed per provider.</p>
-								<p><strong>Tradeoffs.</strong> TODO: More adapter surface to maintain vs. locking the product into one provider's roadmap and pricing.</p>
+								<p><strong>Context.</strong> The product thesis is &ldquo;one chat, any model.&rdquo; Users start a thread in GPT-5, hit a reasoning wall, switch to Claude Opus 4 mid-conversation, then bounce to Gemini 2.5 Pro for its long-context strengths &mdash; without losing the history. Every provider has a different request shape, streaming format, tool-call contract, and token-accounting model.</p>
+								<p><strong>Decision.</strong> A single canonical <code>Message</code> and <code>ConversationState</code> shape lives in the client and in Supabase. A per-provider adapter normalizes three things: streaming chunks into a common token-event stream, tool calls into a provider-neutral envelope, and usage into unified token counts. The full canonical history is replayed into each provider's native format on every request &mdash; stateless on their side, stateful on ours.</p>
+								<p><strong>Tradeoffs.</strong> Three adapters to maintain, and some provider-specific features (Claude's extended thinking, Gemini's native file handling) have to be opted into explicitly instead of coming for free. Gained: the product survives any one provider's outage or price change, shipping a fourth model is a new adapter rather than a rewrite, and no vendor owns the roadmap.</p>
 							</div>
 						</details>
 
@@ -445,9 +445,9 @@
 								<span class="adr-meta">2025 &middot; VoiceLift</span>
 							</summary>
 							<div class="adr-body">
-								<p><strong>Context.</strong> TODO: Mid-workout users can't tap through forms. Need to capture sets, reps, supersets, and gym slang hands-free.</p>
-								<p><strong>Decision.</strong> TODO: Whisper for transcription &rarr; small LLM parser tuned on gym vocabulary &rarr; deterministic set/superset state machine &rarr; Supabase log. Local fallback when offline.</p>
-								<p><strong>Tradeoffs.</strong> TODO: Higher per-log cost than a structured form, but friction goes to near-zero &mdash; which is the entire product thesis.</p>
+								<p><strong>Context.</strong> VoiceLift exists because logging a set mid-workout is high-friction &mdash; tapping a form while your hands are chalked and your heart rate is at 160 is why most workout apps get abandoned. Off-the-shelf voice pickers assume structured commands (&ldquo;add set, ten reps, one-fifty-five pounds&rdquo;); humans don't talk like that mid-lift. They say &ldquo;three plates for eight,&rdquo; &ldquo;warm-up to working weight,&rdquo; and &ldquo;ten, nine, eight to failure.&rdquo;</p>
+								<p><strong>Decision.</strong> OpenAI Whisper for transcription &rarr; a small tuned LLM pass that understands gym vocabulary (&ldquo;three plates&rdquo; = 315 lb, drop sets, supersets, RPE, descending rep schemes) &rarr; a deterministic state machine that owns the current exercise, superset grouping, and rest timer &rarr; Supabase for the log. A lower-accuracy on-device fallback kicks in when the phone is offline so mid-workout logging never drops.</p>
+								<p><strong>Tradeoffs.</strong> Higher per-log cost than a free-tier form app &mdash; each set triggers transcription plus a parsing pass &mdash; and slightly higher latency than tapping. Gained: logging goes from ~15 seconds of tapping per set to under 2 seconds of speech, which <em>is</em> the product. A form-based MVP would have been cheaper to build and dead on arrival.</p>
 							</div>
 						</details>
 
@@ -457,9 +457,9 @@
 								<span class="adr-meta">2026 &middot; anthonysdigital.net</span>
 							</summary>
 							<div class="adr-body">
-								<p><strong>Context.</strong> TODO: Inherited template had Hotjar, Mouseflow, Google Optimize, Chatbase, ManyChat, and orphan debug scripts. Privacy + performance cost was high, signal was low.</p>
-								<p><strong>Decision.</strong> TODO: Strip every third-party script except GTM + GA. Replace Chatbase with a vanilla-JS streamed chat hero I own end-to-end.</p>
-								<p><strong>Tradeoffs.</strong> TODO: Lose heatmaps and replay, gain trust, speed, and zero vendor lock-in on the hero interaction.</p>
+								<p><strong>Context.</strong> The inherited portfolio template shipped with Hotjar, Mouseflow, Google Optimize, Chatbase, CustomGPT, ManyChat, and a handful of orphaned debug scripts. That was roughly 800 KB of third-party JavaScript before any of my own content loaded, LCP was mediocre on mobile, and the privacy story was &ldquo;every visitor's mouse movements are recorded by at least two vendors.&rdquo;</p>
+								<p><strong>Decision.</strong> Strip every third-party script except Google Tag Manager and Google Analytics 4. Replace the Chatbase widget with a vanilla-JS streamed chat hero I own end-to-end &mdash; token-by-token rendering, jittered delays, punctuation pauses, ~3 KB of JS. The site stays static on GitHub Pages with zero build step.</p>
+								<p><strong>Tradeoffs.</strong> Lose heatmaps, session replay, and an A/B testing harness. For a single-author portfolio that already knows its audience, that was telemetry I was never going to look at. Gained: faster LCP, a clean privacy surface, nothing awkward to explain to EU visitors, and a hero interaction that's mine &mdash; not a rented widget I don't control. The streamer doubles as a tiny live portfolio demo: &ldquo;here's what I built to replace the widget I removed.&rdquo;</p>
 							</div>
 						</details>
 
