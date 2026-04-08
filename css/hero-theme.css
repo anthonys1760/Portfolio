@@ -1268,3 +1268,14 @@ body.hero-themed .top-menu-social { display: none; }
 	body.hero-themed .footer .soc-box { display: none; }
 	body.hero-themed .footer .copy { float: none; display: inline-block; }
 }
+
+/* Featured skills group (Mobile) — subtle accent border to visually
+   elevate it above the other stack categories. */
+body.hero-themed .skills-group.featured {
+	border-left: 2px solid #4bffa5;
+	padding-left: 14px;
+	margin-left: -16px;
+}
+body.hero-themed .skills-group.featured .group-label {
+	color: #4bffa5;
+}
