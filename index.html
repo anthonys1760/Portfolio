@@ -291,6 +291,10 @@
 				caretEl.className = 'chat-caret';
 				lastP.appendChild(caretEl);
 			}
+			// Keep the newest tokens in view when the bubble is internally
+			// scrollable (mobile layout with a fixed bubble height).
+			var bubble = textEl.parentElement;
+			if (bubble) bubble.scrollTop = bubble.scrollHeight;
 		}
 
 		function revealCTA() {
