@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+	<!-- Google Tag Manager -->
+	<script>
+		(function (w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+			var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+	</script>
+	<!-- End Google Tag Manager -->
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'UA-105675198-1');
+	</script>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta name="description" content="Technical blog by Anthony Smith — full-stack architecture, React Native, AI integrations, Node.js, security, and more.">
+	<meta name="keywords" content="technical blog, full stack, react native, node.js, AI, architecture, software engineering, anthony smith">
+	<link rel="canonical" href="https://www.anthonysdigital.net/blog/">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://www.anthonysdigital.net/blog/">
+	<meta property="og:title" content="Technical Blog — Anthony Smith">
+	<meta property="og:description" content="Deep dives on full-stack architecture, React Native, AI integrations, and software engineering.">
+	<meta property="og:image" content="https://www.anthonysdigital.net/images/og-card.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Technical Blog — Anthony Smith">
+	<meta name="twitter:description" content="Deep dives on full-stack architecture, React Native, AI integrations, and software engineering.">
+	<meta name="twitter:image" content="https://www.anthonysdigital.net/images/og-card.jpg">
+
+	<title>Technical Blog — Anthony Smith</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/basic.css" />
+	<link rel="stylesheet" href="/css/layout.css" />
+	<link rel="stylesheet" href="/css/animate.css" />
+	<link rel="stylesheet" href="/css/fontawesome.css" />
+	<link rel="stylesheet" href="/css/brands.css" />
+	<link rel="stylesheet" href="/css/solid.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+	<link rel="stylesheet" href="/css/hero-theme.css">
+
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="theme-color" content="#4bffa5">
+
+	<style>
+		/* ── Blog listing page styles ── */
+		.blog-hero {
+			padding: 120px 0 60px;
+			text-align: center;
+		}
+		.blog-hero h1 {
+			font-size: 2.8rem;
+			font-weight: 700;
+			color: #fff;
+			margin-bottom: 12px;
+		}
+		.blog-hero h1 span {
+			color: #4bffa5;
+		}
+		.blog-hero p {
+			color: rgba(255,255,255,0.55);
+			font-size: 1.1rem;
+			max-width: 520px;
+			margin: 0 auto;
+		}
+
+		.blog-grid-section {
+			padding: 40px 0 100px;
+		}
+		.blog-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: 28px;
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 0 24px;
+		}
+
+		.blog-card {
+			background: rgba(255,255,255,0.04);
+			border: 1px solid rgba(255,255,255,0.08);
+			border-radius: 16px;
+			overflow: hidden;
+			transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+			text-decoration: none;
+			display: flex;
+			flex-direction: column;
+			cursor: pointer;
+		}
+		.blog-card:hover {
+			transform: translateY(-5px);
+			border-color: rgba(75,255,165,0.35);
+			box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+		}
+		.blog-card-img {
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+			display: block;
+			background: #111;
+		}
+		.blog-card-body {
+			padding: 22px 24px 26px;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+		}
+		.blog-card-meta {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+		.blog-card-category {
+			font-size: 0.72rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: #4bffa5;
+			background: rgba(75,255,165,0.1);
+			border: 1px solid rgba(75,255,165,0.25);
+			border-radius: 20px;
+			padding: 3px 10px;
+		}
+		.blog-card-read {
+			font-size: 0.78rem;
+			color: rgba(255,255,255,0.35);
+		}
+		.blog-card-title {
+			font-size: 1.1rem;
+			font-weight: 600;
+			color: #fff;
+			margin: 0 0 10px;
+			line-height: 1.45;
+		}
+		.blog-card-excerpt {
+			font-size: 0.88rem;
+			color: rgba(255,255,255,0.5);
+			line-height: 1.65;
+			flex: 1;
+			margin-bottom: 18px;
+		}
+		.blog-card-footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.blog-card-date {
+			font-size: 0.78rem;
+			color: rgba(255,255,255,0.3);
+		}
+		.blog-card-arrow {
+			font-size: 0.82rem;
+			color: #4bffa5;
+			font-weight: 600;
+			letter-spacing: 0.03em;
+		}
+
+		.blog-empty {
+			text-align: center;
+			padding: 80px 24px;
+			color: rgba(255,255,255,0.35);
+			font-size: 1rem;
+		}
+		.blog-empty strong {
+			display: block;
+			font-size: 1.4rem;
+			color: rgba(255,255,255,0.55);
+			margin-bottom: 10px;
+		}
+
+		.blog-loading {
+			text-align: center;
+			padding: 80px 24px;
+			color: rgba(255,255,255,0.35);
+			font-size: 0.95rem;
+		}
+
+		@media (max-width: 600px) {
+			.blog-hero h1 { font-size: 2rem; }
+			.blog-grid { grid-template-columns: 1fr; }
+		}
+	</style>
+</head>
+
+<body class="hero-themed">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
+			style="display:none;visibility:hidden"></iframe></noscript>
+
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="centrize full-width">
+			<div class="vertical-center">
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Container -->
+	<div class="container">
+
+		<!-- Cursor -->
+		<div class="cursor-follower"></div>
+
+		<!-- Header -->
+		<header class="header">
+			<div class="head-top">
+
+				<!-- menu button -->
+				<a href="#" class="menu-btn"><span></span></a>
+
+				<!-- logo -->
+				<div class="logo hover-masks-logo">
+					<a href="/index.html">
+						<span class="mask-lnk">Anthony <strong>Smith</strong></span>
+					</a>
+				</div>
+
+				<!-- top menu -->
+				<div class="top-menu hover-masks">
+					<div class="top-menu-nav">
+						<div class="menu-topmenu-container">
+							<ul class="menu">
+								<li class="menu-item menu-item-has-children">
+									<a href="/index.html">Home</a>
+								</li>
+								<li class="menu-item menu-item-has-children">
+									<a href="/about.html">About</a>
+								</li>
+								<li class="menu-item menu-item-has-children">
+									<a href="/works_creative.html">Portfolio</a>
+								</li>
+								<li class="menu-item menu-item-has-children current-menu-item">
+									<a href="/blog/">Technical Blog</a>
+								</li>
+								<li class="menu-item menu-item-has-children">
+									<a href="https://www.codegrepper.com/profile/anthony-smith" target="_blank">Code Grepper</a>
+								</li>
+								<li class="menu-item menu-item-has-children">
+									<a href="/contacts_image.html">Contact</a>
+								</li>
+							</ul>
+						</div>
+						<div class="top-menu-social" aria-label="Social links">
+							<a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+								<span class="icon fab fa-github"></span>
+								<span class="label">GitHub</span>
+							</a>
+							<a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+								<span class="icon fas fa-envelope"></span>
+								<span class="label">Email</span>
+							</a>
+							<a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+								<span class="icon fas fa-graduation-cap"></span>
+								<span class="label">Codementor</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</header>
+
+		<!-- Wrapper -->
+		<div class="wrapper">
+
+			<!-- Background -->
+			<div id="started-video-bg" class="video-bg media-bg" style="position:fixed;inset:0;z-index:0;">
+				<div class="hero-gradient-bg"></div>
+			</div>
+
+			<!-- Blog Hero -->
+			<section class="blog-hero" style="position:relative;z-index:2;">
+				<h1>Technical <span>Blog</span></h1>
+				<p>Deep dives on full-stack architecture, React Native, AI integrations, Node.js, security, and more.</p>
+			</section>
+
+			<!-- Blog Grid -->
+			<section class="blog-grid-section" style="position:relative;z-index:2;">
+				<div id="blog-grid" class="blog-grid">
+					<div class="blog-loading">Loading posts…</div>
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<footer class="footer" style="position:relative;z-index:2;">
+				<div class="copy">
+					<p><a href="https://www.codementor.io/@anthonys1760?refer=badge"><img
+								src="https://www.codementor.io/m-badges/anthonys1760/book-session.svg"
+								alt="Codementor badge"></a></p>
+				</div>
+				<div class="soc-box">
+					<div class="follow-label">Follow Me</div>
+					<div class="soc">
+						<a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+							<span class="icon fab fa-github"></span>
+						</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</footer>
+
+			<!-- Lines -->
+			<div class="lines">
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+				<div class="line-col"></div>
+			</div>
+
+		</div>
+	</div>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/scripts.js"></script>
+
+	<script>
+		(async function () {
+			const grid = document.getElementById('blog-grid');
+
+			let posts = [];
+			try {
+				const res = await fetch('/blog/data/posts.json?v=' + Date.now());
+				posts = await res.json();
+			} catch (e) {
+				grid.innerHTML = '<div class="blog-empty"><strong>Coming soon</strong>New posts drop every week. Check back soon.</div>';
+				return;
+			}
+
+			if (!posts.length) {
+				grid.innerHTML = '<div class="blog-empty"><strong>Coming soon</strong>New posts drop every week. Check back soon.</div>';
+				return;
+			}
+
+			grid.innerHTML = posts.map(post => `
+				<a class="blog-card" href="/blog/posts/${post.slug}.html">
+					<img class="blog-card-img" src="${post.image}" alt="${post.title}" loading="lazy" onerror="this.style.display='none'">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">${post.category}</span>
+							<span class="blog-card-read">${post.readTime} read</span>
+						</div>
+						<h2 class="blog-card-title">${post.title}</h2>
+						<p class="blog-card-excerpt">${post.excerpt}</p>
+						<div class="blog-card-footer">
+							<span class="blog-card-date">${post.date}</span>
+							<span class="blog-card-arrow">Read more &rarr;</span>
+						</div>
+					</div>
+				</a>
+			`).join('');
+		})();
+	</script>
+
+</body>
+</html>
