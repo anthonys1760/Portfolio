@@ -213,8 +213,13 @@
 		</div>
 	</div>
 
+	<!-- Full-page background (outside container to avoid clipping) -->
+	<div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+		<div class="hero-gradient-bg"></div>
+	</div>
+
 	<!-- Container -->
-	<div class="container">
+	<div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
 
 		<!-- Cursor -->
 		<div class="cursor-follower"></div>
@@ -281,12 +286,7 @@
 		<!-- Wrapper -->
 		<div class="wrapper">
 
-			<!-- Background -->
-			<div id="started-video-bg" class="video-bg media-bg" style="position:fixed;inset:0;z-index:0;">
-				<div class="hero-gradient-bg"></div>
-			</div>
-
-			<!-- Blog Hero -->
+				<!-- Blog Hero -->
 			<section class="blog-hero" style="position:relative;z-index:2;">
 				<h1>Technical <span>Blog</span></h1>
 				<p>Deep dives on full-stack architecture, React Native, AI integrations, Node.js, security, and more.</p>

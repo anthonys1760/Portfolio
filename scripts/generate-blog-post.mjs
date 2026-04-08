@@ -119,6 +119,25 @@ function pickTopic(existingTitles) {
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
+// ── JSON repair: escape bare newlines/tabs inside string values ───────────────
+
+function repairJson(str) {
+  let result = ''
+  let inString = false
+  let escaped = false
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i]
+    if (escaped) { result += ch; escaped = false; continue }
+    if (ch === '\\' && inString) { result += ch; escaped = true; continue }
+    if (ch === '"') { inString = !inString; result += ch; continue }
+    if (inString && ch === '\n') { result += '\\n'; continue }
+    if (inString && ch === '\r') { result += '\\r'; continue }
+    if (inString && ch === '\t') { result += '\\t'; continue }
+    result += ch
+  }
+  return result
+}
+
 // ── OpenRouter call ───────────────────────────────────────────────────────────
 
 async function generatePost(existingPosts) {
@@ -191,7 +210,7 @@ Body rules:
 
   let post
   try {
-    post = JSON.parse(jsonStr)
+    post = JSON.parse(repairJson(jsonStr))
   } catch (e) {
     throw new Error(`Failed to parse JSON: ${e.message}\nRaw: ${raw.slice(0, 500)}`)
   }
@@ -445,7 +464,12 @@ function buildPostHtml(post) {
     </div>
   </div>
 
-  <div class="container">
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
     <div class="cursor-follower"></div>
 
     <!-- Header -->
@@ -486,11 +510,6 @@ function buildPostHtml(post) {
     </header>
 
     <div class="wrapper">
-
-      <!-- Background -->
-      <div id="started-video-bg" class="video-bg media-bg" style="position:fixed;inset:0;z-index:0;">
-        <div class="hero-gradient-bg"></div>
-      </div>
 
       <!-- Post Content -->
       <article class="post-wrap">

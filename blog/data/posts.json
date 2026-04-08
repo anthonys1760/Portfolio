@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "slug": "mastering-mobile-app-state-management-a-pragmatic-guide",
+    "title": "Mastering Mobile App State Management: A Pragmatic Guide",
+    "excerpt": "Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.",
+    "category": "React Native",
+    "readTime": "7 min",
+    "date": "April 8, 2026",
+    "dateISO": "2026-04-08",
+    "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80"
+  },
+  {
+    "slug": "edge-functions-the-future-of-serverless-architecture",
+    "title": "Edge Functions: The Future of Serverless Architecture",
+    "excerpt": "Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.",
+    "category": "Architecture",
+    "readTime": "7 min",
+    "date": "April 8, 2026",
+    "dateISO": "2026-04-08",
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80"
+  }
+]
