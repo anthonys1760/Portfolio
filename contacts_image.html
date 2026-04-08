@@ -370,19 +370,19 @@
 
 					<!-- form -->
 					<div class="contact_form content-box">
-						<form action="https://sheetdb.io/api/v1/92fvwrmzm40fo" id="sheetdb-form" method="post" novalidate>
+						<form action="https://formspree.io/f/mvzvyjnd" id="sheetdb-form" method="post" novalidate>
 							<div class="group-val">
-								<input type="text" name="data[name]" placeholder="Name" required aria-label="Name" />
+								<input type="text" name="name" placeholder="Name" required aria-label="Name" />
 							</div>
 							<div class="group-val">
-								<input type="email" name="data[email]" placeholder="Email" required aria-label="Email" />
+								<input type="email" name="email" placeholder="Email" required aria-label="Email" />
 							</div>
 							<div class="group-val ct-gr">
-								<textarea name="data[message]" placeholder="Message" required aria-label="Message"></textarea>
+								<textarea name="message" placeholder="Message" required aria-label="Message"></textarea>
 							</div>
 							<!-- honeypot: bots fill this, humans don't see it -->
 							<div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
-								<label>Leave this field empty<input type="text" name="data[_gotcha]" tabindex="-1" autocomplete="off" /></label>
+								<label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
 							</div>
 							<div class="group-bts">
 								<button type="submit" class="btn hover-animated" id="sheetdb-submit">
@@ -416,13 +416,13 @@
 					e.preventDefault();
 
 					// honeypot check
-					var gotcha = form.querySelector('input[name="data[_gotcha]"]');
+					var gotcha = form.querySelector('input[name="_gotcha"]');
 					if (gotcha && gotcha.value) { return; }
 
 					// basic validation
-					var name = form.querySelector('input[name="data[name]"]').value.trim();
-					var email = form.querySelector('input[name="data[email]"]').value.trim();
-					var message = form.querySelector('textarea[name="data[message]"]').value.trim();
+					var name = form.querySelector('input[name="name"]').value.trim();
+					var email = form.querySelector('input[name="email"]').value.trim();
+					var message = form.querySelector('textarea[name="message"]').value.trim();
 					if (!name || !email || !message) {
 						setStatus('Please fill out all fields.', 'error');
 						return;
@@ -437,12 +437,17 @@
 
 					fetch(form.action, {
 						method: 'POST',
+						headers: { 'Accept': 'application/json' },
 						body: new FormData(form)
 					})
 					.then(function (r) { return r.json(); })
-					.then(function () {
-						form.reset();
-						setStatus("Thanks — your message is on its way. I'll get back to you soon.", 'success');
+					.then(function (data) {
+						if (data.ok) {
+							form.reset();
+							setStatus("Thanks — your message is on its way. I'll get back to you soon.", 'success');
+						} else {
+							setStatus('Something went wrong. Please email anthony.smith1760@gmail.com directly.', 'error');
+						}
 					})
 					.catch(function () {
 						setStatus('Something went wrong. Please email anthony.smith1760@gmail.com directly.', 'error');
