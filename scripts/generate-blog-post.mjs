@@ -326,7 +326,7 @@ function buildPostHtml(post) {
       z-index: 2;
       max-width: 760px;
       margin: 0 auto;
-      padding: 120px 24px 100px;
+      padding: 150px 24px 100px;
     }
     .post-back {
       display: inline-flex;
@@ -363,10 +363,10 @@ function buildPostHtml(post) {
       color: rgba(255,255,255,0.35);
     }
     .post-title {
-      font-size: 2.4rem;
+      font-size: 1.6rem !important;
       font-weight: 700;
       color: #fff;
-      line-height: 1.25;
+      line-height: 1.3;
       margin: 0 0 20px;
     }
     .post-hero-img {
@@ -443,8 +443,8 @@ function buildPostHtml(post) {
     }
     .post-footer-nav a:hover { opacity: 0.75; }
     @media (max-width: 600px) {
-      .post-title { font-size: 1.7rem; }
-      .post-wrap { padding: 100px 18px 80px; }
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
     }
   </style>
 </head>
