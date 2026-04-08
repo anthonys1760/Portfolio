@@ -1230,8 +1230,9 @@ body.hero-themed .top-menu-social { display: none; }
 @media (max-width: 1199px) {
 	body.hero-themed .top-menu-social {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
-		gap: 16px;
+		gap: 10px 12px;
 		margin-top: 24px;
 		padding-top: 20px;
 		border-top: 1px solid rgba(255,255,255,0.08);
