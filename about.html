@@ -378,6 +378,81 @@
 				</div>
 			</div>
 
+			<!-- Section Tech Decisions (ADRs) -->
+			<div class="section tech-decisions" id="section-tech-decisions">
+				<div class="content">
+
+					<div class="title">
+						<div class="title_inner">Tech decisions</div>
+					</div>
+					<p class="section-lede">Short architectural decision records &mdash; the tradeoffs behind the shipped work.</p>
+
+					<div class="adr-list">
+
+						<details class="adr">
+							<summary>
+								<span class="adr-title">React Native + Expo over native Swift for NutriLogix</span>
+								<span class="adr-meta">2025 &middot; NutriLogix AI</span>
+							</summary>
+							<div class="adr-body">
+								<p><strong>Context.</strong> TODO: Solo founder, need iOS + Android + web from one codebase, fastest path to TestFlight beta.</p>
+								<p><strong>Decision.</strong> TODO: Expo-managed React Native with EAS builds, OTA updates via expo-updates.</p>
+								<p><strong>Tradeoffs.</strong> TODO: Slightly heavier bundle and some native-module friction vs. 3&ndash;4x faster ship velocity and a single TypeScript codebase across platforms.</p>
+							</div>
+						</details>
+
+						<details class="adr">
+							<summary>
+								<span class="adr-title">Supabase over Firebase for auth + storage</span>
+								<span class="adr-meta">2025 &middot; NutriLogix &middot; VoiceLift</span>
+							</summary>
+							<div class="adr-body">
+								<p><strong>Context.</strong> TODO: Need auth, Postgres, row-level security, and file storage without standing up a backend team.</p>
+								<p><strong>Decision.</strong> TODO: Supabase &mdash; Postgres with RLS policies, edge functions for server-side logic, storage buckets signed per user.</p>
+								<p><strong>Tradeoffs.</strong> TODO: Lose Firebase's real-time sync maturity and offline-first SDK; gain SQL, relational modeling, and an escape hatch to self-hosted Postgres later.</p>
+							</div>
+						</details>
+
+						<details class="adr">
+							<summary>
+								<span class="adr-title">Provider-abstraction layer for AstroAI X</span>
+								<span class="adr-meta">2025 &middot; AstroAI X</span>
+							</summary>
+							<div class="adr-body">
+								<p><strong>Context.</strong> TODO: Users want to switch between GPT-5, Claude Opus 4, and Gemini 2.5 Pro mid-conversation without losing context.</p>
+								<p><strong>Decision.</strong> TODO: Single chat-message interface + per-provider adapter that normalizes streaming, tool calls, and token accounting. Context persisted in a shared conversation store, replayed per provider.</p>
+								<p><strong>Tradeoffs.</strong> TODO: More adapter surface to maintain vs. locking the product into one provider's roadmap and pricing.</p>
+							</div>
+						</details>
+
+						<details class="adr">
+							<summary>
+								<span class="adr-title">Whisper + parser pipeline over structured voice forms</span>
+								<span class="adr-meta">2025 &middot; VoiceLift</span>
+							</summary>
+							<div class="adr-body">
+								<p><strong>Context.</strong> TODO: Mid-workout users can't tap through forms. Need to capture sets, reps, supersets, and gym slang hands-free.</p>
+								<p><strong>Decision.</strong> TODO: Whisper for transcription &rarr; small LLM parser tuned on gym vocabulary &rarr; deterministic set/superset state machine &rarr; Supabase log. Local fallback when offline.</p>
+								<p><strong>Tradeoffs.</strong> TODO: Higher per-log cost than a structured form, but friction goes to near-zero &mdash; which is the entire product thesis.</p>
+							</div>
+						</details>
+
+						<details class="adr">
+							<summary>
+								<span class="adr-title">GTM + GA only &mdash; no session replay or chat widgets</span>
+								<span class="adr-meta">2026 &middot; anthonysdigital.net</span>
+							</summary>
+							<div class="adr-body">
+								<p><strong>Context.</strong> TODO: Inherited template had Hotjar, Mouseflow, Google Optimize, Chatbase, ManyChat, and orphan debug scripts. Privacy + performance cost was high, signal was low.</p>
+								<p><strong>Decision.</strong> TODO: Strip every third-party script except GTM + GA. Replace Chatbase with a vanilla-JS streamed chat hero I own end-to-end.</p>
+								<p><strong>Tradeoffs.</strong> TODO: Lose heatmaps and replay, gain trust, speed, and zero vendor lock-in on the hero interaction.</p>
+							</div>
+						</details>
+
+					</div>
+				</div>
+			</div>
+
 			<!-- Section Service -->
 			<div class="section service" id="section-services">
 				<div class="content">

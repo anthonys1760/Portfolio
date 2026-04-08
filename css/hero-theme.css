@@ -1111,3 +1111,105 @@ body.hero-themed .project-case-study p {
 @media (max-width: 768px) {
 	body.hero-themed .project-case-study .cs-grid { grid-template-columns: 1fr; gap: 14px; }
 }
+
+/* Case study architecture diagram (inside project-case-study) */
+body.hero-themed .cs-diagram {
+	margin: 20px 0 0;
+	padding: 0;
+	border-radius: 12px;
+	overflow: hidden;
+	background: rgba(255,255,255,0.02);
+	border: 1px solid rgba(255,255,255,0.06);
+}
+body.hero-themed .cs-diagram img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 360px;
+	object-fit: contain;
+	background: #0b0b14;
+}
+body.hero-themed .cs-diagram figcaption {
+	font-size: 12px;
+	line-height: 1.55;
+	color: rgba(255,255,255,0.55);
+	padding: 10px 14px 12px;
+	letter-spacing: 0.02em;
+}
+
+/* Tech decisions (ADR) section on About */
+body.hero-themed .section.tech-decisions .section-lede {
+	color: rgba(255,255,255,0.6);
+	font-size: 14px;
+	margin: 0 0 24px;
+	max-width: 640px;
+}
+body.hero-themed .adr-list {
+	display: grid;
+	gap: 12px;
+	max-width: 860px;
+}
+body.hero-themed .adr {
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 14px;
+	background: rgba(255,255,255,0.03);
+	padding: 16px 20px;
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+body.hero-themed .adr[open] {
+	border-color: rgba(75,255,165,0.35);
+	background: rgba(75,255,165,0.04);
+}
+body.hero-themed .adr summary {
+	cursor: pointer;
+	list-style: none;
+	outline: none;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+body.hero-themed .adr summary::-webkit-details-marker { display: none; }
+body.hero-themed .adr summary::after {
+	content: "+";
+	color: #4bffa5;
+	font-size: 18px;
+	line-height: 1;
+	margin-left: auto;
+}
+body.hero-themed .adr[open] summary::after { content: "−"; }
+body.hero-themed .adr-title {
+	font-size: 15px;
+	font-weight: 600;
+	color: #f0f0f5;
+	letter-spacing: 0.01em;
+}
+body.hero-themed .adr-meta {
+	font-size: 11px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.45);
+}
+body.hero-themed .adr-body {
+	margin-top: 14px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(255,255,255,0.06);
+}
+body.hero-themed .adr-body p {
+	margin: 0 0 10px;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #cfcfdb;
+}
+body.hero-themed .adr-body p:last-child { margin-bottom: 0; }
+body.hero-themed .adr-body strong {
+	color: #4bffa5;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+@media (max-width: 640px) {
+	body.hero-themed .adr summary { flex-direction: column; gap: 4px; }
+	body.hero-themed .adr summary::after { position: absolute; right: 20px; top: 16px; }
+	body.hero-themed .adr { position: relative; }
+}

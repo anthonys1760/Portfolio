@@ -231,6 +231,10 @@
 											<div><h4>Approach</h4><p>Built a vision model pipeline (OpenAI GPT-4o Vision) that identifies food, estimates portions, and returns structured macro data from a single photo. Barcode scanning adds localized health scores pulled from product databases. Apple Health sync keeps calorie burn and activity data in one place without manual input.</p></div>
 											<div><h4>Outcome</h4><p>Launched on TestFlight with early access users actively logging meals. Photo logging reduces manual entry time from ~2 minutes to under 10 seconds per meal.</p></div>
 										</div>
+										<figure class="cs-diagram">
+											<img src="images/diagrams/placeholder.svg" alt="NutriLogix architecture diagram" loading="lazy" decoding="async" />
+											<figcaption>TODO: Vision pipeline &mdash; camera &rarr; OpenAI Vision &rarr; macro parser &rarr; Supabase &rarr; Apple Health sync.</figcaption>
+										</figure>
 									</details>
 									<div class="project-links">
 										<a class="hero-cta" href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>
@@ -255,6 +259,10 @@
 											<div><h4>Approach</h4><p>Built a unified streaming abstraction layer that routes to OpenAI, Anthropic, and Google APIs while preserving full conversation context across model switches. Added low-latency voice input, file and PDF uploads, and web search with cited sources — all in a single React Native app available on iOS and Android.</p></div>
 											<div><h4>Outcome</h4><p>Live on the App Store and Google Play. Users get access to GPT-5, Claude Opus 4, Gemini 2.5 Pro, DeepSeek R1, and more for the cost of a single ChatGPT subscription.</p></div>
 										</div>
+										<figure class="cs-diagram">
+											<img src="images/diagrams/placeholder.svg" alt="AstroAI X architecture diagram" loading="lazy" decoding="async" />
+											<figcaption>TODO: Provider-abstraction layer &mdash; client &rarr; router &rarr; (GPT-5 / Claude / Gemini) &rarr; streamed merge &rarr; shared context store.</figcaption>
+										</figure>
 									</details>
 									<div class="project-links">
 										<a class="hero-cta" href="https://astro-ai.net/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>
@@ -279,6 +287,10 @@
 											<div><h4>Approach</h4><p>Built a voice-first pipeline using OpenAI Whisper for transcription and GPT-4o structured outputs to parse gym slang, supersets, and compound set descriptions into clean Supabase records. A confirmation sheet lets users verify before saving, with a ripple-animated voice button as the sole primary interaction. Stack: Expo SDK, Supabase (Postgres + RLS), RevenueCat subscriptions.</p></div>
 											<div><h4>Outcome</h4><p>Logging a set drops from ~15 taps to a single voice command. Currently in active development with early access at voicelift.app.</p></div>
 										</div>
+										<figure class="cs-diagram">
+											<img src="images/diagrams/placeholder.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
+											<figcaption>TODO: Voice loop &mdash; mic &rarr; Whisper &rarr; gym-slang parser &rarr; set/superset state machine &rarr; Supabase log.</figcaption>
+										</figure>
 									</details>
 									<div class="project-links">
 										<a class="hero-cta" href="https://voicelift.app/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>

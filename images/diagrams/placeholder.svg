@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Architecture diagram placeholder">
+	<defs>
+		<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+			<path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(75,255,165,0.08)" stroke-width="1"/>
+		</pattern>
+	</defs>
+	<rect width="800" height="450" fill="#0b0b14"/>
+	<rect width="800" height="450" fill="url(#grid)"/>
+	<g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#4bffa5">
+		<text x="400" y="200" text-anchor="middle" font-size="22" letter-spacing="4">ARCHITECTURE DIAGRAM</text>
+		<text x="400" y="235" text-anchor="middle" font-size="14" fill="rgba(255,255,255,0.55)" letter-spacing="2">coming soon</text>
+	</g>
+	<g stroke="rgba(75,255,165,0.35)" stroke-width="1.5" fill="none">
+		<rect x="120" y="280" width="130" height="60" rx="8"/>
+		<rect x="335" y="280" width="130" height="60" rx="8"/>
+		<rect x="550" y="280" width="130" height="60" rx="8"/>
+		<line x1="250" y1="310" x2="335" y2="310" marker-end="url(#arrow)"/>
+		<line x1="465" y1="310" x2="550" y2="310" marker-end="url(#arrow)"/>
+	</g>
+	<defs>
+		<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+			<path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(75,255,165,0.55)"/>
+		</marker>
+	</defs>
+	<g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="rgba(255,255,255,0.65)" text-anchor="middle">
+		<text x="185" y="315">Client</text>
+		<text x="400" y="315">Service</text>
+		<text x="615" y="315">Store</text>
+	</g>
+</svg>
