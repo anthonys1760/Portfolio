@@ -280,13 +280,21 @@ function buildPostHtml(post) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="${escapeHtml(post.excerpt)}">
+  <meta name="keywords" content="${escapeHtml(post.keywords || '')}">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:title" content="${escapeHtml(post.title)} — Anthony Smith">
   <meta property="og:description" content="${escapeHtml(post.excerpt)}">
   <meta property="og:image" content="${post.image}">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="${post.dateISO}">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="${escapeHtml(post.category)}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="${escapeHtml(post.title)}">
   <meta name="twitter:description" content="${escapeHtml(post.excerpt)}">
   <meta name="twitter:image" content="${post.image}">
@@ -310,13 +318,37 @@ function buildPostHtml(post) {
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/${post.slug}.html"
+    },
     "headline": "${escapeHtml(post.title)}",
     "description": "${escapeHtml(post.excerpt)}",
-    "image": "${post.image}",
+    "keywords": "${escapeHtml(post.keywords || '')}",
+    "articleSection": "${escapeHtml(post.category)}",
+    "image": {
+      "@type": "ImageObject",
+      "url": "${post.image}"
+    },
     "datePublished": "${post.dateISO}",
-    "author": { "@type": "Person", "name": "Anthony Smith", "url": "https://www.anthonysdigital.net" },
-    "publisher": { "@type": "Person", "name": "Anthony Smith" },
-    "url": "https://www.anthonysdigital.net/blog/posts/${post.slug}.html"
+    "dateModified": "${post.dateISO}",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/${post.slug}.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
   }
   </script>
 
@@ -583,6 +615,27 @@ function savePost(post, existingPosts) {
   console.log(`[Blog] Updated posts.json (${updated.length} total)`)
 }
 
+// ── Sitemap update ────────────────────────────────────────────────────────────
+
+function updateSitemap(slug, dateISO) {
+  const sitemapPath = path.join(ROOT, 'sitemap.xml')
+  let xml = readFileSync(sitemapPath, 'utf8')
+
+  const postUrl = `https://www.anthonysdigital.net/blog/posts/${slug}.html`
+
+  // Skip if already in sitemap
+  if (xml.includes(postUrl)) {
+    console.log('[Blog] Sitemap already contains this post, skipping')
+    return
+  }
+
+  const entry = `\t<url>\n\t\t<loc>${postUrl}</loc>\n\t\t<lastmod>${dateISO}</lastmod>\n\t\t<changefreq>never</changefreq>\n\t\t<priority>0.7</priority>\n\t</url>`
+  xml = xml.replace('</urlset>', `${entry}\n</urlset>`)
+
+  writeFileSync(sitemapPath, xml, 'utf8')
+  console.log(`[Blog] Updated sitemap.xml with ${postUrl}`)
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -605,6 +658,9 @@ async function main() {
 
     // Update listing JSON
     savePost(post, existingPosts)
+
+    // Update sitemap
+    updateSitemap(post.slug, post.dateISO)
 
     console.log(`[Blog] Done! → https://www.anthonysdigital.net/blog/posts/${post.slug}.html`)
   } catch (err) {

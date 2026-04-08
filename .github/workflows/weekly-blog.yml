@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "Anthony Smith Blog Bot"
           git config user.email "anthony.smith1760@gmail.com"
-          git add blog/posts/ blog/data/posts.json
+          git add blog/posts/ blog/data/posts.json sitemap.xml
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
