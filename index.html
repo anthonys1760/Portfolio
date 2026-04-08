@@ -182,7 +182,19 @@
 								</div>
 								<div class="chat-row assistant">
 									<div class="chat-bubble assistant">
-										<div class="typing-dots" id="typing-dots"><span></span><span></span><span></span></div>
+										<div class="thinking-state" id="thinking-state">
+											<div class="thinking-label" aria-live="polite">Thinking</div>
+											<div class="thinking-preview" id="thinking-preview">Reading context&hellip;</div>
+										</div>
+										<div class="thought-header" id="thought-header" hidden>
+											<button type="button" class="thought-toggle" id="thought-toggle" aria-expanded="false" aria-controls="thought-trace">
+												<span class="thought-chevron" aria-hidden="true">&#9656;</span>
+												<span class="thought-text">Thought for <span id="thought-time">0</span>s</span>
+											</button>
+											<div class="thought-trace" id="thought-trace" hidden>
+												<p>Pulled the key facts from the resume &mdash; role, location, core strengths, and current focus. Framed the answer around the senior full-stack + solutions architect positioning with a deliberate React Native mobile-apps emphasis, and anchored it with SpartanNash and the mentoring volume as concrete proof points.</p>
+											</div>
+										</div>
 										<div class="chat-text" id="chat-text" style="display:none;"></div>
 									</div>
 								</div>
@@ -258,10 +270,15 @@
 	(function () {
 		var REPLY = "Anthony is a Senior Full Stack Solutions Architect based in Belmont, Michigan.\n\nHe builds scalable web platforms, ships <span class=\"accent\">React Native mobile apps</span> to TestFlight and the App Store, and hardens production systems against OWASP-class threats.\n\nCurrently leading systems engineering at <span class=\"accent\">SpartanNash</span> and mentoring 140,000+ developers worldwide on the side.";
 
-		var dots = document.getElementById('typing-dots');
+		var thinkingState = document.getElementById('thinking-state');
+		var thinkingPreview = document.getElementById('thinking-preview');
+		var thoughtHeader = document.getElementById('thought-header');
+		var thoughtToggle = document.getElementById('thought-toggle');
+		var thoughtTrace = document.getElementById('thought-trace');
+		var thoughtTime = document.getElementById('thought-time');
 		var textEl = document.getElementById('chat-text');
 		var cta = document.getElementById('hero-cta-wrap');
-		if (!dots || !textEl || !cta) return;
+		if (!thinkingState || !textEl || !cta) return;
 
 		// Tokenize the reply so we can stream raw text while preserving HTML spans.
 		// Strategy: split the string into tokens that are either a full HTML tag or a single visible char.
@@ -351,12 +368,66 @@
 			setTimeout(streamNext, delay);
 		}
 
-		// Show typing dots first, then begin streaming
+		// Claude-style "thinking" phase: rotate a faint reasoning preview
+		// line while the shimmer plays, then reveal a "Thought for Xs"
+		// header and begin streaming the reply.
+		var previewLines = [
+			'Reading context\u2026',
+			'Recalling the resume\u2026',
+			'Weighing how to frame it\u2026',
+			'Composing the response\u2026'
+		];
+		var previewIdx = 0;
+		var previewTimer = null;
+
+		function swapPreview() {
+			previewIdx = (previewIdx + 1) % previewLines.length;
+			thinkingPreview.style.opacity = '0';
+			setTimeout(function () {
+				thinkingPreview.innerHTML = previewLines[previewIdx];
+				thinkingPreview.style.opacity = '1';
+			}, 220);
+		}
+
+		// Target thinking duration: 3.2s ± small jitter so it feels organic.
+		var THINK_MS = 3200 + Math.floor(rand(-300, 400));
+		var thinkStart = (typeof performance !== 'undefined' && performance.now)
+			? performance.now()
+			: Date.now();
+
+		previewTimer = setInterval(swapPreview, 900);
+
 		setTimeout(function () {
-			dots.style.display = 'none';
+			clearInterval(previewTimer);
+			var now = (typeof performance !== 'undefined' && performance.now)
+				? performance.now()
+				: Date.now();
+			var elapsedSec = Math.max(1, Math.round((now - thinkStart) / 1000));
+			thoughtTime.textContent = String(elapsedSec);
+
+			// Swap thinking state → thought header + streaming text
+			thinkingState.style.display = 'none';
+			thoughtHeader.hidden = false;
 			textEl.style.display = '';
 			streamNext();
-		}, 750);
+		}, THINK_MS);
+
+		// Click to expand/collapse the "reasoning" trace
+		if (thoughtToggle) {
+			thoughtToggle.addEventListener('click', function () {
+				var expanded = this.getAttribute('aria-expanded') === 'true';
+				this.setAttribute('aria-expanded', String(!expanded));
+				if (expanded) {
+					thoughtTrace.setAttribute('hidden', '');
+				} else {
+					thoughtTrace.removeAttribute('hidden');
+					// On mobile the bubble is scroll-locked; make sure the
+					// expanded trace stays visible.
+					var bubble = textEl.parentElement;
+					if (bubble) bubble.scrollTop = bubble.scrollHeight;
+				}
+			});
+		}
 	})();
 	</script>
 

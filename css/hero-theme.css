@@ -1279,3 +1279,103 @@ body.hero-themed .skills-group.featured {
 body.hero-themed .skills-group.featured .group-label {
 	color: #4bffa5;
 }
+
+/* ---------------------------------------------------------
+   Claude-style "Thinking" state + "Thought for Xs" header
+   --------------------------------------------------------- */
+.thinking-state {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 2px 0;
+}
+.thinking-label {
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1.2;
+	background: linear-gradient(
+		90deg,
+		rgba(255,255,255,0.28) 0%,
+		rgba(255,255,255,0.35) 35%,
+		rgba(255,255,255,0.95) 50%,
+		rgba(255,255,255,0.35) 65%,
+		rgba(255,255,255,0.28) 100%
+	);
+	background-size: 250% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: thinking-shimmer 2.2s linear infinite;
+}
+.thinking-label::after { content: "\2026"; margin-left: 1px; }
+
+@keyframes thinking-shimmer {
+	0%   { background-position: 250% 0; }
+	100% { background-position: -250% 0; }
+}
+
+.thinking-preview {
+	font-size: 13px;
+	line-height: 1.4;
+	color: rgba(255,255,255,0.4);
+	font-style: italic;
+	transition: opacity 0.25s ease;
+	min-height: 18px;
+}
+
+/* Thought for Xs collapsible header */
+.thought-header {
+	margin: 0 0 12px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(255,255,255,0.07);
+	animation: thought-header-in 0.35s ease both;
+}
+@keyframes thought-header-in {
+	from { opacity: 0; transform: translateY(-4px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+.thought-toggle {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: rgba(255,255,255,0.5);
+	font-family: inherit;
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	transition: color 0.2s ease;
+}
+.thought-toggle:hover,
+.thought-toggle:focus-visible { color: #4bffa5; outline: none; }
+.thought-chevron {
+	display: inline-block;
+	font-size: 10px;
+	line-height: 1;
+	transform: rotate(0deg);
+	transition: transform 0.2s ease;
+}
+.thought-toggle[aria-expanded="true"] .thought-chevron {
+	transform: rotate(90deg);
+}
+.thought-trace {
+	margin-top: 10px;
+	padding: 10px 14px;
+	border-left: 2px solid rgba(75,255,165,0.3);
+	background: rgba(255,255,255,0.025);
+	border-radius: 4px;
+	font-size: 12.5px;
+	line-height: 1.6;
+	color: rgba(255,255,255,0.55);
+	font-style: italic;
+	animation: thought-trace-in 0.25s ease both;
+}
+.thought-trace p { margin: 0; }
+@keyframes thought-trace-in {
+	from { opacity: 0; max-height: 0; }
+	to   { opacity: 1; max-height: 240px; }
+}
