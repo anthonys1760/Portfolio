@@ -447,10 +447,15 @@
 			}
 
 			// State transition: kill the glow, flip the meta label, swap
-			// thinking-state → thought-header + streaming reply.
+			// thinking-state → thought-header + streaming reply. After the
+			// fade-out settles, kick off a gentle idle "breathing" so the
+			// bubble stays subtly alive without competing with the CTAs.
 			if (bubble) {
 				bubble.classList.remove('thinking-active');
 				bubble.classList.add('thinking-done');
+				setTimeout(function () {
+					bubble.classList.add('thinking-idle');
+				}, 900);
 			}
 			if (metaMode) metaMode.textContent = 'reply';
 			thinkingState.style.display = 'none';

@@ -1355,6 +1355,17 @@ body.hero-themed .skills-group.featured .group-label {
 	box-shadow: none;
 }
 
+/* Idle "breathing" state — applied ~900ms after thinking-done so the
+   fade-out transition finishes cleanly first. Much slower and gentler
+   than the thinking pulse so it doesn't compete with the CTA buttons. */
+.chat-bubble.assistant.thinking-done.thinking-idle {
+	animation: bubble-idle-breathe 5.5s ease-in-out infinite;
+}
+@keyframes bubble-idle-breathe {
+	0%, 100% { box-shadow: 0 0 22px -8px rgba(75,255,165,0.06); }
+	50%      { box-shadow: 0 0 32px -4px rgba(75,255,165,0.16); }
+}
+
 .thinking-state {
 	display: flex;
 	flex-direction: column;
