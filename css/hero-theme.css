@@ -755,9 +755,38 @@ body.hero-themed .section.experience .content { max-width: 1100px; margin: 0 aut
 	.exp-body { padding: 20px; }
 }
 
-/* Align logo text vertically with nav items */
+/* Logo styling */
 body.hero-themed .header .logo {
 	line-height: 1;
+	width: auto;
+	font-size: 17px;
+	letter-spacing: 0.02em;
+}
+body.hero-themed .header .logo a {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	color: rgba(255,255,255,0.9);
+	text-decoration: none;
+}
+/* Accent dot monogram */
+body.hero-themed .header .logo a::before {
+	content: '';
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #4bffa5;
+	flex-shrink: 0;
+	box-shadow: 0 0 6px rgba(75,255,165,0.6);
+}
+body.hero-themed .header .logo .mask-lnk {
+	font-weight: 300;
+	color: rgba(255,255,255,0.85);
+}
+body.hero-themed .header .logo strong {
+	font-weight: 700;
+	color: #4bffa5;
 }
 
 /* Header / footer transparency */
