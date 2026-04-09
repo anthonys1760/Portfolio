@@ -591,6 +591,7 @@ function buildPostHtml(post) {
 
   <script src="/js/jquery.min.js"></script>
   <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
 </body>
 </html>`
 }

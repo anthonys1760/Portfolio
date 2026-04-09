@@ -1519,3 +1519,37 @@ body.hero-themed .skills-group.featured .group-label {
 	from { opacity: 0; max-height: 0; }
 	to   { opacity: 1; max-height: 240px; }
 }
+
+/* ── Back-to-top button ───────────────────────────────────────────────────── */
+#back-to-top {
+	position: fixed;
+	bottom: 32px;
+	right: 32px;
+	z-index: 999;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: rgba(75,255,165,0.1);
+	border: 1px solid rgba(75,255,165,0.3);
+	color: #4bffa5;
+	font-size: 24px;
+	line-height: 44px;
+	text-align: center;
+	cursor: pointer;
+	opacity: 0;
+	transform: translateY(12px);
+	transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease;
+	pointer-events: none;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	padding: 0;
+}
+#back-to-top.visible {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+#back-to-top:hover {
+	background: rgba(75,255,165,0.2);
+	box-shadow: 0 0 18px rgba(75,255,165,0.35);
+}
