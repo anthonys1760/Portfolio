@@ -104,6 +104,9 @@
 	color: #f0f0f5;
 	border-bottom-left-radius: 6px;
 	min-height: 24px;
+	max-height: 300px;
+	overflow-y: auto;
+	overscroll-behavior: contain;
 }
 .chat-bubble.assistant p { margin: 0 0 12px 0; }
 .chat-bubble.assistant p:last-child { margin-bottom: 0; }
