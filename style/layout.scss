@@ -391,7 +391,8 @@
 	.header {
 		margin: 0;
 		padding: 0 30px;
-		top: 30px;
+		top: 0;
+		background: $default_bg;
 	}
 	.header .logo {
 		padding: 0;
