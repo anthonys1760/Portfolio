@@ -755,21 +755,9 @@ body.hero-themed .section.experience .content { max-width: 1100px; margin: 0 aut
 	.exp-body { padding: 20px; }
 }
 
-/* Header layout — align logo and nav on the same baseline */
-body.hero-themed .header .head-top {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
+/* Align logo text vertically with nav items */
 body.hero-themed .header .logo {
-	position: static;
-	transform: none;
-	-webkit-transform: none;
-	flex-shrink: 0;
-}
-body.hero-themed .header .top-menu {
-	flex: 1;
-	text-align: right;
+	line-height: 1;
 }
 
 /* Header / footer transparency */
