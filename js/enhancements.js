@@ -1,4 +1,21 @@
-/* enhancements.js — count-up, back-to-top, scrollspy */
+/* enhancements.js — count-up, back-to-top, scrollspy, reading progress */
+
+// ── Reading progress bar ──────────────────────────────────────────────────────
+// Only activates on blog post pages (presence of .post-wrap)
+(function () {
+  if (!document.querySelector('.post-wrap')) return;
+
+  var bar = document.createElement('div');
+  bar.id = 'reading-progress';
+  document.body.appendChild(bar);
+
+  window.addEventListener('scroll', function () {
+    var doc = document.documentElement;
+    var scrolled = doc.scrollTop || document.body.scrollTop;
+    var total = doc.scrollHeight - doc.clientHeight;
+    bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+  }, { passive: true });
+})();
 
 // ── Count-up animation ────────────────────────────────────────────────────────
 // Triggers on .about-stat .num elements when they scroll into view

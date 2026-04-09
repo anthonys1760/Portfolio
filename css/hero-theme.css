@@ -1520,6 +1520,111 @@ body.hero-themed .skills-group.featured .group-label {
 	to   { opacity: 1; max-height: 240px; }
 }
 
+/* ── Available for work badge ─────────────────────────────────────────────── */
+.avail-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.8rem;
+	color: rgba(255,255,255,0.6);
+	background: rgba(75,255,165,0.07);
+	border: 1px solid rgba(75,255,165,0.2);
+	border-radius: 20px;
+	padding: 5px 14px 5px 10px;
+	margin: 0 0 22px 2px;
+}
+.avail-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #4bffa5;
+	box-shadow: 0 0 6px rgba(75,255,165,0.7);
+	animation: avail-pulse 2s ease-in-out infinite;
+	flex-shrink: 0;
+}
+@keyframes avail-pulse {
+	0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(75,255,165,0.7); }
+	50%       { opacity: 0.5; box-shadow: 0 0 12px rgba(75,255,165,0.3); }
+}
+
+/* ── Tech stack strip ─────────────────────────────────────────────────────── */
+.tech-stack-strip {
+	margin: 28px 0;
+}
+.tech-stack-label {
+	font-size: 0.72rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: rgba(255,255,255,0.35);
+	margin: 0 0 14px;
+}
+.tech-stack-scroll {
+	position: relative;
+	overflow: hidden;
+}
+.tech-stack-scroll::before,
+.tech-stack-scroll::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 40px;
+	height: 100%;
+	z-index: 2;
+	pointer-events: none;
+}
+.tech-stack-scroll::before {
+	left: 0;
+	background: linear-gradient(to right, #050509, transparent);
+}
+.tech-stack-scroll::after {
+	right: 0;
+	background: linear-gradient(to left, #050509, transparent);
+}
+.tech-stack-track {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.tech-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: rgba(255,255,255,0.04);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 8px;
+	padding: 8px 14px;
+	transition: border-color 0.2s, background 0.2s;
+}
+.tech-item:hover {
+	border-color: rgba(75,255,165,0.3);
+	background: rgba(75,255,165,0.06);
+}
+.tech-item img {
+	width: 18px;
+	height: 18px;
+	display: block;
+	flex-shrink: 0;
+}
+.tech-item span {
+	font-size: 0.82rem;
+	color: rgba(255,255,255,0.65);
+	white-space: nowrap;
+}
+
+/* ── Reading progress bar ─────────────────────────────────────────────────── */
+#reading-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 3px;
+	background: linear-gradient(90deg, #4bffa5, #00c9ff);
+	z-index: 200;
+	transition: width 0.1s linear;
+	box-shadow: 0 0 8px rgba(75,255,165,0.5);
+}
+
 /* ── Back-to-top button ───────────────────────────────────────────────────── */
 #back-to-top {
 	position: fixed;
