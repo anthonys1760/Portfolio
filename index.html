@@ -181,10 +181,16 @@
 									<div class="chat-bubble user">Who is Anthony Smith?</div>
 								</div>
 								<div class="chat-row assistant">
-									<div class="chat-bubble assistant">
+									<div class="chat-bubble assistant thinking-active" id="chat-bubble-assistant">
+										<div class="assistant-meta" id="assistant-meta">
+											<span class="meta-model">claude-opus-4.6</span>
+											<span class="meta-sep" aria-hidden="true">&middot;</span>
+											<span class="meta-mode" id="meta-mode">extended thinking</span>
+											<span class="meta-pulse" id="meta-pulse" aria-hidden="true"></span>
+										</div>
 										<div class="thinking-state" id="thinking-state">
 											<div class="thinking-label" aria-live="polite">Thinking</div>
-											<div class="thinking-preview" id="thinking-preview">Reading context&hellip;</div>
+											<div class="thinking-stream" id="thinking-stream" aria-live="polite"></div>
 										</div>
 										<div class="thought-header" id="thought-header" hidden>
 											<button type="button" class="thought-toggle" id="thought-toggle" aria-expanded="false" aria-controls="thought-trace">
@@ -192,7 +198,7 @@
 												<span class="thought-text">Thought for <span id="thought-time">0</span>s</span>
 											</button>
 											<div class="thought-trace" id="thought-trace" hidden>
-												<p>Pulled the key facts from the resume &mdash; role, location, core strengths, and current focus. Framed the answer around the senior full-stack + solutions architect positioning with a deliberate React Native mobile-apps emphasis, and anchored it with SpartanNash and the mentoring volume as concrete proof points.</p>
+												<p id="thought-trace-body"></p>
 											</div>
 										</div>
 										<div class="chat-text" id="chat-text" style="display:none;"></div>
@@ -270,15 +276,23 @@
 	(function () {
 		var REPLY = "Anthony is a Senior Full Stack Solutions Architect based in Belmont, Michigan.\n\nHe builds scalable web platforms, ships <span class=\"accent\">React Native mobile apps</span> to TestFlight and the App Store, and hardens production systems against OWASP-class threats.\n\nCurrently leading systems engineering at <span class=\"accent\">SpartanNash</span> and mentoring 140,000+ developers worldwide on the side.";
 
+		var bubble = document.getElementById('chat-bubble-assistant');
 		var thinkingState = document.getElementById('thinking-state');
-		var thinkingPreview = document.getElementById('thinking-preview');
+		var thinkingStream = document.getElementById('thinking-stream');
 		var thoughtHeader = document.getElementById('thought-header');
 		var thoughtToggle = document.getElementById('thought-toggle');
 		var thoughtTrace = document.getElementById('thought-trace');
+		var thoughtTraceBody = document.getElementById('thought-trace-body');
 		var thoughtTime = document.getElementById('thought-time');
+		var metaMode = document.getElementById('meta-mode');
 		var textEl = document.getElementById('chat-text');
 		var cta = document.getElementById('hero-cta-wrap');
-		if (!thinkingState || !textEl || !cta) return;
+		if (!thinkingState || !thinkingStream || !textEl || !cta) return;
+
+		// Claude-style streamed "thought" trace. Entity spans render bold as
+		// they stream in, mirroring the chain-of-thought highlighting in
+		// Anthropic's thinking UI.
+		var THOUGHT_TRACE = "Pulling key facts: <strong>role</strong>, <strong>location</strong>, current focus.\nFraming around <strong>senior full-stack</strong> + <strong>solutions architect</strong>.\n<strong>React Native</strong> mobile apps is the 2026 differentiator.\nAnchoring with <strong>SpartanNash</strong> and <strong>140k mentees</strong> as proof.\nDrafting the reply\u2026";
 
 		// Tokenize the reply so we can stream raw text while preserving HTML spans.
 		// Strategy: split the string into tokens that are either a full HTML tag or a single visible char.
@@ -368,25 +382,43 @@
 			setTimeout(streamNext, delay);
 		}
 
-		// Claude-style "thinking" phase: rotate a faint reasoning preview
-		// line while the shimmer plays, then reveal a "Thought for Xs"
-		// header and begin streaming the reply.
-		var previewLines = [
-			'Reading context\u2026',
-			'Recalling the resume\u2026',
-			'Weighing how to frame it\u2026',
-			'Composing the response\u2026'
-		];
-		var previewIdx = 0;
-		var previewTimer = null;
+		// Claude-style "thinking" phase: stream a real reasoning trace into
+		// .thinking-stream (preserving HTML strong tags for entity highlights),
+		// then collapse into a "Thought for Xs" header and begin the reply.
+		var thoughtTokens = tokenize(THOUGHT_TRACE);
+		var thoughtCursor = 0;
+		var thoughtBuffer = '';
+		var thoughtStopped = false;
+		var thoughtTimer = null;
 
-		function swapPreview() {
-			previewIdx = (previewIdx + 1) % previewLines.length;
-			thinkingPreview.style.opacity = '0';
-			setTimeout(function () {
-				thinkingPreview.innerHTML = previewLines[previewIdx];
-				thinkingPreview.style.opacity = '1';
-			}, 220);
+		function renderThought() {
+			thinkingStream.innerHTML = thoughtBuffer.replace(/\n/g, '<br/>');
+			// Auto-scroll so the newest lines stay in view under the fade mask.
+			thinkingStream.scrollTop = thinkingStream.scrollHeight;
+		}
+
+		function streamThought() {
+			if (thoughtStopped) return;
+			if (thoughtCursor >= thoughtTokens.length) {
+				// Idle pulse at the end of the trace — keep a soft ellipsis
+				// cadence until the thinking phase actually elapses.
+				return;
+			}
+			var chunkTarget = Math.floor(rand(2, 5));
+			var consumedVisible = 0;
+			while (thoughtCursor < thoughtTokens.length && consumedVisible < chunkTarget) {
+				var ttok = thoughtTokens[thoughtCursor++];
+				thoughtBuffer += ttok;
+				if (ttok.length > 1 && ttok[0] === '<') continue;
+				consumedVisible++;
+			}
+			renderThought();
+			var last = thoughtBuffer.slice(-1);
+			var delay = rand(10, 26);
+			if (/[.!?]/.test(last)) delay += rand(90, 170);
+			else if (/[,:;]/.test(last)) delay += rand(45, 90);
+			if (last === '\n') delay += rand(120, 220);
+			thoughtTimer = setTimeout(streamThought, delay);
 		}
 
 		// Target thinking duration: 3.2s ± small jitter so it feels organic.
@@ -395,17 +427,32 @@
 			? performance.now()
 			: Date.now();
 
-		previewTimer = setInterval(swapPreview, 900);
+		// Kick off the thought stream.
+		streamThought();
 
 		setTimeout(function () {
-			clearInterval(previewTimer);
+			thoughtStopped = true;
+			if (thoughtTimer) clearTimeout(thoughtTimer);
 			var now = (typeof performance !== 'undefined' && performance.now)
 				? performance.now()
 				: Date.now();
 			var elapsedSec = Math.max(1, Math.round((now - thinkStart) / 1000));
 			thoughtTime.textContent = String(elapsedSec);
 
-			// Swap thinking state → thought header + streaming text
+			// Populate the click-to-expand trace with the full source so the
+			// collapsed header can re-reveal the same reasoning the user just
+			// watched stream.
+			if (thoughtTraceBody) {
+				thoughtTraceBody.innerHTML = THOUGHT_TRACE.replace(/\n/g, '<br/>');
+			}
+
+			// State transition: kill the glow, flip the meta label, swap
+			// thinking-state → thought-header + streaming reply.
+			if (bubble) {
+				bubble.classList.remove('thinking-active');
+				bubble.classList.add('thinking-done');
+			}
+			if (metaMode) metaMode.textContent = 'reply';
 			thinkingState.style.display = 'none';
 			thoughtHeader.hidden = false;
 			textEl.style.display = '';

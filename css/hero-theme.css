@@ -1283,10 +1283,82 @@ body.hero-themed .skills-group.featured .group-label {
 /* ---------------------------------------------------------
    Claude-style "Thinking" state + "Thought for Xs" header
    --------------------------------------------------------- */
+
+/* Model/mode meta row above the assistant reply. Reads as a Claude UI
+   pastiche: model name + mode + a soft accent pulse while thinking. */
+.assistant-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+	font-size: 11px;
+	letter-spacing: 0.03em;
+	color: rgba(255,255,255,0.48);
+	margin: -2px 0 10px;
+	padding-bottom: 9px;
+	border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.meta-model {
+	color: rgba(255,255,255,0.78);
+	font-weight: 500;
+}
+.meta-sep { color: rgba(255,255,255,0.28); }
+.meta-mode {
+	font-style: italic;
+	transition: color 0.3s ease;
+}
+.chat-bubble.assistant.thinking-done .meta-mode {
+	color: rgba(75,255,165,0.65);
+}
+.meta-pulse {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #4bffa5;
+	box-shadow: 0 0 0 0 rgba(75,255,165,0.55);
+	animation: meta-pulse 1.8s ease-out infinite;
+	margin-left: auto;
+	flex-shrink: 0;
+}
+@keyframes meta-pulse {
+	0%   { box-shadow: 0 0 0 0 rgba(75,255,165,0.55); opacity: 1; }
+	70%  { box-shadow: 0 0 0 7px rgba(75,255,165,0); opacity: 0.75; }
+	100% { box-shadow: 0 0 0 0 rgba(75,255,165,0); opacity: 1; }
+}
+.chat-bubble.assistant.thinking-done .meta-pulse {
+	animation: none;
+	background: rgba(75,255,165,0.45);
+	box-shadow: none;
+	opacity: 0.55;
+}
+
+/* Bubble glow — pulses while thinking, fades on completion. */
+.chat-bubble.assistant.thinking-active {
+	border-color: rgba(75,255,165,0.28);
+	animation: bubble-thinking-pulse 2.2s ease-in-out infinite;
+}
+@keyframes bubble-thinking-pulse {
+	0%, 100% {
+		box-shadow:
+			0 0 0 1px rgba(75,255,165,0.14),
+			0 0 24px -6px rgba(75,255,165,0.28);
+	}
+	50% {
+		box-shadow:
+			0 0 0 1px rgba(75,255,165,0.28),
+			0 0 38px -3px rgba(75,255,165,0.48);
+	}
+}
+.chat-bubble.assistant.thinking-done {
+	transition: border-color 0.8s ease, box-shadow 0.8s ease;
+	border-color: rgba(255,255,255,0.1);
+	box-shadow: none;
+}
+
 .thinking-state {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 	padding: 2px 0;
 }
 .thinking-label {
@@ -1315,13 +1387,28 @@ body.hero-themed .skills-group.featured .group-label {
 	100% { background-position: -250% 0; }
 }
 
-.thinking-preview {
+/* Live-streaming reasoning trace. Fixed max-height with a fade mask at
+   the top so older lines appear to "scroll away" as new ones arrive. */
+.thinking-stream {
+	position: relative;
 	font-size: 13px;
-	line-height: 1.4;
-	color: rgba(255,255,255,0.4);
+	line-height: 1.55;
+	color: rgba(255,255,255,0.52);
 	font-style: italic;
+	max-height: 68px;
+	overflow-y: auto;
+	padding-right: 4px;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	-webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
+	mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
 	transition: opacity 0.25s ease;
-	min-height: 18px;
+}
+.thinking-stream::-webkit-scrollbar { display: none; }
+.thinking-stream strong {
+	color: rgba(255,255,255,0.88);
+	font-weight: 600;
+	font-style: normal;
 }
 
 /* Thought for Xs collapsible header */
@@ -1375,6 +1462,11 @@ body.hero-themed .skills-group.featured .group-label {
 	animation: thought-trace-in 0.25s ease both;
 }
 .thought-trace p { margin: 0; }
+.thought-trace strong {
+	color: rgba(75,255,165,0.92);
+	font-weight: 600;
+	font-style: normal;
+}
 @keyframes thought-trace-in {
 	from { opacity: 0; max-height: 0; }
 	to   { opacity: 1; max-height: 240px; }
