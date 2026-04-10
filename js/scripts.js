@@ -160,7 +160,7 @@
 	/*
 		Grained
 	*/
-	if(!$('.grained-off').length){
+	if(!$('.grained-off').length && typeof grained === 'function'){
 	var grained_options = {
 		'animate': true,
 		'patternWidth': 400,
