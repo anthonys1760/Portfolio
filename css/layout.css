@@ -680,7 +680,7 @@
 .section.started.layout-creative {
 	margin: 0 auto;
 	margin-bottom: 0;
-	padding-top: 20%;
+	padding-top: 80px;
 	padding-left: 20%;
 	padding-right: 20%;
 	padding-bottom: 70px;
@@ -960,7 +960,7 @@
 /* section started tablet */
 @media (max-width: 1199px) {
 	.section.started.layout-creative, .section.started.layout-post-creative {
-		padding-top: 35vw;
+		padding-top: 80px;
 		padding-left: 50px;
 		padding-right: 50px;
 	}
@@ -1046,7 +1046,7 @@
 
 	.section.started.layout-creative,
 	.section.started.layout-post-creative {
-		padding-top: 50vw;
+		padding-top: 60px;
 		padding-left: 30px;
 		padding-right: 30px;
 		padding-bottom: 30px;
