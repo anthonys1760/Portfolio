@@ -966,7 +966,7 @@
 /* section started tablet */
 @media (max-width: 1199px) {
 	.section.started.layout-creative, .section.started.layout-post-creative {
-		padding-top: 35vw;
+		padding-top: 80px;
 		padding-left: 50px;
 		padding-right: 50px;
 	}
@@ -1052,7 +1052,7 @@
 
 	.section.started.layout-creative,
 	.section.started.layout-post-creative {
-		padding-top: 50vw;
+		padding-top: 60px;
 		padding-left: 30px;
 		padding-right: 30px;
 		padding-bottom: 30px;
