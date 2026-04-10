@@ -1301,6 +1301,24 @@ body.hero-themed .top-menu-social { display: none; }
    link now lives in the mobile menu; the footer keeps only the
    Codementor badge, centered. */
 @media (max-width: 720px) {
+	/* Align logo and hamburger on the same baseline */
+	body.hero-themed .header .head-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	body.hero-themed .header .logo {
+		position: static;
+		transform: none;
+		-webkit-transform: none;
+	}
+	body.hero-themed .header .menu-btn {
+		float: none;
+		transform: none;
+		-webkit-transform: none;
+		flex-shrink: 0;
+	}
+
 	body.hero-themed .footer { text-align: center; }
 	body.hero-themed .footer .soc-box { display: none; }
 	body.hero-themed .footer .copy { float: none; display: inline-block; }
