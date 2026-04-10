@@ -881,7 +881,7 @@ body.hero-themed .header .menu-btn span {
 		z-index: 50;
 	}
 }
-body.hero-themed .lines .line-col { background: rgba(255, 255, 255, 0.03); }
+body.hero-themed .lines { display: none; }
 
 /* Portfolio: hero project cards + archive */
 body.hero-themed .filter-menu { display: none; }
