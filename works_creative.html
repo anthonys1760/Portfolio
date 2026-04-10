@@ -283,8 +283,8 @@
 											<div><h4>Outcome</h4><p>Launched on TestFlight with early access users actively logging meals. Photo logging reduces manual entry time from ~2 minutes to under 10 seconds per meal.</p></div>
 										</div>
 										<figure class="cs-diagram">
-											<img src="images/diagrams/placeholder.svg" alt="NutriLogix architecture diagram" loading="lazy" decoding="async" />
-											<figcaption>TODO: Vision pipeline &mdash; camera &rarr; OpenAI Vision &rarr; macro parser &rarr; Supabase &rarr; Apple Health sync.</figcaption>
+											<img src="images/diagrams/nutrilogix-arch.svg" alt="NutriLogix AI architecture — vision and barcode pipelines merging into Supabase and Apple Health" loading="lazy" decoding="async" />
+											<figcaption>Vision pipeline (camera &rarr; GPT-4o &rarr; macro parser) and barcode pipeline (scanner &rarr; product DB &rarr; health score) both feed into Supabase, syncing out to Apple Health.</figcaption>
 										</figure>
 									</details>
 									<div class="project-links">
