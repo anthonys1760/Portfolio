@@ -1311,12 +1311,14 @@ body.hero-themed .top-menu-social { display: none; }
 		position: static;
 		transform: none;
 		-webkit-transform: none;
+		order: 1;
 	}
 	body.hero-themed .header .menu-btn {
 		float: none;
 		transform: none;
 		-webkit-transform: none;
 		flex-shrink: 0;
+		order: 2;
 	}
 
 	body.hero-themed .footer { text-align: center; }
