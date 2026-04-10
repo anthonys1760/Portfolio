@@ -1167,6 +1167,35 @@ body.hero-themed .cs-diagram {
 	background: rgba(255,255,255,0.02);
 	border: 1px solid rgba(255,255,255,0.06);
 }
+body.hero-themed .cs-diagram a {
+	display: block;
+	position: relative;
+	cursor: zoom-in;
+}
+body.hero-themed .cs-diagram a::after {
+	content: '';
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 28px;
+	height: 28px;
+	background: rgba(0,0,0,0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M1 5V1h4M15 5V1h-4M1 11v4h4M15 11v4h-4' stroke='%234bffa5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;
+	border: 1px solid rgba(75,255,165,0.35);
+	border-radius: 6px;
+	opacity: 0;
+	transition: opacity 0.2s;
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+}
+body.hero-themed .cs-diagram a:hover::after {
+	opacity: 1;
+}
+body.hero-themed .cs-diagram a img {
+	transition: opacity 0.18s;
+}
+body.hero-themed .cs-diagram a:hover img {
+	opacity: 0.88;
+}
 body.hero-themed .cs-diagram img {
 	display: block;
 	width: 100%;

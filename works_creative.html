@@ -283,7 +283,9 @@
 											<div><h4>Outcome</h4><p>Launched on TestFlight with early access users actively logging meals. Photo logging reduces manual entry time from ~2 minutes to under 10 seconds per meal.</p></div>
 										</div>
 										<figure class="cs-diagram">
-											<img src="images/diagrams/nutrilogix-arch.svg" alt="NutriLogix AI architecture — vision and barcode pipelines merging into Supabase and Apple Health" loading="lazy" decoding="async" />
+											<a href="images/diagrams/nutrilogix-arch.svg" class="has-popup-image" title="View full diagram">
+												<img src="images/diagrams/nutrilogix-arch.svg" alt="NutriLogix AI architecture — vision and barcode pipelines merging into Supabase and Apple Health" loading="lazy" decoding="async" />
+											</a>
 											<figcaption>Vision pipeline (camera &rarr; GPT-4o &rarr; macro parser) and barcode pipeline (scanner &rarr; product DB &rarr; health score) both feed into Supabase, syncing out to Apple Health.</figcaption>
 										</figure>
 									</details>
@@ -311,7 +313,9 @@
 											<div><h4>Outcome</h4><p>Live on the App Store and Google Play. Users get access to GPT-5, Claude Opus 4, Gemini 2.5 Pro, DeepSeek R1, and more for the cost of a single ChatGPT subscription.</p></div>
 										</div>
 										<figure class="cs-diagram">
-											<img src="images/diagrams/astroai-arch.svg" alt="AstroAI X architecture diagram" loading="lazy" decoding="async" />
+											<a href="images/diagrams/astroai-arch.svg" class="has-popup-image" title="View full diagram">
+												<img src="images/diagrams/astroai-arch.svg" alt="AstroAI X architecture diagram" loading="lazy" decoding="async" />
+											</a>
 											<figcaption>Provider-abstraction layer &mdash; Voice / Client / File &rarr; Streaming Abstraction Layer &rarr; (GPT-5 · Claude Opus 4 · Gemini 2.5 Pro · DeepSeek R1) &rarr; Stream Merger &rarr; Shared Context Store.</figcaption>
 										</figure>
 									</details>
@@ -339,7 +343,9 @@
 											<div><h4>Outcome</h4><p>Logging a set drops from ~15 taps to a single voice command. Currently in active development with early access at voicelift.app.</p></div>
 										</div>
 										<figure class="cs-diagram">
-											<img src="images/diagrams/voicelift-arch.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
+											<a href="images/diagrams/voicelift-arch.svg" class="has-popup-image" title="View full diagram">
+												<img src="images/diagrams/voicelift-arch.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
+											</a>
 											<figcaption>Voice pipeline &mdash; mic &rarr; Whisper (STT) &rarr; GPT-4o Structured Outputs (gym-slang parser) &rarr; Set / Superset State Machine &rarr; Confirmation Sheet &rarr; Supabase · RevenueCat.</figcaption>
 										</figure>
 									</details>
