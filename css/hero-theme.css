@@ -1167,12 +1167,12 @@ body.hero-themed .cs-diagram {
 	background: rgba(255,255,255,0.02);
 	border: 1px solid rgba(255,255,255,0.06);
 }
-body.hero-themed .cs-diagram a {
+body.hero-themed .cs-diagram-link {
 	display: block;
 	position: relative;
 	cursor: zoom-in;
 }
-body.hero-themed .cs-diagram a::after {
+body.hero-themed .cs-diagram-link::after {
 	content: '';
 	position: absolute;
 	top: 10px;
@@ -1187,13 +1187,13 @@ body.hero-themed .cs-diagram a::after {
 	backdrop-filter: blur(4px);
 	-webkit-backdrop-filter: blur(4px);
 }
-body.hero-themed .cs-diagram a:hover::after {
+body.hero-themed .cs-diagram-link:hover::after {
 	opacity: 1;
 }
-body.hero-themed .cs-diagram a img {
+body.hero-themed .cs-diagram-link img {
 	transition: opacity 0.18s;
 }
-body.hero-themed .cs-diagram a:hover img {
+body.hero-themed .cs-diagram-link:hover img {
 	opacity: 0.88;
 }
 body.hero-themed .cs-diagram img {
