@@ -1306,7 +1306,6 @@ body.hero-themed .top-menu-social { display: none; }
 		transform: none;
 		-webkit-transform: none;
 	}
-	body.hero-themed .header .logo { display: none; }
 
 	body.hero-themed .footer { text-align: center; }
 	body.hero-themed .footer .soc-box { display: none; }
