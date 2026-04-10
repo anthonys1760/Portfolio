@@ -930,6 +930,9 @@
 	.section.started + .section, .section.started.layout-creative + .section {
 		margin-top: 0;
 	}
+	.section.started.layout-creative + .section {
+		padding-top: 80px;
+	}
 }
 
 /* section started mobile */
