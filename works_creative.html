@@ -339,8 +339,8 @@
 											<div><h4>Outcome</h4><p>Logging a set drops from ~15 taps to a single voice command. Currently in active development with early access at voicelift.app.</p></div>
 										</div>
 										<figure class="cs-diagram">
-											<img src="images/diagrams/placeholder.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
-											<figcaption>TODO: Voice loop &mdash; mic &rarr; Whisper &rarr; gym-slang parser &rarr; set/superset state machine &rarr; Supabase log.</figcaption>
+											<img src="images/diagrams/voicelift-arch.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
+											<figcaption>Voice pipeline &mdash; mic &rarr; Whisper (STT) &rarr; GPT-4o Structured Outputs (gym-slang parser) &rarr; Set / Superset State Machine &rarr; Confirmation Sheet &rarr; Supabase · RevenueCat.</figcaption>
 										</figure>
 									</details>
 									<div class="project-links">
