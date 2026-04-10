@@ -1305,20 +1305,22 @@ body.hero-themed .top-menu-social { display: none; }
 	body.hero-themed .header .head-top {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+	}
+	body.hero-themed .header .top-menu {
+		display: none;
 	}
 	body.hero-themed .header .logo {
 		position: static;
 		transform: none;
 		-webkit-transform: none;
-		order: 1;
+		order: -1;
 	}
 	body.hero-themed .header .menu-btn {
 		float: none;
 		transform: none;
 		-webkit-transform: none;
 		flex-shrink: 0;
-		order: 2;
+		margin-left: auto;
 	}
 
 	body.hero-themed .footer { text-align: center; }
