@@ -1416,29 +1416,40 @@ body.hero-themed .skills-group.featured .group-label {
 	padding: 2px 0;
 }
 .thinking-label {
-	font-size: 17px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 15px;
 	font-weight: 500;
 	line-height: 1.2;
-	background: linear-gradient(
-		90deg,
-		rgba(255,255,255,0.28) 0%,
-		rgba(255,255,255,0.35) 35%,
-		rgba(255,255,255,0.95) 50%,
-		rgba(255,255,255,0.35) 65%,
-		rgba(255,255,255,0.28) 100%
-	);
-	background-size: 250% 100%;
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: transparent;
-	animation: thinking-shimmer 2.2s linear infinite;
+	color: rgba(255,255,255,0.72);
 }
-.thinking-label::after { content: "\2026"; margin-left: 1px; }
 
-@keyframes thinking-shimmer {
-	0%   { background-position: 250% 0; }
-	100% { background-position: -250% 0; }
+/* Orbiting dot — a ring track with a glowing dot rotating around it */
+.thinking-orbit {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 1.5px solid rgba(75,255,165,0.22);
+	flex-shrink: 0;
+	animation: orbit-spin 1.3s linear infinite;
+}
+.thinking-orbit::before {
+	content: '';
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #4bffa5;
+	box-shadow: 0 0 7px rgba(75,255,165,0.95);
+	top: -3px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+@keyframes orbit-spin {
+	from { transform: rotate(0deg); }
+	to   { transform: rotate(360deg); }
 }
 
 /* Live-streaming reasoning trace. Fixed max-height with a fade mask at
