@@ -193,7 +193,7 @@ Body rules:
       'X-Title': 'Anthony Smith Blog Automation',
     },
     body: JSON.stringify({
-      model: 'anthropic/claude-3-5-haiku',
+      model: 'anthropic/claude-sonnet-4-5',
       temperature: 0.75,
       messages: [{ role: 'user', content: prompt }],
     }),
