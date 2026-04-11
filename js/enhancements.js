@@ -83,10 +83,10 @@
     '/index.html': 'home',
     '/':           'home',
     '/about.html': 'about',
-    '/works_creative.html': 'portfolio',
+    '/portfolio.html': 'portfolio',
     '/blog/':      'blog',
     '/blog/index.html': 'blog',
-    '/contacts_image.html': 'contact',
+    '/contact.html': 'contact',
   };
 
   // Blog post pages

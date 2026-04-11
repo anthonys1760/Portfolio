@@ -519,9 +519,9 @@ function buildPostHtml(post) {
               <ul class="menu">
                 <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
                 <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
-                <li class="menu-item menu-item-has-children"><a href="/works_creative.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
                 <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
-                <li class="menu-item menu-item-has-children"><a href="/contacts_image.html">Contact</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
             <div class="top-menu-social" aria-label="Social links">
