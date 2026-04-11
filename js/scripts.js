@@ -321,13 +321,6 @@
 	});
 
 	/*
-		Download CV on Mobile
-	*/
-	$('.section.about').on('click touchstart', '.btn', function(){
-		location.href = $(this).attr('href');
-	});
-	
-	/*
 		Mouse Button Scroll
 	*/
 	$('.section').on('click', '.mouse_btn', function(){
