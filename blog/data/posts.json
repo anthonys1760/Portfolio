@@ -1,5 +1,15 @@
 [
   {
+    "slug": "typescript-patterns-for-large-codebases",
+    "title": "TypeScript Patterns for Large Codebases",
+    "excerpt": "Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.",
+    "category": "TypeScript",
+    "readTime": "8 min",
+    "date": "April 11, 2026",
+    "dateISO": "2026-04-11",
+    "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80"
+  },
+  {
     "slug": "mastering-mobile-app-state-management-a-pragmatic-guide",
     "title": "Mastering Mobile App State Management: A Pragmatic Guide",
     "excerpt": "Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.",
