@@ -1,0 +1,42 @@
+name: Weekly Blog Post
+
+on:
+  schedule:
+    # Every Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate blog post
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: node scripts/generate-blog-post.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "Anthony Smith Blog Bot"
+          git config user.email "anthony.smith1760@gmail.com"
+          git add blog/posts/ blog/data/posts.json sitemap.xml
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "content(blog): auto-generate weekly post [skip ci]"
+            git push
+          fi
