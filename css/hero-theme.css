@@ -1136,26 +1136,27 @@ body.hero-themed .project-case-study summary::after {
 }
 body.hero-themed .project-case-study[open] summary::after { content: " −"; }
 body.hero-themed .project-case-study .cs-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 18px;
-	margin-top: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	margin-top: 18px;
+}
+body.hero-themed .project-case-study .cs-grid > div {
+	padding-left: 14px;
+	border-left: 2px solid rgba(75,255,165,0.35);
 }
 body.hero-themed .project-case-study h4 {
-	font-size: 11px;
-	letter-spacing: 0.16em;
+	font-size: 13px;
+	letter-spacing: 0.18em;
 	text-transform: uppercase;
-	color: rgba(255,255,255,0.55);
-	margin: 0 0 6px;
+	color: #4bffa5;
+	margin: 0 0 8px;
 }
 body.hero-themed .project-case-study p {
-	font-size: 14px;
-	line-height: 1.55;
-	color: #cfcfdb;
+	font-size: 15.5px;
+	line-height: 1.65;
+	color: #d8d8e2;
 	margin: 0;
-}
-@media (max-width: 768px) {
-	body.hero-themed .project-case-study .cs-grid { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* Case study architecture diagram (inside project-case-study) */
