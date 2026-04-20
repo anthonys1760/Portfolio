@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.">
+  <meta name="keywords" content="">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html">
+  <meta property="og:title" content="The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code — Anthony Smith">
+  <meta property="og:description" content="Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-04-20">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="Career">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code">
+  <meta name="twitter:description" content="Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80">
+
+  <title>The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html"
+    },
+    "headline": "The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code",
+    "description": "Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.",
+    "keywords": "",
+    "articleSection": "Career",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+    },
+    "datePublished": "2026-04-20",
+    "dateModified": "2026-04-20",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">Career</span>
+            <span class="post-read">8 min read</span>
+            <span class="post-date">April 20, 2026</span>
+          </div>
+          <h1 class="post-title">The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>I've reviewed thousands of pull requests over the past decade, and I've seen the same pattern repeat: teams that treat code reviews as a checkbox exercise ship buggy code and burn out engineers. Teams that treat them as collaborative learning sessions ship better code <em>and</em> build stronger engineers. The difference isn't in the tools or process—it's in the mindset. Here's what I've learned about making code reviews actually valuable.</p>
+
+<h2>The Two Types of Feedback (And Why You Need Both)</h2>
+
+<p>Most engineers conflate two fundamentally different types of feedback: <strong>blocking feedback</strong> (things that must change before merge) and <strong>teaching feedback</strong> (suggestions for improvement that aren't dealbreakers). Mixing these up creates confusion and resentment. When I review code, I explicitly label my comments.</p>
+
+<pre><code class="lang-javascript">// ❌ BLOCKING: This will cause a memory leak in long-running processes
+const cache = {};
+
+export function memoize(fn) {
+  return (...args) =&gt; {
+    const key = JSON.stringify(args);
+    if (cache[key]) return cache[key];
+    cache[key] = fn(...args);
+    return cache[key];
+  };
+}
+
+// ✅ SUGGESTION: Consider using a WeakMap or LRU cache for better memory management
+import LRU from 'lru-cache';
+
+const cache = new LRU({ max: 500, ttl: 1000 * 60 * 5 });
+
+export function memoize(fn) {
+  return (...args) =&gt; {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
+}</code></pre>
+
+<div class="post-callout"><strong>Pro tip:</strong> Use prefixes like <code>blocking:</code>, <code>nit:</code>, or <code>question:</code> in your review comments. This single change will eliminate 80% of the friction in your code reviews. The author immediately knows what requires action versus what's optional discussion.</div>
+
+<h2>Ask Questions, Don't Make Demands</h2>
+
+<p>The fastest way to make someone defensive is to tell them their code is wrong without understanding their constraints. I've learned to phrase most comments as questions: <em>"What happens if this API returns null?"</em> or <em>"Have you considered using a Set here for O(1) lookups?"</em> This approach serves two purposes: it makes the author think through edge cases, and it gives them space to explain constraints you might not be aware of. Sometimes the answer is <em>"Good catch, I'll fix that"</em> and sometimes it's <em>"The API contract guarantees non-null, see line 15"</em>—both are valuable outcomes.</p>
+
+<h2>Review for Architecture First, Style Last</h2>
+
+<p>I review PRs in three passes, and the order matters. First pass: architecture and approach. Does this solve the right problem? Are there glaring performance issues or security holes? Second pass: logic and edge cases. Third pass: style and nitpicks. If you comment on indentation before questioning whether the entire approach is sound, you've wasted everyone's time.</p>
+
+<ul><li><strong>Pass 1 - Architecture:</strong> Does this belong here? Is the abstraction appropriate? Will this scale?</li><li><strong>Pass 2 - Correctness:</strong> Edge cases, error handling, race conditions, off-by-one errors</li><li><strong>Pass 3 - Quality:</strong> Readability, naming, tests, documentation, style consistency</li><li><strong>Pass 4 - Nitpicks:</strong> Only if you have time and energy, and always marked as non-blocking</li></ul>
+
+<h2>Receiving Feedback: Defend Your Code, Not Your Ego</h2>
+
+<p>When someone questions your PR, you have two options: defend the <em>code</em> with technical reasoning, or defend your <em>ego</em> with emotional reasoning. I've been guilty of the latter more times than I'd like to admit. The trick I use now: wait 10 minutes before responding to any comment that triggers defensiveness. Usually, after that pause, I realize the reviewer has a point. If I still disagree, I respond with data: benchmarks, links to docs, or examples of similar patterns in the codebase.</p>
+
+<pre><code class="lang-typescript">// Reviewer: "Why not use Promise.all here?"
+// ❌ Defensive response: "This works fine, we don't need to optimize everything"
+
+// ✅ Technical response with reasoning:
+// "Good question. These API calls need to be sequential because 
+// each depends on the previous response's data. Here's the flow:"
+
+async function processUserData(userId: string) {
+  // Step 1: Get user - needed for step 2
+  const user = await fetchUser(userId);
+  
+  // Step 2: Get permissions - requires user.organizationId from step 1
+  const permissions = await fetchPermissions(user.organizationId);
+  
+  // Step 3: Get resources - filtered by permissions from step 2
+  const resources = await fetchResources(permissions.allowedResourceIds);
+  
+  return { user, permissions, resources };
+}
+
+// If they WERE independent, I'd absolutely use Promise.all:
+// const [user, settings, preferences] = await Promise.all([
+//   fetchUser(userId),
+//   fetchSettings(userId),
+//   fetchPreferences(userId)
+// ]);</code></pre>
+
+<div class="post-callout"><strong>Reality check:</strong> If you find yourself getting defensive about code reviews regularly, that's a signal. Either you're working with jerks (possible), or you're tying your self-worth to your code (more likely). Your code is not you. It's a draft document that gets better with editing.</div>
+
+<h2>The 24-Hour Rule for Big Changes</h2>
+
+<p>Here's a rule that's saved me countless hours of rework: if a reviewer suggests a significant architectural change, I don't implement it immediately. I sleep on it. I've found that about 30% of the time, the suggestion doesn't actually fit once I think through all the implications. In those cases, I respond with a detailed explanation of why I'm keeping the current approach. The other 70% of the time, the suggestion is good, and having thought it through means I implement it properly the first time rather than rushing a half-baked version just to appease the reviewer.</p>
+
+<p>Code reviews are the highest-leverage activity in software engineering. They catch bugs, spread knowledge, enforce standards, and mentor junior engineers—all at once. But only if you approach them with the right mindset: collaborative, curious, and focused on the code rather than the coder. Master this, and you'll not only write better code, you'll build better teams.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>

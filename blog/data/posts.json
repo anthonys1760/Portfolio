@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-code-review-mindset-how-to-give-and-receive-feedback-tha",
+    "title": "The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code",
+    "excerpt": "Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "April 20, 2026",
+    "dateISO": "2026-04-20",
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+  },
+  {
     "slug": "react-native-mobile-architecture-lessons-from-production",
     "title": "React Native Mobile Architecture: Lessons from Production",
     "excerpt": "After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.",
