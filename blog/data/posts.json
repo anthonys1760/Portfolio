@@ -1,5 +1,15 @@
 [
   {
+    "slug": "application-security-and-owasp-best-practices-a-production-e",
+    "title": "Application Security and OWASP Best Practices: A Production Engineer's Guide",
+    "excerpt": "Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.",
+    "category": "Security",
+    "readTime": "9 min",
+    "date": "April 27, 2026",
+    "dateISO": "2026-04-27",
+    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80"
+  },
+  {
     "slug": "the-code-review-mindset-how-to-give-and-receive-feedback-tha",
     "title": "The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code",
     "excerpt": "Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.",

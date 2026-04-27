@@ -55,4 +55,10 @@
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
+	<url>
+		<loc>https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html</loc>
+		<lastmod>2026-04-27</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
 </urlset>

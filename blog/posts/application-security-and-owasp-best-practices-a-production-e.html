@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.">
+  <meta name="keywords" content="">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">
+  <meta property="og:title" content="Application Security and OWASP Best Practices: A Production Engineer's Guide — Anthony Smith">
+  <meta property="og:description" content="Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-04-27">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="Security">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="Application Security and OWASP Best Practices: A Production Engineer's Guide">
+  <meta name="twitter:description" content="Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80">
+
+  <title>Application Security and OWASP Best Practices: A Production Engineer's Guide — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html"
+    },
+    "headline": "Application Security and OWASP Best Practices: A Production Engineer's Guide",
+    "description": "Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.",
+    "keywords": "",
+    "articleSection": "Security",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80"
+    },
+    "datePublished": "2026-04-27",
+    "dateModified": "2026-04-27",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">Security</span>
+            <span class="post-read">9 min read</span>
+            <span class="post-date">April 27, 2026</span>
+          </div>
+          <h1 class="post-title">Application Security and OWASP Best Practices: A Production Engineer's Guide</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80" alt="Application Security and OWASP Best Practices: A Production Engineer's Guide" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>I've been the engineer who got paged at 2 AM because someone discovered we were leaking user data through an API endpoint. I've also been the one who had to explain to leadership why our authentication system needed a complete rewrite. Security isn't theoretical — it's the difference between a successful product and a catastrophic breach. The OWASP Top 10 isn't just a checklist; it's a battle-tested playbook built from real-world failures. Let's talk about the vulnerabilities I've actually seen in production and how to prevent them.</p>
+
+<h2>Authentication: JWT Tokens Done Wrong</h2>
+
+<p>The most common security issue I've encountered isn't some exotic attack — it's basic authentication misconfigurations. I've seen production systems that stored JWT secrets in environment variables that were committed to Git, tokens that never expired, and refresh token implementations that defeated the entire purpose of access tokens. Here's how to implement JWT authentication properly:</p>
+
+<pre><code class="lang-javascript">// BAD: Weak secret, no expiration, no refresh strategy
+const token = jwt.sign({ userId: user.id }, 'secret123');
+
+// GOOD: Strong secret, short-lived access tokens, refresh tokens
+const generateTokens = (user) =&gt; {
+  const accessToken = jwt.sign(
+    { userId: user.id, type: 'access' },
+    process.env.JWT_ACCESS_SECRET,
+    { expiresIn: '15m', algorithm: 'HS256' }
+  );
+  
+  const refreshToken = jwt.sign(
+    { userId: user.id, type: 'refresh', tokenVersion: user.tokenVersion },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: '7d', algorithm: 'HS256' }
+  );
+  
+  return { accessToken, refreshToken };
+};
+
+// Store refresh token hash in database, not the token itself
+const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+await db.refreshTokens.create({
+  userId: user.id,
+  tokenHash: hashedRefreshToken,
+  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+});</code></pre>
+
+<div class="post-callout"><strong>Security Reality Check:</strong> If your JWT secret is shorter than 256 bits or you're using symmetric keys in a distributed system where multiple services need to verify tokens, you're doing it wrong. Use asymmetric RS256 for multi-service architectures and rotate your keys regularly.</div>
+
+<h2>Injection Attacks: It's Not Just SQL Anymore</h2>
+
+<p>SQL injection is the classic example everyone knows, but I've seen injection vulnerabilities in NoSQL queries, LDAP filters, OS commands, and even GraphQL. The fundamental mistake is always the same: trusting user input. Modern ORMs help with SQL injection, but they don't solve the entire problem. Here's a real example from a codebase I inherited that was vulnerable to NoSQL injection:</p>
+
+<pre><code class="lang-javascript">// VULNERABLE: NoSQL injection in MongoDB
+app.post('/api/login', async (req, res) =&gt; {
+  const { username, password } = req.body;
+  // If attacker sends: { "username": {"$ne": null}, "password": {"$ne": null} }
+  // This bypasses authentication!
+  const user = await User.findOne({ username, password });
+  if (user) return res.json({ token: generateToken(user) });
+});
+
+// SECURE: Input validation and parameterization
+const Joi = require('joi');
+
+const loginSchema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string().min(8).required()
+});
+
+app.post('/api/login', async (req, res) =&gt; {
+  const { error, value } = loginSchema.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message });
+  
+  const { username, password } = value;
+  const user = await User.findOne({ username: username.toString() });
+  
+  if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+  
+  return res.json({ token: generateToken(user) });
+});</code></pre>
+
+<h2>Authorization: The Forgotten Layer</h2>
+
+<p>Authentication tells you <em>who</em> the user is. Authorization tells you <em>what</em> they can do. I've seen countless applications that implement authentication correctly but completely botch authorization. The classic mistake is checking if a user is logged in but not verifying they have permission to access the specific resource. This leads to Insecure Direct Object Reference (IDOR) vulnerabilities where User A can access User B's data just by changing an ID in the URL.</p>
+
+<pre><code class="lang-javascript">// VULNERABLE: Only checks authentication, not authorization
+app.get('/api/orders/:orderId', authenticateToken, async (req, res) =&gt; {
+  const order = await Order.findById(req.params.orderId);
+  return res.json(order); // Any logged-in user can see any order!
+});
+
+// SECURE: Verify ownership or permission
+app.get('/api/orders/:orderId', authenticateToken, async (req, res) =&gt; {
+  const order = await Order.findById(req.params.orderId);
+  
+  if (!order) {
+    return res.status(404).json({ error: 'Order not found' });
+  }
+  
+  // Check ownership
+  if (order.userId !== req.user.id &amp;&amp; !req.user.isAdmin) {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+  
+  return res.json(order);
+});
+
+// BETTER: Implement middleware for reusable authorization
+const authorizeResource = (resourceType) =&gt; async (req, res, next) =&gt; {
+  const resource = await resourceType.findById(req.params.id);
+  
+  if (!resource) return res.status(404).json({ error: 'Not found' });
+  if (resource.userId !== req.user.id &amp;&amp; !req.user.isAdmin) {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+  
+  req.resource = resource;
+  next();
+};
+
+app.get('/api/orders/:id', authenticateToken, authorizeResource(Order), (req, res) =&gt; {
+  return res.json(req.resource);
+});</code></pre>
+
+<h2>Security Headers: The Low-Hanging Fruit</h2>
+
+<p>Security headers are one of the easiest wins in application security, yet I constantly see production apps missing them. These headers protect against clickjacking, XSS, and other client-side attacks. Use the <code>helmet</code> middleware in Express or configure them in your reverse proxy. Here's my standard configuration:</p>
+
+<ul><li><strong>Content-Security-Policy:</strong> Prevents XSS by controlling which resources can be loaded. Start strict and loosen as needed.</li><li><strong>X-Frame-Options:</strong> Prevents clickjacking by controlling whether your site can be embedded in iframes.</li><li><strong>Strict-Transport-Security:</strong> Forces HTTPS connections. Set max-age to at least 1 year in production.</li><li><strong>X-Content-Type-Options:</strong> Prevents MIME-sniffing attacks. Always set to 'nosniff'.</li><li><strong>Referrer-Policy:</strong> Controls how much referrer information is sent. Use 'strict-origin-when-cross-origin'.</li></ul>
+
+<div class="post-callout"><strong>Production Tip:</strong> Don't just set these headers and forget them. Use <em>securityheaders.com</em> to audit your configuration regularly. I've caught misconfigurations in production that were introduced by well-meaning developers who didn't understand the implications of their changes.</div>
+
+<h2>Rate Limiting and API Abuse</h2>
+
+<p>Rate limiting isn't just about preventing DDoS attacks — it's about protecting your resources from abuse and credential stuffing. I implemented rate limiting after watching our login endpoint get hammered with 10,000 requests per minute during a credential stuffing attack. The key is implementing multiple layers: per-IP limits, per-user limits, and per-endpoint limits. Use Redis for distributed rate limiting if you're running multiple server instances.</p>
+
+<pre><code class="lang-javascript">const rateLimit = require('express-rate-limit');
+const RedisStore = require('rate-limit-redis');
+const Redis = require('ioredis');
+
+const redisClient = new Redis(process.env.REDIS_URL);
+
+// Aggressive rate limiting for authentication endpoints
+const authLimiter = rateLimit({
+  store: new RedisStore({
+    client: redisClient,
+    prefix: 'rl:auth:'
+  }),
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts per window
+  message: 'Too many login attempts, please try again later',
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Implement progressive delays
+  skipSuccessfulRequests: true,
+});
+
+// General API rate limiting
+const apiLimiter = rateLimit({
+  store: new RedisStore({
+    client: redisClient,
+    prefix: 'rl:api:'
+  }),
+  windowMs: 60 * 1000, // 1 minute
+  max: 100,
+  message: 'Too many requests, please slow down'
+});
+
+app.use('/api/', apiLimiter);
+app.use('/api/auth/', authLimiter);</code></pre>
+
+<p>Security isn't a feature you add at the end — it's a mindset you adopt from day one. The OWASP Top 10 exists because these vulnerabilities keep appearing in production systems, often built by smart engineers who simply didn't know better. Implement these practices in your codebase today, not after you get breached. Your future self (and your users) will thank you.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>
