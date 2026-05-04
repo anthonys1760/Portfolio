@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-myth-of-the-10x-engineer-what-actually-makes-someone-sen",
+    "title": "The Myth of the 10x Engineer: What Actually Makes Someone Senior",
+    "excerpt": "After a decade of hiring and mentoring engineers, I've learned that seniority isn't about coding speed or genius. It's about judgment, communication, and knowing when NOT to code.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "May 4, 2026",
+    "dateISO": "2026-05-04",
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+  },
+  {
     "slug": "application-security-and-owasp-best-practices-a-production-e",
     "title": "Application Security and OWASP Best Practices: A Production Engineer's Guide",
     "excerpt": "Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.",
