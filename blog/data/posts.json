@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-art-of-incremental-refactoring-ship-features-while-impro",
+    "title": "The Art of Incremental Refactoring: Ship Features While Improving Code",
+    "excerpt": "How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "May 11, 2026",
+    "dateISO": "2026-05-11",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+  },
+  {
     "slug": "the-myth-of-the-10x-engineer-what-actually-makes-someone-sen",
     "title": "The Myth of the 10x Engineer: What Actually Makes Someone Senior",
     "excerpt": "After a decade of hiring and mentoring engineers, I've learned that seniority isn't about coding speed or genius. It's about judgment, communication, and knowing when NOT to code.",

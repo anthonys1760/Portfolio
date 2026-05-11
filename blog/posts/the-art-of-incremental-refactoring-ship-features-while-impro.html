@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
+  <meta name="keywords" content="">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html">
+  <meta property="og:title" content="The Art of Incremental Refactoring: Ship Features While Improving Code — Anthony Smith">
+  <meta property="og:description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-05-11">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="Career">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="The Art of Incremental Refactoring: Ship Features While Improving Code">
+  <meta name="twitter:description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+
+  <title>The Art of Incremental Refactoring: Ship Features While Improving Code — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html"
+    },
+    "headline": "The Art of Incremental Refactoring: Ship Features While Improving Code",
+    "description": "How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.",
+    "keywords": "",
+    "articleSection": "Career",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+    },
+    "datePublished": "2026-05-11",
+    "dateModified": "2026-05-11",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">Career</span>
+            <span class="post-read">8 min read</span>
+            <span class="post-date">May 11, 2026</span>
+          </div>
+          <h1 class="post-title">The Art of Incremental Refactoring: Ship Features While Improving Code</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80" alt="The Art of Incremental Refactoring: Ship Features While Improving Code" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>Every engineer has been there: you open a file to add a simple feature and discover a tangled mess of legacy code. Your options seem binary — either hold your nose and add to the mess, or propose a massive refactor that will block feature work for weeks. But there's a third path that senior engineers master: <strong>incremental refactoring</strong>. This isn't about being cautious or slow. It's about being strategic. The best engineers I've worked with ship features <em>faster</em> precisely because they know how to improve code quality without stopping the train.</p>
+
+<h2>The Boy Scout Rule in Practice</h2>
+
+<p>The Boy Scout Rule — "leave the code better than you found it" — sounds great in theory but fails in practice without constraints. The key is defining <strong>better</strong> narrowly. When touching a file for a feature, I limit improvements to the immediate context: the function I'm modifying and its direct dependencies. Not the entire module. Not the architectural pattern. Just the code I'm already changing.</p>
+
+<pre><code class="lang-typescript">// Before: Adding a feature to this mess
+function processOrder(order: any) {
+  if (order.items &amp;&amp; order.items.length &gt; 0) {
+    let total = 0;
+    for (let i = 0; i &lt; order.items.length; i++) {
+      total += order.items[i].price * order.items[i].qty;
+    }
+    if (order.discount) {
+      total = total - (total * order.discount);
+    }
+    order.total = total;
+  }
+  // Need to add tax calculation here...
+}
+
+// After: Refactor ONLY what you touch
+interface OrderItem {
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  items: OrderItem[];
+  discount?: number;
+  taxRate?: number;
+}
+
+function calculateSubtotal(items: OrderItem[]): number {
+  return items.reduce((sum, item) =&gt; sum + item.price * item.quantity, 0);
+}
+
+function applyDiscount(subtotal: number, discount?: number): number {
+  return discount ? subtotal * (1 - discount) : subtotal;
+}
+
+function calculateTax(amount: number, taxRate?: number): number {
+  return taxRate ? amount * taxRate : 0;
+}
+
+function processOrder(order: Order): number {
+  const subtotal = calculateSubtotal(order.items);
+  const afterDiscount = applyDiscount(subtotal, order.discount);
+  const tax = calculateTax(afterDiscount, order.taxRate);
+  return afterDiscount + tax;
+}</code></pre>
+
+<p>Notice what I <em>didn't</em> do: I didn't refactor the entire order processing system, migrate to a new architecture, or fix every <code>any</code> type in the codebase. I extracted functions for the calculations I needed to modify, added types for clarity, and made my new feature (tax calculation) trivial to implement. The PR is reviewable. The risk is contained. The code is measurably better.</p>
+
+<h2>The Strangler Fig Pattern for Architectural Changes</h2>
+
+<p>When you need to change something architectural — like replacing a legacy API client or migrating state management — the strangler fig pattern is your friend. Wrap the old system with a new interface, route new code through the wrapper, and gradually migrate old call sites. The key is that <strong>both systems run in parallel</strong> until the migration is complete.</p>
+
+<pre><code class="lang-typescript">// Legacy API client we want to replace
+class LegacyAPIClient {
+  async fetchUser(id: string) {
+    // Old implementation with weird quirks
+  }
+}
+
+// New, better implementation
+class ModernAPIClient {
+  async getUser(id: string): Promise&lt;User&gt; {
+    // Clean implementation with proper types
+  }
+}
+
+// Adapter that lets us migrate incrementally
+class APIClient {
+  private legacy = new LegacyAPIClient();
+  private modern = new ModernAPIClient();
+  private migratedEndpoints = new Set(['users', 'orders']);
+
+  async fetchUser(id: string): Promise&lt;User&gt; {
+    if (this.migratedEndpoints.has('users')) {
+      return this.modern.getUser(id);
+    }
+    return this.legacy.fetchUser(id);
+  }
+
+  // Add feature flag support for gradual rollout
+  async fetchUserWithFlag(id: string, useModern: boolean): Promise&lt;User&gt; {
+    return useModern 
+      ? this.modern.getUser(id)
+      : this.legacy.fetchUser(id);
+  }
+}
+
+// Now you can migrate call sites one at a time
+// Old code keeps working, new code uses the better client</code></pre>
+
+<div class="post-callout"><strong>Production tip:</strong> Always add metrics when introducing an adapter. Track which code path is used and compare error rates. I've caught subtle bugs in "improved" implementations because I could compare them directly against the legacy behavior in production traffic.</div>
+
+<h2>Refactoring Debt vs. Technical Debt</h2>
+
+<p>Not all messy code needs refactoring. I distinguish between <strong>technical debt</strong> (code that slows down future work) and <strong>refactoring debt</strong> (code that offends my sensibilities but doesn't actually cause problems). That ugly 500-line function in a stable, rarely-changed module? Probably refactoring debt. The inconsistent error handling that makes debugging production issues take hours? Technical debt. Pay down the latter ruthlessly. Ignore the former unless you're already there.</p>
+
+<ul><li><strong>Technical debt indicators:</strong> Bugs cluster in certain modules, features take longer than they should, new engineers get confused in specific areas, production debugging is painful</li><li><strong>Refactoring debt indicators:</strong> Code doesn't follow current style guides, uses outdated patterns, isn't "elegant" but works fine</li><li><strong>Decision rule:</strong> If fixing it would measurably improve velocity or reliability, it's technical debt worth addressing. If it just makes the code "nicer," deprioritize it</li><li><strong>Track it:</strong> Keep a lightweight technical debt log in your team's docs. When someone hits a painful area, they add it. Review quarterly and tackle the highest-impact items</li></ul>
+
+<h2>Making Refactoring Visible</h2>
+
+<p>The biggest career mistake I see engineers make with refactoring is doing it invisibly. They spend days improving code quality, then hide it in a feature PR or worse, don't mention it at all. <strong>Make your refactoring work visible</strong>. Not to brag, but because it's valuable work that should be recognized and because it teaches others the skill.</p>
+
+<div class="post-callout">I structure refactoring PRs with a clear before/after narrative: "This function was doing X, Y, and Z. I extracted Y into a helper because we need it for the new feature. This makes the original function clearer and makes the new feature a 3-line change instead of 30." <em>Show the value.</em></div>
+
+<h2>When to Stop and Do a Big Refactor</h2>
+
+<p>Sometimes incremental refactoring isn't enough. If you're hitting the same painful area repeatedly, or if the architecture is fundamentally wrong for current requirements, you need dedicated time. The key is getting buy-in by quantifying the cost of <em>not</em> refactoring. Track how much time the team spends working around the problem. Estimate how much faster you could ship features with the improved architecture. Present it as an investment with measurable returns, not as "we want to rewrite things because the code is ugly." I've successfully advocated for month-long refactors by showing they'd pay for themselves in saved engineering time within a quarter.</p>
+
+<p>The craft of software engineering isn't about writing perfect code the first time — it's about knowing how to evolve imperfect code into better code while continuously delivering value. Master incremental refactoring, and you'll ship faster than the engineers who either ignore code quality or get stuck in endless refactoring cycles. That's the real 10x skill.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>
