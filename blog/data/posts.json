@@ -1,5 +1,15 @@
 [
   {
+    "slug": "cicd-and-github-actions-beyond-the-yaml-copy-paste",
+    "title": "CI/CD and GitHub Actions: Beyond the YAML Copy-Paste",
+    "excerpt": "Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.",
+    "category": "DevOps",
+    "readTime": "8 min",
+    "date": "May 18, 2026",
+    "dateISO": "2026-05-18",
+    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80"
+  },
+  {
     "slug": "the-art-of-incremental-refactoring-ship-features-while-impro",
     "title": "The Art of Incremental Refactoring: Ship Features While Improving Code",
     "excerpt": "How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.",

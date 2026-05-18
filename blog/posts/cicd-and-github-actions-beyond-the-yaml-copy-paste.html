@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.">
+  <meta name="keywords" content="">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html">
+  <meta property="og:title" content="CI/CD and GitHub Actions: Beyond the YAML Copy-Paste — Anthony Smith">
+  <meta property="og:description" content="Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-05-18">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="DevOps">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="CI/CD and GitHub Actions: Beyond the YAML Copy-Paste">
+  <meta name="twitter:description" content="Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80">
+
+  <title>CI/CD and GitHub Actions: Beyond the YAML Copy-Paste — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html"
+    },
+    "headline": "CI/CD and GitHub Actions: Beyond the YAML Copy-Paste",
+    "description": "Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.",
+    "keywords": "",
+    "articleSection": "DevOps",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80"
+    },
+    "datePublished": "2026-05-18",
+    "dateModified": "2026-05-18",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">DevOps</span>
+            <span class="post-read">8 min read</span>
+            <span class="post-date">May 18, 2026</span>
+          </div>
+          <h1 class="post-title">CI/CD and GitHub Actions: Beyond the YAML Copy-Paste</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80" alt="CI/CD and GitHub Actions: Beyond the YAML Copy-Paste" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>I've seen teams spend weeks setting up elaborate CI/CD pipelines that break on day one of actual use. The problem isn't GitHub Actions—it's that most engineers treat workflows like magic incantations copied from Stack Overflow. After maintaining CI/CD for teams ranging from 5 to 50+ engineers, I've learned that good automation isn't about having the fanciest YAML. It's about understanding the trade-offs and building pipelines that fail fast, recover gracefully, and don't become a bottleneck.</p>
+
+<h2>The Baseline: Fast Feedback Loops</h2>
+
+<p>Your CI pipeline has one job: tell engineers if they broke something, as fast as possible. Every minute your pipeline takes is a minute an engineer is context-switching or waiting. I aim for sub-5-minute feedback on PRs. Here's a production workflow that prioritizes speed through parallelization and caching:</p>
+
+<pre><code class="lang-yaml">name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Lint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Run tests
+        run: npm test -- --coverage --maxWorkers=2
+      
+      - name: Upload coverage
+        if: matrix.node-version == 20
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: dist/
+          retention-days: 7</code></pre>
+
+<div class="post-callout"><strong>Speed wins:</strong> Notice the <code>--prefer-offline</code> flag and <code>cache: 'npm'</code>. These small optimizations cut 30-60 seconds from every run. Also, <code>--maxWorkers=2</code> prevents Jest from spawning too many workers in CI, which paradoxically slows things down.</div>
+
+<h2>Conditional Workflows: Don't Run What You Don't Need</h2>
+
+<p>One of the biggest mistakes I see is running the entire pipeline for every change. If someone updates documentation, you don't need to run integration tests. GitHub Actions supports path filtering, but here's the pattern I actually use in production—it's more explicit and easier to debug:</p>
+
+<pre><code class="lang-yaml">name: Smart CI
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package*.json'
+      - '.github/workflows/**'
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'src/api/**'
+              - 'src/db/**'
+            frontend:
+              - 'src/components/**'
+              - 'src/pages/**'
+
+  test-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: &gt;-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run backend tests
+        run: npm run test:api
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+
+  test-frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run frontend tests
+        run: npm run test:ui</code></pre>
+
+<p>This approach saves significant CI minutes on large repos. The <code>dorny/paths-filter</code> action is more reliable than GitHub's built-in path filtering, and the explicit outputs make it clear what's running and why.</p>
+
+<h2>Deployment: Progressive Rollouts with Confidence</h2>
+
+<p>Deployment workflows need guardrails. I use environments with protection rules and required reviewers for production, but here's the part most tutorials skip: integration with your actual infrastructure. This example deploys to AWS but shows the pattern for any platform:</p>
+
+<pre><code class="lang-yaml">name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.example.com
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Deploy to staging
+        run: |
+          aws s3 sync dist/ s3://staging-bucket/ --delete
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.STAGING_CF_ID }} --paths "/*"
+      
+      - name: Run smoke tests
+        run: npm run test:smoke -- --env=staging
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://example.com
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Deploy to production
+        run: |
+          aws s3 sync dist/ s3://prod-bucket/ --delete
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_CF_ID }} --paths "/*"
+      
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: 'Production deployment ${{ job.status }}'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}</code></pre>
+
+<div class="post-callout"><strong>Use OIDC, not access keys:</strong> The <code>role-to-assume</code> pattern uses GitHub's OIDC provider to get temporary AWS credentials. No long-lived secrets in your repo. This is <em>significantly</em> more secure and is how you should authenticate to cloud providers in 2024.</div>
+
+<h2>Reusable Workflows: DRY for YAML</h2>
+
+<p>Once you have multiple repos, you'll want to share workflow logic. GitHub supports reusable workflows, which I use extensively. Here's a reusable workflow for Node.js testing that I call from multiple repositories:</p>
+
+<ul><li>Create a <code>.github/workflows/reusable-node-test.yml</code> in a central repo with <code>on: workflow_call</code></li><li>Define inputs for customization (Node version, test command, etc.)</li><li>Call it from other repos using <code>uses: org/repo/.github/workflows/reusable-node-test.yml@main</code></li><li>Version your reusable workflows with tags, not <code>@main</code>, once they're stable</li><li>Keep secrets at the caller level—reusable workflows inherit secrets from the calling workflow</li></ul>
+
+<p>The key insight: reusable workflows are for <em>process</em>, not configuration. If you find yourself passing 15 inputs to customize behavior, you're doing it wrong. Instead, encode your team's standards (run these checks, in this order, with these quality gates) and let individual repos provide minimal configuration.</p>
+
+<h2>Debugging and Observability</h2>
+
+<p>When workflows fail at 2 AM, you need visibility. Enable debug logging with <code>ACTIONS_STEP_DEBUG</code> and <code>ACTIONS_RUNNER_DEBUG</code> secrets. Use job summaries to surface important information directly in the Actions UI. Most importantly: make your failure messages actionable. Don't just say 'tests failed'—tell engineers <em>which</em> test failed and link to the logs. I add custom annotations using <code>echo "::error file=app.js,line=10::Something broke here"</code> to make failures scannable.</p>
+
+<div class="post-callout">The best CI/CD pipeline is one your team doesn't think about. If engineers are regularly debugging workflows instead of writing code, your automation has become the problem it was meant to solve. Prioritize reliability and clear error messages over clever optimizations.</div>
+
+<p>GitHub Actions isn't perfect—the YAML can get verbose, the minute limits on free tiers are restrictive, and debugging can be painful. But it's <em>good enough</em> for most teams, and the integration with GitHub's ecosystem is unmatched. Focus on fast feedback, clear failures, and progressive rollouts. Your future self (and your team) will thank you.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>
