@@ -12,6 +12,7 @@ jobs:
 
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout gh-pages
@@ -29,14 +30,23 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: node scripts/generate-blog-post.mjs
 
-      - name: Commit and push
+      - name: Open PR for review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          BRANCH="blog/weekly-$(date +%Y-%m-%d)"
           git config user.name "Anthony Smith Blog Bot"
           git config user.email "anthony.smith1760@gmail.com"
+          git checkout -b "$BRANCH"
           git add blog/posts/ blog/data/posts.json sitemap.xml
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "content(blog): auto-generate weekly post [skip ci]"
-            git push
+            git commit -m "content(blog): auto-generate weekly post"
+            git push origin "$BRANCH"
+            gh pr create \
+              --base gh-pages \
+              --head "$BRANCH" \
+              --title "Weekly Blog Post - $(date +'%B %d, %Y')" \
+              --body "Auto-generated weekly blog post. Review and merge to publish."
           fi
