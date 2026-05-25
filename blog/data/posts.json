@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-engineering-ladder-trap-why-promotion-chasing-hurts-your",
+    "title": "The Engineering Ladder Trap: Why Promotion-Chasing Hurts Your Growth",
+    "excerpt": "Most engineers optimize for the wrong metrics when chasing promotions. Here's what actually matters for long-term career growth.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "May 25, 2026",
+    "dateISO": "2026-05-25",
+    "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&q=80"
+  },
+  {
     "slug": "cicd-and-github-actions-beyond-the-yaml-copy-paste",
     "title": "CI/CD and GitHub Actions: Beyond the YAML Copy-Paste",
     "excerpt": "Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.",
