@@ -1,5 +1,15 @@
 [
   {
+    "slug": "documentation-debt-why-your-team-moves-slower-than-you-think",
+    "title": "Documentation Debt: Why Your Team Moves Slower Than You Think",
+    "excerpt": "Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "June 1, 2026",
+    "dateISO": "2026-06-01",
+    "image": "https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80"
+  },
+  {
     "slug": "the-engineering-ladder-trap-why-promotion-chasing-hurts-your",
     "title": "The Engineering Ladder Trap: Why Promotion-Chasing Hurts Your Growth",
     "excerpt": "Most engineers optimize for the wrong metrics when chasing promotions. Here's what actually matters for long-term career growth.",
