@@ -1,5 +1,15 @@
 [
   {
+    "slug": "architecture-decision-records-the-full-stack-engineers-secre",
+    "title": "Architecture Decision Records: The Full-Stack Engineer's Secret Weapon",
+    "excerpt": "ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.",
+    "category": "Architecture",
+    "readTime": "7 min",
+    "date": "June 15, 2026",
+    "dateISO": "2026-06-15",
+    "image": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80"
+  },
+  {
     "slug": "documentation-debt-why-your-team-moves-slower-than-you-think",
     "title": "Documentation Debt: Why Your Team Moves Slower Than You Think",
     "excerpt": "Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
