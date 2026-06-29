@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-pull-request-your-most-underutilized-career-growth-tool",
+    "title": "The Pull Request: Your Most Underutilized Career Growth Tool",
+    "excerpt": "Most engineers treat PRs as a formality. Senior engineers use them as a platform to build influence, teach, and accelerate their career.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "June 29, 2026",
+    "dateISO": "2026-06-29",
+    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80"
+  },
+  {
     "slug": "the-debugging-mindset-how-senior-engineers-approach-producti",
     "title": "The Debugging Mindset: How Senior Engineers Approach Production Incidents",
     "excerpt": "Production fires reveal who actually knows their systems. Here's how to move from panic-driven debugging to systematic problem-solving.",
