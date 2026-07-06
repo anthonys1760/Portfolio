@@ -1,5 +1,15 @@
 [
   {
+    "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
+    "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
+    "category": "Node.js",
+    "readTime": "8 min",
+    "date": "July 6, 2026",
+    "dateISO": "2026-07-06",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+  },
+  {
     "slug": "the-pull-request-your-most-underutilized-career-growth-tool",
     "title": "The Pull Request: Your Most Underutilized Career Growth Tool",
     "excerpt": "Most engineers treat PRs as a formality. Senior engineers use them as a platform to build influence, teach, and accelerate their career.",
