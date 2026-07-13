@@ -1,5 +1,15 @@
 [
   {
+    "slug": "postgresql-and-supabase-for-production-apps-what-you-need-to",
+    "title": "PostgreSQL and Supabase for Production Apps: What You Need to Know",
+    "excerpt": "Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.",
+    "category": "Architecture",
+    "readTime": "8 min",
+    "date": "July 13, 2026",
+    "dateISO": "2026-07-13",
+    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80"
+  },
+  {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
     "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
