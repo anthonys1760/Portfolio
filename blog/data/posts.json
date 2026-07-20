@@ -1,5 +1,15 @@
 [
   {
+    "slug": "rest-and-graphql-api-design-lessons-from-building-both-in-pr",
+    "title": "REST and GraphQL API Design: Lessons from Building Both in Production",
+    "excerpt": "After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.",
+    "category": "API Design",
+    "readTime": "8 min",
+    "date": "July 20, 2026",
+    "dateISO": "2026-07-20",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+  },
+  {
     "slug": "postgresql-and-supabase-for-production-apps-what-you-need-to",
     "title": "PostgreSQL and Supabase for Production Apps: What You Need to Know",
     "excerpt": "Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.",

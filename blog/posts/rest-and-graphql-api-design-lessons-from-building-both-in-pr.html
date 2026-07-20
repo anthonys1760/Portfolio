@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.">
+  <meta name="keywords" content="">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
+  <meta property="og:title" content="REST and GraphQL API Design: Lessons from Building Both in Production — Anthony Smith">
+  <meta property="og:description" content="After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-07-20">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="API Design">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="REST and GraphQL API Design: Lessons from Building Both in Production">
+  <meta name="twitter:description" content="After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
+
+  <title>REST and GraphQL API Design: Lessons from Building Both in Production — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html"
+    },
+    "headline": "REST and GraphQL API Design: Lessons from Building Both in Production",
+    "description": "After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.",
+    "keywords": "",
+    "articleSection": "API Design",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+    },
+    "datePublished": "2026-07-20",
+    "dateModified": "2026-07-20",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">API Design</span>
+            <span class="post-read">8 min read</span>
+            <span class="post-date">July 20, 2026</span>
+          </div>
+          <h1 class="post-title">REST and GraphQL API Design: Lessons from Building Both in Production</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="REST and GraphQL API Design: Lessons from Building Both in Production" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>I've built and maintained both REST and GraphQL APIs in production for years. The discourse around which is "better" misses the point entirely. The real question isn't REST vs GraphQL—it's understanding the tradeoffs and knowing when each shines. Here's what I've learned shipping both to production with teams of varying sizes.</p>
+
+<h2>The Real Difference Nobody Talks About</h2>
+
+<p>REST and GraphQL aren't just different query syntaxes. They represent fundamentally different contracts between client and server. <strong>REST is resource-oriented</strong>—you're asking for things. <strong>GraphQL is requirement-oriented</strong>—you're describing what you need. This distinction affects everything from caching to versioning to team dynamics.</p>
+
+<p>In REST, the server dictates the shape of responses. In GraphQL, the client does. This sounds like a minor detail, but it changes who owns the complexity. With REST, backend engineers absorb the complexity of creating the right endpoints. With GraphQL, that complexity shifts to the schema design and resolver implementation.</p>
+
+<h2>When REST Actually Wins</h2>
+
+<p>REST isn't outdated—it's <em>predictable</em>. For public APIs, third-party integrations, or webhook systems, REST is often the better choice. Why? HTTP caching works out of the box. Every developer understands it. Tools like Postman and curl make it trivial to debug. Here's a well-designed REST endpoint that leverages HTTP semantics properly:</p>
+
+<pre><code class="lang-typescript">// Good REST design uses HTTP methods and status codes correctly
+app.get('/api/v1/users/:id', async (req, res) =&gt; {
+  const user = await db.users.findUnique({
+    where: { id: req.params.id },
+    select: { id: true, email: true, name: true, createdAt: true }
+  });
+  
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  
+  // Set proper cache headers for GET requests
+  res.set('Cache-Control', 'private, max-age=300');
+  res.set('ETag', `"${user.id}-${user.updatedAt.getTime()}"`);
+  
+  return res.json({ data: user });
+});
+
+app.patch('/api/v1/users/:id', async (req, res) =&gt; {
+  // PATCH for partial updates, PUT for full replacement
+  const { name, email } = req.body;
+  
+  try {
+    const updated = await db.users.update({
+      where: { id: req.params.id },
+      data: { name, email },
+    });
+    
+    return res.json({ data: updated });
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    throw error;
+  }
+});</code></pre>
+
+<div class="post-callout"><strong>Key insight:</strong> REST forces you to think in resources and HTTP semantics. This constraint is actually valuable—it prevents bikeshedding and gives you a standard vocabulary. Every engineer knows what a 404 means. Not everyone agrees on what a GraphQL error extension should look like.</div>
+
+<h2>When GraphQL Solves Real Problems</h2>
+
+<p>GraphQL shines when you have multiple clients with different data requirements. Mobile apps need less data than web dashboards. Internal tools need different fields than customer-facing apps. With REST, you end up with endpoint sprawl: <code>/users/basic</code>, <code>/users/detailed</code>, <code>/users/with-posts</code>. GraphQL eliminates this.</p>
+
+<p>The other killer feature: <strong>eliminating overfetching and underfetching</strong>. In REST, you either make multiple requests or return too much data. GraphQL lets clients request exactly what they need in one round trip. Here's a practical example:</p>
+
+<pre><code class="lang-typescript">// GraphQL resolver with DataLoader to prevent N+1 queries
+import DataLoader from 'dataloader';
+
+const userLoader = new DataLoader(async (userIds) =&gt; {
+  const users = await db.users.findMany({
+    where: { id: { in: userIds } }
+  });
+  
+  // Return in same order as requested IDs
+  const userMap = new Map(users.map(u =&gt; [u.id, u]));
+  return userIds.map(id =&gt; userMap.get(id) || null);
+});
+
+const resolvers = {
+  Query: {
+    user: (_, { id }) =&gt; userLoader.load(id),
+  },
+  User: {
+    posts: async (user, { limit = 10 }) =&gt; {
+      return db.posts.findMany({
+        where: { authorId: user.id },
+        take: limit,
+        orderBy: { createdAt: 'desc' }
+      });
+    },
+    // Resolver runs only if client requests this field
+    followerCount: async (user) =&gt; {
+      return db.followers.count({
+        where: { followingId: user.id }
+      });
+    }
+  }
+};</code></pre>
+
+<div class="post-callout"><strong>Warning:</strong> GraphQL's flexibility is also its biggest footgun. Without proper query complexity analysis and depth limiting, clients can craft queries that bring down your database. Always implement query cost analysis in production—libraries like <code>graphql-query-complexity</code> are non-negotiable.</div>
+
+<h2>The Versioning Question</h2>
+
+<p>REST versioning is explicit: <code>/v1/users</code> vs <code>/v2/users</code>. You maintain multiple versions until clients migrate. GraphQL proponents claim you never need versioning because you just add fields and deprecate old ones. In theory, this is true. In practice, I've seen teams struggle with schema bloat and unclear deprecation timelines.</p>
+
+<p>My take: <strong>both approaches require discipline</strong>. With REST, you need a sunset policy for old versions. With GraphQL, you need strict governance around schema changes and clear communication about deprecations. Neither is easier—they're just different types of work.</p>
+
+<h2>Practical Decision Framework</h2>
+
+<ul><li><strong>Choose REST when:</strong> You're building a public API, need simple HTTP caching, have straightforward CRUD operations, or want maximum tooling compatibility</li><li><strong>Choose GraphQL when:</strong> You have multiple clients with different data needs, complex nested relationships, or want to avoid endpoint proliferation</li><li><strong>Use both when:</strong> Your public API is REST but internal services use GraphQL, or you expose GraphQL for web/mobile but REST webhooks for integrations</li><li><strong>Avoid GraphQL if:</strong> Your team is small, your data model is simple, or you don't have time to invest in proper tooling and monitoring</li></ul>
+
+<p>The best API design isn't about choosing the "right" technology—it's about understanding your constraints. I've seen elegant REST APIs and nightmare GraphQL schemas. The technology matters less than the thought you put into the contract between client and server. Design for your team's strengths, your client's needs, and your operational capabilities. Everything else is just syntax.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>

@@ -121,4 +121,10 @@
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
+	<url>
+		<loc>https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html</loc>
+		<lastmod>2026-07-20</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
 </urlset>
