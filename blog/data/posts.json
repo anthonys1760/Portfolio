@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d",
+    "title": "The First 90 Days: How to Ramp Up in a New Codebase Without Drowning",
+    "excerpt": "Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.",
+    "category": "Career",
+    "readTime": "8 min",
+    "date": "July 27, 2026",
+    "dateISO": "2026-07-27",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+  },
+  {
     "slug": "rest-and-graphql-api-design-lessons-from-building-both-in-pr",
     "title": "REST and GraphQL API Design: Lessons from Building Both in Production",
     "excerpt": "After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.",
