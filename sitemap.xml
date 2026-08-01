@@ -133,4 +133,16 @@
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
+	<url>
+		<loc>https://www.anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html</loc>
+		<lastmod>2026-08-01</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
+	<url>
+		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html</loc>
+		<lastmod>2026-08-01</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
 </urlset>

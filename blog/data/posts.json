@@ -1,5 +1,32 @@
 [
   {
+    "slug": "how-i-test-for-broken-object-level-authorization",
+    "title": "How I Test for Broken Object Level Authorization",
+    "excerpt": "Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.",
+    "category": "Security",
+    "readTime": "4 min",
+    "date": "August 1, 2026",
+    "dateISO": "2026-08-01",
+    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "bola",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
+    "slug": "the-engineering-journal-why-writing-about-your-work-makes-yo",
+    "title": "The Engineering Journal: Why Writing About Your Work Makes You Better at It",
+    "excerpt": "Most engineers document their code but not their decisions. Here's why keeping an engineering journal is the most underrated career accelerator.",
+    "category": "Career",
+    "readTime": "7 min",
+    "date": "August 1, 2026",
+    "dateISO": "2026-08-01",
+    "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80"
+  },
+  {
     "slug": "the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d",
     "title": "The First 90 Days: How to Ramp Up in a New Codebase Without Drowning",
     "excerpt": "Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.",
