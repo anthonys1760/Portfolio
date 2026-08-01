@@ -1705,3 +1705,22 @@ body.hero-themed .skills-group.featured .group-label {
 	background: rgba(75,255,165,0.2);
 	box-shadow: 0 0 18px rgba(75,255,165,0.35);
 }
+
+/* ── Blog post code blocks ────────────────────────────────────────────────
+   basic.css sets `code { white-space: nowrap; display: inline-block }` for
+   inline code, which also applies to the <code> inside a <pre> and collapses
+   every newline in a multi-line snippet onto one overflowing line. Scoped to
+   .post-body so inline <code> in prose keeps its pill styling.
+
+   pre-wrap keeps the author's line breaks but wraps long lines at the edge
+   of the box, so a snippet never scrolls sideways off the page. The pre
+   keeps its overflow-x: auto as a safety net for anything unwrappable. */
+.post-body pre code {
+	display: block;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	word-break: normal;
+	overflow: visible;
+	max-width: none;
+	font-style: normal;
+}
