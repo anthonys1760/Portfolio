@@ -1,5 +1,33 @@
 [
   {
+    "slug": "how-i-test-for-broken-object-property-level-authorization",
+    "title": "How I Test for Broken Object Property Level Authorization",
+    "excerpt": "Most APIs validate which objects you can access but forget to control which properties you can read or write within those objects.",
+    "category": "Security",
+    "readTime": "4 min",
+    "date": "August 10, 2026",
+    "dateISO": "2026-08-10",
+    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "bopla",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp",
+      "authorization"
+    ]
+  },
+  {
+    "slug": "aillm-integrations-in-production-apps-what-they-dont-tell-yo",
+    "title": "AI/LLM Integrations in Production Apps: What They Don't Tell You",
+    "excerpt": "Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.",
+    "category": "AI & ML",
+    "readTime": "9 min",
+    "date": "August 10, 2026",
+    "dateISO": "2026-08-10",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80"
+  },
+  {
     "slug": "how-i-test-for-broken-object-level-authorization",
     "title": "How I Test for Broken Object Level Authorization",
     "excerpt": "Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.",
