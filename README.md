@@ -65,23 +65,6 @@ master/
 
 ---
 
-## Automated Blog
-
-A GitHub Actions workflow runs every **Monday at 9:00 AM UTC** to generate a new technical blog post using Claude Sonnet via OpenRouter. Each run:
-
-1. Picks a topic not recently covered from a curated list (React Native, Node.js, AI/LLM, security, architecture, etc.)
-2. Generates a full structured post with headings, code examples, and callouts
-3. Writes the post HTML to `blog/posts/[slug].html`
-4. Updates `blog/data/posts.json` with post metadata
-5. Adds the post URL to `sitemap.xml`
-6. Commits and pushes to `gh-pages`
-
-**Required secret:** `OPENROUTER_API_KEY` (set in repo Settings → Secrets → Actions)
-
-To trigger manually: Actions tab → Weekly Blog Post → Run workflow
-
----
-
 ## Deployment
 
 The site deploys from the `gh-pages` branch via GitHub Pages to the custom domain `anthonysdigital.net`. All changes to the live site should be pushed to `gh-pages`.
