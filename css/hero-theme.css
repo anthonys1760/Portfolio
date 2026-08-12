@@ -115,7 +115,14 @@
 	color: #f0f0f5;
 	border-bottom-left-radius: 6px;
 	min-height: 24px;
-	max-height: 300px;
+}
+/* Homepage streaming bubble only: lock it to its final size up front so
+   the CTA + trusted-by row below never shift as tokens stream in. The
+   reply scrolls inside the bubble once it overflows. */
+#chat-bubble-assistant {
+	width: 88%;
+	min-height: 240px;
+	max-height: 240px;
 	overflow-y: auto;
 	overscroll-behavior: contain;
 }
@@ -205,14 +212,12 @@
 	.hero-role { font-size: 26px; }
 	.chat-bubble { font-size: 16px; padding: 12px 16px; }
 	.hero-chat-wrap { padding: 16px; }
-	/* Lock the assistant bubble to a fixed size on mobile so the CTA +
-	   trusted-by row don't get pushed down as tokens stream in. Bubble
-	   becomes internally scrollable once text overflows. */
-	.chat-bubble.assistant {
+	/* Slightly taller lock on mobile where the reply wraps more. Scoped to
+	   the homepage streaming bubble so inner-page static bubbles keep
+	   their natural height. */
+	#chat-bubble-assistant {
 		min-height: 260px;
 		max-height: 260px;
-		overflow-y: auto;
-		overscroll-behavior: contain;
 	}
 }
 
