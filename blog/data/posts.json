@@ -1,7 +1,7 @@
 [
   {
     "slug": "how-i-test-for-broken-object-property-level-authorization",
-    "title": "How I Test for Broken Object Property Level Authorization",
+    "title": "How I Test for Mass Assignment and Excessive Data Exposure",
     "excerpt": "Most APIs validate which objects you can access but forget to control which properties you can read or write within those objects.",
     "category": "Security",
     "readTime": "4 min",
@@ -87,7 +87,7 @@
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
-    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle\u2014and the ones that didn't.",
     "category": "Node.js",
     "readTime": "8 min",
     "date": "July 6, 2026",
@@ -117,7 +117,7 @@
   {
     "slug": "architecture-decision-records-the-full-stack-engineers-secre",
     "title": "Architecture Decision Records: The Full-Stack Engineer's Secret Weapon",
-    "excerpt": "ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.",
+    "excerpt": "ADRs aren't documentation overhead\u2014they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.",
     "category": "Architecture",
     "readTime": "7 min",
     "date": "June 15, 2026",
@@ -127,7 +127,7 @@
   {
     "slug": "documentation-debt-why-your-team-moves-slower-than-you-think",
     "title": "Documentation Debt: Why Your Team Moves Slower Than You Think",
-    "excerpt": "Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
+    "excerpt": "Poor documentation isn't just annoying\u2014it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
     "category": "Career",
     "readTime": "8 min",
     "date": "June 1, 2026",

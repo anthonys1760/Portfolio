@@ -17,7 +17,7 @@
   <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-property-level-authorization.html">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-property-level-authorization.html">
-  <meta property="og:title" content="How I Test for Broken Object Property Level Authorization — Anthony Smith">
+  <meta property="og:title" content="How I Test for Mass Assignment and Excessive Data Exposure — Anthony Smith">
   <meta property="og:description" content="Most APIs validate which objects you can access but forget to control which properties you can read or write within those objects.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
@@ -26,11 +26,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Broken Object Property Level Authorization">
+  <meta name="twitter:title" content="How I Test for Mass Assignment and Excessive Data Exposure">
   <meta name="twitter:description" content="Most APIs validate which objects you can access but forget to control which properties you can read or write within those objects.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
 
-  <title>How I Test for Broken Object Property Level Authorization — Anthony Smith</title>
+  <title>How I Test for Mass Assignment and Excessive Data Exposure — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -53,7 +53,7 @@
       "@type": "WebPage",
       "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-property-level-authorization.html"
     },
-    "headline": "How I Test for Broken Object Property Level Authorization",
+    "headline": "How I Test for Mass Assignment and Excessive Data Exposure",
     "description": "Most APIs validate which objects you can access but forget to control which properties you can read or write within those objects.",
     "keywords": "mass assignment, excessive data exposure, BOPLA, API security, property level authorization, object authorization, REST API security, data filtering",
     "articleSection": "Security",
@@ -286,10 +286,10 @@
             <span class="post-read">4 min read</span>
             <span class="post-date">August 10, 2026</span>
           </div>
-          <h1 class="post-title">How I Test for Broken Object Property Level Authorization</h1>
+          <h1 class="post-title">How I Test for Mass Assignment and Excessive Data Exposure</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for Broken Object Property Level Authorization" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for Mass Assignment and Excessive Data Exposure" onerror="this.style.display='none'">
 
         <div class="post-body">
           <p>Most APIs get object level authorization right but completely forget property level controls. A developer validates that you can access invoice 4021, but never checks whether you should see the <code>internal_notes</code> field or be allowed to update <code>is_paid</code>. The API returns every column from the database row or accepts every field from your JSON body without asking which properties this specific user role should touch.</p>

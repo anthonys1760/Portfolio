@@ -2,11 +2,10 @@
 /**
  * generate-blog-post.mjs
  *
- * Generates two technical blog posts per run via OpenRouter (Claude):
- *   1. a general full stack post (rotating topic)
- *   2. an application security methodology post (rotating OWASP API topic)
+ * Generates one application security methodology post per run via
+ * OpenRouter (Claude), rotating through OWASP API security topics.
  *
- * For each post it writes:
+ * For the post it writes:
  *   - /blog/posts/[slug].html  — full standalone post page
  *   - /blog/data/posts.json    — prepended with new post metadata
  *   - /sitemap.xml             — appended with the post URL
@@ -34,32 +33,8 @@ const DRY_RUN = process.env.DRY_RUN === '1'
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
 if (!OPENROUTER_API_KEY && !DRY_RUN) { console.error('[Blog] Missing OPENROUTER_API_KEY'); process.exit(1) }
 
-// Topics rotate across the full stack
-const TOPICS = [
-  'React Native mobile architecture',
-  'Node.js backend patterns and performance',
-  'AI/LLM integrations in production apps',
-  'Application security and OWASP best practices',
-  'Full-stack architecture decision records',
-  'PostgreSQL and Supabase for production apps',
-  'CI/CD and GitHub Actions automation',
-  'TypeScript patterns for large codebases',
-  'REST and GraphQL API design',
-  'React performance optimization',
-  'Mobile app state management',
-  'Edge functions and serverless patterns',
-  'Software engineering career and craft',
-  'Code review and team engineering culture',
-]
-
-const CATEGORIES = [
-  'Architecture', 'React Native', 'Node.js', 'AI & ML',
-  'Security', 'DevOps', 'TypeScript', 'API Design',
-  'Performance', 'Career',
-]
-
 // ── Application security methodology series ──────────────────────────────────
-// A second post each run: how I test for or defend against one class of flaw.
+// One post each run: how I test for or defend against one class of flaw.
 // Rotation is keyed on topicKey stored in posts.json, so dedup is exact.
 
 const SECURITY_SERIES = 'appsec-methodology'
@@ -137,18 +112,6 @@ function loadExistingPosts() {
   } catch {
     return []
   }
-}
-
-// ── Pick a topic not recently covered ────────────────────────────────────────
-
-function pickTopic(existingTitles) {
-  // Prefer topics not already covered
-  const usedTopics = TOPICS.filter(t =>
-    existingTitles.some(title => title.toLowerCase().includes(t.split(' ')[0].toLowerCase()))
-  )
-  const available = TOPICS.filter(t => !usedTopics.includes(t))
-  const pool = available.length ? available : TOPICS
-  return pool[Math.floor(Math.random() * pool.length)]
 }
 
 // Security rotation is exact, not fuzzy: it keys on topicKey recorded in
@@ -246,57 +209,6 @@ function finalizePost(post, existingPosts, dateISO) {
   return post
 }
 
-async function generatePost(existingPosts) {
-  const existingTitles = existingPosts.map(p => p.title)
-  const topic = pickTopic(existingTitles)
-  const dateISO = today()
-
-  const prompt = `You are a senior full-stack engineer writing a technical blog for your personal portfolio at anthonysdigital.net.
-
-Write a NEW technical blog post on the topic: **${topic}**
-
-The post should be practical, opinionated, and reflect real-world engineering experience. Include code examples where relevant. Avoid fluff — write for engineers.
-
-Do NOT overlap with these existing posts:
-${existingTitles.length ? existingTitles.map(t => `- ${t}`).join('\n') : '(none yet)'}
-
-For the featured image, provide a direct Unsplash CDN URL using a photo ID you are confident exists (format: https://images.unsplash.com/photo-XXXXXXXXXXXXXXXXXX?w=1200&q=80). Choose a photo relevant to tech/code/engineering.
-
-Respond ONLY with valid JSON (no markdown fences, no extra text) matching this exact schema:
-{
-  "title": "Post title",
-  "excerpt": "2-sentence excerpt for the blog card listing (max 200 chars, no HTML)",
-  "category": "One of: Architecture | React Native | Node.js | AI & ML | Security | DevOps | TypeScript | API Design | Performance | Career",
-  "readTime": "X min",
-  "keywords": "6-10 comma separated SEO keywords for this post",
-  "image": "https://images.unsplash.com/photo-XXXXXXXXXXXXXXXXXX?w=1200&q=80",
-  "body": [
-    { "type": "paragraph", "text": "..." },
-    { "type": "heading", "text": "..." },
-    { "type": "code", "lang": "js", "code": "..." },
-    { "type": "callout", "text": "..." },
-    { "type": "list", "items": ["...", "..."] }
-  ]
-}
-
-Body rules:
-- 8-14 body blocks total
-- Start with a paragraph hook (no heading first)
-- Include 3-5 headings that structure the post
-- Include 1-3 code blocks with real, runnable code snippets (use backtick-free plain strings)
-- Include 1-2 callout blocks with key insights or warnings (may use <strong> and <em> inline)
-- Include 1 list block
-- paragraph and callout text may use <strong>, <em>, and <code> inline tags only
-- code blocks: escape any backslashes in the JSON string`
-
-  console.log(`[Blog] Generating post on topic: "${topic}"`)
-
-  const post = finalizePost(await callModel(prompt, 'general'), existingPosts, dateISO)
-
-  console.log(`[Blog] Generated: "${post.title}" → ${post.slug}`)
-  return post
-}
-
 // ── Application security methodology post ────────────────────────────────────
 
 function buildSecurityPrompt(topic, priorTitles, problems = []) {
@@ -372,6 +284,7 @@ Respond ONLY with valid JSON (no markdown fences, no extra text) matching this e
 
 Output rules:
 - The title must be plain, not clickbait, in the form "How I Test for X" or "How I Think About X on REST APIs" or similar. It must start with "How I".
+- The title must be clearly distinguishable at a glance from every already published title listed above. If the formal name of this topic is one word away from a prior title, name the topic by its concrete behavior instead (for example "Mass Assignment" rather than a near-identical OWASP category name).
 - category must be exactly "Security".
 - Map the structure above onto blocks in this order: one or two opening paragraphs with no heading first, then heading plus paragraph for why it hides, then heading plus one orderedlist block of 4 to 7 numbered steps for the method, then heading plus a paragraph or callout for the deeper nuance, then heading plus paragraph for why it stays a problem, then a closing paragraph with the plain summary.
 - Include 3 to 5 headings.
@@ -949,21 +862,6 @@ function updateSitemap(slug, dateISO) {
 // point so enforceVoice is proven to strip them.
 
 const FIXTURES = {
-  general: {
-    title: 'Dry Run Placeholder Post',
-    excerpt: 'A fixture used to exercise the generator without calling OpenRouter.',
-    category: 'Architecture',
-    readTime: '3 min',
-    keywords: 'testing, fixtures, automation',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80',
-    body: [
-      { type: 'paragraph', text: 'This post exists only to exercise the generation pipeline in dry run mode.' },
-      { type: 'heading', text: 'A heading' },
-      { type: 'paragraph', text: 'It should never be committed to the live site.' },
-      { type: 'list', items: ['One', 'Two'] },
-    ],
-  },
-
   security: {
     title: 'How I Test for Broken Object Level Authorization',
     excerpt: 'Most APIs authenticate the caller and then trust the ID in the URL. Here is how I probe that gap and how I close it.',
@@ -1025,55 +923,31 @@ const FIXTURES = {
   },
 }
 
-const JOBS = [
-  { kind: 'general', generate: generatePost },
-  { kind: 'security', generate: generateSecurityPost },
-]
-
 async function main() {
   mkdirSync(POSTS_DIR, { recursive: true })
   mkdirSync(path.dirname(POSTS_JSON), { recursive: true })
 
-  // Mutable accumulator: each job sees the posts written by earlier jobs, so
-  // slug collisions and topic dedup account for this run as well as history.
   const posts = loadExistingPosts()
   console.log(`[Blog] ${posts.length} existing posts`)
 
-  const published = []
+  const post = await generateSecurityPost(posts)
 
-  for (const job of JOBS) {
-    try {
-      const post = await job.generate(posts)
+  // Verify featured image
+  post.image = await safeImageUrl(post.image)
 
-      // Verify featured image
-      post.image = await safeImageUrl(post.image)
+  // Write HTML post file
+  const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
+  writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
+  console.log(`[Blog] Wrote ${htmlPath}`)
 
-      // Write HTML post file
-      const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
-      writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
-      console.log(`[Blog] Wrote ${htmlPath}`)
+  // Update listing JSON (newest first)
+  posts.unshift(toMeta(post))
+  savePosts(posts)
 
-      // Update listing JSON (newest first)
-      posts.unshift(toMeta(post))
-      savePosts(posts)
+  // Update sitemap
+  updateSitemap(post.slug, post.dateISO)
 
-      // Update sitemap
-      updateSitemap(post.slug, post.dateISO)
-
-      published.push(post)
-      console.log(`[Blog] Done! → https://www.anthonysdigital.net/blog/posts/${post.slug}.html`)
-    } catch (err) {
-      // One bad generation must not cost us the other post.
-      console.error(`[Blog] ERROR generating ${job.kind} post:`, err.message)
-    }
-  }
-
-  if (!published.length) {
-    console.error('[Blog] ERROR: every post failed to generate')
-    process.exit(1)
-  }
-
-  console.log(`[Blog] Published ${published.length} of ${JOBS.length} posts`)
+  console.log(`[Blog] Done! → https://www.anthonysdigital.net/blog/posts/${post.slug}.html`)
 }
 
 main()
