@@ -73,6 +73,17 @@
 	color: #4bffa5;
 	font-weight: 500;
 }
+.hero-tagline {
+	margin: -16px 0 28px 2px;
+	font-size: 15px;
+	line-height: 1.7;
+	color: rgba(255, 255, 255, 0.6);
+}
+.hero-tagline-meta {
+	font-size: 13px;
+	letter-spacing: 0.04em;
+	color: rgba(255, 255, 255, 0.4);
+}
 
 /* Chat bubbles */
 .chat-bubble {
