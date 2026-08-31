@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-105675198-1');</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta name="keywords" content="JWT security, token validation, authentication flaws, API security testing, broken authentication, JSON web tokens, signature verification">
+  <meta name="author" content="Anthony Smith">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
+  <meta property="og:title" content="How I Test for JWT Validation Flaws — Anthony Smith">
+  <meta property="og:description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
+  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="article:published_time" content="2026-08-31">
+  <meta property="article:author" content="Anthony Smith">
+  <meta property="article:section" content="Security">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anthonys1760">
+  <meta name="twitter:title" content="How I Test for JWT Validation Flaws">
+  <meta name="twitter:description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
+
+  <title>How I Test for JWT Validation Flaws — Anthony Smith</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/brands.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/css/hero-theme.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4bffa5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html"
+    },
+    "headline": "How I Test for JWT Validation Flaws",
+    "description": "Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.",
+    "keywords": "JWT security, token validation, authentication flaws, API security testing, broken authentication, JSON web tokens, signature verification",
+    "articleSection": "Security",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
+    },
+    "datePublished": "2026-08-31",
+    "dateModified": "2026-08-31",
+    "author": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net",
+      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Anthony Smith",
+      "url": "https://www.anthonysdigital.net"
+    },
+    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Anthony Smith — Technical Blog",
+      "url": "https://www.anthonysdigital.net/blog/"
+    }
+  }
+  </script>
+
+  <style>
+    .post-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 150px 24px 100px;
+    }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: #4bffa5; }
+    .post-header { margin-bottom: 40px; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4bffa5;
+      background: rgba(75,255,165,0.1);
+      border: 1px solid rgba(75,255,165,0.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .post-read, .post-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .post-title {
+      font-size: 1.6rem !important;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin: 0 0 20px;
+    }
+    .post-hero-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 48px;
+      max-height: 420px;
+      object-fit: cover;
+    }
+    .post-body h2 {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 40px 0 14px;
+    }
+    .post-body p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .post-body ul, .post-body ol {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body ol li { padding-left: 4px; }
+    .post-body ol li::marker { color: #4bffa5; font-weight: 600; }
+    .post-body pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .post-body code {
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #4bffa5;
+    }
+    .post-body p code, .post-body li code {
+      background: rgba(75,255,165,0.08);
+      border: 1px solid rgba(75,255,165,0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.875em;
+    }
+    .post-callout {
+      background: rgba(75,255,165,0.07);
+      border-left: 3px solid #4bffa5;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .post-footer-nav {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .post-footer-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4bffa5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .post-footer-nav a:hover { opacity: 0.75; }
+    @media (max-width: 600px) {
+      .post-title { font-size: 1.35rem !important; }
+      .post-wrap { padding: 130px 18px 80px; }
+    }
+  </style>
+</head>
+
+<body class="hero-themed">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="centrize full-width">
+      <div class="vertical-center">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-page background (outside container to avoid clipping) -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-gradient-bg"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;min-height:100vh;background:transparent;">
+    <div class="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="head-top">
+        <a href="#" class="menu-btn"><span></span></a>
+        <div class="logo hover-masks-logo">
+          <a href="/index.html">
+            <span class="mask-lnk">Anthony <strong>Smith</strong></span>
+          </a>
+        </div>
+        <div class="top-menu hover-masks">
+          <div class="top-menu-nav">
+            <div class="menu-topmenu-container">
+              <ul class="menu">
+                <li class="menu-item menu-item-has-children"><a href="/index.html">Home</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/about.html">About</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/portfolio.html">Portfolio</a></li>
+                <li class="menu-item menu-item-has-children current-menu-item"><a href="/blog/">Technical Blog</a></li>
+                <li class="menu-item menu-item-has-children"><a href="/contact.html">Contact</a></li>
+              </ul>
+            </div>
+            <div class="top-menu-social" aria-label="Social links">
+              <a class="top-menu-social-link" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+                <span class="icon fab fa-github"></span><span class="label">GitHub</span>
+              </a>
+              <a class="top-menu-social-link" href="mailto:anthony.smith1760@gmail.com" aria-label="Email">
+                <span class="icon fas fa-envelope"></span><span class="label">Email</span>
+              </a>
+              <a class="top-menu-social-link" href="https://www.codementor.io/@anthonys1760" target="_blank" rel="noopener" aria-label="Codementor">
+                <span class="icon fas fa-graduation-cap"></span><span class="label">Codementor</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <!-- Post Content -->
+      <article class="post-wrap">
+
+        <a href="/blog/" class="post-back">&larr; All posts</a>
+
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-category">Security</span>
+            <span class="post-read">5 min read</span>
+            <span class="post-date">August 31, 2026</span>
+          </div>
+          <h1 class="post-title">How I Test for JWT Validation Flaws</h1>
+        </header>
+
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for JWT Validation Flaws" onerror="this.style.display='none'">
+
+        <div class="post-body">
+          <p>Most APIs that use JWTs check whether a token is present and whether it can be decoded. They stop there. The problem is that decoding a JWT requires no secret and no verification. Any string that looks like three base64 segments separated by periods will decode successfully. The application extracts the user ID from the payload, loads that user's data, and grants access. An attacker who changes the <code>sub</code> claim from <code>1234</code> to <code>5678</code> becomes user 5678.</p>
+
+<p>This happens because developers treat JWTs as opaque tokens when they are actually signed or encrypted data structures. The signature exists to prevent tampering, but only if the application actually verifies it. I see APIs that decode the payload and immediately trust every claim inside without ever checking the signature against a secret or public key.</p>
+
+<h2>Why This Hides</h2>
+
+<p>JWT libraries make verification optional. Most provide separate methods for decoding and verifying, and the decode method works perfectly during development. The token parses, the claims look correct, and everything functions. The missing verification step causes no errors and no visible breakage. Code review often misses it because the JWT handling is tucked into middleware or a utility function, and reviewers assume the library is doing the secure thing by default. It is not.</p>
+
+<h2>My Testing Method</h2>
+
+<ol><li>Capture a valid JWT from an authenticated session. Decode it using a tool or library to see the header and payload structure. Note the algorithm in the <code>alg</code> header and identify which claims control identity, such as <code>sub</code>, <code>user_id</code>, or <code>email</code>.</li><li>Modify a claim that determines access or identity. Change the user ID to another valid value, or escalate a role from <code>user</code> to <code>admin</code>. Re-encode the header and payload without signing, or sign it with a key you control.</li><li>Send the modified token in a request to a protected endpoint. If the API accepts it and returns data for the altered user or role, signature verification is missing or broken.</li><li>Test the <code>alg</code> field by changing it to <code>none</code>. Remove the signature portion entirely, leaving the trailing period. Some libraries honor this and skip verification when <code>alg</code> is set to <code>none</code>.</li><li>If the API uses asymmetric signing with RS256, try changing the algorithm to HS256 and signing the token with the public key. If the server uses the same key material to verify HMAC signatures that it uses for RSA public key verification, this can succeed.</li><li>Check for missing expiration enforcement by replaying an old token or by removing the <code>exp</code> claim entirely. Verify that the API rejects expired tokens and enforces reasonable TTLs.</li><li>Test issuer and audience validation by changing the <code>iss</code> or <code>aud</code> claims to arbitrary values. These claims tie a token to a specific system and should be validated, but often are not.</li></ol>
+
+<h2>The Deeper Issue</h2>
+
+<div class="post-callout">A valid JWT structure is not the same as a verified JWT. Parsing succeeds even when the signature is wrong, missing, or never checked. Treat every JWT as untrusted input until signature verification passes. Do not extract claims before verification, because an attacker controls the entire token body until you prove it was signed by your system.</div>
+
+<h2>Defensive Implementation</h2>
+
+<p>When implementing JWT validation, always use the verify method provided by your library, never the decode method alone. Explicitly specify the allowed algorithms and reject <code>none</code>. Validate <code>iss</code>, <code>aud</code>, and <code>exp</code> claims as part of every verification call. Store signing secrets securely and rotate them periodically.</p>
+
+<pre><code class="lang-js">const jwt = require('jsonwebtoken');
+
+function verifyToken(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: ['HS256'],
+      issuer: 'api.example.com',
+      audience: 'web-client'
+    });
+    return decoded;
+  } catch (err) {
+    throw new Error('Invalid token');
+  }
+}</code></pre>
+
+<h2>Why It Persists</h2>
+
+<p>JWT validation flaws survive because the failure mode is silent. An application that skips verification works exactly like one that performs it, until an attacker notices. Developers see tokens flowing through the system and assume the library is handling security. Documentation often shows decoding examples first and buries verification in later sections. The gap does not surface in functional testing, only in adversarial testing.</p>
+
+<p>I test every API that uses JWTs by modifying tokens and observing whether the changes are rejected. Verification must happen before trust.</p>
+        </div>
+
+        <nav class="post-footer-nav">
+          <a href="/blog/">&larr; Back to all posts</a>
+        </nav>
+
+      </article>
+
+      <!-- Footer -->
+      <footer class="footer" style="position:relative;z-index:2;">
+        <div class="copy"></div>
+        <div class="soc-box">
+          <div class="follow-label">Follow Me</div>
+          <div class="soc">
+            <a target="_blank" rel="noopener" href="https://github.com/anthonys1760?tab=repositories" aria-label="GitHub">
+              <span class="icon fab fa-github"></span>
+            </a>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </footer>
+
+      <div class="lines">
+        <div class="line-col"></div><div class="line-col"></div><div class="line-col"></div>
+        <div class="line-col"></div><div class="line-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <script src="/js/enhancements.js"></script>
+</body>
+</html>

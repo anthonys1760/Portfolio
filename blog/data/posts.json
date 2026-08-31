@@ -1,5 +1,23 @@
 [
   {
+    "slug": "how-i-test-for-jwt-validation-flaws",
+    "title": "How I Test for JWT Validation Flaws",
+    "excerpt": "Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.",
+    "category": "Security",
+    "readTime": "5 min",
+    "date": "August 31, 2026",
+    "dateISO": "2026-08-31",
+    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "authn-jwt",
+    "tags": [
+      "appsec",
+      "api-security",
+      "authentication",
+      "jwt"
+    ]
+  },
+  {
     "slug": "how-i-test-for-mass-assignment-and-excessive-data-exposure",
     "title": "How I Test for Mass Assignment and Excessive Data Exposure",
     "excerpt": "Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.",
