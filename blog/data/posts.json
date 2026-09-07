@@ -1,5 +1,22 @@
 [
   {
+    "slug": "how-i-test-for-broken-function-level-authorization",
+    "title": "How I Test for Broken Function Level Authorization",
+    "excerpt": "Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.",
+    "category": "Security",
+    "readTime": "4 min",
+    "date": "September 7, 2026",
+    "dateISO": "2026-09-07",
+    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "bfla",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
     "slug": "how-i-test-for-jwt-validation-flaws",
     "title": "How I Test for JWT Validation Flaws",
     "excerpt": "Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.",
