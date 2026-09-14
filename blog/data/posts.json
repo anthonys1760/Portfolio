@@ -1,5 +1,22 @@
 [
   {
+    "slug": "how-i-test-for-unrestricted-resource-consumption",
+    "title": "How I Test for Unrestricted Resource Consumption",
+    "excerpt": "Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.",
+    "category": "Security",
+    "readTime": "4 min",
+    "date": "September 14, 2026",
+    "dateISO": "2026-09-14",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "resource-abuse",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
     "slug": "how-i-test-for-broken-function-level-authorization",
     "title": "How I Test for Broken Function Level Authorization",
     "excerpt": "Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.",
