@@ -1,5 +1,22 @@
 [
   {
+    "slug": "how-i-test-for-security-misconfiguration",
+    "title": "How I Test for Security Misconfiguration",
+    "excerpt": "Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.",
+    "category": "Security",
+    "readTime": "5 min",
+    "date": "September 28, 2026",
+    "dateISO": "2026-09-28",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "misconfig",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
     "slug": "how-i-test-for-server-side-request-forgery",
     "title": "How I Test for Server Side Request Forgery",
     "excerpt": "Most APIs trust URL parameters without asking where they point. I walk through how I test whether the server can be tricked into making requests on an attacker's behalf.",
