@@ -1,5 +1,22 @@
 [
   {
+    "slug": "how-i-test-for-shadow-and-zombie-apis",
+    "title": "How I Test for Shadow and Zombie APIs",
+    "excerpt": "Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.",
+    "category": "Security",
+    "readTime": "5 min",
+    "date": "October 5, 2026",
+    "dateISO": "2026-10-05",
+    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "inventory",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
     "slug": "how-i-test-for-security-misconfiguration",
     "title": "How I Test for Security Misconfiguration",
     "excerpt": "Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.",

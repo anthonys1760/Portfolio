@@ -187,4 +187,10 @@
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
+	<url>
+		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html</loc>
+		<lastmod>2026-10-05</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
 </urlset>
