@@ -1,5 +1,22 @@
 [
   {
+    "slug": "how-i-test-for-unsafe-consumption-of-third-party-apis",
+    "title": "How I Test for Unsafe Consumption of Third Party APIs",
+    "excerpt": "Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.",
+    "category": "Security",
+    "readTime": "6 min",
+    "date": "November 2, 2026",
+    "dateISO": "2026-11-02",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "series": "appsec-methodology",
+    "topicKey": "third-party",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp"
+    ]
+  },
+  {
     "slug": "how-i-test-for-shadow-and-zombie-apis",
     "title": "How I Test for Shadow and Zombie APIs",
     "excerpt": "Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.",
