@@ -202,12 +202,16 @@
 .feat-card img {
 	display: block;
 	width: 100%;
+	max-width: 100%;
+	height: auto;
 	margin-top: 12px;
 	border-radius: 12px;
+	aspect-ratio: 1000 / 750;
+	object-fit: contain;
+	flex: none;
 }
 @media (min-width: 1000px) {
 	.feat-card { margin-top: 0; }
-	.feat-card img { max-height: 280px; object-fit: cover; object-position: right center; }
 }
 
 .home .hero-chat {
@@ -261,8 +265,13 @@
 }
 .case-shots img {
 	width: 100%;
+	max-width: 100%;
+	height: auto;
+	aspect-ratio: 1000 / 750;
+	object-fit: contain;
 	border-radius: 16px;
 	display: block;
+	flex: none;
 	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .case-shots figcaption {
@@ -812,9 +821,11 @@ body.hero-themed .header.active .menu-btn:after {
 .case-row .case-media img {
 	display: block;
 	width: 100%;
+	max-width: 100%;
 	height: auto;
-	aspect-ratio: 4 / 5;
-	object-fit: cover;
+	aspect-ratio: 840 / 1050;
+	object-fit: contain;
+	flex: none;
 	border-radius: 16px;
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	background: #0c1018;
