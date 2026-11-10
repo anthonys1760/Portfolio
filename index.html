@@ -21,39 +21,26 @@
 	</script>
 	<!-- End Google Tag Manager -->
 
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-105675198-1');
-	</script>
-
 	<!-- Meta -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta name="description" content="Anthony Smith — Senior Full Stack & Solutions Architect. 6+ years shipping scalable web platforms, AI integrations, and secure systems. Based in Belmont, Michigan.">
-	<meta name="keywords" content="senior full stack engineer, solutions architect, tech lead, technical lead, software architect, react native, ai engineer, llm integration, cloud infrastructure, application security, digital transformation, GCP, Azure, belmont michigan, portfolio">
+	<meta name="description" content="Anthony Smith — I ship secure apps. Then I break them. 15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Based in Grand Rapids, Michigan. Open to full-time roles and contract or freelance work.">
+	<meta name="keywords" content="senior software engineer, application security, api security, react native, typescript, supabase, owasp, grand rapids michigan, portfolio">
 	<meta name="author" content="Anthony Smith">
 	<meta name="robots" content="index, follow">
 	<link rel="canonical" href="https://www.anthonysdigital.net/">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://www.anthonysdigital.net/">
-	<meta property="og:title" content="Anthony Smith — Senior Full Stack & Solutions Architect">
-	<meta property="og:description" content="6+ years shipping scalable web platforms, AI integrations, and secure systems. Lead Systems Engineer at SpartanNash.">
+	<meta property="og:title" content="Anthony Smith — I ship secure apps. Then I break them.">
+	<meta property="og:description" content="15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Grand Rapids, Michigan.">
 	<meta property="og:image" content="https://www.anthonysdigital.net/images/og-card.jpg">
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Anthony Smith — Senior Full Stack & Solutions Architect">
-	<meta name="twitter:description" content="6+ years shipping scalable web platforms, AI integrations, and secure systems.">
+	<meta name="twitter:title" content="Anthony Smith — I ship secure apps. Then I break them.">
+	<meta name="twitter:description" content="15+ years building production systems. Mobile apps, API security testing, and AI features. Grand Rapids, Michigan.">
 	<meta name="twitter:image" content="https://www.anthonysdigital.net/images/og-card.jpg">
 
 	<!-- Title -->
-	<title>Anthony Smith — Senior Full Stack Solutions Architect & AI Systems Engineer</title>
+	<title>Anthony Smith — I ship secure apps. Then I break them.</title>
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,6 +59,7 @@
 	<link rel="stylesheet" href="css/brands.css" />
 	<link rel="stylesheet" href="css/solid.css" />
 	<link rel="stylesheet" href="css/hero-theme.css">
+	<link rel="stylesheet" href="/css/review-fixes.css">
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -87,12 +75,12 @@
 		"@type": "Person",
 		"name": "Anthony Smith",
 		"url": "https://www.anthonysdigital.net",
-		"jobTitle": "Senior Full Stack & Solutions Architect",
-		"description": "Senior Full Stack Engineer, Tech Lead, and Solutions Architect with 6+ years shipping scalable web platforms, AI integrations, and secure systems.",
+		"jobTitle": "I ship secure apps. Then I break them.",
+		"description": "Senior Software Engineer with 15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Open to full-time roles and contract or freelance work.",
 		"email": "mailto:anthony.smith1760@gmail.com",
 		"address": {
 			"@type": "PostalAddress",
-			"addressLocality": "Belmont",
+			"addressLocality": "Grand Rapids",
 			"addressRegion": "Michigan",
 			"addressCountry": "US"
 		},
@@ -106,6 +94,7 @@
 </head>
 
 <body class="home hero-themed">
+	<a class="skip" href="#main">Skip to content</a>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
 			style="display:none;visibility:hidden"></iframe></noscript>
@@ -133,34 +122,33 @@
 		<header class="header">
 			<div class="head-top">
 
-				<!-- menu button -->
-				<a href="#" class="menu-btn"><span></span></a>
+				<button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span></button>
 
 				<!-- logo -->
-				<div class="logo hover-masks-logo animated bounceIn delay-4s">
-					<a href="#">
+				<div class="logo hover-masks-logo">
+					<a href="index.html">
 						<span class="mask-lnk">Anthony <strong>Smith</strong></span>
 					</a>
 				</div>
 
 				<!-- top menu -->
-				<div class="top-menu hover-masks animated fadeIn delay-4s">
+				<div class="top-menu hover-masks">
 					<div class="top-menu-nav">
 						<div class="menu-topmenu-container">
 							<ul class="menu">
-								<li class="menu-item menu-item-has-children current-menu-item">
-									<a href="index.html">Home</a>
+								<li class="menu-item current-menu-item">
+									<a href="index.html" aria-current="page">Home</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="about.html">About</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="portfolio.html">Portfolio</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="/blog/">Technical Blog</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="contact.html">Contact</a>
 								</li>
 							</ul>
@@ -186,11 +174,13 @@
 					</div>
 				</div>
 
+			
+				<a class="header-touch" href="contact.html">Get in touch</a>
 			</div>
 		</header>
 
 		<!-- Wrapper -->
-		<div class="wrapper">
+		<div class="wrapper" id="main">
 
 			<!-- Section Started -->
 			<div class="section started" id="section-started">
@@ -205,62 +195,53 @@
 					<div class="vertical-center">
 						<div class="started-content started-chat">
 							<div class="hero-chat-wrap">
-								<p class="hero-name">Anthony Smith</p>
-								<h1 class="hero-role">Senior Software Engineer<br /><strong>Application &amp; API Security.</strong></h1>
-								<p class="hero-tagline">I build production systems and break them before attackers do.<br />
-									<span class="hero-tagline-meta">Node &middot; TypeScript &middot; React &middot; OWASP&ensp;|&ensp;DoD &middot; Ford</span></p>
-
-								<div class="chat-row user">
-									<div class="chat-bubble user">Who is Anthony Smith?</div>
+								<div class="hero-top">
+									<div class="hero-copy">
+										<p class="hero-eyebrow">Senior Software Engineer · Grand Rapids, MI</p>
+										<h1 class="hero-role">I ship secure apps.<br /><strong>Then I break them.</strong></h1>
+										<p class="hero-tagline"><strong>15+ years</strong> building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10.</p>
+										<ul class="hire-chips" aria-label="Hire me for">
+											<li>Mobile apps</li>
+											<li>AppSec &amp; API testing</li>
+											<li>AI features</li>
+										</ul>
+										<div class="hero-cta-wrap" id="hero-cta-wrap">
+											<a class="hero-cta hero-cta-primary" href="mailto:anthony.smith1760@gmail.com?subject=Project%20or%20role">Email me about a project</a>
+											<a class="hero-text-link" href="portfolio.html">See case studies →</a>
+										</div>
+										<p class="hero-proof"><strong>Lead Systems Engineer</strong>, SpartanNash · <strong>PenTest+</strong> certified</p>
+										<p class="hero-availability">Open to full-time roles and contract or freelance work.</p>
+									</div>
+									<a class="feat-card" href="portfolio.html#castlog">
+										<div class="lbl">Featured case study</div>
+										<h2>CastLog</h2>
+										<p>Fishing journal you log by voice. Built solo, offline-first.</p>
+										<div class="status"><i></i>Live on the App Store</div>
+										<p class="stack">React Native · On-device AI · Offline-first</p>
+										<p class="more">Read the case study →</p>
+										<img src="images/castlog.jpg" alt="CastLog marketing image from this repo. It shows the voice log and catch journal on phone screens inside a laptop mockup. Separate app screenshots are not in the repo.">
+									</a>
 								</div>
-								<div class="chat-row assistant">
-									<div class="chat-bubble assistant thinking-active" id="chat-bubble-assistant">
+
+								<div class="chat-row assistant hero-chat">
+									<div class="chat-bubble assistant thinking-done thinking-idle" id="chat-bubble-assistant">
 										<div class="assistant-meta" id="assistant-meta">
-											<span class="meta-model">claude-opus-4.6</span>
+											<span class="meta-model">anthony.ai</span>
 											<span class="meta-sep" aria-hidden="true">&middot;</span>
-											<span class="meta-mode" id="meta-mode">extended thinking</span>
-											<span class="meta-pulse" id="meta-pulse" aria-hidden="true"></span>
+											<span class="meta-mode" id="meta-mode">about me</span>
 										</div>
-										<div class="thinking-state" id="thinking-state">
-											<div class="thinking-label" aria-live="polite">
-												<span class="thinking-orbit" aria-hidden="true"></span>
-												Thinking
-											</div>
-											<div class="thinking-stream" id="thinking-stream" aria-live="polite"></div>
+										<div class="chat-text" id="chat-text">
+											<p>Anthony is a Senior Software Engineer specializing in <span class="accent">application &amp; API security</span>, based in Grand Rapids, Michigan.</p>
+											<p>He builds scalable web platforms, ships <span class="accent">React Native mobile apps</span> to TestFlight and the App Store, and designs <span class="accent">multi-agent AI systems</span> — orchestrating Anthropic, OpenAI, Grok, and Gemini through custom OpenRouter pipelines.</p>
+											<p>He leads systems engineering at <span class="accent">SpartanNash</span>, mentors developers in the Grepper community, and is open to full-time roles and to contract or freelance work.</p>
 										</div>
-										<div class="thought-header" id="thought-header" hidden>
-											<button type="button" class="thought-toggle" id="thought-toggle" aria-expanded="false" aria-controls="thought-trace">
-												<span class="thought-chevron" aria-hidden="true">&#9656;</span>
-												<span class="thought-text">Thought for <span id="thought-time">0</span>s</span>
-											</button>
-											<div class="thought-trace" id="thought-trace" hidden>
-												<p id="thought-trace-body"></p>
-											</div>
-										</div>
-										<div class="chat-text" id="chat-text" style="display:none;"></div>
 									</div>
 								</div>
 
-								<div class="hero-cta-wrap" id="hero-cta-wrap">
-									<a class="hero-cta" href="portfolio.html">
-										See my work <span class="arrow">&rarr;</span>
-									</a>
-									<a class="hero-cta outline" href="contact.html">
-										Get in touch <span class="arrow">&rarr;</span>
-									</a>
-								</div>
-
-								<div class="trusted-by">
-									<div class="trusted-label">Trusted by &amp; featured in</div>
-									<ul class="trusted-marks">
-										<li>SpartanNash</li>
-										<li>Ford Motor Company</li>
-										<li>U.S. Department of Defense</li>
-										<li>iOS App Store</li>
-										<li>TestFlight</li>
-										<li>Grepper</li>
-										<li>HackerNoon</li>
-									</ul>
+								<div class="trust-split">
+									<p><span class="trusted-label">Worked with</span> SpartanNash · Ford (via VMLY&amp;R) · DoD contractor work (via Intelligent Waves)</p>
+									<p><span class="trusted-label">Writing on</span> HackerNoon</p>
+									<p><span class="trusted-label">Available on</span> iOS App Store · TestFlight</p>
 								</div>
 							</div>
 						</div>
@@ -311,215 +292,18 @@
 	<script defer src="js/scripts.js"></script>
 	<script defer src="/js/enhancements.js"></script>
 
-	<!-- Hero chat streamer: natural LLM-style token streaming -->
+	<!-- Caret only. The reply is in the HTML so it is visible on first paint. -->
 	<script>
 	(function () {
-		var REPLY = "Anthony is a Senior Software Engineer specializing in <span class=\"accent\">application &amp; API security</span>, based in Belmont, Michigan.\n\nHe builds scalable web platforms, ships <span class=\"accent\">React Native mobile apps</span> to TestFlight and the App Store, and designs <span class=\"accent\">multi-agent AI systems</span> \u2014 orchestrating Anthropic, OpenAI, Grok, and Gemini through custom OpenRouter pipelines.\n\nCurrently leading systems engineering at <span class=\"accent\">SpartanNash</span> and mentoring 140,000+ developers worldwide on the side.";
-
-		var bubble = document.getElementById('chat-bubble-assistant');
-		var thinkingState = document.getElementById('thinking-state');
-		var thinkingStream = document.getElementById('thinking-stream');
-		var thoughtHeader = document.getElementById('thought-header');
-		var thoughtToggle = document.getElementById('thought-toggle');
-		var thoughtTrace = document.getElementById('thought-trace');
-		var thoughtTraceBody = document.getElementById('thought-trace-body');
-		var thoughtTime = document.getElementById('thought-time');
-		var metaMode = document.getElementById('meta-mode');
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		var textEl = document.getElementById('chat-text');
-		var cta = document.getElementById('hero-cta-wrap');
-		if (!thinkingState || !thinkingStream || !textEl || !cta) return;
-
-		// Claude-style streamed "thought" trace. Entity spans render bold as
-		// they stream in, mirroring the chain-of-thought highlighting in
-		// Anthropic's thinking UI.
-		var THOUGHT_TRACE = "Pulling key facts: <strong>role</strong>, <strong>location</strong>, current focus.\nFraming around <strong>senior full-stack</strong> + <strong>solutions architect</strong> + <strong>AI systems engineer</strong>.\n<strong>React Native</strong> mobile apps is the 2026 differentiator.\nAnchoring with <strong>SpartanNash</strong> and <strong>140k mentees</strong> as proof.\nDrafting the reply\u2026";
-
-		// Tokenize the reply so we can stream raw text while preserving HTML spans.
-		// Strategy: split the string into tokens that are either a full HTML tag or a single visible char.
-		function tokenize(str) {
-			var tokens = [];
-			var i = 0;
-			while (i < str.length) {
-				if (str[i] === '<') {
-					var end = str.indexOf('>', i);
-					if (end === -1) { tokens.push(str[i]); i++; continue; }
-					tokens.push(str.slice(i, end + 1));
-					i = end + 1;
-				} else {
-					tokens.push(str[i]);
-					i++;
-				}
-			}
-			return tokens;
-		}
-
-		var tokens = tokenize(REPLY);
-		var cursor = 0;
-		var buffer = '';
-		var caretEl;
-
-		function rand(min, max) { return min + Math.random() * (max - min); }
-
-		function render() {
-			// Convert \n\n to paragraph breaks and \n to <br/>
-			var html = buffer.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>');
-			textEl.innerHTML = '<p>' + html + '</p>';
-			// Append caret to the last paragraph
-			var lastP = textEl.querySelector('p:last-child');
-			if (lastP) {
-				if (!caretEl) caretEl = document.createElement('span');
-				caretEl.className = 'chat-caret';
-				lastP.appendChild(caretEl);
-			}
-			// Keep the newest tokens in view when the bubble is internally
-			// scrollable (mobile layout with a fixed bubble height).
-			var bubble = textEl.parentElement;
-			if (bubble) bubble.scrollTop = bubble.scrollHeight;
-		}
-
-		function revealCTA() {
-			if (caretEl) caretEl.classList.add('blink');
-			cta.classList.add('revealed');
-		}
-
-		function streamNext() {
-			if (cursor >= tokens.length) {
-				revealCTA();
-				return;
-			}
-
-			// Take a random chunk of 2-5 visible chars (but consume full HTML tags atomically).
-			var chunkTarget = Math.floor(rand(2, 6));
-			var consumedVisible = 0;
-			var paragraphBreak = false;
-			while (cursor < tokens.length && consumedVisible < chunkTarget) {
-				var tok = tokens[cursor++];
-				buffer += tok;
-				if (tok.length > 1 && tok[0] === '<') {
-					// HTML tag — doesn't count toward visible chunk size
-					continue;
-				}
-				consumedVisible++;
-				// Stop early on paragraph break so we can pause longer
-				if (tok === '\n' && cursor < tokens.length && tokens[cursor] === '\n') {
-					buffer += tokens[cursor++];
-					paragraphBreak = true;
-					break;
-				}
-			}
-
-			render();
-
-			// Decide next delay
-			var last = buffer.slice(-1);
-			var delay = rand(28, 95);
-			if (/[.!?]/.test(last)) delay += rand(220, 380);
-			else if (/[,:;]/.test(last)) delay += rand(120, 220);
-			if (paragraphBreak) delay += rand(420, 600);
-			// Occasional "thinking" pause
-			if (Math.random() < 0.04) delay += rand(400, 800);
-
-			setTimeout(streamNext, delay);
-		}
-
-		// Claude-style "thinking" phase: stream a real reasoning trace into
-		// .thinking-stream (preserving HTML strong tags for entity highlights),
-		// then collapse into a "Thought for Xs" header and begin the reply.
-		var thoughtTokens = tokenize(THOUGHT_TRACE);
-		var thoughtCursor = 0;
-		var thoughtBuffer = '';
-		var thoughtStopped = false;
-		var thoughtTimer = null;
-
-		function renderThought() {
-			thinkingStream.innerHTML = thoughtBuffer.replace(/\n/g, '<br/>');
-			// Auto-scroll so the newest lines stay in view under the fade mask.
-			thinkingStream.scrollTop = thinkingStream.scrollHeight;
-		}
-
-		function streamThought() {
-			if (thoughtStopped) return;
-			if (thoughtCursor >= thoughtTokens.length) {
-				// Idle pulse at the end of the trace — keep a soft ellipsis
-				// cadence until the thinking phase actually elapses.
-				return;
-			}
-			var chunkTarget = Math.floor(rand(2, 5));
-			var consumedVisible = 0;
-			while (thoughtCursor < thoughtTokens.length && consumedVisible < chunkTarget) {
-				var ttok = thoughtTokens[thoughtCursor++];
-				thoughtBuffer += ttok;
-				if (ttok.length > 1 && ttok[0] === '<') continue;
-				consumedVisible++;
-			}
-			renderThought();
-			var last = thoughtBuffer.slice(-1);
-			var delay = rand(10, 26);
-			if (/[.!?]/.test(last)) delay += rand(90, 170);
-			else if (/[,:;]/.test(last)) delay += rand(45, 90);
-			if (last === '\n') delay += rand(120, 220);
-			thoughtTimer = setTimeout(streamThought, delay);
-		}
-
-		// Target thinking duration: 3.2s ± small jitter so it feels organic.
-		var THINK_MS = 3200 + Math.floor(rand(-300, 400));
-		var thinkStart = (typeof performance !== 'undefined' && performance.now)
-			? performance.now()
-			: Date.now();
-
-		// Kick off the thought stream.
-		streamThought();
-
-		setTimeout(function () {
-			thoughtStopped = true;
-			if (thoughtTimer) clearTimeout(thoughtTimer);
-			var now = (typeof performance !== 'undefined' && performance.now)
-				? performance.now()
-				: Date.now();
-			var elapsedSec = Math.max(1, Math.round((now - thinkStart) / 1000));
-			thoughtTime.textContent = String(elapsedSec);
-
-			// Populate the click-to-expand trace with the full source so the
-			// collapsed header can re-reveal the same reasoning the user just
-			// watched stream.
-			if (thoughtTraceBody) {
-				thoughtTraceBody.innerHTML = THOUGHT_TRACE.replace(/\n/g, '<br/>');
-			}
-
-			// State transition: kill the glow, flip the meta label, swap
-			// thinking-state → thought-header + streaming reply. After the
-			// fade-out settles, kick off a gentle idle "breathing" so the
-			// bubble stays subtly alive without competing with the CTAs.
-			if (bubble) {
-				bubble.classList.remove('thinking-active');
-				bubble.classList.add('thinking-done');
-				setTimeout(function () {
-					bubble.classList.add('thinking-idle');
-				}, 900);
-			}
-			if (metaMode) metaMode.textContent = 'reply';
-			thinkingState.style.display = 'none';
-			thoughtHeader.hidden = false;
-			textEl.style.display = '';
-			streamNext();
-		}, THINK_MS);
-
-		// Click to expand/collapse the "reasoning" trace
-		if (thoughtToggle) {
-			thoughtToggle.addEventListener('click', function () {
-				var expanded = this.getAttribute('aria-expanded') === 'true';
-				this.setAttribute('aria-expanded', String(!expanded));
-				if (expanded) {
-					thoughtTrace.setAttribute('hidden', '');
-				} else {
-					thoughtTrace.removeAttribute('hidden');
-					// On mobile the bubble is scroll-locked; make sure the
-					// expanded trace stays visible.
-					var bubble = textEl.parentElement;
-					if (bubble) bubble.scrollTop = bubble.scrollHeight;
-				}
-			});
-		}
+		if (!textEl) return;
+		var last = textEl.querySelector('p:last-child');
+		if (!last) return;
+		var caret = document.createElement('span');
+		caret.className = 'chat-caret blink';
+		caret.setAttribute('aria-hidden', 'true');
+		last.appendChild(caret);
 	})();
 	</script>
 

@@ -15,13 +15,6 @@
 	</script>
 	<!-- End Google Tag Manager -->
 
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-		gtag('config', 'UA-105675198-1');
-	</script>
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -137,7 +130,7 @@
 		}
 		.blog-card-read {
 			font-size: 0.78rem;
-			color: rgba(255,255,255,0.35);
+			color: rgba(255,255,255,0.62);
 		}
 		.blog-card-title {
 			font-size: 1.1rem !important;
@@ -160,7 +153,7 @@
 		}
 		.blog-card-date {
 			font-size: 0.78rem;
-			color: rgba(255,255,255,0.3);
+			color: rgba(255,255,255,0.62);
 		}
 		.blog-card-arrow {
 			font-size: 0.82rem;
@@ -172,7 +165,7 @@
 		.blog-empty {
 			text-align: center;
 			padding: 80px 24px;
-			color: rgba(255,255,255,0.35);
+			color: rgba(255,255,255,0.62);
 			font-size: 1rem;
 		}
 		.blog-empty strong {
@@ -185,7 +178,7 @@
 		.blog-loading {
 			text-align: center;
 			padding: 80px 24px;
-			color: rgba(255,255,255,0.35);
+			color: rgba(255,255,255,0.62);
 			font-size: 0.95rem;
 		}
 
@@ -194,9 +187,11 @@
 			.blog-grid { grid-template-columns: 1fr; }
 		}
 	</style>
+<link rel="stylesheet" href="/css/review-fixes.css">
 </head>
 
 <body class="hero-themed">
+	<a class="skip" href="#main">Skip to content</a>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
 			style="display:none;visibility:hidden"></iframe></noscript>
@@ -229,7 +224,7 @@
 			<div class="head-top">
 
 				<!-- menu button -->
-				<a href="#" class="menu-btn"><span></span></a>
+				<button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span></button>
 
 				<!-- logo -->
 				<div class="logo hover-masks-logo">
@@ -243,19 +238,19 @@
 					<div class="top-menu-nav">
 						<div class="menu-topmenu-container">
 							<ul class="menu">
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="/index.html">Home</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="/about.html">About</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="/portfolio.html">Portfolio</a>
 								</li>
-								<li class="menu-item menu-item-has-children current-menu-item">
-									<a href="/blog/">Technical Blog</a>
+								<li class="menu-item current-menu-item">
+									<a href="/blog/" aria-current="page">Technical Blog</a>
 								</li>
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="/contact.html">Contact</a>
 								</li>
 							</ul>
@@ -281,7 +276,7 @@
 		</header>
 
 		<!-- Wrapper -->
-		<div class="wrapper">
+		<div class="wrapper" id="main">
 
 				<!-- Blog Hero -->
 			<section class="blog-hero" style="position:relative;z-index:2;">

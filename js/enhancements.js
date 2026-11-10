@@ -98,17 +98,19 @@
   document.querySelectorAll('.header .top-menu .menu li a').forEach(function (a) {
     var href = a.getAttribute('href') || '';
     var match = false;
-    if (key === 'home'      && (href === 'index.html' || href === '/index.html' || href === '/')) match = true;
-    if (key === 'about'     && href.indexOf('about') !== -1) match = true;
-    if (key === 'portfolio' && href.indexOf('works_creative') !== -1) match = true;
-    if (key === 'blog'      && href.indexOf('/blog') !== -1) match = true;
-    if (key === 'contact'   && href.indexOf('contacts') !== -1) match = true;
+    if (key === 'home' && (href === 'index.html' || href === '/index.html' || href === '/' || href === '/index.html')) match = true;
+    if (key === 'about' && href.indexOf('about.html') !== -1) match = true;
+    if (key === 'portfolio' && href.indexOf('portfolio.html') !== -1) match = true;
+    if (key === 'blog' && href.indexOf('/blog') !== -1) match = true;
+    if (key === 'contact' && /contact\.html$/.test(href)) match = true;
 
     var li = a.parentElement;
     if (match) {
       li.classList.add('current-menu-item');
+      a.setAttribute('aria-current', 'page');
     } else {
       li.classList.remove('current-menu-item');
+      a.removeAttribute('aria-current');
     }
   });
 })();
