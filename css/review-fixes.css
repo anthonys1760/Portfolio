@@ -539,18 +539,30 @@ body.hero-themed .header .logo a {
 	body.hero-themed .header .head-top {
 		display: flex;
 		align-items: center;
+		gap: 32px;
 	}
 	body.hero-themed .header .logo {
 		position: relative;
 		top: auto;
+		left: auto;
 		transform: none;
+		flex: none;
 	}
 	body.hero-themed .header .top-menu {
+		position: static;
 		margin-left: auto;
+		margin-right: 0;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
+		flex: 0 1 auto;
+		min-width: 0;
 		gap: 18px;
+	}
+	body.hero-themed .header .header-touch {
+		position: static;
+		margin: 0;
+		flex: none;
 	}
 	body.hero-themed .header .menu-btn {
 		display: none;
