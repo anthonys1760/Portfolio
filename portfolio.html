@@ -21,23 +21,10 @@
 	</script>
 	<!-- End Google Tag Manager -->
 
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105675198-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-105675198-1');
-	</script>
-
 	<!-- Meta -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta name="description" content="Selected work by Anthony Smith — React Native apps, AI integrations, and full-stack web platforms including CastLog, NutriLogix AI, and VoiceLift." />
+	<meta name="description" content="Selected work by Anthony Smith — CastLog, Nutrilogix, VoiceLift, and AstroAI X. React Native apps, on-device and multi-provider AI, and API security writing." />
 	<meta name="keywords" content="anthony smith portfolio, react native projects, ai apps, full stack projects, senior engineer portfolio" />
 	<meta name="author" content="Anthony Smith" />
 	<meta name="robots" content="index, follow">
@@ -76,6 +63,7 @@
 	<link rel="stylesheet" href="css/brands.css" />
 	<link rel="stylesheet" href="css/solid.css" />
 	<link rel="stylesheet" href="css/hero-theme.css" />
+	<link rel="stylesheet" href="/css/review-fixes.css" />
 
 	<!-- Theme Colors
 	<link rel="stylesheet" href="css/theme-colors/blue.css" />
@@ -106,12 +94,12 @@
 		"@type": "Person",
 		"name": "Anthony Smith",
 		"url": "https://www.anthonysdigital.net",
-		"jobTitle": "Senior Full Stack & Solutions Architect",
-		"description": "Senior Full Stack Engineer, Tech Lead, and Solutions Architect with 6+ years shipping scalable web platforms, AI integrations, and secure systems.",
+		"jobTitle": "I ship secure apps. Then I break them.",
+		"description": "Senior Software Engineer with 15+ years building production systems. Open to full-time roles and contract or freelance work.",
 		"email": "mailto:anthony.smith1760@gmail.com",
 		"address": {
 			"@type": "PostalAddress",
-			"addressLocality": "Belmont",
+			"addressLocality": "Grand Rapids",
 			"addressRegion": "Michigan",
 			"addressCountry": "US"
 		},
@@ -125,6 +113,7 @@
 </head>
 
 <body class="hero-themed">
+	<a class="skip" href="#main">Skip to content</a>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52FVS76" height="0" width="0"
 			style="display:none;visibility:hidden"></iframe></noscript>
@@ -151,12 +140,11 @@
 		<header class="header">
 			<div class="head-top">
 
-				<!-- menu button -->
-				<a href="#" class="menu-btn"><span></span></a>
+				<button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span></button>
 
 				<!-- logo -->
 				<div class="logo hover-masks-logo">
-					<a href="#">
+					<a href="index.html">
 						<span class="mask-lnk">Anthony <strong>Smith</strong></span>
 					</a>
 				</div>
@@ -166,23 +154,20 @@
 					<div class="top-menu-nav">
 						<div class="menu-topmenu-container">
 							<ul class="menu">
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="index.html">Home</a>
-
-								<li class="menu-item menu-item-has-children">
+								</li>
+								<li class="menu-item">
 									<a href="about.html">About</a>
-
-								<li class="menu-item menu-item-has-children current-menu-item">
-									<a href="portfolio.html">Portfolio</a>
-
-
-								<li class="menu-item menu-item-has-children">
+								</li>
+								<li class="menu-item current-menu-item">
+									<a href="portfolio.html" aria-current="page">Portfolio</a>
+								</li>
+								<li class="menu-item">
 									<a href="/blog/">Technical Blog</a>
 								</li>
-
-								<li class="menu-item menu-item-has-children">
+								<li class="menu-item">
 									<a href="contact.html">Contact</a>
-
 								</li>
 							</ul>
 						</div>
@@ -207,11 +192,13 @@
 					</div>
 				</div>
 
+			
+				<a class="header-touch" href="contact.html">Get in touch</a>
 			</div>
 		</header>
 
 		<!-- Wrapper -->
-		<div class="wrapper">
+		<div class="wrapper" id="main">
 
 			<!-- Section Started -->
 			<div class="section started layout-creative" id="section-started">
@@ -259,100 +246,105 @@
 
 					<!-- Hero project cards -->
 						<div class="project-cards">
+							<p class="portfolio-kicker">Portfolio · Selected work</p>
+							<h2 class="portfolio-heading">Apps I designed, built and shipped</h2>
 
-							<article class="project-card">
-								<a class="project-thumb" href="https://castlogapp.com/" target="_blank" rel="noopener">
-									<img src="images/castlog.jpg" alt="CastLog" />
-								</a>
-								<div class="project-body">
-									<p class="project-meta">2026 &middot; Founder &amp; Engineer</p>
-									<h2 class="project-title">CastLog</h2>
-									<p class="project-desc">AI-powered fishing journal built for wet hands and flopping fish. Log a catch in under 15 seconds, identify species from a photo, and pull local regulations by GPS &mdash; fully offline. No paywalls on core features, no corporate data pipeline.</p>
-									<ul class="stack-chips"><li>React Native</li><li>On-device AI</li><li>Offline-first</li></ul>
-									<details class="project-case-study">
-										<summary>Case study</summary>
-										<div class="cs-grid">
-											<div><h4>Problem</h4><p>Existing fishing apps assume dry hands, full signal, and patience &mdash; none of which exist on a boat. Anglers either stop logging mid-trip or lose their data behind a paywall when they cancel.</p></div>
-											<div><h4>Approach</h4><p>Designed an offline-first journal with a 3-tap logging flow, on-device AI fish ID (94% accuracy), GPS-based regulation lookups, and a searchable knot library that works with no signal. Full data export (CSV/JSON) and private-by-default spots are baked in &mdash; users own their catch history.</p></div>
-											<div><h4>Outcome</h4><p>Now live on the App Store. Voice logging and Apple Watch support on the roadmap.</p></div>
-										</div>
-									</details>
-									<div class="project-links">
-										<a class="hero-cta" href="https://castlogapp.com/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>
-										<a class="hero-cta outline" href="https://apps.apple.com/us/app/castlog-private-fishing-log/id6766137949" target="_blank" rel="noopener">App Store <span class="arrow">&rarr;</span></a>
+							<article class="case-card" id="castlog">
+								<div class="case-shots">
+									<figure>
+										<img src="images/castlog.jpg" alt="CastLog marketing image already in the repo, showing the voice log and catch journal on phone screens inside a laptop mockup." />
+										<figcaption>Voice log and catch journal, from the image in this repo</figcaption>
+									</figure>
+									<p class="shot-note">The repo has this marketing composite, not separate App Store screenshots.</p>
+								</div>
+								<div>
+									<div class="case-top">
+										<span class="case-kicker">iOS app · 2026 · Solo founder &amp; engineer</span>
+										<span class="status-pill"><i></i>Live on the App Store</span>
+									</div>
+									<h2>CastLog</h2>
+									<p class="case-one">A fishing journal you can log by voice, built for wet hands and no signal. It logs a catch in seconds.</p>
+									<dl class="case-dl">
+										<dt>Problem</dt>
+										<dd>Fishing apps assume dry hands, full signal and patience, so anglers stop logging mid-trip.</dd>
+										<dt>My role</dt>
+										<dd>Product, UX, React Native app, back end and App Store release. Built solo.</dd>
+										<dt>Stack</dt>
+										<dd><span class="tag">React Native</span><span class="tag">On-device AI</span><span class="tag">Offline-first</span></dd>
+										<dt>Outcome</dt>
+										<dd>Shipped to the App Store. Voice logging, Fish ID with a 95% median confidence score, private spots, and CSV/JSON export are in the product.<br><span class="outcome-slot">+ Add one measured number here (e.g. median time to log, from analytics) once it exists</span></dd>
+									</dl>
+									<div class="case-links">
+										<a class="primary" href="https://apps.apple.com/app/id6766137949" target="_blank" rel="noopener">View on the App Store ↗</a>
+										<a class="secondary" href="https://castlogapp.com/" target="_blank" rel="noopener">Website ↗</a>
+										<a class="textish" href="#castlog">Read the case study →</a>
 									</div>
 								</div>
 							</article>
 
-							<article class="project-card reverse">
-								<a class="project-thumb" href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">
-									<img src="images/nutrilogix.jpg" alt="NutriLogix AI" />
-								</a>
-								<div class="project-body">
-									<p class="project-meta">2026 &middot; Founder &amp; Engineer</p>
-									<h2 class="project-title">NutriLogix AI</h2>
-									<p class="project-desc">AI-powered nutrition and fitness tracker. Snap a photo of any meal to log calories and macros instantly, scan barcodes for localized health scores, and sync activity in real time via Apple Health. Currently in TestFlight beta.</p>
-									<ul class="stack-chips"><li>React Native</li><li>OpenAI API</li><li>Apple Health</li></ul>
-									<details class="project-case-study">
-										<summary>Case study</summary>
-										<div class="cs-grid">
-											<div><h4>Problem</h4><p>Manually logging meals is tedious and inaccurate — users either skip it or spend minutes searching databases for food items. Existing trackers require too many taps and still get portion sizes wrong.</p></div>
-											<div><h4>Approach</h4><p>Built a vision model pipeline (OpenAI GPT-4o Vision) that identifies food, estimates portions, and returns structured macro data from a single photo. Barcode scanning adds localized health scores pulled from product databases. Apple Health sync keeps calorie burn and activity data in one place without manual input.</p></div>
-											<div><h4>Outcome</h4><p>Launched on TestFlight with early access users actively logging meals. Photo logging reduces manual entry time from ~2 minutes to under 10 seconds per meal.</p></div>
-										</div>
-										<figure class="cs-diagram">
-											<a href="images/diagrams/nutrilogix-arch.svg" class="cs-diagram-link" target="_blank" rel="noopener">
-												<img src="images/diagrams/nutrilogix-arch.svg" alt="NutriLogix AI architecture — vision and barcode pipelines merging into Supabase and Apple Health" loading="lazy" decoding="async" />
-											</a>
-											<figcaption>Vision pipeline (camera &rarr; GPT-4o &rarr; macro parser) and barcode pipeline (scanner &rarr; product DB &rarr; health score) both feed into Supabase, syncing out to Apple Health.</figcaption>
-										</figure>
-									</details>
-									<div class="project-links">
-										<a class="hero-cta" href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>
-										<a class="hero-cta outline" href="https://testflight.apple.com/join/R9aNvaJa" target="_blank" rel="noopener">TestFlight <span class="arrow">&rarr;</span></a>
-									</div>
-								</div>
-							</article>
+							<div class="case-rows">
+								<article class="case-row" id="nutrilogix">
+									<div class="mark" aria-hidden="true">NL</div>
+									<h3>Nutrilogix</h3>
+									<div class="st">iOS · TestFlight beta</div>
+									<p>Log meals from a photo or by voice. Barcode lookup and Apple Health sync. Solo-built, in TestFlight.</p>
+									<dl class="case-dl">
+										<dt>Problem</dt>
+										<dd>Typing every meal is easy to abandon.</dd>
+										<dt>My role</dt>
+										<dd>Product, app, and back end. Built solo.</dd>
+										<dt>Outcome</dt>
+										<dd>On TestFlight. No timing number is published here.</dd>
+									</dl>
+									<a class="row-link" href="https://testflight.apple.com/join/7tFSghHS" target="_blank" rel="noopener">Join the TestFlight beta ↗</a>
+									<a class="row-link" href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">Website ↗</a>
+									<a class="row-link" href="images/diagrams/nutrilogix-arch.svg">Architecture diagram</a>
+								</article>
 
-							
+								<article class="case-row" id="voicelift">
+									<div class="mark" aria-hidden="true">VL</div>
+									<h3>VoiceLift</h3>
+									<div class="st">In development</div>
+									<p>Voice-first workout logger: say your set and it is logged.</p>
+									<dl class="case-dl">
+										<dt>Problem</dt>
+										<dd>Form loggers break the set. People stop logging mid-workout.</dd>
+										<dt>My role</dt>
+										<dd>Product, voice pipeline, and app. Built solo.</dd>
+										<dt>Outcome</dt>
+										<dd>In active development, with early access at voicelift.app.</dd>
+									</dl>
+									<a class="row-link" href="https://voicelift.app/" target="_blank" rel="noopener">Website ↗</a>
+									<a class="row-link" href="images/diagrams/voicelift-arch.svg">Architecture diagram</a>
+								</article>
 
-							<article class="project-card">
-								<a class="project-thumb" href="https://voicelift.app/" target="_blank" rel="noopener">
-									<img src="images/voicelift.jpg" alt="VoiceLift" />
-								</a>
-								<div class="project-body">
-									<p class="project-meta">2026 &middot; Founder &amp; Engineer</p>
-									<h2 class="project-title">VoiceLift</h2>
-									<p class="project-desc">Voice-first workout logger. No forms, no friction &mdash; say your set and it's logged instantly. AI understands gym slang, supersets, and edge cases.</p>
-									<ul class="stack-chips"><li>React Native</li><li>OpenAI API</li><li>Whisper</li></ul>
-									<details class="project-case-study">
-										<summary>Case study</summary>
-										<div class="cs-grid">
-											<div><h4>Problem</h4><p>Form-based workout loggers break training flow — tapping through dropdowns between sets kills momentum and focus. Most lifters either stop logging mid-workout or don't log at all.</p></div>
-											<div><h4>Approach</h4><p>Built a voice-first pipeline using OpenAI Whisper for transcription and GPT-4o structured outputs to parse gym slang, supersets, and compound set descriptions into clean Supabase records. A confirmation sheet lets users verify before saving, with a ripple-animated voice button as the sole primary interaction. Stack: Expo SDK, Supabase (Postgres + RLS), RevenueCat subscriptions.</p></div>
-											<div><h4>Outcome</h4><p>Logging a set drops from ~15 taps to a single voice command. Currently in active development with early access at voicelift.app.</p></div>
-										</div>
-										<figure class="cs-diagram">
-											<a href="images/diagrams/voicelift-arch.svg" class="cs-diagram-link" target="_blank" rel="noopener">
-												<img src="images/diagrams/voicelift-arch.svg" alt="VoiceLift architecture diagram" loading="lazy" decoding="async" />
-											</a>
-											<figcaption>Voice pipeline &mdash; mic &rarr; Whisper (STT) &rarr; GPT-4o Structured Outputs (gym-slang parser) &rarr; Set / Superset State Machine &rarr; Confirmation Sheet &rarr; Supabase · RevenueCat.</figcaption>
-										</figure>
-									</details>
-									<div class="project-links">
-										<a class="hero-cta" href="https://voicelift.app/" target="_blank" rel="noopener">Live <span class="arrow">&rarr;</span></a>
-									</div>
-								</div>
-							</article>
+								<article class="case-row" id="astroai-x">
+									<div class="mark" aria-hidden="true">AX</div>
+									<h3>AstroAI X</h3>
+									<div class="st">AI systems · multi-provider</div>
+									<p>Provider-abstraction layer that streams four frontier models and merges the replies. This is the live reference implementation described on the About page. No public URL is stored in this repo.</p>
+									<dl class="case-dl">
+										<dt>Problem</dt>
+										<dd>Each model provider uses a different request, stream, and tool-call shape.</dd>
+										<dt>My role</dt>
+										<dd>The abstraction layer and the reference app, as described in the decision record.</dd>
+										<dt>Outcome</dt>
+										<dd>One canonical conversation is replayed into each provider. No measured usage number is published here.</dd>
+									</dl>
+									<a class="row-link" href="about.html#adr-astroai">Read the decision record →</a>
+								</article>
+							</div>
 
-							
-
-							
-
-							
-
-							
-
+							<!-- TODO: Add an anonymized security case study (scope, method, finding classes, fix verified). Do not invent one. The posts below are writing, not a client engagement. -->
+							<aside class="security-note">
+								<h3>API security testing, in writing</h3>
+								<p>These posts describe a testing method. They are not a client case study, and this page does not invent findings.</p>
+								<ul>
+									<li><a href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">How I test for broken object level authorization</a></li>
+									<li><a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">How I test for broken function level authorization</a></li>
+									<li><a href="/blog/posts/how-i-test-for-jwt-validation-flaws.html">How I test for JWT validation flaws</a></li>
+								</ul>
+							</aside>
 
 							<div class="project-ctas">
 								<a class="project-cta-card content-box" href="https://github.com/anthonys1760?tab=repositories" target="_blank" rel="noopener">
@@ -367,16 +359,15 @@
 									<div class="cta-icon"><span class="fas fa-paper-plane"></span></div>
 									<div class="cta-body">
 										<div class="cta-title">Let's work together</div>
-										<div class="cta-desc">Have a project in mind? Let's talk.</div>
+										<div class="cta-desc">Open to full-time roles and contract or freelance work.</div>
 									</div>
 									<div class="cta-arrow">&rarr;</div>
 								</a>
 							</div>
-
 						</div>
 					<!-- Archive -->
 					<details class="project-archive content-box">
-						<summary>View archive <span class="archive-count">37 more projects</span></summary>
+						<summary>Early work (2020–2022) <span class="archive-count">37 projects</span></summary>
 						<ul class="archive-list">
 							<li><span class="year">2022</span><a href="https://github.com/anthonys1760/power-gym" target="_blank" rel="noopener">Power Gym</a><span class="cat">Responsive site</span></li>
 							<li><span class="year">2022</span><a href="https://github.com/anthonys1760/live-user-filter" target="_blank" rel="noopener">Live Search Filter</a><span class="cat">JS component</span></li>

@@ -25,7 +25,7 @@
 		/*
 			Typed Subtitle
 		*/
-		if(($('.typed-subtitle').length) && ($('.h-subtitle p').length > 1)){
+		if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && ($('.typed-subtitle').length) && ($('.h-subtitle p').length > 1)){
 			$('.typed-subtitle').each(function(){
 				$(this).typed({
 					stringsElement: $(this).prev('.typing-subtitle'),
@@ -39,6 +39,7 @@
 		*/
 		setTimeout(function(){
 			$('.h-subtitles').addClass('ready');
+			if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 			if($('.typed-bread').length){
 				$('.typed-bread').typed({
 					stringsElement: $('.typing-bread'),
@@ -146,21 +147,18 @@
 	*/
 	var width = $(window).width();
 	var height = $(window).height();
+	var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	/*
-		Set Height Started Section
+		Opening-section height is owned by CSS.
+		An inline pixel height clipped the homepage buttons on short laptops
+		and pushed the contact form below a locked screen.
 	*/
-	$('.section.started').css({'height': height});
-	$('.logged-in .section.started').css({'height': height-32});
-	if(width < 783) {
-		$('.section.started').css({'height': height});
-		$('.logged-in .section.started').css({'height': height-46});
-	}
 
 	/*
 		Grained
 	*/
-	if(!$('.grained-off').length && typeof grained === 'function'){
+	if(!reduceMotion && !$('.grained-off').length && typeof grained === 'function'){
 	var grained_options = {
 		'animate': true,
 		'patternWidth': 400,
@@ -206,7 +204,7 @@
 	$('.hover-masks a').each(function() {
 		var mask_val = $(this).html();
 		$(this).wrapInner('<span class="mask-lnk"></span>');
-		$(this).append('<span class="mask-lnk mask-lnk-hover">' + mask_val + '</span>');
+		$(this).append('<span class="mask-lnk mask-lnk-hover" aria-hidden="true">' + mask_val + '</span>');
 	});
 
 	/*
@@ -250,6 +248,7 @@
 		Animation Between Pages
 	*/
 	$('header .top-menu, .typed-bread, .popup-box .bts, .animate-to-page').on('click', 'a', function(){
+		if ($(this).hasClass('header-touch')) return;
 		var link = $(this).attr('href');
 		if(link.indexOf('#section-') == 0){
 			if(!$('body').hasClass('home')){
@@ -303,6 +302,7 @@
 		Menu on Mobile
 	*/
 	$('header').on('click', '.menu-btn', function(){
+		var open;
 		if($('header').hasClass('active')){
 			$('header').removeClass('active');
 			$('.footer .soc').fadeIn();
@@ -310,13 +310,17 @@
 			if($('.video-bg').length) {
 				$('body').addClass('background-enabled');
 			}
+			open = false;
 		} else {
 			$('header').addClass('active');
 			$('.footer .soc').hide();
 			$('body').removeClass('loaded');
 			$('body').removeClass('background-enabled');
+			open = true;
 		}
-		
+		$(this).attr('aria-expanded', open ? 'true' : 'false');
+		$(this).attr('aria-label', open ? 'Close menu' : 'Open menu');
+
 		return false;
 	});
 
@@ -345,7 +349,7 @@
 		/*
 			Portfolio items parallax
 		*/
-		if($('.portfolio-items').length){
+		if(!reduceMotion && $('.portfolio-items').length && typeof simpleParallax === 'function'){
 			var s_parallax = document.getElementsByClassName('wp-post-image');
 			new simpleParallax(s_parallax);
 		}
@@ -553,12 +557,6 @@
 		var width = $(window).width();
 		var height = $(window).height();
 		
-		/* Set full height in started blocks */
-		$('.section.started').css({'height': height});
-		if(width < 783) {
-			$('.section.started').css({'height': height});
-		}
-
 		/* Dotted skills line on resize */
 		var skills_dotted = $('.skills-list.dotted .progress');
 		var skills_dotted_w = skills_dotted.width();
