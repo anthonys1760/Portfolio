@@ -392,7 +392,7 @@
 .case-rows {
 	margin-top: 20px;
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 16px;
 }
 .case-row {
@@ -539,18 +539,30 @@ body.hero-themed .header .logo a {
 	body.hero-themed .header .head-top {
 		display: flex;
 		align-items: center;
+		gap: 32px;
 	}
 	body.hero-themed .header .logo {
 		position: relative;
 		top: auto;
+		left: auto;
 		transform: none;
+		flex: none;
 	}
 	body.hero-themed .header .top-menu {
+		position: static;
 		margin-left: auto;
+		margin-right: 0;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
+		flex: 0 1 auto;
+		min-width: 0;
 		gap: 18px;
+	}
+	body.hero-themed .header .header-touch {
+		position: static;
+		margin: 0;
+		flex: none;
 	}
 	body.hero-themed .header .menu-btn {
 		display: none;
@@ -718,6 +730,94 @@ button.menu-btn,
 .home .hero-cta.hero-cta-primary,
 .home .hero-text-link {
 	box-sizing: border-box;
+}
+
+/* Compact menu icon. The 44px button stays the tap target; the bars are 23×2px with 6px gaps. */
+body.hero-themed .header .menu-btn:before,
+body.hero-themed .header .menu-btn:after,
+body.hero-themed .header .menu-btn span {
+	width: 23px;
+	height: 2px;
+	left: calc(50% - 11.5px);
+	right: auto;
+	margin: 0;
+	border-radius: 2px;
+	transform-origin: center center;
+}
+body.hero-themed .header .menu-btn:before {
+	top: 13px;
+	bottom: auto;
+}
+body.hero-themed .header .menu-btn span {
+	top: 21px;
+	margin-top: 0;
+}
+body.hero-themed .header .menu-btn:after {
+	top: 29px;
+	bottom: auto;
+}
+body.hero-themed .header.active .menu-btn:before {
+	opacity: 0;
+}
+body.hero-themed .header.active .menu-btn span {
+	transform: rotate(45deg);
+}
+body.hero-themed .header.active .menu-btn:after {
+	top: 29px !important;
+	bottom: auto !important;
+	transform: translateY(-8px) rotate(-45deg);
+}
+@media (max-width: 1199px) {
+	body.hero-themed .header.active {
+		height: auto;
+		overflow: visible;
+		padding: 8px 16px;
+	}
+	body.hero-themed .header.active .menu-btn {
+		position: relative;
+		top: auto;
+		right: auto;
+		left: auto;
+	}
+	body.hero-themed .header.active {
+		background: #0c1016;
+	}
+	body.hero-themed .header .menu-btn,
+	body.hero-themed .header .logo,
+	body.hero-themed .header-touch {
+		position: relative;
+		z-index: 50;
+	}
+	body.hero-themed .header.active .top-menu {
+		top: 72px;
+		height: calc(100vh - 72px);
+		padding: 12px 24px 28px;
+		background: #0c1016;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+	}
+	body.hero-themed .header.active .top-menu-social {
+		justify-content: flex-start;
+		margin-top: 16px;
+		padding-top: 16px;
+	}
+}
+
+/* Project-card shots. Same rounded frame as the featured CastLog image. */
+.case-row .case-media {
+	margin: 0 0 14px;
+	padding: 0;
+}
+.case-row .case-media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 5;
+	object-fit: cover;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: #0c1018;
 }
 
 /* 8/10. Reduced motion */
