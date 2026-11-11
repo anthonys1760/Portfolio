@@ -462,13 +462,19 @@
 	font-size: 14px;
 	line-height: 1.5;
 }
-.security-note ul { margin: 0; padding-left: 18px; }
-.security-note li { margin: 6px 0; }
+.security-note ul {
+	margin: 0;
+	padding-left: 1.25em;
+	list-style-position: outside;
+}
+.security-note li {
+	margin: 8px 0;
+	display: list-item;
+}
 .security-note a {
+	display: inline;
 	color: #4bffa5;
-	display: inline-flex;
-	align-items: center;
-	min-height: 44px;
+	line-height: 1.45;
 }
 @media (max-width: 900px) {
 	.case-card { grid-template-columns: 1fr; padding: 18px; }
@@ -807,6 +813,12 @@ body.hero-themed .header.active .menu-btn:after {
 		margin-top: 16px;
 		padding-top: 16px;
 	}
+	body.hero-themed .top-menu-social-link,
+	body.hero-themed .top-menu-social-link:hover,
+	body.hero-themed .top-menu-social-link:focus,
+	body.hero-themed .top-menu-social-link:active {
+		text-decoration: none;
+	}
 }
 
 /* Project-card shots. Same rounded frame as the featured CastLog image. */
@@ -823,6 +835,66 @@ body.hero-themed .header.active .menu-btn:after {
 	object-fit: contain;
 	flex: none;
 	border-radius: 16px;
+}
+
+/* Link icons. Inline strokes so iOS does not swap the arrow for an emoji. */
+svg.ico {
+	width: 0.9em;
+	height: 0.9em;
+	display: inline-block;
+	vertical-align: -0.125em;
+	flex: none;
+	margin-left: 0.28em;
+}
+.hero-cta .arrow svg.ico,
+.cta-arrow svg.ico,
+.blog-card-arrow svg.ico {
+	margin-left: 0;
+}
+.cta-arrow {
+	display: inline-flex;
+	align-items: center;
+}
+.feat-card .more,
+.blog-card-arrow {
+	display: inline-flex;
+	align-items: center;
+}
+
+/* Open mobile menu: one padding, alignment, and line-height in every state. */
+@media (max-width: 1199px) {
+	body.hero-themed .header.active .top-menu ul li a,
+	body.hero-themed .header.active .top-menu ul li a:hover,
+	body.hero-themed .header.active .top-menu ul li a:focus,
+	body.hero-themed .header.active .top-menu ul li a:active,
+	body.hero-themed .header.active .top-menu ul li.current-menu-item > a,
+	body.hero-themed .header.active .top-menu ul li.current-menu-item a {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		text-align: left;
+		text-indent: 0;
+		line-height: 1.2;
+		min-height: 52px;
+		padding: 16px 18px;
+		transform: none;
+	}
+	body.hero-themed .header.active .top-menu .mask-lnk,
+	body.hero-themed .header.active .top-menu a:hover .mask-lnk,
+	body.hero-themed .header.active .top-menu a:focus .mask-lnk,
+	body.hero-themed .header.active .top-menu a:active .mask-lnk,
+	body.hero-themed .header.active .top-menu li.current-menu-item a .mask-lnk {
+		position: static;
+		left: auto;
+		top: auto;
+		width: auto;
+		display: inline;
+		transform: none;
+		opacity: 1;
+	}
+	body.hero-themed .header.active .top-menu .mask-lnk.mask-lnk-hover {
+		display: none !important;
+	}
 }
 
 /* 8/10. Reduced motion */
