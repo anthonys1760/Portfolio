@@ -813,6 +813,12 @@ body.hero-themed .header.active .menu-btn:after {
 		margin-top: 16px;
 		padding-top: 16px;
 	}
+	body.hero-themed .top-menu-social-link,
+	body.hero-themed .top-menu-social-link:hover,
+	body.hero-themed .top-menu-social-link:focus,
+	body.hero-themed .top-menu-social-link:active {
+		text-decoration: none;
+	}
 }
 
 /* Project-card shots. Same rounded frame as the featured CastLog image. */
