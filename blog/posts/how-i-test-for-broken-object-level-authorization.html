@@ -18,7 +18,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html">
   <meta property="og:title" content="Login Is Not Ownership — Anthony Smith">
   <meta property="og:description" content="A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-08-01">
   <meta property="article:author" content="Anthony Smith">
@@ -27,7 +27,7 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Login Is Not Ownership">
   <meta name="twitter:description" content="A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80">
 
   <title>Login Is Not Ownership — Anthony Smith</title>
 
@@ -58,7 +58,7 @@
     "articleSection": "Security",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
+      "url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80"
     },
     "datePublished": "2026-08-01",
     "dateModified": "2026-11-11",
@@ -292,7 +292,7 @@
           <h1 class="post-title">Login Is Not Ownership</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="Login Is Not Ownership" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80" alt="An apartment building with many separate balconies and windows, each unit its own" onerror="this.style.display='none'">
 
         <div class="post-body">
 <p>A user who can load <code>GET /api/invoices/4021</code> tries <code>GET /api/invoices/4022</code> and receives someone else's invoice. The session token was valid. The record exists. Nothing in the request asked whether invoice 4022 belongs to that user, and nothing in the handler answered.</p>
