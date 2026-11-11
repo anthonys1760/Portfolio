@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.">
+  <meta name="description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
   <meta name="keywords" content="security misconfiguration, default credentials, error handling, CORS policy, API security testing, attack surface reduction, secure defaults, environment variables">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html">
-  <meta property="og:title" content="How I Test for Security Misconfiguration — Anthony Smith">
-  <meta property="og:description" content="Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html">
+  <meta property="og:title" content="A Production Sweep for Security Misconfiguration — Anthony Smith">
+  <meta property="og:description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-09-28">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Security Misconfiguration">
-  <meta name="twitter:description" content="Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.">
+  <meta name="twitter:title" content="A Production Sweep for Security Misconfiguration">
+  <meta name="twitter:description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
 
-  <title>How I Test for Security Misconfiguration — Anthony Smith</title>
+  <title>A Production Sweep for Security Misconfiguration — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html"
     },
-    "headline": "How I Test for Security Misconfiguration",
-    "description": "Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.",
+    "headline": "A Production Sweep for Security Misconfiguration",
+    "description": "A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.",
     "keywords": "security misconfiguration, default credentials, error handling, CORS policy, API security testing, attack surface reduction, secure defaults, environment variables",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
     },
     "datePublished": "2026-09-28",
-    "dateModified": "2026-09-28",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,36 +284,48 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">5 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">September 28, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Security Misconfiguration</h1>
+          <h1 class="post-title">A Production Sweep for Security Misconfiguration</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="How I Test for Security Misconfiguration" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="A Production Sweep for Security Misconfiguration" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Most applications ship with more surface area than they need. Debug endpoints stay enabled in production. CORS policies allow any origin. Error messages leak stack traces or internal paths. The application works fine for legitimate users, so these misconfigurations sit unnoticed until someone maps the actual attack surface versus the intended one.</p>
+<p>Run this before a release. The questions are about what is still turned on: debug routes, CORS, default credentials, verbose errors, unused verbs, and headers that describe the stack. None of these need a novel bug. They are leftovers.</p>
 
-<p>The gap is not usually a single catastrophic setting. It is the accumulation of defaults that were safe in development, features enabled for convenience, and security controls that were never turned on. Each one seems minor. Together they create paths an attacker can walk without triggering alarms.</p>
+<h2>Debug and admin routes</h2>
 
-<h2>Why It Hides</h2>
+<p>Walk the app and record every path the client calls. Then look for routes that are not linked: <code>/admin</code>, <code>/debug</code>, <code>/internal</code>, health checks, and <code>/.well-known</code>. A health check that prints versions, or an admin page that assumes a firewall, is still part of the surface if the public host answers. Routes that were never documented are the subject of <a href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">The Routes That Never Made the Inventory</a>.</p>
 
-<p>Security misconfiguration does not break functionality. The app runs, tests pass, and users get their work done. No one complains about overly permissive CORS or verbose error messages because those things make integration easier. Code review focuses on logic and business rules, not on whether the HTTP server is advertising its version number or whether an admin panel requires a second factor. The misconfiguration is invisible until someone looks for it specifically.</p>
+<h2>Verbose errors</h2>
 
-<h2>The Method</h2>
+<p>Send malformed JSON, omit a required field, and send an overly long value. The production response should be generic. Stack traces, file paths, SQL, and framework versions are configuration, not helpful UX. The same pass applies to <code>X-Powered-By</code> and <code>Server</code> headers that advertise the stack.</p>
 
-<ol><li>Map all exposed endpoints, including those not linked in the UI. Check for admin routes, debug paths, health checks, and anything under <code>/internal</code>, <code>/admin</code>, <code>/debug</code>, or <code>/.well-known</code>. Use the application normally and inspect all HTTP traffic to find undocumented paths.</li><li>Test error handling by sending malformed requests: invalid JSON, missing required fields, SQL syntax in parameters, excessively long strings. Note whether errors return stack traces, file paths, database details, or framework version numbers. Production errors should be generic.</li><li>Examine response headers for unnecessary information disclosure. Look for <code>X-Powered-By</code>, <code>Server</code>, and overly permissive <code>Access-Control-Allow-Origin</code> values. Check whether security headers like <code>Strict-Transport-Security</code> and <code>Content-Security-Policy</code> are present.</li><li>Verify that default credentials and example configurations are not active. Try common usernames and passwords on any authentication surface. Check whether environment files, API keys, or database connection strings are exposed at predictable paths like <code>/.env</code> or <code>/config.json</code>.</li><li>Test whether unnecessary HTTP methods are allowed. If the API supports <code>GET /api/users</code>, try <code>OPTIONS</code>, <code>TRACE</code>, <code>PUT</code>, and <code>DELETE</code> on the same path. Methods that should not be supported often are.</li><li>Review third party integrations and libraries for known vulnerabilities or insecure defaults. Check whether dependencies are current and whether any require explicit hardening steps that were skipped.</li></ol>
+<h2>CORS and security headers</h2>
 
-<h2>The Deeper Nuance</h2>
+<p>Note <code>Access-Control-Allow-Origin</code>. An allow-any origin is a setting, not a default you have to live with. Confirm <code>Strict-Transport-Security</code> and <code>Content-Security-Policy</code> are present and match what you meant to ship. Headers are easy to drift when someone later "fixes" a client by loosening them.</p>
 
-<div class="post-callout">Configuration is not a one-time task. Frameworks and libraries change their defaults between versions. A setting that was secure by default in version 2.x might require explicit hardening in 3.x. I retest configuration after every major dependency update, not just at initial deployment. What was safe six months ago may not be now.</div>
+<h2>Default credentials and leaked config</h2>
 
-<h2>Why It Stays a Problem</h2>
+<p>Try the sample usernames and passwords that shipped with the framework or the tutorial you copied. Request paths that often hold config, such as <code>/.env</code> and <code>/config.json</code>. Example files and environment dumps are misconfiguration when they are reachable.</p>
 
-<p>Security misconfiguration persists because it requires ongoing discipline, not a one-time fix. Developers inherit projects with settings they do not fully understand. Deployment scripts copy configuration from examples that were never hardened. Pressure to ship fast means security settings get deferred, and there is no forcing function to revisit them. Unlike a code vulnerability that breaks the app, a misconfiguration just quietly expands the attack surface.</p>
+<h2>Verbs you do not implement</h2>
 
-<p>I treat configuration as code that needs review and testing. Misconfigurations are not dramatic, but they are reliable footholds for attackers who take the time to enumerate what was left on.</p>
+<p>On a path you do support, try <code>OPTIONS</code>, <code>TRACE</code>, <code>PUT</code>, and <code>DELETE</code>. A method that should not exist sometimes still dispatches. Function-level checks for the verbs you do intend are covered in <a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">When a Valid Session Can Call Admin</a>.</p>
+
+<h2>Defaults that moved</h2>
+
+<div class="post-callout">Configuration is not finished at the first deploy. A framework default can change between major versions, so a setting that was safe until you upgraded now needs an explicit choice. Re-run this sweep after a major dependency bump, not only when the app is new. Third-party libraries with insecure defaults belong in the same pass. How those dependencies' responses are handled is separate, in <a href="/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">Treat Upstream Responses as Untrusted Input</a>.</div>
+
+<p>Each item is small, which is why it gets deferred. Together they are the surface you did not mean to publish.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-server-side-request-forgery.html">Previous: What I Inspect When an API Fetches a User-Supplied URL</a>
+<a href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">Next: The Routes That Never Made the Inventory</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

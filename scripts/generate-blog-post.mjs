@@ -169,7 +169,7 @@ async function callModel(prompt, fixtureKind) {
     headers: {
       'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://www.anthonysdigital.net',
+      'HTTP-Referer': 'https://anthonysdigital.net',
       'X-Title': 'Anthony Smith Blog Automation',
     },
     body: JSON.stringify({
@@ -489,9 +489,9 @@ function buildPostHtml(post) {
   <meta name="keywords" content="${escapeHtml(post.keywords || '')}">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/${post.slug}.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/${post.slug}.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:title" content="${escapeHtml(post.title)} — Anthony Smith">
   <meta property="og:description" content="${escapeHtml(post.excerpt)}">
   <meta property="og:image" content="${post.image}">
@@ -526,7 +526,7 @@ function buildPostHtml(post) {
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/${post.slug}.html"
+      "@id": "https://anthonysdigital.net/blog/posts/${post.slug}.html"
     },
     "headline": "${escapeHtml(post.title)}",
     "description": "${escapeHtml(post.excerpt)}",
@@ -541,19 +541,19 @@ function buildPostHtml(post) {
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/${post.slug}.html",
+    "url": "https://anthonysdigital.net/blog/posts/${post.slug}.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -839,7 +839,7 @@ function updateSitemap(slug, dateISO) {
   const sitemapPath = path.join(ROOT, 'sitemap.xml')
   let xml = readFileSync(sitemapPath, 'utf8')
 
-  const postUrl = `https://www.anthonysdigital.net/blog/posts/${slug}.html`
+  const postUrl = `https://anthonysdigital.net/blog/posts/${slug}.html`
 
   // Skip if already in sitemap
   if (xml.includes(postUrl)) {
@@ -948,7 +948,7 @@ async function main() {
   // Update sitemap
   updateSitemap(post.slug, post.dateISO)
 
-  console.log(`[Blog] Done! → https://www.anthonysdigital.net/blog/posts/${post.slug}.html`)
+  console.log(`[Blog] Done! → https://anthonysdigital.net/blog/posts/${post.slug}.html`)
 }
 
 main()

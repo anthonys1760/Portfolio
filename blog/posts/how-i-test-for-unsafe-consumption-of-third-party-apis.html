@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.">
+  <meta name="description" content="Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.">
   <meta name="keywords" content="API security, third party API, supply chain security, input validation, API integration, upstream dependencies, appsec">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">
-  <meta property="og:title" content="How I Test for Unsafe Consumption of Third Party APIs — Anthony Smith">
-  <meta property="og:description" content="Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">
+  <meta property="og:title" content="Treat Upstream Responses as Untrusted Input — Anthony Smith">
+  <meta property="og:description" content="Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-11-02">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Unsafe Consumption of Third Party APIs">
-  <meta name="twitter:description" content="Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.">
+  <meta name="twitter:title" content="Treat Upstream Responses as Untrusted Input">
+  <meta name="twitter:description" content="Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
 
-  <title>How I Test for Unsafe Consumption of Third Party APIs — Anthony Smith</title>
+  <title>Treat Upstream Responses as Untrusted Input — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html"
     },
-    "headline": "How I Test for Unsafe Consumption of Third Party APIs",
-    "description": "Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.",
+    "headline": "Treat Upstream Responses as Untrusted Input",
+    "description": "Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.",
     "keywords": "API security, third party API, supply chain security, input validation, API integration, upstream dependencies, appsec",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
     },
     "datePublished": "2026-11-02",
-    "dateModified": "2026-11-02",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,34 +284,36 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">6 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">November 2, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Unsafe Consumption of Third Party APIs</h1>
+          <h1 class="post-title">Treat Upstream Responses as Untrusted Input</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="How I Test for Unsafe Consumption of Third Party APIs" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="Treat Upstream Responses as Untrusted Input" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>The mistake is simple: developers validate user input but pass third party API responses straight into business logic, databases, and frontend templates. They treat upstream services as trusted sources. A payment provider returns a transaction ID, a mapping service returns coordinates, a CRM returns customer details. The response gets logged, stored, displayed, or used in queries without the same scrutiny applied to a form submission.</p>
+<p>A payment provider, a maps API, or a webhook is on your side of the diagram. The response still has to be validated like user input. A transaction id, a set of coordinates, or a block of customer details will be stored, rendered, or built into a query. The TLS session and the vendor's reputation do not do that validation.</p>
 
-<p>This creates a supply chain vulnerability. If the upstream service is compromised, misconfigured, or simply returns unexpected data types or formats, your application becomes the attack surface. I have seen apps that sanitize every user comment but render unescaped HTML from a third party content API, and services that parameterize internal queries but concatenate strings from an external analytics endpoint.</p>
+<p>This is an explainer, not a report of a specific incident. The illustration below is labeled as an illustration.</p>
 
-<h2>Why It Hides</h2>
+<h2>Why an upstream response is still input</h2>
 
-<p>Third party APIs feel like infrastructure, not user input. They live behind authentication, they have SLAs, they come from vendors with security certifications. Code review focuses on the integration logic: did we handle the happy path, did we retry on failure, did we log errors. The assumption is that a service returning JSON over HTTPS with a valid signature is safe to consume. The response schema is treated as a contract, not as untrusted data. Most integration tests mock the external service with well formed responses, so the defensive code path never gets exercised in CI.</p>
+<p>Integration code is reviewed for the happy path: retries, error logs, the fields the documentation promised. Tests stub the partner with a tidy JSON object, so a defensive parser never runs in CI. A signature proves the bytes came from the holder of a key. It does not prove the values fit your types, your lengths, or your business rules. The partner can have a bug, a bad deploy, or a compromised account, and the signature can still be valid.</p>
 
-<h2>The Method</h2>
+<div class="post-callout">Illustration, not a discovered incident: a service escapes comments that users type into a form, then inserts HTML that a content API returned. The form field was treated as untrusted. The partner payload was treated as content. The same split shows up when internal queries are parameterized, but a string from an analytics response is concatenated into a query or a file path.</div>
 
-<ol><li>Identify every external API your application consumes. This includes payment processors, geolocation services, authentication providers, content delivery networks, and internal services owned by other teams that you do not control the deployment of.</li><li>Map the data flow from each response into your system. Where does the transaction ID go? Is it logged, stored in a database, passed to a template engine, used in a file path, included in a redirect, or embedded in a generated document?</li><li>Test each integration point with malformed and malicious payloads in the response. Replace expected strings with SQL fragments, script tags, path traversal sequences, oversized values, null bytes, and format string specifiers. Verify that your application treats these as it would treat the same input from an anonymous user.</li><li>Check whether your app enforces type and boundary constraints on response fields. If the API is supposed to return an integer between 1 and 100, does your code accept a string, a negative number, or a value in the millions? Does a missing field cause a null pointer exception or get handled gracefully?</li><li>Review error handling for upstream failures. When the third party service is unreachable, returns a 500, or sends back an empty body, does your application fail closed or does it bypass validation and use default values that might be attacker controlled?</li><li>Verify that sensitive data from third party responses is not over logged or exposed in error messages. API keys, tokens, and personal information returned by upstream services often end up in application logs or user facing errors without redaction.</li><li>Test for time of check to time of use issues. If your app caches a response or stores it for later processing, can an attacker influence the upstream service between validation and use, or replay an old response that no longer meets current business rules?</li></ol>
+<h2>Follow the field</h2>
 
-<h2>The Deeper Nuance</h2>
+<p>List every external API, including services owned by another team whose deploys you do not control. For each response field, write down where it goes: a log line, a column, a template, a redirect, a file path, a generated document. Then decide the type, the bounds, and the format before that value is allowed into application logic.</p>
 
-<div class="post-callout">A signed or authenticated response is not the same as a validated response. Cryptographic proof that the data came from the expected service does not mean the data is safe to use. The upstream provider might have been compromised, might have a bug, or might simply return data your application cannot handle. Treat signature verification as an authentication step, not as input validation.</div>
+<p>If the contract says "an integer in a range," a string, a negative, or a missing field needs a handled failure, not a guess. When the partner times out, returns an error, or sends an empty body, fail closed. Do not fill the gap with a default that came from the caller. If you cache the response, the checks apply when the cache is written and still apply when it is read, so a stale payload cannot skip a rule you added later.</p>
 
-<h2>Defensive Code</h2>
+<p>Logs and error pages need the same pass. Tokens, keys, and personal data from the partner response should be redacted before they are stored or shown.</p>
 
-<p>I validate third party responses with the same rigor as user input. Every field gets a type check, a boundary check, and a format check before it enters application logic. Here is an example of defensive parsing:</p>
+<h2>Parse into a known shape</h2>
 
 <pre><code class="lang-javascript">function parsePaymentResponse(response) {
   const schema = {
@@ -322,32 +324,31 @@
 
   for (const [field, rules] of Object.entries(schema)) {
     const value = response[field];
-    
+
     if (typeof value !== rules.type) {
       throw new ValidationError(`Invalid type for ${field}`);
     }
-    
+
     if (rules.maxLength &amp;&amp; value.length &gt; rules.maxLength) {
       throw new ValidationError(`Field ${field} exceeds max length`);
     }
-    
+
     if (rules.pattern &amp;&amp; !rules.pattern.test(value)) {
       throw new ValidationError(`Field ${field} format invalid`);
     }
-    
+
     if (rules.enum &amp;&amp; !rules.enum.includes(value)) {
       throw new ValidationError(`Field ${field} not in allowed values`);
     }
   }
-  
+
   return response;
 }</code></pre>
 
-<h2>Why It Stays a Problem</h2>
-
-<p>Organizations draw security boundaries at their own perimeter. Input validation is a checkbox on the secure coding checklist, but the mental model treats it as protection from external attackers, not from business partners. Third party integrations are built under time pressure by developers who trust the API documentation and assume the vendor has their own security team. The risk feels theoretical until a widely used service gets breached or a provider pushes a bad update. By then, dozens of downstream applications have inherited the vulnerability.</p>
-
-<p>Unsafe consumption of third party APIs turns your security posture into the lowest common denominator of every service you integrate. Treat upstream responses as untrusted input and validate them accordingly.</p>
+<p>The schema is the point, not the vendor name. Your checks become the weakest partner you trust without a parser. Unexpected types and oversized values should fail that parser the same way a bad form field would. Partner endpoints that never made your own inventory still count, which is <a href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">The Routes That Never Made the Inventory</a>.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">Previous: The Routes That Never Made the Inventory</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

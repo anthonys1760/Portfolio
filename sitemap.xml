@@ -1,201 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://www.anthonysdigital.net/</loc>
+		<loc>https://anthonysdigital.net/</loc>
 		<changefreq>monthly</changefreq>
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/about.html</loc>
+		<loc>https://anthonysdigital.net/about.html</loc>
 		<changefreq>monthly</changefreq>
 		<priority>0.9</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/portfolio.html</loc>
+		<loc>https://anthonysdigital.net/portfolio.html</loc>
 		<changefreq>monthly</changefreq>
 		<priority>0.9</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/contact.html</loc>
+		<loc>https://anthonysdigital.net/contact.html</loc>
 		<changefreq>monthly</changefreq>
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/</loc>
+		<loc>https://anthonysdigital.net/blog/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.9</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/edge-functions-the-future-of-serverless-architecture.html</loc>
-		<lastmod>2026-04-08</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html</loc>
-		<lastmod>2026-04-08</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html</loc>
-		<lastmod>2026-04-11</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html</loc>
-		<lastmod>2026-04-13</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html</loc>
-		<lastmod>2026-04-20</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html</loc>
-		<lastmod>2026-04-27</lastmod>
-		<changefreq>never</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html</loc>
-		<lastmod>2026-05-04</lastmod>
-		<changefreq>never</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html</loc>
+		<loc>https://anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html</loc>
 		<lastmod>2026-05-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html</loc>
-		<lastmod>2026-05-18</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-engineering-ladder-trap-why-promotion-chasing-hurts-your.html</loc>
-		<lastmod>2026-05-25</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html</loc>
-		<lastmod>2026-06-01</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html</loc>
-		<lastmod>2026-06-15</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html</loc>
-		<lastmod>2026-06-22</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html</loc>
-		<lastmod>2026-06-29</lastmod>
-		<changefreq>never</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html</loc>
+		<loc>https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html</loc>
 		<lastmod>2026-07-06</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html</loc>
-		<lastmod>2026-07-13</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html</loc>
-		<lastmod>2026-07-20</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html</loc>
+		<loc>https://anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html</loc>
 		<lastmod>2026-07-27</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html</loc>
-		<lastmod>2026-08-01</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html</loc>
-		<lastmod>2026-08-01</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html</loc>
-		<lastmod>2026-08-10</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html</loc>
-		<lastmod>2026-08-24</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html</loc>
-		<lastmod>2026-08-31</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html</loc>
-		<lastmod>2026-09-07</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html</loc>
-		<lastmod>2026-09-14</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-server-side-request-forgery.html</loc>
-		<lastmod>2026-09-21</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-server-side-request-forgery.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html</loc>
-		<lastmod>2026-09-28</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html</loc>
-		<lastmod>2026-10-05</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://www.anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html</loc>
-		<lastmod>2026-11-02</lastmod>
+		<loc>https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html</loc>
+		<lastmod>2026-11-11</lastmod>
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>

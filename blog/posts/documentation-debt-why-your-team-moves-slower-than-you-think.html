@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.">
+  <meta name="description" content="What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.">
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">
   <meta property="og:title" content="Documentation Debt: Why Your Team Moves Slower Than You Think — Anthony Smith">
-  <meta property="og:description" content="Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.">
+  <meta property="og:description" content="What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-06-01">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="Career">
+  <meta property="article:section" content="Engineering">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Documentation Debt: Why Your Team Moves Slower Than You Think">
-  <meta name="twitter:description" content="Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.">
+  <meta name="twitter:description" content="What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80">
 
   <title>Documentation Debt: Why Your Team Moves Slower Than You Think — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html"
+      "@id": "https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html"
     },
     "headline": "Documentation Debt: Why Your Team Moves Slower Than You Think",
-    "description": "Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
+    "description": "What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.",
     "keywords": "",
-    "articleSection": "Career",
+    "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80"
     },
     "datePublished": "2026-06-01",
-    "dateModified": "2026-06-01",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html",
+    "url": "https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">Career</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Engineering</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">June 1, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">documentation</span></span>
           </div>
           <h1 class="post-title">Documentation Debt: Why Your Team Moves Slower Than You Think</h1>
         </header>
@@ -291,23 +293,27 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80" alt="Documentation Debt: Why Your Team Moves Slower Than You Think" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've watched senior engineers spend three hours reverse-engineering a microservice's authentication flow because the original author left the team six months ago. I've seen entire sprints derailed because nobody documented the quirks of a third-party API integration. Documentation debt is the silent killer of engineering velocity, and unlike technical debt, we barely talk about it. Here's the uncomfortable truth: every hour you don't spend documenting is borrowed time that your team will repay with interest—usually at the worst possible moment.</p>
+<p>Team documentation is how someone other than the author can change a system, deploy it, or explain its contract. When the authentication flow of a service lives only in the code, the next person rebuilds that story from scratch. When a third-party integration's quirks live in one person's head, everyone else waits. When the API contract is not written down, frontend and backend spend the time in meetings instead. That cost is real, and it is not a number I can put on a sprint.</p>
 
-<h2>The Real Cost of Undocumented Systems</h2>
+<p>This post is about what the team should keep. Personal notes belong in <a href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">The Engineering Journal</a>. Architecture decisions belong in <a href="/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">Architecture Decision Records</a>, not in a second copy of that practice here.</p>
 
-<p>Documentation debt compounds faster than technical debt because it affects <em>everyone</em>, not just the code's maintainers. When your payment processing logic isn't documented, new engineers can't contribute to that area. When your deployment process lives in someone's head, you can't deploy when they're on vacation. When your API contracts aren't written down, frontend and backend teams waste hours in alignment meetings. I've calculated that poor documentation costs my teams roughly 15-20% of sprint velocity—that's one full week per month spent on avoidable confusion.</p>
+<h2>What is worth writing down</h2>
 
-<div class="post-callout"><strong>The Documentation Paradox:</strong> The engineers who understand the system best are the least likely to document it (they don't need to), while the engineers who need documentation most can't write it (they don't understand it yet).</div>
+<p>Comments that restate the next line are noise. The test for a page is whether a new teammate would lose time without it. These usually pass that test:</p>
 
-<h2>What Actually Needs Documentation</h2>
+<ul>
+<li><strong>Runbooks:</strong> what to do when the service is down, how to roll back, how to debug the failures you have already seen.</li>
+<li><strong>API contracts:</strong> request and response shapes, error codes, rate limits, authentication.</li>
+<li><strong>Local setup:</strong> environment variables, dependencies, seeds, and the gotchas that block a first run.</li>
+<li><strong>Domain rules:</strong> business behavior the code does not make obvious, including regulatory constraints and legacy quirks.</li>
+<li><strong>Pointers to decisions:</strong> a short link to the ADR when the question is why a choice was made, not how the code runs today.</li>
+</ul>
 
-<p>Not everything needs docs. Self-explanatory code doesn't need comments explaining what it does—that's noise. But here's what <strong>always</strong> needs documentation: architectural decisions (why, not what), non-obvious behavior, setup and deployment processes, API contracts, and failure modes. The test is simple: if someone joining your team would waste time figuring it out, document it.</p>
+<div class="post-callout"><strong>The documentation paradox:</strong> the people who understand a system well enough to document it feel the least need, and the people who need the page cannot write it yet. The page has to be part of the change that introduces the behavior, or it does not get written.</div>
 
-<ul><li><strong>Architecture Decision Records (ADRs):</strong> Why you chose Postgres over MongoDB, why you split that monolith, why you're using JWT tokens</li><li><strong>Runbooks:</strong> What to do when the service goes down at 2am, how to roll back a deployment, how to debug common issues</li><li><strong>API contracts:</strong> Request/response schemas, error codes, rate limits, authentication flows</li><li><strong>Local development setup:</strong> Environment variables, dependencies, database seeds, common gotchas</li><li><strong>Domain knowledge:</strong> Business rules that aren't obvious from code, regulatory requirements, legacy system quirks</li></ul>
+<h2>Keep it in the repository</h2>
 
-<h2>Documentation as Code: Make It Impossible to Ignore</h2>
-
-<p>The best documentation lives in the repository, versioned alongside the code. I use a simple pattern: every feature branch must update relevant docs before merge. This isn't optional—it's in our PR template checklist. Here's a real example of how we enforce API documentation using TypeScript and a simple script that generates markdown from our route definitions:</p>
+<p>The copy that stays current lives next to the code and is reviewed with it. One way to force API docs to move with the route is to generate them from the same schema the handler validates. A feature branch updates that schema or the checklist fails.</p>
 
 <pre><code class="lang-typescript">// routes/users.ts
 import { z } from 'zod';
@@ -347,64 +353,28 @@ import fs from 'fs';
 
 function generateMarkdown(routes: Route[]) {
   let md = '# API Documentation\n\n';
-  
+
   routes.forEach(route =&gt; {
     md += `## ${route.method} ${route.path}\n\n`;
     md += `${route.description}\n\n`;
     md += `**Request Body:**\n\`\`\`json\n${JSON.stringify(route.exampleRequest, null, 2)}\n\`\`\`\n\n`;
     md += `**Response:**\n\`\`\`json\n${JSON.stringify(route.exampleResponse, null, 2)}\n\`\`\`\n\n`;
   });
-  
+
   return md;
 }
 
 fs.writeFileSync('./docs/API.md', generateMarkdown(routes));</code></pre>
 
-<p>This pattern forces developers to document as they code. The documentation is type-safe, lives next to the implementation, and automatically generates human-readable markdown. When the code changes, the docs update automatically. No separate wiki to maintain, no stale documentation.</p>
+<p>The markdown is a build product. When the route changes, the contract changes with it. There is no separate wiki page to forget.</p>
 
-<h2>The Architecture Decision Record (ADR) Practice</h2>
+<h2>Decisions are a different document</h2>
 
-<p>ADRs are the highest-leverage documentation you can write. They capture <em>why</em> decisions were made, which is impossible to reverse-engineer from code. I keep them in <code>docs/adr/</code> with a simple numbering scheme: <code>001-use-postgresql.md</code>, <code>002-migrate-to-microservices.md</code>. Each ADR follows a template: Context (what problem are we solving?), Decision (what did we choose?), Consequences (what are the tradeoffs?). Here's a real ADR from a project where we chose to use optimistic UI updates:</p>
+<p>An ADR captures why a choice was made, in a form you do not edit in place when you change your mind. You write a new record that supersedes the old one. The template, where to store the files, and when to skip one are all in <a href="/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">Architecture Decision Records</a>. A team doc should link the record. It should not restate the whole method.</p>
 
-<pre><code class="lang-markdown"># ADR 012: Implement Optimistic UI Updates for Comments
+<h2>Make the missing page part of review</h2>
 
-## Status
-Accepted
-
-## Context
-Users complained that adding comments felt slow. Network latency to our API 
-averages 200-300ms, and waiting for server confirmation before showing the 
-comment creates a sluggish experience. Our comment system is append-only 
-with rare conflicts.
-
-## Decision
-Implement optimistic updates: show comments immediately in the UI, then 
-reconcile with server response. If the server rejects the comment (auth 
-failure, rate limit, validation error), roll back the UI change and show 
-an error toast.
-
-## Consequences
-**Positive:**
-- Perceived performance improves dramatically
-- Users get instant feedback
-- Works well with our append-only comment model
-
-**Negative:**
-- More complex error handling (need rollback logic)
-- Potential for UI/server state mismatch during network issues
-- Need to handle duplicate prevention (user double-clicks)
-
-## Implementation Notes
-Using a temporary ID pattern (temp_xxx) until server returns real ID. 
-See CommentStore.addOptimistic() for implementation.</code></pre>
-
-<div class="post-callout"><strong>ADR Pro Tip:</strong> Write ADRs <em>before</em> implementing big changes, not after. The act of writing forces you to think through consequences, and the document serves as an RFC for team review. I've caught flawed architectural decisions multiple times just by forcing myself to write them down.</div>
-
-<h2>Building a Documentation Culture</h2>
-
-<p>Documentation isn't a one-time task—it's a cultural practice. Here's what's worked on my teams: First, lead by example. When I review PRs, I comment on missing documentation as seriously as I comment on bugs. Second, make documentation visible. We have a <code>#docs-updates</code> Slack channel where our CI posts whenever docs change. Third, celebrate good documentation in retros and performance reviews. I've literally given spot bonuses for exceptional documentation. Fourth, timebox it. Documentation doesn't need to be perfect—it needs to exist. I tell engineers: spend 20 minutes documenting this, then ship it. Perfect documentation that doesn't exist is worthless.</p>
-
-<p>The hardest part is starting. Pick one area—maybe your deployment process or your most confusing service—and document it this week. Then make it a habit. Your future self (and your teammates) will thank you when you're not spending Friday night trying to remember why that weird caching layer exists.</p>
+<p>Treat a missing runbook or contract like a missing test when you review. Put the docs in the repo so a pull request can show the diff. A short update is more useful than a perfect page that waits for a writing week. Timebox it, ship it, and fix it in the next change that touches that code. How to talk about that in the review itself is <a href="/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html">The Code Review Mindset</a>.</p>
         </div>
 
         <nav class="post-footer-nav">

@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta name="description" content="Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.">
   <meta name="keywords" content="JWT security, token validation, authentication flaws, API security testing, broken authentication, JSON web tokens, signature verification">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
-  <meta property="og:title" content="How I Test for JWT Validation Flaws — Anthony Smith">
-  <meta property="og:description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html">
+  <meta property="og:title" content="JWT Validation Mistakes That Still Ship — Anthony Smith">
+  <meta property="og:description" content="Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-08-31">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for JWT Validation Flaws">
-  <meta name="twitter:description" content="Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.">
+  <meta name="twitter:title" content="JWT Validation Mistakes That Still Ship">
+  <meta name="twitter:description" content="Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
 
-  <title>How I Test for JWT Validation Flaws — Anthony Smith</title>
+  <title>JWT Validation Mistakes That Still Ship — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html"
     },
-    "headline": "How I Test for JWT Validation Flaws",
-    "description": "Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.",
+    "headline": "JWT Validation Mistakes That Still Ship",
+    "description": "Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.",
     "keywords": "JWT security, token validation, authentication flaws, API security testing, broken authentication, JSON web tokens, signature verification",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
     },
     "datePublished": "2026-08-31",
-    "dateModified": "2026-08-31",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,34 +284,40 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">5 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">August 31, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">jwt</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for JWT Validation Flaws</h1>
+          <h1 class="post-title">JWT Validation Mistakes That Still Ship</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for JWT Validation Flaws" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="JWT Validation Mistakes That Still Ship" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Most APIs that use JWTs check whether a token is present and whether it can be decoded. They stop there. The problem is that decoding a JWT requires no secret and no verification. Any string that looks like three base64 segments separated by periods will decode successfully. The application extracts the user ID from the payload, loads that user's data, and grants access. An attacker who changes the <code>sub</code> claim from <code>1234</code> to <code>5678</code> becomes user 5678.</p>
+<p>Decoding a JWT is not the same as verifying it. Any string of three base64 segments separated by periods will decode. No secret is required. An API that decodes the payload, reads <code>sub</code> or <code>user_id</code>, and loads that user has not checked that this system signed the token.</p>
 
-<p>This happens because developers treat JWTs as opaque tokens when they are actually signed or encrypted data structures. The signature exists to prevent tampering, but only if the application actually verifies it. I see APIs that decode the payload and immediately trust every claim inside without ever checking the signature against a secret or public key.</p>
+<p>Libraries make that split easy. Decode works in development. The claims look right. Nothing errors. Verification is a different function, and it is easy to never call it. The mistakes below are the ones that still ship, with the check that should reject each one.</p>
 
-<h2>Why This Hides</h2>
+<h2>Trusting claims from an unverified payload</h2>
 
-<p>JWT libraries make verification optional. Most provide separate methods for decoding and verifying, and the decode method works perfectly during development. The token parses, the claims look correct, and everything functions. The missing verification step causes no errors and no visible breakage. Code review often misses it because the JWT handling is tucked into middleware or a utility function, and reviewers assume the library is doing the secure thing by default. It is not.</p>
+<p>The signature exists so the payload cannot be swapped. If the application never compares it to the secret or public key, a change to <code>sub</code>, <code>email</code>, or a role claim is just another decoded field. Do not read claims until verification has succeeded. Until then the caller controls the whole token body.</p>
 
-<h2>My Testing Method</h2>
+<div class="post-callout">A token that parses is not a token you can trust. Parsing succeeds when the signature is wrong, missing, or never checked.</div>
 
-<ol><li>Capture a valid JWT from an authenticated session. Decode it using a tool or library to see the header and payload structure. Note the algorithm in the <code>alg</code> header and identify which claims control identity, such as <code>sub</code>, <code>user_id</code>, or <code>email</code>.</li><li>Modify a claim that determines access or identity. Change the user ID to another valid value, or escalate a role from <code>user</code> to <code>admin</code>. Re-encode the header and payload without signing, or sign it with a key you control.</li><li>Send the modified token in a request to a protected endpoint. If the API accepts it and returns data for the altered user or role, signature verification is missing or broken.</li><li>Test the <code>alg</code> field by changing it to <code>none</code>. Remove the signature portion entirely, leaving the trailing period. Some libraries honor this and skip verification when <code>alg</code> is set to <code>none</code>.</li><li>If the API uses asymmetric signing with RS256, try changing the algorithm to HS256 and signing the token with the public key. If the server uses the same key material to verify HMAC signatures that it uses for RSA public key verification, this can succeed.</li><li>Check for missing expiration enforcement by replaying an old token or by removing the <code>exp</code> claim entirely. Verify that the API rejects expired tokens and enforces reasonable TTLs.</li><li>Test issuer and audience validation by changing the <code>iss</code> or <code>aud</code> claims to arbitrary values. These claims tie a token to a specific system and should be validated, but often are not.</li></ol>
+<h2>Honoring <code>alg: none</code></h2>
 
-<h2>The Deeper Issue</h2>
+<p>Some libraries skip verification when the header says <code>none</code>, including a token that keeps the trailing period and drops the signature. The defensive check is to pass an explicit allowlist of algorithms, such as <code>HS256</code> only, and to reject <code>none</code>. Do not let the token choose the algorithm from a default that includes unsigned tokens.</p>
 
-<div class="post-callout">A valid JWT structure is not the same as a verified JWT. Parsing succeeds even when the signature is wrong, missing, or never checked. Treat every JWT as untrusted input until signature verification passes. Do not extract claims before verification, because an attacker controls the entire token body until you prove it was signed by your system.</div>
+<h2>Using one key for two algorithms</h2>
 
-<h2>Defensive Implementation</h2>
+<p>If the API signs with RS256, a confused verifier may accept a token whose header says HS256 and whose signature was produced with the public key as an HMAC secret. The server then uses the same key material for two different meanings. Pin the algorithm you issue. Do not verify HMAC with the RSA public key.</p>
 
-<p>When implementing JWT validation, always use the verify method provided by your library, never the decode method alone. Explicitly specify the allowed algorithms and reject <code>none</code>. Validate <code>iss</code>, <code>aud</code>, and <code>exp</code> claims as part of every verification call. Store signing secrets securely and rotate them periodically.</p>
+<h2>Skipping expiry, issuer, and audience</h2>
+
+<p>A signature check without <code>exp</code> accepts a token forever, and removing <code>exp</code> should not make the token more valid. <code>iss</code> and <code>aud</code> tie the token to a specific issuer and client. If they are not checked, a token from another system that happens to share key material still passes. Set a short lifetime on access tokens, reject expired tokens, and pass issuer and audience into the verify call.</p>
+
+<h2>Call verify, and tell it the rules</h2>
 
 <pre><code class="lang-js">const jwt = require('jsonwebtoken');
 
@@ -328,11 +334,11 @@ function verifyToken(token) {
   }
 }</code></pre>
 
-<h2>Why It Persists</h2>
-
-<p>JWT validation flaws survive because the failure mode is silent. An application that skips verification works exactly like one that performs it, until an attacker notices. Developers see tokens flowing through the system and assume the library is handling security. Documentation often shows decoding examples first and buries verification in later sections. The gap does not surface in functional testing, only in adversarial testing.</p>
-
-<p>I test every API that uses JWTs by modifying tokens and observing whether the changes are rejected. Verification must happen before trust.</p>
+<p>Store the secret outside the repo and rotate it. The failure mode of a decode-only middleware is silence: the API behaves like a careful one until a claim changes and nobody rejects it. The same authentication topic, from the series map, starts at <a href="/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">Application Security and OWASP: Start Here</a>.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">Previous: A Field-Level Checklist for Mass Assignment and Data Exposure</a>
+<a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">Next: When a Valid Session Can Call Admin</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

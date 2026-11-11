@@ -12,10 +12,10 @@
   <meta name="description" content="Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.">
   <meta name="keywords" content="edge functions, serverless architecture, cloudflare workers, CDN edge computing, low latency, distributed systems, web performance, deployment strategy">
   <meta name="author" content="Anthony Smith">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/edge-functions-the-future-of-serverless-architecture.html">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/edge-functions-the-future-of-serverless-architecture.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/">
   <meta property="og:title" content="Edge Functions: The Future of Serverless Architecture — Anthony Smith">
   <meta property="og:description" content="Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80">
@@ -29,7 +29,7 @@
   <meta name="twitter:description" content="Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80">
 
-  <title>Edge Functions: The Future of Serverless Architecture — Anthony Smith</title>
+  <title>This article has moved — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -43,20 +43,6 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#4bffa5">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Edge Functions: The Future of Serverless Architecture",
-    "description": "Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.",
-    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80",
-    "datePublished": "2026-04-08",
-    "author": { "@type": "Person", "name": "Anthony Smith", "url": "https://www.anthonysdigital.net" },
-    "publisher": { "@type": "Person", "name": "Anthony Smith" },
-    "url": "https://www.anthonysdigital.net/blog/posts/edge-functions-the-future-of-serverless-architecture.html"
-  }
-  </script>
 
   <style>
     .post-wrap {
@@ -186,6 +172,8 @@
     }
   </style>
 <link rel="stylesheet" href="/css/review-fixes.css">
+  <meta http-equiv="refresh" content="0; url=https://anthonysdigital.net/blog/">
+  <script>location.replace("https://anthonysdigital.net/blog/");</script>
 </head>
 
 <body class="hero-themed">
@@ -253,67 +241,13 @@
 
       <!-- Post Content -->
       <article class="post-wrap">
-
         <a href="/blog/" class="post-back">&larr; All posts</a>
-
         <header class="post-header">
-          <div class="post-meta">
-            <span class="post-category">Architecture</span>
-            <span class="post-read">7 min read</span>
-            <span class="post-date">April 8, 2026</span>
-          </div>
-          <h1 class="post-title">Edge Functions: The Future of Serverless Architecture</h1>
+          <h1 class="post-title">This article has moved</h1>
         </header>
-
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80" alt="Edge Functions: The Future of Serverless Architecture" onerror="this.style.display='none'">
-
         <div class="post-body">
-          <p>The serverless landscape is evolving rapidly, and edge functions are at the forefront of this transformation. Unlike traditional cloud functions that route requests through centralized data centers, edge functions execute code directly at the network's edge—closer to the end-user, dramatically reducing latency and improving global application performance.</p>
-
-<h2>What Makes Edge Functions Different?</h2>
-
-<p>Edge functions fundamentally differ from traditional serverless approaches by distributing compute resources across multiple global points of presence (PoPs). Instead of routing every request through a single regional data center, edge platforms like Cloudflare Workers, Vercel Edge Functions, and AWS Lambda@Edge can execute code within milliseconds of the user's geographic location.</p>
-
-<div class="post-callout"><strong>Key Advantage:</strong> Reduced latency isn't just a performance metric—it's a critical user experience and conversion optimization strategy.</div>
-
-<h2>Practical Implementation Patterns</h2>
-
-<pre><code class="lang-javascript">// Cloudflare Workers Edge Function Example
-export default {
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    if (url.pathname === '/geo-redirect') {
-      const countryCode = request.cf.country;
-      const redirectMap = {
-        US: 'https://us.example.com',
-        CA: 'https://ca.example.com',
-        default: 'https://global.example.com'
-      };
-      
-      return Response.redirect(
-        redirectMap[countryCode] || redirectMap.default
-      );
-    }
-    
-    return new Response('Hello from the edge!');
-  }
-}</code></pre>
-
-<p>This example demonstrates a geo-routing edge function that dynamically redirects users based on their geographic location. By leveraging built-in geolocation metadata, we can create intelligent routing mechanisms without additional infrastructure overhead.</p>
-
-<h2>Performance and Architectural Considerations</h2>
-
-<ul><li>Minimize external dependencies to keep cold start times low</li><li>Design functions to be stateless and deterministic</li><li>Leverage edge key-value stores for lightweight caching</li><li>Use TypeScript for enhanced type safety and developer experience</li></ul>
-
-<div class="post-callout"><em>Warning:</em> Edge functions have strict execution time and memory constraints. Complex computations should still be routed to traditional serverless or server-side infrastructure.</div>
-
-<p>As cloud providers continue investing in edge computing, we're witnessing a paradigm shift towards more distributed, responsive application architectures. Edge functions represent not just a technical optimization, but a fundamental rethinking of how we design global software systems.</p>
+          <p>This article now lives at <a href="https://anthonysdigital.net/blog/">the blog</a>.</p>
         </div>
-
-        <nav class="post-footer-nav">
-          <a href="/blog/">&larr; Back to all posts</a>
-        </nav>
-
       </article>
 
       <!-- Footer -->

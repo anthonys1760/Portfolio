@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.">
+  <meta name="description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta name="keywords" content="mass assignment, excessive data exposure, API security, broken object property level authorization, BOPLA, data over-exposure, parameter binding">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
-  <meta property="og:title" content="How I Test for Mass Assignment and Excessive Data Exposure — Anthony Smith">
-  <meta property="og:description" content="Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
+  <meta property="og:title" content="A Field-Level Checklist for Mass Assignment and Data Exposure — Anthony Smith">
+  <meta property="og:description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-08-24">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Mass Assignment and Excessive Data Exposure">
-  <meta name="twitter:description" content="Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.">
+  <meta name="twitter:title" content="A Field-Level Checklist for Mass Assignment and Data Exposure">
+  <meta name="twitter:description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
 
-  <title>How I Test for Mass Assignment and Excessive Data Exposure — Anthony Smith</title>
+  <title>A Field-Level Checklist for Mass Assignment and Data Exposure — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html"
     },
-    "headline": "How I Test for Mass Assignment and Excessive Data Exposure",
-    "description": "Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.",
+    "headline": "A Field-Level Checklist for Mass Assignment and Data Exposure",
+    "description": "Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.",
     "keywords": "mass assignment, excessive data exposure, API security, broken object property level authorization, BOPLA, data over-exposure, parameter binding",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
     },
     "datePublished": "2026-08-24",
-    "dateModified": "2026-08-24",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,34 +284,36 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">4 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">August 24, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">authorization</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Mass Assignment and Excessive Data Exposure</h1>
+          <h1 class="post-title">A Field-Level Checklist for Mass Assignment and Data Exposure</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="How I Test for Mass Assignment and Excessive Data Exposure" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="A Field-Level Checklist for Mass Assignment and Data Exposure" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>The common mistake is treating the client as a trusted filter. Most APIs bind incoming request parameters directly to internal objects or return entire database records to the client, assuming the frontend will only send or display the fields a user should access. When I update my profile and send <code>{"email": "new@example.com", "role": "admin"}</code>, the server often accepts both fields if the underlying user object has a role property. When I fetch my account details, the response includes my hashed password, internal timestamps, and soft delete flags because the endpoint serializes the whole model.</p>
+<p>Pick one endpoint you can call as yourself, such as <code>PATCH /api/users/me</code>. Then run the checks below. This is property-level authorization: the object can be yours and still expose fields you should not read, or accept fields you should not write.</p>
 
-<p>This is broken object property level authorization. The object exists and belongs to me, so object level authorization passes. But I should not be able to write to certain properties or read others. The framework makes it trivial to bind all fields or return all columns, and developers rarely add a second layer of property level control.</p>
+<h2>Extra fields in the body</h2>
 
-<h2>Why It Hides</h2>
+<p>Send the profile update the screen sends, then add a field the form never includes. <code>{"email": "new@example.com", "role": "admin"}</code> is the usual shape. If the user record has a <code>role</code>, <code>balance</code>, <code>is_verified</code>, or internal flag, and the handler copies the JSON onto the model, the extra field is stored. Repeat the same fields on <code>POST</code>, <code>PUT</code>, and <code>PATCH</code>. Those verbs often bind parameters in different code.</p>
 
-<p>The frontend never sends the dangerous fields or displays the sensitive ones, so normal usage looks fine. Code review sees a standard update handler or a typical serializer. There is no obvious flaw in the logic because the logic is missing entirely. The framework does the work, and the absence of an allowlist is invisible. Automated scanners see a 200 response and move on. The vulnerability only surfaces when someone inspects the request in a proxy and adds a field the UI does not include, or when someone reads the full response body instead of trusting what the page renders.</p>
+<h2>A missing write allowlist</h2>
 
-<h2>The Method</h2>
+<p>There is often no line that says which keys a caller may set. The framework binds the body because that is the short version. A review sees a normal update. Tests pass because the test uses the same payload as the UI. Compare the <code>GET</code> of the same resource with the form: anything that comes back and is not editable is a candidate to try on the write.</p>
 
-<ol><li>Identify an endpoint where I can update a resource I own, such as PATCH <code>/api/users/me</code> or PUT <code>/api/profile</code>. Capture the legitimate request.</li><li>Retrieve the same resource with a GET request and note every field in the response, especially those not editable in the UI: role, account type, credit balance, is_verified, created_at, internal IDs.</li><li>Add each of those fields to the update request one at a time with a value I want but should not be able to set. Send the modified request and check if the server accepts and persists the change.</li><li>Test write operations with different HTTP verbs on the same resource. POST, PUT, and PATCH sometimes have different parameter binding or validation logic.</li><li>For read operations, examine the full response body from any endpoint that returns user data, invoices, or records. Look for fields that should be internal only: password hashes, tokens, soft delete flags, fields from joined tables, or properties that leak other users' information.</li><li>Check if filtering or field selection is supported, such as <code>?fields=id,email,role</code> or GraphQL field requests. Test if I can request fields the UI does not normally display.</li><li>Repeat the process on resources I do not own but can access through a shared context, such as updating a team member's profile or reading another user's invoice in a multi-tenant system. Property level flaws often bypass object level checks.</li></ol>
+<p>Also try a resource you can touch without owning it outright, such as another member of a team. A property check and an object check fail in different places. Object ownership is the subject of <a href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">Login Is Not Ownership</a>.</p>
 
-<h2>The Deeper Nuance</h2>
+<h2>The response returns the whole record</h2>
 
-<div class="post-callout">The same endpoint can be vulnerable to mass assignment on write and excessive data exposure on read. Fixing one does not fix the other. I have seen APIs that carefully allowlist update fields but still return the entire user object, including password hashes and internal flags, in the response. Both directions need explicit property level controls.</div>
+<div class="post-callout">Closing the write does not close the read. An update can allowlist <code>email</code> and <code>name</code> and still respond with the full user row: password hash, tokens, soft-delete flags, internal ids, columns joined in from another table. Both directions need an explicit field list. A filter such as <code>?fields=</code>, or a GraphQL selection, deserves the same question: can the client name a field the screen never shows?</div>
 
-<h2>Defense Pattern</h2>
+<h2>Allow the write, shape the read</h2>
 
-<p>I defend against this by defining explicit schemas for every request and response. On the backend, I use an allowlist of fields the client can write for each role and endpoint. I never bind request bodies directly to models. On read, I use a serializer or DTO that includes only the fields the client needs for that specific operation. I do not return the database row.</p>
+<p>Define a schema per endpoint. Copy only the writable keys onto the update. Return a serializer or DTO for that operation, not the database row.</p>
 
 <pre><code class="lang-js">// Allowlist pattern for update
 const userUpdateSchema = {
@@ -324,22 +326,22 @@ const userUpdateSchema = {
 function updateUser(req, user) {
   const allowed = Object.keys(userUpdateSchema)
     .filter(k =&gt; userUpdateSchema[k].writable);
-  
+
   const updates = {};
   allowed.forEach(field =&gt; {
     if (req.body[field] !== undefined) {
       updates[field] = req.body[field];
     }
   });
-  
+
   return db.users.update(user.id, updates);
 }</code></pre>
 
-<h2>Why It Stays a Problem</h2>
-
-<p>Frameworks optimize for developer speed. Binding all parameters or serializing entire models is one line of code. Adding allowlists and response shaping is manual work on every endpoint. Teams ship features and assume the client will behave. There is no compiler error when you forget the allowlist, and the feature works perfectly in testing because the test uses the UI. By the time someone notices, the pattern is everywhere.</p>
-
-<p>Property level authorization requires treating the client as an adversary on every field, not just every object. I test by sending what I should not and reading what should be hidden.</p>
+<p>If the allowlist is missing, nothing fails at compile time. The feature still works for anyone who only uses the screen.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">Previous: Login Is Not Ownership</a>
+<a href="/blog/posts/how-i-test-for-jwt-validation-flaws.html">Next: JWT Validation Mistakes That Still Ship</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.">
+  <meta name="description" content="Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.">
   <meta name="keywords" content="function level authorization, privilege escalation, role based access control, API security, authorization testing, RBAC vulnerabilities">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html">
-  <meta property="og:title" content="How I Test for Broken Function Level Authorization — Anthony Smith">
-  <meta property="og:description" content="Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html">
+  <meta property="og:title" content="When a Valid Session Can Call Admin — Anthony Smith">
+  <meta property="og:description" content="Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-09-07">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Broken Function Level Authorization">
-  <meta name="twitter:description" content="Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.">
+  <meta name="twitter:title" content="When a Valid Session Can Call Admin">
+  <meta name="twitter:description" content="Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
 
-  <title>How I Test for Broken Function Level Authorization — Anthony Smith</title>
+  <title>When a Valid Session Can Call Admin — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html"
     },
-    "headline": "How I Test for Broken Function Level Authorization",
-    "description": "Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.",
+    "headline": "When a Valid Session Can Call Admin",
+    "description": "Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.",
     "keywords": "function level authorization, privilege escalation, role based access control, API security, authorization testing, RBAC vulnerabilities",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
     },
     "datePublished": "2026-09-07",
-    "dateModified": "2026-09-07",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,34 +284,34 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">4 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">September 7, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">authorization</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Broken Function Level Authorization</h1>
+          <h1 class="post-title">When a Valid Session Can Call Admin</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for Broken Function Level Authorization" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="When a Valid Session Can Call Admin" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Most applications check whether a user is authenticated before allowing access to a function. Far fewer check whether that specific user should be allowed to perform that specific action. The result is a logged in user with basic privileges calling administrative functions directly, and the application happily executing them because the user passed the authentication gate.</p>
+<p>Object access asks whether this user may have this record. That question is <a href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">Login Is Not Ownership</a>. Function access asks something else: may this user call this operation at all?</p>
 
-<p>I see this constantly in REST APIs where authentication middleware runs globally but authorization logic is left to individual route handlers. A developer implements <code>POST /api/users</code> for admins to create accounts, protects it with an auth token check, but never validates the token belongs to an admin. Any authenticated user can call it.</p>
+<p>A logged-in user opens <code>POST /api/users</code> or <code>DELETE /api/users/:id</code> because the route exists. Authentication middleware already ran. The handler never asks whether this session is allowed to create users or delete them. The UI never showed the button, so the path looks unused. The route still runs.</p>
 
-<h2>Why It Hides in Plain Sight</h2>
+<h2>What "protected" often means</h2>
 
-<p>This flaw survives code review because the protection looks present. There's a decorator, a middleware function, a guard clause checking for a valid session. The code reads as protected. What's missing is invisible: the second check that compares the user's role or permission set against what the function requires. In normal application use, the UI never renders an admin button for a regular user, so the path never gets exercised. The vulnerability only surfaces when someone inspects network traffic or reads API documentation and tries calling a privileged endpoint directly.</p>
+<p>A decorator, a guard, or a middleware checks for a session and the code reads as protected. The missing piece is the comparison between this user's permissions and what the function requires. Admin, export, approval, configuration, and other people's resources are the functions to list. Try each one with a low-privilege session, and try the verbs the screen does not use. A 200 or 201 where you expected 403 means the action ran. Some handlers fail open and return a generic success after doing the privileged work.</p>
 
-<h2>How I Test for It</h2>
+<p>Watch for a <code>role</code> field in the body or query that the server treats as authority rather than as a label. Watch for a pair of routes that disagree: <code>GET /api/users</code> limited to admins, <code>GET /api/users/export</code> returning the same data without that check. Also call the function with no session at all. A missing user is sometimes treated as "nothing to check" instead of as anonymous.</p>
 
-<ol><li>Map all endpoints and identify which ones perform administrative, destructive, or sensitive operations. Look for user management, configuration changes, bulk data exports, approval workflows, or anything that modifies system state beyond the current user's own resources.</li><li>Authenticate as a low privilege user and capture the session token or cookie. Keep this session active in a separate tool or browser profile.</li><li>Using the low privilege session, attempt to call each administrative or sensitive function directly. Change the HTTP method if needed. Try <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, and <code>DELETE</code> on the same path.</li><li>Pay close attention to endpoints that return 200 or 201 responses when they should return 403. Some applications fail open, executing the privileged action but returning a generic success message.</li><li>Test endpoints that accept role or permission identifiers as parameters. Try changing <code>role=user</code> to <code>role=admin</code> in the request body or query string. Some systems use this for display logic but accidentally honor it for authorization decisions.</li><li>Check for inconsistent authorization between related endpoints. If <code>GET /api/users</code> correctly restricts to admins but <code>GET /api/users/export</code> does not, that's the same data with a missing control.</li><li>Test with no authentication at all. Some functions accidentally bypass authorization checks entirely when no session is present, assuming unauthenticated requests will be caught earlier in the stack.</li></ol>
+<h2>A role is not a permission</h2>
 
-<h2>The Permission vs. Role Trap</h2>
+<div class="post-callout">Checking <code>admin</code> couples every sensitive function to a job title. A new <code>moderator</code> or <code>support</code> role means finding every admin branch. It also hides bugs: a tester who only uses an admin account will never notice that support can call the same function. Name the permission the function needs, such as <code>users:create</code> or <code>can_delete_users</code>, and test with the lowest privilege that should be refused.</div>
 
-<div class="post-callout">Many authorization systems check for a role like <code>admin</code> instead of a specific permission like <code>can_delete_users</code>. This creates two problems. First, it couples your security logic to your organizational hierarchy. When you add a <code>moderator</code> role, you have to find and update every admin check. Second, it makes testing brittle. A tester with an <code>admin</code> account will never notice that a <code>support</code> user can also call the function. I always test with the lowest conceivable privilege level, not just one step down from admin.</div>
+<h2>One module that maps functions to permissions</h2>
 
-<h2>Defense: Centralized Authorization Checks</h2>
-
-<p>The most reliable defense is a policy layer that explicitly maps every function to the permissions required to call it. Decorate each route or controller method with the required permission, and enforce it in a single reusable authorization module. Never rely on authentication alone.</p>
+<p>Authentication can sit at the edge of the request. Authorization has to sit on the decision. Put the required permission on the route and enforce it in one helper, so a new admin function cannot ship with only a login check.</p>
 
 <pre><code class="lang-js">// Authorization middleware that checks specific permissions
 function requirePermission(permission) {
@@ -327,21 +327,21 @@ function requirePermission(permission) {
 }
 
 // Apply to sensitive routes
-app.post('/api/users', 
+app.post('/api/users',
   requirePermission('users:create'),
   createUserHandler
 );
 
-app.delete('/api/users/:id', 
+app.delete('/api/users/:id',
   requirePermission('users:delete'),
   deleteUserHandler
 );</code></pre>
 
-<h2>Why It Persists</h2>
-
-<p>This flaw survives because authorization is harder to centralize than authentication. Authentication happens once per request at the entry point. Authorization must happen at every decision point, and developers forget. Frameworks provide authentication middleware out of the box but leave authorization as an exercise for the implementer. Time pressure and feature velocity mean the happy path gets built and tested, but the hostile path where a user tries something they shouldn't never gets exercised until production.</p>
-
-<p>Function level authorization breaks when we treat a valid session as sufficient proof of permission. Test every privileged function with the least privileged user you can create.</p>
+<p>Frameworks hand you the session check. The permission map is yours. If it is missing, the happy path still works, because the people using the admin screen really are admins.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-jwt-validation-flaws.html">Previous: JWT Validation Mistakes That Still Ship</a>
+<a href="/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">Next: A Rate-Limit Checklist Beyond the Login Endpoint</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

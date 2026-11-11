@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.">
+  <meta name="description" content="Module boundaries, native bridges, navigation, and where state should live in a React Native app.">
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
   <meta property="og:title" content="React Native Mobile Architecture: Lessons from Production — Anthony Smith">
-  <meta property="og:description" content="After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.">
+  <meta property="og:description" content="Module boundaries, native bridges, navigation, and where state should live in a React Native app.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-04-13">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="React Native">
+  <meta property="article:section" content="Mobile">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="React Native Mobile Architecture: Lessons from Production">
-  <meta name="twitter:description" content="After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.">
+  <meta name="twitter:description" content="Module boundaries, native bridges, navigation, and where state should live in a React Native app.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80">
 
   <title>React Native Mobile Architecture: Lessons from Production — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html"
+      "@id": "https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html"
     },
     "headline": "React Native Mobile Architecture: Lessons from Production",
-    "description": "After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.",
+    "description": "Module boundaries, native bridges, navigation, and where state should live in a React Native app.",
     "keywords": "",
-    "articleSection": "React Native",
+    "articleSection": "Mobile",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80"
     },
     "datePublished": "2026-04-13",
-    "dateModified": "2026-04-13",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html",
+    "url": "https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">React Native</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Mobile</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">April 13, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">react-native</span></span>
           </div>
           <h1 class="post-title">React Native Mobile Architecture: Lessons from Production</h1>
         </header>
@@ -291,7 +293,7 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80" alt="React Native Mobile Architecture: Lessons from Production" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've shipped six React Native apps to production over the past four years, and the architecture decisions we made early on determined whether we'd be iterating quickly or drowning in technical debt by month six. The React Native ecosystem loves to talk about bridge optimization and JSI, but the real battle is won or lost in how you structure your codebase. Here's what actually matters when you're building for scale.</p>
+<p>Architecture decisions made early decide whether a React Native app stays easy to change or drowns in structural debt. The ecosystem talks about the bridge and JSI. The practical battle is how the codebase is structured: modules, native boundaries, navigation, and where state lives.</p>
 
 <h2>The Module Layer Pattern</h2>
 
@@ -445,6 +447,21 @@ export class Router {
 <p>Your CI/CD pipeline will make or break your velocity. I use Fastlane for both platforms with environment-specific build configurations managed through <code>.env</code> files and react-native-config. The key is making builds reproducible and keeping build times under 15 minutes. Cache your Gradle/CocoaPods dependencies aggressively, and use EAS Build if you can't maintain your own build infrastructure.</p>
 
 <p>The architecture patterns that matter in React Native aren't exotic—they're the boring fundamentals applied consistently. Modular boundaries, explicit interfaces, centralized infrastructure, and performance monitoring. Get these right early, and you'll spend your time shipping features instead of untangling dependencies.</p>
+<h2>Where state should live</h2>
+<p>A module that owns its state still has to pick a tool. Start with what the framework already gives you. Local component state is enough for one screen. Context is enough when a few children share a value that changes rarely. A dedicated store earns its place when many screens read and update the same session or domain data and those updates are getting hard to follow.</p>
+<p>Redux, MobX, Recoil, and a small hook-based store are the usual later options. Adopting one before the app has shown the need adds ceremony. The failure mode is extra indirection and re-renders that cost more than the feature did.</p>
+<pre><code class="lang-javascript">const UserProfile = () =&gt; {
+  const [profile, setProfile] = useState({
+    name: '',
+    email: '',
+    preferences: {}
+  });
+
+  const updateProfile = (updates) =&gt; {
+    setProfile(current =&gt; ({ ...current, ...updates }));
+  };
+};</code></pre>
+<p>When a store is justified, keep each update narrow so one slice does not re-render the whole tree. Measure that before adding another layer. The progression is local state, then context, then a store.</p>
         </div>
 
         <nav class="post-footer-nav">

@@ -1,10 +1,10 @@
 [
   {
     "slug": "how-i-test-for-unsafe-consumption-of-third-party-apis",
-    "title": "How I Test for Unsafe Consumption of Third Party APIs",
-    "excerpt": "Most apps trust external API responses without validation. I test whether your service inherits vulnerabilities from upstream dependencies.",
+    "title": "Treat Upstream Responses as Untrusted Input",
+    "excerpt": "Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.",
     "category": "Security",
-    "readTime": "6 min",
+    "readTime": "2 min",
     "date": "November 2, 2026",
     "dateISO": "2026-11-02",
     "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
@@ -18,10 +18,10 @@
   },
   {
     "slug": "how-i-test-for-shadow-and-zombie-apis",
-    "title": "How I Test for Shadow and Zombie APIs",
-    "excerpt": "Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.",
+    "title": "The Routes That Never Made the Inventory",
+    "excerpt": "Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.",
     "category": "Security",
-    "readTime": "5 min",
+    "readTime": "2 min",
     "date": "October 5, 2026",
     "dateISO": "2026-10-05",
     "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
@@ -35,10 +35,10 @@
   },
   {
     "slug": "how-i-test-for-security-misconfiguration",
-    "title": "How I Test for Security Misconfiguration",
-    "excerpt": "Security misconfiguration hides in defaults, error messages, and unnecessary features. Here's how I find what was left on by accident.",
+    "title": "A Production Sweep for Security Misconfiguration",
+    "excerpt": "A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.",
     "category": "Security",
-    "readTime": "5 min",
+    "readTime": "2 min",
     "date": "September 28, 2026",
     "dateISO": "2026-09-28",
     "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
@@ -52,10 +52,10 @@
   },
   {
     "slug": "how-i-test-for-server-side-request-forgery",
-    "title": "How I Test for Server Side Request Forgery",
-    "excerpt": "Most APIs trust URL parameters without asking where they point. I walk through how I test whether the server can be tricked into making requests on an attacker's behalf.",
+    "title": "What I Inspect When an API Fetches a User-Supplied URL",
+    "excerpt": "A defensive review of avatar, webhook, and import URLs: where the URL is accepted, what the server may fetch, and how allowlists hold up after DNS resolution.",
     "category": "Security",
-    "readTime": "6 min",
+    "readTime": "2 min",
     "date": "September 21, 2026",
     "dateISO": "2026-09-21",
     "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
@@ -69,10 +69,10 @@
   },
   {
     "slug": "how-i-test-for-unrestricted-resource-consumption",
-    "title": "How I Test for Unrestricted Resource Consumption",
-    "excerpt": "Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.",
+    "title": "A Rate-Limit Checklist Beyond the Login Endpoint",
+    "excerpt": "Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.",
     "category": "Security",
-    "readTime": "4 min",
+    "readTime": "2 min",
     "date": "September 14, 2026",
     "dateISO": "2026-09-14",
     "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
@@ -86,10 +86,10 @@
   },
   {
     "slug": "how-i-test-for-broken-function-level-authorization",
-    "title": "How I Test for Broken Function Level Authorization",
-    "excerpt": "Most APIs check if you're logged in, but forget to verify whether your role should allow the action you're attempting.",
+    "title": "When a Valid Session Can Call Admin",
+    "excerpt": "Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.",
     "category": "Security",
-    "readTime": "4 min",
+    "readTime": "2 min",
     "date": "September 7, 2026",
     "dateISO": "2026-09-07",
     "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
@@ -98,15 +98,16 @@
     "tags": [
       "appsec",
       "api-security",
+      "authorization",
       "owasp"
     ]
   },
   {
     "slug": "how-i-test-for-jwt-validation-flaws",
-    "title": "How I Test for JWT Validation Flaws",
-    "excerpt": "Most APIs check that a JWT exists, but skip the validation steps that actually make tokens secure. Here's how I find those gaps.",
+    "title": "JWT Validation Mistakes That Still Ship",
+    "excerpt": "Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.",
     "category": "Security",
-    "readTime": "5 min",
+    "readTime": "2 min",
     "date": "August 31, 2026",
     "dateISO": "2026-08-31",
     "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
@@ -115,16 +116,16 @@
     "tags": [
       "appsec",
       "api-security",
-      "authentication",
-      "jwt"
+      "jwt",
+      "owasp"
     ]
   },
   {
     "slug": "how-i-test-for-mass-assignment-and-excessive-data-exposure",
-    "title": "How I Test for Mass Assignment and Excessive Data Exposure",
-    "excerpt": "Most APIs trust the client to only send or request what it should. I test what happens when the client asks for everything or sends fields it shouldn't touch.",
+    "title": "A Field-Level Checklist for Mass Assignment and Data Exposure",
+    "excerpt": "Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.",
     "category": "Security",
-    "readTime": "4 min",
+    "readTime": "2 min",
     "date": "August 24, 2026",
     "dateISO": "2026-08-24",
     "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
@@ -133,25 +134,29 @@
     "tags": [
       "appsec",
       "api-security",
+      "authorization",
       "owasp"
     ]
   },
   {
     "slug": "aillm-integrations-in-production-apps-what-they-dont-tell-yo",
     "title": "AI/LLM Integrations in Production Apps: What They Don't Tell You",
-    "excerpt": "Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.",
-    "category": "AI & ML",
-    "readTime": "9 min",
+    "excerpt": "Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.",
+    "category": "AI",
+    "readTime": "3 min",
     "date": "August 10, 2026",
     "dateISO": "2026-08-10",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
+    "tags": [
+      "llm"
+    ]
   },
   {
     "slug": "how-i-test-for-broken-object-level-authorization",
-    "title": "How I Test for Broken Object Level Authorization",
-    "excerpt": "Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.",
+    "title": "Login Is Not Ownership",
+    "excerpt": "A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.",
     "category": "Security",
-    "readTime": "4 min",
+    "readTime": "2 min",
     "date": "August 1, 2026",
     "dateISO": "2026-08-01",
     "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
@@ -160,197 +165,223 @@
     "tags": [
       "appsec",
       "api-security",
+      "authorization",
       "owasp"
     ]
   },
   {
     "slug": "the-engineering-journal-why-writing-about-your-work-makes-yo",
     "title": "The Engineering Journal: Why Writing About Your Work Makes You Better at It",
-    "excerpt": "Most engineers document their code but not their decisions. Here's why keeping an engineering journal is the most underrated career accelerator.",
-    "category": "Career",
-    "readTime": "7 min",
+    "excerpt": "A private log of decisions, debugging notes, and patterns. It is not team documentation, and it is not a substitute for an architecture decision record.",
+    "category": "Engineering",
+    "readTime": "2 min",
     "date": "August 1, 2026",
     "dateISO": "2026-08-01",
-    "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80",
+    "tags": [
+      "documentation",
+      "career"
+    ]
   },
   {
     "slug": "the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d",
     "title": "The First 90 Days: How to Ramp Up in a New Codebase Without Drowning",
     "excerpt": "Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.",
-    "category": "Career",
-    "readTime": "8 min",
+    "category": "Engineering",
+    "readTime": "3 min",
     "date": "July 27, 2026",
     "dateISO": "2026-07-27",
-    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "rest-and-graphql-api-design-lessons-from-building-both-in-pr",
     "title": "REST and GraphQL API Design: Lessons from Building Both in Production",
     "excerpt": "After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.",
-    "category": "API Design",
-    "readTime": "8 min",
+    "category": "Backend",
+    "readTime": "3 min",
     "date": "July 20, 2026",
     "dateISO": "2026-07-20",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "tags": [
+      "rest",
+      "graphql",
+      "api-security"
+    ]
   },
   {
     "slug": "postgresql-and-supabase-for-production-apps-what-you-need-to",
     "title": "PostgreSQL and Supabase for Production Apps: What You Need to Know",
-    "excerpt": "Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.",
-    "category": "Architecture",
-    "readTime": "8 min",
+    "excerpt": "Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.",
+    "category": "Backend",
+    "readTime": "3 min",
     "date": "July 13, 2026",
     "dateISO": "2026-07-13",
-    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80",
+    "tags": [
+      "postgres",
+      "supabase"
+    ]
   },
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
-    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
-    "category": "Node.js",
-    "readTime": "8 min",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle\u2014and the ones that didn't.",
+    "category": "Backend",
+    "readTime": "3 min",
     "date": "July 6, 2026",
     "dateISO": "2026-07-06",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "tags": [
+      "nodejs"
+    ]
   },
   {
     "slug": "the-pull-request-your-most-underutilized-career-growth-tool",
     "title": "The Pull Request: Your Most Underutilized Career Growth Tool",
     "excerpt": "Most engineers treat PRs as a formality. Senior engineers use them as a platform to build influence, teach, and accelerate their career.",
-    "category": "Career",
-    "readTime": "8 min",
+    "category": "Engineering",
+    "readTime": "3 min",
     "date": "June 29, 2026",
     "dateISO": "2026-06-29",
-    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "the-debugging-mindset-how-senior-engineers-approach-producti",
     "title": "The Debugging Mindset: How Senior Engineers Approach Production Incidents",
     "excerpt": "Production fires reveal who actually knows their systems. Here's how to move from panic-driven debugging to systematic problem-solving.",
-    "category": "Career",
-    "readTime": "8 min",
+    "category": "Engineering",
+    "readTime": "3 min",
     "date": "June 22, 2026",
     "dateISO": "2026-06-22",
-    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "architecture-decision-records-the-full-stack-engineers-secre",
     "title": "Architecture Decision Records: The Full-Stack Engineer's Secret Weapon",
-    "excerpt": "ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.",
-    "category": "Architecture",
-    "readTime": "7 min",
+    "excerpt": "How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.",
+    "category": "Engineering",
+    "readTime": "2 min",
     "date": "June 15, 2026",
     "dateISO": "2026-06-15",
-    "image": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80",
+    "tags": [
+      "documentation"
+    ]
   },
   {
     "slug": "documentation-debt-why-your-team-moves-slower-than-you-think",
     "title": "Documentation Debt: Why Your Team Moves Slower Than You Think",
-    "excerpt": "Poor documentation isn't just annoying—it's a compound interest loan on your team's velocity. Here's how to pay it down without stopping feature work.",
-    "category": "Career",
-    "readTime": "8 min",
+    "excerpt": "What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.",
+    "category": "Engineering",
+    "readTime": "2 min",
     "date": "June 1, 2026",
     "dateISO": "2026-06-01",
-    "image": "https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80"
-  },
-  {
-    "slug": "the-engineering-ladder-trap-why-promotion-chasing-hurts-your",
-    "title": "The Engineering Ladder Trap: Why Promotion-Chasing Hurts Your Growth",
-    "excerpt": "Most engineers optimize for the wrong metrics when chasing promotions. Here's what actually matters for long-term career growth.",
-    "category": "Career",
-    "readTime": "8 min",
-    "date": "May 25, 2026",
-    "dateISO": "2026-05-25",
-    "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80",
+    "tags": [
+      "documentation"
+    ]
   },
   {
     "slug": "cicd-and-github-actions-beyond-the-yaml-copy-paste",
     "title": "CI/CD and GitHub Actions: Beyond the YAML Copy-Paste",
     "excerpt": "Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.",
-    "category": "DevOps",
-    "readTime": "8 min",
+    "category": "Backend",
+    "readTime": "3 min",
     "date": "May 18, 2026",
     "dateISO": "2026-05-18",
-    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80",
+    "tags": [
+      "cicd"
+    ]
   },
   {
     "slug": "the-art-of-incremental-refactoring-ship-features-while-impro",
     "title": "The Art of Incremental Refactoring: Ship Features While Improving Code",
     "excerpt": "How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.",
-    "category": "Career",
-    "readTime": "8 min",
+    "category": "Engineering",
+    "readTime": "4 min",
     "date": "May 11, 2026",
     "dateISO": "2026-05-11",
-    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "the-myth-of-the-10x-engineer-what-actually-makes-someone-sen",
     "title": "The Myth of the 10x Engineer: What Actually Makes Someone Senior",
-    "excerpt": "After a decade of hiring and mentoring engineers, I've learned that seniority isn't about coding speed or genius. It's about judgment, communication, and knowing when NOT to code.",
-    "category": "Career",
-    "readTime": "8 min",
+    "excerpt": "Seniority is risk reduction, communication, and making other people effective. Promotion metrics that only count individual output miss the same point.",
+    "category": "Engineering",
+    "readTime": "4 min",
     "date": "May 4, 2026",
     "dateISO": "2026-05-04",
-    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "application-security-and-owasp-best-practices-a-production-e",
-    "title": "Application Security and OWASP Best Practices: A Production Engineer's Guide",
-    "excerpt": "Real-world security vulnerabilities I've seen in production and how OWASP guidelines actually help prevent them. Practical code examples included.",
+    "title": "Application Security and OWASP: Start Here",
+    "excerpt": "A map of the API security posts on this site: authorization, tokens, expensive routes, misconfiguration, forgotten routes, and untrusted partner responses.",
     "category": "Security",
-    "readTime": "9 min",
+    "readTime": "2 min",
     "date": "April 27, 2026",
     "dateISO": "2026-04-27",
-    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80",
+    "tags": [
+      "appsec",
+      "api-security",
+      "owasp",
+      "authorization"
+    ]
   },
   {
     "slug": "the-code-review-mindset-how-to-give-and-receive-feedback-tha",
     "title": "The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code",
     "excerpt": "Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.",
-    "category": "Career",
-    "readTime": "8 min",
+    "category": "Engineering",
+    "readTime": "3 min",
     "date": "April 20, 2026",
     "dateISO": "2026-04-20",
-    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+    "tags": [
+      "career"
+    ]
   },
   {
     "slug": "react-native-mobile-architecture-lessons-from-production",
     "title": "React Native Mobile Architecture: Lessons from Production",
-    "excerpt": "After shipping multiple React Native apps to millions of users, here's the architecture patterns that actually scale in production.",
-    "category": "React Native",
-    "readTime": "8 min",
+    "excerpt": "Module boundaries, native bridges, navigation, and where state should live in a React Native app.",
+    "category": "Mobile",
+    "readTime": "3 min",
     "date": "April 13, 2026",
     "dateISO": "2026-04-13",
-    "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80",
+    "tags": [
+      "react-native"
+    ]
   },
   {
     "slug": "typescript-patterns-for-large-codebases",
     "title": "TypeScript Patterns for Large Codebases",
-    "excerpt": "Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.",
-    "category": "TypeScript",
-    "readTime": "8 min",
+    "excerpt": "Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.",
+    "category": "Engineering",
+    "readTime": "3 min",
     "date": "April 11, 2026",
     "dateISO": "2026-04-11",
-    "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80"
-  },
-  {
-    "slug": "mastering-mobile-app-state-management-a-pragmatic-guide",
-    "title": "Mastering Mobile App State Management: A Pragmatic Guide",
-    "excerpt": "Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.",
-    "category": "React Native",
-    "readTime": "7 min",
-    "date": "April 8, 2026",
-    "dateISO": "2026-04-08",
-    "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80"
-  },
-  {
-    "slug": "edge-functions-the-future-of-serverless-architecture",
-    "title": "Edge Functions: The Future of Serverless Architecture",
-    "excerpt": "Discover how edge functions revolutionize serverless computing by bringing computation closer to users. Learn practical strategies for implementing ultra-low-latency, globally distributed applications.",
-    "category": "Architecture",
-    "readTime": "7 min",
-    "date": "April 8, 2026",
-    "dateISO": "2026-04-08",
-    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80",
+    "tags": [
+      "typescript"
+    ]
   }
 ]
