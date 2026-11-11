@@ -305,6 +305,30 @@ body.home .trust-split .trust-val {
 	font-size: 14px;
 	line-height: 1.5;
 }
+body.home .trust-split .trust-val .trust-note {
+	color: rgba(255, 255, 255, 0.55);
+	white-space: nowrap;
+}
+/* The value column is ~300px beside the chat bubble. Stack Google Play
+   so "(coming soon)" stays with it instead of splitting mid-phrase.
+   Under 900px the row is full width and the separator stays inline. */
+@media (min-width: 900px) {
+	body.home .trust-split .trust-val .trust-more {
+		display: block;
+		position: relative;
+	}
+	body.home .trust-split .trust-val .trust-sep {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+}
 
 @media (max-width: 899px) {
 	body.home .section.started .started-content.started-chat {
