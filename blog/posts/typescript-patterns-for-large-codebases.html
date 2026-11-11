@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>TypeScript's structural typing is elegant until you accidentally pass a <code>UserId</code> where an <code>OrderId</code> was expected—both are strings, so TypeScript happily compiles. In large codebases with dozens of domain entities, this becomes a real problem. The solution is to implement nominal typing using branded types.</p>
 
-<pre><code class="lang-typescript">// Create branded types for domain primitives
+<pre><code class="language-typescript">// Create branded types for domain primitives
 type Brand&lt;K, T&gt; = K &amp; { __brand: T };
 
 type UserId = Brand&lt;string, 'UserId'&gt;;
@@ -328,7 +328,7 @@ getOrder(userId); // Error: Argument of type 'UserId' is not assignable to 'Orde
 
 <p>Type assertions (<code>as</code>) get a bad rap, but they're essential in large codebases—you just need to be disciplined about where you use them. I follow a simple rule: assertions are allowed at system boundaries (API responses, database queries, external libraries) but banned everywhere else. Create a dedicated validation layer where runtime checks and type assertions live together.</p>
 
-<pre><code class="lang-typescript">// validation.ts - centralized validation with runtime checks
+<pre><code class="language-typescript">// validation.ts - centralized validation with runtime checks
 import { z } from 'zod';
 
 const UserSchema = z.object({
@@ -361,7 +361,7 @@ function processUser(user: User) {
 
 <p>One of TypeScript's most underutilized features is discriminated unions, especially for modeling state machines. Instead of optional fields that may or may not be present depending on state, make impossible states unrepresentable. This pattern eliminates entire categories of runtime errors.</p>
 
-<pre><code class="lang-typescript">// Bad: Optional fields lead to invalid states
+<pre><code class="language-typescript">// Bad: Optional fields lead to invalid states
 type BadRequest = {
   status: 'idle' | 'loading' | 'success' | 'error';
   data?: User;
@@ -402,7 +402,7 @@ function handleRequest(state: RequestState) {
 
 <p>Generics are powerful, but unconstrained generics are nearly useless in large codebases. Every generic should have meaningful constraints that encode business rules. This makes your APIs self-documenting and catches errors at compile time rather than runtime.</p>
 
-<pre><code class="lang-typescript">// Weak: Too generic, allows anything
+<pre><code class="language-typescript">// Weak: Too generic, allows anything
 function processEntity&lt;T&gt;(entity: T): void {
   // What can we actually do with T here?
 }
@@ -467,6 +467,9 @@ function updateEntity&lt;T extends DomainEntity&lt;string&gt;&gt;(
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

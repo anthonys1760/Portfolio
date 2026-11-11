@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>Node.js is single-threaded. Every millisecond you spend doing synchronous work is a millisecond your server can't process other requests. The most common performance killer I see? <strong>Synchronous JSON parsing of large payloads</strong>. When you call <code>JSON.parse()</code> on a 5MB webhook payload, you're blocking the event loop for 50-100ms. At 1000 req/s, that's a disaster.</p>
 
-<pre><code class="lang-javascript">// Bad: Blocking the event loop
+<pre><code class="language-javascript">// Bad: Blocking the event loop
 app.post('/webhook', express.json({ limit: '10mb' }), (req, res) =&gt; {
   // express.json() already parsed synchronously - damage done
   processWebhook(req.body);
@@ -329,7 +329,7 @@ app.post('/webhook', (req, res) =&gt; {
 
 <p>Database connection pools are configured once and forgotten. Then production traffic spikes and suddenly your app is spending 80% of its time waiting for available connections. <strong>Default pool sizes are almost always wrong</strong>. PostgreSQL's default is 10 connections. MongoDB's is 5. For a service handling 100 concurrent requests, that's a 10:1 queue.</p>
 
-<pre><code class="lang-javascript">// Naive approach - connection per request
+<pre><code class="language-javascript">// Naive approach - connection per request
 const { Pool } = require('pg');
 const pool = new Pool({
   max: 10, // Default - way too small
@@ -361,7 +361,7 @@ setInterval(() =&gt; {
 
 <p>Raw SQL scattered across route handlers makes performance optimization impossible. You can't identify N+1 queries. You can't add caching layers. You can't switch databases. The repository pattern isn't just about clean architecture—<strong>it's about having a single place to optimize data access</strong>.</p>
 
-<pre><code class="lang-javascript">// repositories/UserRepository.js
+<pre><code class="language-javascript">// repositories/UserRepository.js
 class UserRepository {
   constructor(pool, cache) {
     this.pool = pool;
@@ -411,7 +411,7 @@ module.exports = UserRepository;</code></pre>
 
 <p>If you're doing image processing, PDF generation, or complex data transformations in your request handlers, you're doing it wrong. These tasks should run in worker threads or separate processes. I use <code>worker_threads</code> for short CPU-intensive tasks and Bull queues for longer jobs. The pattern is simple: accept the request, queue the work, return immediately.</p>
 
-<pre><code class="lang-javascript">const { Worker } = require('worker_threads');
+<pre><code class="language-javascript">const { Worker } = require('worker_threads');
 const Queue = require('bull');
 
 const imageQueue = new Queue('image-processing', process.env.REDIS_URL);
@@ -466,6 +466,9 @@ imageQueue.process(async (job) =&gt; {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

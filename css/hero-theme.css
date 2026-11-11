@@ -1728,13 +1728,13 @@ body.hero-themed .skills-group.featured .group-label {
    every newline in a multi-line snippet onto one overflowing line. Scoped to
    .post-body so inline <code> in prose keeps its pill styling.
 
-   pre-wrap keeps the author's line breaks but wraps long lines at the edge
-   of the box, so a snippet never scrolls sideways off the page. The pre
-   keeps its overflow-x: auto as a safety net for anything unwrappable. */
+   pre keeps the author's line breaks. Long lines scroll inside the block
+   instead of wrapping mid-expression. */
 .post-body pre code {
 	display: block;
-	white-space: pre-wrap;
-	overflow-wrap: break-word;
+	white-space: pre;
+	overflow-wrap: normal;
+	word-wrap: normal;
 	word-break: normal;
 	overflow: visible;
 	max-width: none;

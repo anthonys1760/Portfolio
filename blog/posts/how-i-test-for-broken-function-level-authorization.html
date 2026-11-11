@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -313,7 +313,7 @@
 
 <p>Authentication can sit at the edge of the request. Authorization has to sit on the decision. Put the required permission on the route and enforce it in one helper, so a new admin function cannot ship with only a login check.</p>
 
-<pre><code class="lang-js">// Authorization middleware that checks specific permissions
+<pre><code class="language-javascript">// Authorization middleware that checks specific permissions
 function requirePermission(permission) {
   return (req, res, next) =&gt; {
     if (!req.user) {
@@ -372,6 +372,9 @@ app.delete('/api/users/:id',
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

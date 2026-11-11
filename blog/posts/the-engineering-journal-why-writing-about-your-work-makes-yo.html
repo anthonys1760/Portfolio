@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -305,7 +305,7 @@
 
 <p>The entries that pay off are investigations. Write the trail, not only the final patch: what you thought, what you checked, what the cause was. The sample below is an illustration of that shape. It is not a claim about a particular outage.</p>
 
-<pre><code class="lang-markdown">## 2023-04-12: Postgres Connection Pool Exhaustion
+<pre><code class="language-markdown">## 2023-04-12: Postgres Connection Pool Exhaustion
 
 **Context**: API started timing out under load during demo. Postgres connections maxed at 100.
 
@@ -338,7 +338,7 @@ Add connection pool metrics from day one. We were flying blind.</code></pre>
 
 <p>The team ADR is the version other people review. The journal can hold the rougher reasoning: options, the tradeoff you accepted, and the measurement you had at the time. That file can be wrong, incomplete, and still useful to you. This sample shows the shape. The latency figures are part of the illustration, not a confirmed benchmark.</p>
 
-<pre><code class="lang-markdown">## 2023-09-15: Caching Strategy for User Permissions
+<pre><code class="language-markdown">## 2023-09-15: Caching Strategy for User Permissions
 
 **Options**:
 1. In-memory cache (node-cache) - fast, but inconsistent across instances
@@ -399,6 +399,9 @@ Add connection pool metrics from day one. We were flying blind.</code></pre>
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

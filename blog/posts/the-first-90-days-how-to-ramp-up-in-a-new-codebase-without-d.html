@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>Don't start by reading code top-to-bottom. That's a trap. Instead, trace actual user flows through the system. Pick the most critical feature—user authentication, checkout flow, data sync—and follow a single request from entry point to database and back. Use your debugger. Set breakpoints everywhere. This gives you a mental map of how the pieces connect.</p>
 
-<pre><code class="lang-javascript">// Create a "learning journal" file in your local workspace
+<pre><code class="language-javascript">// Create a "learning journal" file in your local workspace
 // I literally keep a LEARNING.md file that looks like this:
 
 ## Auth Flow
@@ -332,7 +332,7 @@
 
 <p>By week five, you have enough context to spot problems that insiders have become blind to. Maybe the local development setup takes 45 minutes. Maybe there's no easy way to test payment flows. Maybe the API returns inconsistent error formats. <strong>These observations are gold.</strong> New engineers see the sharp edges that veterans have learned to avoid.</p>
 
-<pre><code class="lang-typescript">// I once joined a team where every engineer had this helper function
+<pre><code class="language-typescript">// I once joined a team where every engineer had this helper function
 // duplicated across multiple files:
 
 function safeJsonParse(str: string): any {
@@ -376,7 +376,7 @@ export function parseJson&lt;T = unknown&gt;(
 
 <p>The real skill isn't ramping up in <em>this</em> codebase—it's getting better at ramping up in <em>any</em> codebase. Every new role is a chance to refine your onboarding process. I keep a personal checklist that I update after each job change. What worked? What wasted time? What questions should I have asked earlier?</p>
 
-<pre><code class="lang-markdown"># My Personal Onboarding Checklist
+<pre><code class="language-markdown"># My Personal Onboarding Checklist
 
 ## Week 1
 - [ ] Set up local environment and run full test suite
@@ -428,6 +428,9 @@ export function parseJson&lt;T = unknown&gt;(
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

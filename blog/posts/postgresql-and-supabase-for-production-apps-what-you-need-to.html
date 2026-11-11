@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -301,7 +301,7 @@
 
 <p>Here's a production-ready RLS policy pattern I use for every multi-tenant table:</p>
 
-<pre><code class="lang-sql">-- Enable RLS on the table
+<pre><code class="language-sql">-- Enable RLS on the table
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 
 -- Policy for SELECT: users can only see their own projects
@@ -337,7 +337,7 @@ CREATE POLICY "Users can delete own projects"
 
 <p>The solution is to use Supabase's connection pooler for transactional queries and be aggressive about closing connections:</p>
 
-<pre><code class="lang-typescript">import { createClient } from '@supabase/supabase-js';
+<pre><code class="language-typescript">import { createClient } from '@supabase/supabase-js';
 
 // Use the pooler connection string for server-side operations
 const supabaseUrl = process.env.SUPABASE_URL!;
@@ -386,7 +386,7 @@ const cleanup = () =&gt; {
 
 <p>Want to know the biggest performance win I've implemented? Moving complex business logic from JavaScript to PostgreSQL functions. When you need to aggregate data, perform calculations, or handle complex transactions, doing it in the database is 10-100x faster than round-tripping data to your application layer.</p>
 
-<pre><code class="lang-sql">-- Complex aggregation that would require multiple queries in JS
+<pre><code class="language-sql">-- Complex aggregation that would require multiple queries in JS
 CREATE OR REPLACE FUNCTION get_user_dashboard_stats(user_uuid UUID)
 RETURNS JSON AS $$
 DECLARE
@@ -450,6 +450,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;</code></pre>
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

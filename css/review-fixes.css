@@ -1261,3 +1261,132 @@ body.home .footer .soc a:hover {
 		text-align: left;
 	}
 }
+
+/* The loading mark is a 1px bar pinned to the horizontal center
+   (basic.css: .preloader .spinner { left: 50%; width: 1px }). The preloader
+   has no background, so the bar stays on top of the mobile header until
+   window load, which is the line beside "Anthony Smith" at 390px. Hide it
+   at the mobile-header breakpoint. The desktop loading bar stays. */
+@media (max-width: 1199px) {
+	.preloader .spinner {
+		display: none !important;
+	}
+}
+
+/* Blog code: sideways scroll, system monospace, Highlight.js colors.
+   Inline code keeps the green pill; only pre>code is recolored. */
+.post-body pre {
+	max-width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: pre;
+	box-sizing: border-box;
+	-webkit-overflow-scrolling: touch;
+}
+.post-body pre code {
+	display: block;
+	white-space: pre;
+	overflow-wrap: normal;
+	word-wrap: normal;
+	word-break: normal;
+	overflow: visible;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-style: normal;
+	font-size: 0.875rem;
+	line-height: 1.55;
+	color: #e6edf3;
+	background: transparent;
+	padding: 0;
+}
+.post-body p code,
+.post-body li code,
+.post-body .post-callout code {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.post-body pre[data-language] {
+	position: relative;
+	padding-top: 2rem;
+}
+.post-body pre[data-language]::before {
+	content: attr(data-language);
+	position: absolute;
+	top: 9px;
+	right: 12px;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 11px;
+	line-height: 1;
+	letter-spacing: 0.06em;
+	text-transform: lowercase;
+	color: rgba(230, 237, 243, 0.7);
+	pointer-events: none;
+}
+.post-body pre code.hljs {
+	background: transparent;
+	padding: 0;
+}
+.post-body pre .hljs-comment,
+.post-body pre .hljs-quote {
+	color: #b7c5d6;
+	font-style: italic;
+}
+.post-body pre .hljs-keyword,
+.post-body pre .hljs-selector-tag,
+.post-body pre .hljs-literal,
+.post-body pre .hljs-section,
+.post-body pre .hljs-name,
+.post-body pre .hljs-tag {
+	color: #4bffa5;
+}
+.post-body pre .hljs-string,
+.post-body pre .hljs-doctag,
+.post-body pre .hljs-regexp {
+	color: #ffd7a8;
+}
+.post-body pre .hljs-number,
+.post-body pre .hljs-symbol,
+.post-body pre .hljs-bullet {
+	color: #f3b6d0;
+}
+.post-body pre .hljs-title,
+.post-body pre .hljs-title.function_,
+.post-body pre .hljs-title.class_,
+.post-body pre .hljs-function {
+	color: #9fd4ff;
+}
+.post-body pre .hljs-type,
+.post-body pre .hljs-built_in,
+.post-body pre .hljs-class {
+	color: #d2c4ff;
+}
+.post-body pre .hljs-attr,
+.post-body pre .hljs-attribute,
+.post-body pre .hljs-variable,
+.post-body pre .hljs-template-variable,
+.post-body pre .hljs-params,
+.post-body pre .hljs-punctuation,
+.post-body pre .hljs-operator {
+	color: #e6edf3;
+}
+.post-body pre .hljs-meta,
+.post-body pre .hljs-meta .hljs-keyword {
+	color: #7ee0c0;
+}
+@media (max-width: 600px) {
+	.post-body pre {
+		padding: 12px;
+		margin: 18px 0;
+	}
+	.post-body pre[data-language] {
+		padding-top: 28px;
+	}
+	.post-body pre[data-language]::before {
+		top: 8px;
+		right: 10px;
+		font-size: 10px;
+	}
+	.post-body pre code,
+	.post-body pre code.hljs {
+		font-size: 13px;
+		line-height: 1.45;
+	}
+}

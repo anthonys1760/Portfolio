@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -315,7 +315,7 @@
 
 <p>The copy that stays current lives next to the code and is reviewed with it. One way to force API docs to move with the route is to generate them from the same schema the handler validates. A feature branch updates that schema or the checklist fails.</p>
 
-<pre><code class="lang-typescript">// routes/users.ts
+<pre><code class="language-typescript">// routes/users.ts
 import { z } from 'zod';
 import { createRoute } from '../lib/route-factory';
 
@@ -405,6 +405,9 @@ fs.writeFileSync('./docs/API.md', generateMarkdown(routes));</code></pre>
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

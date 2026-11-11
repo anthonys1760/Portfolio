@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>Most engineers conflate two fundamentally different types of feedback: <strong>blocking feedback</strong> (things that must change before merge) and <strong>teaching feedback</strong> (suggestions for improvement that aren't dealbreakers). Mixing these up creates confusion and resentment. When I review code, I explicitly label my comments.</p>
 
-<pre><code class="lang-javascript">// ❌ BLOCKING: This will cause a memory leak in long-running processes
+<pre><code class="language-javascript">// ❌ BLOCKING: This will cause a memory leak in long-running processes
 const cache = {};
 
 export function memoize(fn) {
@@ -342,7 +342,7 @@ export function memoize(fn) {
 
 <p>When someone questions your PR, you have two options: defend the <em>code</em> with technical reasoning, or defend your <em>ego</em> with emotional reasoning. I've been guilty of the latter more times than I'd like to admit. The trick I use now: wait 10 minutes before responding to any comment that triggers defensiveness. Usually, after that pause, I realize the reviewer has a point. If I still disagree, I respond with data: benchmarks, links to docs, or examples of similar patterns in the codebase.</p>
 
-<pre><code class="lang-typescript">// Reviewer: "Why not use Promise.all here?"
+<pre><code class="language-typescript">// Reviewer: "Why not use Promise.all here?"
 // ❌ Defensive response: "This works fine, we don't need to optimize everything"
 
 // ✅ Technical response with reasoning:
@@ -406,6 +406,9 @@ async function processUserData(userId: string) {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

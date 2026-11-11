@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -315,7 +315,7 @@
 
 <p>Define a schema per endpoint. Copy only the writable keys onto the update. Return a serializer or DTO for that operation, not the database row.</p>
 
-<pre><code class="lang-js">// Allowlist pattern for update
+<pre><code class="language-javascript">// Allowlist pattern for update
 const userUpdateSchema = {
   email: { type: 'string', writable: true },
   name: { type: 'string', writable: true },
@@ -372,6 +372,9 @@ function updateUser(req, user) {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

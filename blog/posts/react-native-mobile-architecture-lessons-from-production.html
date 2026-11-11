@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>Most React Native apps start as a monolith and die as a monolith. The biggest architectural win I've implemented is treating major features as isolated modules with explicit dependency contracts. Each module owns its navigation, state, and native bridges. This isn't about microservices—it's about cognitive load and parallel development.</p>
 
-<pre><code class="lang-typescript">// modules/payments/index.ts
+<pre><code class="language-typescript">// modules/payments/index.ts
 export interface PaymentsModule {
   screens: {
     CheckoutScreen: React.ComponentType&lt;CheckoutProps&gt;;
@@ -350,7 +350,7 @@ class PaymentsModuleImpl implements PaymentsModule {
 
 <p>The new architecture (Fabric + TurboModules) is great, but you still need a coherent strategy for native code. I organize native modules by <em>capability</em>, not by platform. Each capability gets a TypeScript interface, platform-specific implementations, and a unified JS API. This makes mocking trivial for testing and keeps platform differences contained.</p>
 
-<pre><code class="lang-typescript">// native/capabilities/biometrics/index.ts
+<pre><code class="language-typescript">// native/capabilities/biometrics/index.ts
 export interface BiometricsCapability {
   isAvailable(): Promise&lt;boolean&gt;;
   authenticate(reason: string): Promise&lt;BiometricResult&gt;;
@@ -398,7 +398,7 @@ export class BiometricsModule implements BiometricsCapability {
 
 <p>React Navigation is the de facto standard, but treat it as infrastructure, not application code. I create a routing layer that decouples navigation logic from screens. This means you can deep link to any screen with type-safe parameters, and navigation logic lives in one place instead of scattered across 50 <code>navigation.navigate()</code> calls.</p>
 
-<pre><code class="lang-typescript">// navigation/Router.ts
+<pre><code class="language-typescript">// navigation/Router.ts
 export class Router {
   constructor(private navRef: NavigationContainerRef) {}
 
@@ -450,7 +450,7 @@ export class Router {
 <h2>Where state should live</h2>
 <p>A module that owns its state still has to pick a tool. Start with what the framework already gives you. Local component state is enough for one screen. Context is enough when a few children share a value that changes rarely. A dedicated store earns its place when many screens read and update the same session or domain data and those updates are getting hard to follow.</p>
 <p>Redux, MobX, Recoil, and a small hook-based store are the usual later options. Adopting one before the app has shown the need adds ceremony. The failure mode is extra indirection and re-renders that cost more than the feature did.</p>
-<pre><code class="lang-javascript">const UserProfile = () =&gt; {
+<pre><code class="language-javascript">const UserProfile = () =&gt; {
   const [profile, setProfile] = useState({
     name: '',
     email: '',
@@ -492,6 +492,9 @@ export class Router {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

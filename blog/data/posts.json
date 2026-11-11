@@ -2,7 +2,7 @@
   {
     "slug": "how-i-test-for-unsafe-consumption-of-third-party-apis",
     "title": "Treat Upstream Responses as Untrusted Input",
-    "excerpt": "Payment, map, and webhook responses are still input. Validate them before they reach your own logic. The illustration is labeled as an illustration, not a discovered incident.",
+    "excerpt": "Payment, map, and webhook responses are still input. Validate their types, bounds, and shape before they reach your own logic.",
     "category": "Security",
     "readTime": "2 min",
     "date": "November 2, 2026",

@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -311,7 +311,7 @@
 
 <p>Let me give you a real example from last year. A mid-level engineer on my team proposed building a custom feature flag system. They had a beautiful design, clean architecture diagrams, even a proof of concept. A junior engineer would have said "cool!" A senior engineer asks different questions:</p>
 
-<pre><code class="lang-js">// What they wanted to build:
+<pre><code class="language-javascript">// What they wanted to build:
 class FeatureFlagService {
   constructor(configStore, cache, analytics) {
     this.store = configStore;
@@ -362,7 +362,7 @@ export const isEnabled = (flagName, user) =&gt; {
 
 <p>The best engineers I've worked with share a common trait: they make everyone around them better. They write documentation that answers questions before they're asked. They build tools that eliminate entire classes of bugs. They mentor junior engineers and give feedback that actually helps people grow. They push back on bad requirements and protect their team from scope creep and technical debt.</p>
 
-<pre><code class="lang-typescript">// Junior: Solves their own problem
+<pre><code class="language-typescript">// Junior: Solves their own problem
 function formatCurrency(amount: number): string {
   return `$${amount.toFixed(2)}`;
 }
@@ -404,7 +404,7 @@ export function formatCurrency(
 </ul>
 <p>There is a heroics version of the same mistake. If one person is the only one who can rescue a system, the team depends on that person. Seniority is making the rescue unnecessary. The incident habits are in <a href="/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html">The Debugging Mindset</a>.</p>
 <p>A small example of leverage is encoding the failure path so a caller cannot ignore it:</p>
-<pre><code class="lang-typescript">type Result&lt;T, E = Error&gt; =
+<pre><code class="language-typescript">type Result&lt;T, E = Error&gt; =
   | { ok: true; value: T }
   | { ok: false; error: E };
 
@@ -449,6 +449,9 @@ async function fetchUser(id: string): Promise&lt;Result&lt;User&gt;&gt; {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>
