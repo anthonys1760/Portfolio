@@ -34,21 +34,24 @@ PROJECTS = (
 )
 
 # Above-the-fold viewports. The composed canvas is identical for every project.
+# The tablet is a landscape iPad (1194×834 is 4:3).
 VIEWPORTS = (
     ("laptop", 1440, 900),
-    ("tablet", 834, 1112),
+    ("tablet", 1194, 834),
     ("phone", 390, 844),
 )
 
 CANVAS = (1600, 1000)
 CHROME_PORT = 9333
 
-# Shared layout, in canvas pixels. Laptop sits at the back; tablet and phone
-# overlap it in front. Screen boxes keep each capture's real aspect ratio.
+# Shared layout, in canvas pixels. Laptop sits at the back centre. The landscape
+# iPad overlaps at the front-left, lower; the phone overlaps at the front-right.
+# Screen boxes keep each capture's real aspect ratio so nothing is stretched.
+# Sizes stay readable when the 1600px canvas is shown at about 340px.
 LAYOUT = {
-    "laptop": {"x": 250, "y": 56, "screen": (1072, 670), "bezel": 16, "radius": 22, "chin": 28, "deck": 46},
-    "tablet": {"x": 78, "y": 268, "screen": (390, 520), "bezel": 14, "radius": 26, "chin": 0, "deck": 0},
-    "phone": {"x": 1268, "y": 318, "screen": (214, 463), "bezel": 12, "radius": 28, "chin": 0, "deck": 0},
+    "laptop": {"x": 294, "y": 52, "screen": (960, 600), "bezel": 16, "radius": 22, "chin": 28, "deck": 46},
+    "tablet": {"x": 48, "y": 478, "screen": (620, 433), "bezel": 14, "radius": 26, "chin": 0, "deck": 0},
+    "phone": {"x": 1210, "y": 392, "screen": (236, 511), "bezel": 12, "radius": 28, "chin": 0, "deck": 0},
 }
 
 BEZEL = (24, 26, 31, 255)
