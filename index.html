@@ -46,7 +46,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="https://www.googletagmanager.com">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 	<!-- Styles -->
 	<link rel="stylesheet" href="css/basic.css" />
@@ -174,7 +174,14 @@
 					</div>
 				</div>
 
-			
+				<div class="header-social">
+					<a class="header-icon" href="https://github.com/anthonys1760" target="_blank" rel="noopener" aria-label="GitHub">
+						<span class="icon fab fa-github" aria-hidden="true"></span>
+					</a>
+					<a class="header-icon" href="https://www.linkedin.com/in/anthony-smith-b1085389" target="_blank" rel="noopener" aria-label="LinkedIn">
+						<span class="icon fab fa-linkedin" aria-hidden="true"></span>
+					</a>
+				</div>
 				<a class="header-touch" href="contact.html">Get in touch</a>
 			</div>
 		</header>
@@ -197,7 +204,7 @@
 							<div class="hero-chat-wrap">
 								<div class="hero-top">
 									<div class="hero-copy">
-										<p class="hero-eyebrow">Senior Software Engineer · Grand Rapids, MI</p>
+										<p class="hero-eyebrow">Senior Software Engineer · <span class="place">Grand Rapids, MI</span></p>
 										<h1 class="hero-role">I ship secure apps.<br /><strong>Then I break them.</strong></h1>
 										<p class="hero-tagline"><strong>15+ years</strong> building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10.</p>
 										<ul class="hire-chips" aria-label="Hire me for">
@@ -213,35 +220,39 @@
 										<p class="hero-availability">Open to full-time roles and contract or freelance work.</p>
 									</div>
 									<a class="feat-card" href="portfolio.html#castlog">
-										<div class="lbl">Featured product</div>
+										<div class="stage-top">
+											<div class="lbl">Featured product</div>
+											<div class="status"><i></i>Live on the App Store</div>
+										</div>
 										<h2>CastLog</h2>
-										<p>Fishing journal you log by voice. Built solo, offline-first.</p>
-										<div class="status"><i></i>Live on the App Store</div>
-										<p class="stack">React Native · On-device AI · Offline-first</p>
-										<p class="more">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
-										<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, tablet and phone">
+										<p class="deck">Fishing journal you log by voice. Built solo, offline-first.</p>
+										<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, landscape iPad and phone">
+										<span class="more">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
 									</a>
 								</div>
 
-								<div class="chat-row assistant hero-chat">
-									<div class="chat-bubble assistant thinking-done thinking-idle" id="chat-bubble-assistant">
-										<div class="assistant-meta" id="assistant-meta">
-											<span class="meta-model">anthony.ai</span>
-											<span class="meta-sep" aria-hidden="true">&middot;</span>
-											<span class="meta-mode" id="meta-mode">about me</span>
-										</div>
-										<div class="chat-text" id="chat-text">
-											<p>Anthony is a Senior Software Engineer specializing in <span class="accent">application &amp; API security</span>, based in Grand Rapids, Michigan.</p>
-											<p>He builds scalable web platforms, ships <span class="accent">React Native mobile apps</span> to TestFlight and the App Store, and designs <span class="accent">multi-agent AI systems</span> — orchestrating Anthropic, OpenAI, Grok, and Gemini through custom OpenRouter pipelines.</p>
-											<p>He leads systems engineering at <span class="accent">SpartanNash</span>, mentors developers in the Grepper community, and is open to full-time roles and to contract or freelance work.</p>
+								<div class="hero-band">
+									<div class="chat-row assistant hero-chat">
+										<div class="chat-bubble assistant thinking-done thinking-idle" id="chat-bubble-assistant">
+											<div class="assistant-meta" id="assistant-meta">
+												<span class="meta-model">anthony.ai</span>
+												<span class="meta-sep" aria-hidden="true">&middot;</span>
+												<span class="meta-mode" id="meta-mode">about me</span>
+											</div>
+											<div class="chat-text" id="chat-text">
+												<p>Anthony is a Senior Software Engineer specializing in <span class="accent">application &amp; API security</span>, based in Grand Rapids, Michigan.</p>
+												<p>He builds scalable web platforms, ships <span class="accent">React Native mobile apps</span> to TestFlight and the App Store, and designs <span class="accent">multi-agent AI systems</span> — orchestrating Anthropic, OpenAI, Grok, and Gemini through custom OpenRouter pipelines.</p>
+												<p>He leads systems engineering at <span class="accent">SpartanNash</span>, mentors developers in the Grepper community, and is open to full-time roles and to contract or freelance work.</p>
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<div class="trust-split">
-									<p><span class="trusted-label">Worked with</span> SpartanNash · Ford (via VMLY&amp;R) · DoD contractor work (via Intelligent Waves)</p>
-									<p><span class="trusted-label">Writing on</span> HackerNoon</p>
-									<p><span class="trusted-label">Available on</span> iOS App Store · TestFlight</p>
+									<div class="trust-split">
+										<p><span class="trusted-label">Worked with</span><span class="trust-val">SpartanNash · Ford (via VMLY&amp;R) · DoD contractor work (via Intelligent Waves)</span></p>
+										<p><span class="trusted-label">Writing on</span><span class="trust-val">HackerNoon</span></p>
+										<p><span class="trusted-label">Available on</span><span class="trust-val">iOS App Store · TestFlight</span></p>
+										<p><span class="trusted-label">Open to</span><span class="trust-val">Full-time roles and contract or freelance work</span></p>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -254,15 +265,15 @@
 
 		<!-- Footer -->
 		<footer class="footer">
-			<div class="copy"></div>
-			<div class="soc-box animated flipInY delay-5s">
+			<div class="copy">&copy; 2026 Anthony Smith</div>
+			<div class="soc-box">
 				<div class="follow-label">Connect With Me</div>
 				<div class="soc">
 					<a target="_blank" rel="noopener" href="https://github.com/anthonys1760" aria-label="GitHub">
-						<span class="icon fab fa-github"></span>
+						<span class="icon fab fa-github" aria-hidden="true"></span>
 					</a>
 					<a target="_blank" rel="noopener" href="https://www.linkedin.com/in/anthony-smith-b1085389" aria-label="LinkedIn">
-						<span class="icon fab fa-linkedin"></span>
+						<span class="icon fab fa-linkedin" aria-hidden="true"></span>
 					</a>
 				</div>
 			</div>
