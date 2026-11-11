@@ -206,7 +206,7 @@
 	height: auto;
 	margin-top: 12px;
 	border-radius: 12px;
-	aspect-ratio: 1000 / 750;
+	aspect-ratio: 1600 / 1000;
 	object-fit: contain;
 	flex: none;
 }
@@ -267,12 +267,11 @@
 	width: 100%;
 	max-width: 100%;
 	height: auto;
-	aspect-ratio: 1000 / 750;
+	aspect-ratio: 1600 / 1000;
 	object-fit: contain;
 	border-radius: 16px;
 	display: block;
 	flex: none;
-	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .case-shots figcaption {
 	font-size: 12px;
@@ -808,12 +807,10 @@ body.hero-themed .header.active .menu-btn:after {
 	width: 100%;
 	max-width: 100%;
 	height: auto;
-	aspect-ratio: 840 / 1050;
+	aspect-ratio: 1600 / 1000;
 	object-fit: contain;
 	flex: none;
 	border-radius: 16px;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: #0c1018;
 }
 
 /* 8/10. Reduced motion */
