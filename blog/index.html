@@ -341,7 +341,7 @@
 
 			grid.innerHTML = posts.map(post => `
 				<a class="blog-card" href="/blog/posts/${post.slug}.html">
-					<img class="blog-card-img" src="${post.image}" alt="${post.title}" loading="lazy" onerror="this.style.display='none'">
+					<img class="blog-card-img" src="${post.image}" alt="${post.imageAlt || post.title}" loading="lazy" onerror="this.style.display='none'">
 					<div class="blog-card-body">
 						<div class="blog-card-meta">
 							<span class="blog-card-category">${post.category}</span>

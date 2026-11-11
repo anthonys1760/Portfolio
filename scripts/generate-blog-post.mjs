@@ -13,9 +13,12 @@
  *   BLOG_MODEL   model id, default grok-4.7
  *   DRY_RUN=1    same as --dry-run
  *
- * A missing key, an unparseable model response, or an exhausted topic list
- * fails the process. When GITHUB_STEP_SUMMARY is set, the failure is also
- * written there for the Actions job summary.
+ * A missing key, an unparseable model response, an exhausted topic list,
+ * or an exhausted image pool fails the process. When GITHUB_STEP_SUMMARY
+ * is set, the failure is also written there for the Actions job summary.
+ *
+ * Featured images come from IMAGE_POOL. The script assigns a photo that is
+ * not already used in posts.json. It does not reuse one when the pool is empty.
  */
 
 import { execFile } from 'child_process'
@@ -45,7 +48,8 @@ class BlogError extends Error {
   }
 }
 
-if (!DRY_RUN && !process.env.XAI_API_KEY) {
+function requireApiKey() {
+  if (DRY_RUN || process.env.XAI_API_KEY) return
   const message = '[Blog] Missing XAI_API_KEY. The run cannot call the xAI API.'
   console.error(message)
   writeSummary(`## Weekly blog draft failed\n\n${message}\n`)
@@ -478,13 +482,36 @@ const TOPICS = [
   },
 ]
 
-const FALLBACK_IMAGES = [
-  'photo-1461749280684-dccba630e2f6',
-  'photo-1555066931-4365d14bab8c',
-  'photo-1498050108023-c5249f4df085',
-  'photo-1504384308090-c894fdcc538d',
-  'photo-1517694712202-14dd9538aa97',
-  'photo-1531297484001-80022131f5a1',
+// Verified Unsplash photos (HTTP 200, image/jpeg at ?w=1200&q=80).
+// Each entry is a real photograph, not a render, and none is a near-duplicate
+// of another entry or of a photo already on a post. Add ids here when the
+// pool runs low. Do not add an id that posts.json already uses.
+const IMAGE_POOL = [
+  { id: '1485827404703-89b55fcc595e', topics: ['ai'], alt: 'A white robot with a round face and illuminated eyes, photographed indoors' },
+  { id: '1597852074816-d933c7d2b988', topics: ['backend', 'security'], alt: 'An open hard drive with the platter and read arm exposed' },
+  { id: '1501139083538-0139583c060f', topics: ['security'], alt: 'An hourglass with blue sand standing on a bed of small stones' },
+  { id: '1450101499163-c8848c66ca85', topics: ['security', 'engineering'], alt: 'A person signing a printed document with a pen' },
+  { id: '1563013544-824ae1b704d3', topics: ['security', 'backend'], alt: 'Hands holding a credit card above a laptop keyboard' },
+  { id: '1529699211952-734e80c4d42b', topics: ['engineering'], alt: 'Wooden chess pieces lined up on a board, with one dark pawn in front' },
+  { id: '1587654780291-39c9404d746b', topics: ['engineering'], alt: 'A pile of loose colorful interlocking building bricks' },
+  { id: '1581091226825-a6a2a5aee158', topics: ['backend', 'engineering'], alt: 'A person working on a laptop beside factory machinery and cable trays' },
+  { id: '1551434678-e076c223a692', topics: ['engineering'], alt: 'Two people working at separate laptops in a bright office' },
+  { id: '1600880292203-757bb62b4baf', topics: ['engineering'], alt: 'Two coworkers high-fiving across a desk covered with papers and a laptop' },
+  { id: '1481627834876-b7833e8f5570', topics: ['engineering'], alt: 'Library shelves packed with books under a row of hanging light bulbs' },
+  { id: '1434030216411-0b793f4b4173', topics: ['engineering'], alt: 'A hand writing notes on paper beside a closed laptop and a mug' },
+  { id: '1454165804606-c3d57bc86b40', topics: ['engineering'], alt: 'Two people marking up a printed page between open laptops' },
+  { id: '1554224155-6726b3ff858f', topics: ['backend', 'security'], alt: 'Tax forms, a calculator phone, and a pen spread across a wood floor' },
+  { id: '1542744173-8e7e53415bb0', topics: ['engineering'], alt: 'A person presenting to colleagues seated around a conference table with laptops' },
+  { id: '1552664730-d307ca884978', topics: ['engineering'], alt: 'A person pointing at a wall of colorful sticky notes while others sit with laptops' },
+  { id: '1423666639041-f56000c27a9a', topics: ['mobile', 'security'], alt: 'Hands holding a phone above a laptop, with a small USB drive on the table' },
+  { id: '1504384308090-c894fdcc538d', topics: ['engineering'], alt: 'A large open office with rows of people working at laptops' },
+  { id: '1581092160562-40aa08e78837', topics: ['engineering', 'backend'], alt: 'Technical drawings, a cutting mat, and a toolbox laid out on a workbench' },
+  { id: '1503387762-592deb58ef4e', topics: ['engineering'], alt: 'A person drafting a floor plan with a ruler and a rolled sheet of paper' },
+  { id: '1434494878577-86c23bcb06b9', topics: ['mobile'], alt: 'A person tapping a smartwatch on their wrist' },
+  { id: '1517048676732-d65bc937f952', topics: ['engineering'], alt: 'People seated along a wooden table, writing in notebooks' },
+  { id: '1600880292089-90a7e086ee0c', topics: ['engineering'], alt: 'Several hands stacked together over a table of papers' },
+  { id: '1531403009284-440f080d1e12', topics: ['backend', 'engineering'], alt: 'A hand pinning a card on a wall of wireframes and flow diagrams' },
+  { id: '1456513080510-7bf3a84b82f8', topics: ['engineering'], alt: 'Open books and a handwritten notebook on a table, with shelves behind them' },
 ]
 
 const STOPWORDS = new Set((
@@ -575,24 +602,79 @@ function loadExistingPosts() {
   }
 }
 
-function randomFallback() {
-  const id = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]
-  return `https://images.unsplash.com/${id}?w=1200&q=80`
+function imageId(url) {
+  const match = String(url || '').match(/photo-([A-Za-z0-9_-]+)/)
+  return match ? match[1] : ''
+}
+
+function imageUrl(id) {
+  return `https://images.unsplash.com/photo-${id}?w=1200&q=80`
+}
+
+function topicGroup(topic) {
+  const category = String(topic?.category || '').toLowerCase()
+  const area = String(topic?.area || '')
+  if (area === 'agent-security' || category === 'ai') return 'ai'
+  if (area === 'appsec' || category === 'security') return 'security'
+  if (category === 'mobile') return 'mobile'
+  if (category === 'backend') return 'backend'
+  return 'engineering'
+}
+
+function usedImageIds(posts) {
+  return new Set(posts.map(post => imageId(post.image)).filter(Boolean))
 }
 
 async function verifyImageUrl(url) {
   try {
-    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
-    return res.ok
+    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(8000) })
+    const type = (res.headers.get('content-type') || '').toLowerCase()
+    return res.status === 200 && type.startsWith('image/')
   } catch {
     return false
   }
 }
 
-async function safeImageUrl(url) {
-  if (!url || !url.startsWith('http')) return randomFallback()
-  const ok = await verifyImageUrl(url)
-  return ok ? url : randomFallback()
+function failImagePool(message) {
+  const summary = [
+    '## Weekly blog draft did not run',
+    '',
+    message,
+    '',
+    'Add new verified Unsplash URLs to `IMAGE_POOL` in `scripts/generate-blog-post.mjs`, then run the workflow again.',
+    'Each URL must return HTTP 200 with an image content-type, and its photo id must not already appear in `blog/data/posts.json`.',
+    '',
+  ].join('\n')
+  throw new BlogError(summary, summary)
+}
+
+// Prefer an unused pool photo in the topic group. If that group is used up,
+// take any other unused pool photo. If none remain, fail instead of reusing.
+async function assignImage(posts, topic) {
+  const used = usedImageIds(posts)
+  const group = topicGroup(topic)
+  const unused = IMAGE_POOL.filter(item => !used.has(item.id))
+  const primary = unused.filter(item => item.topics[0] === group)
+  const secondary = unused.filter(item => item.topics[0] !== group && item.topics.includes(group))
+  const rest = unused.filter(item => !item.topics.includes(group))
+  const candidates = [...primary, ...secondary, ...rest]
+
+  if (!candidates.length) {
+    failImagePool(
+      'No unused image is left in the curated pool. This run will not reuse a photo that is already on a post.',
+    )
+  }
+
+  const failed = []
+  for (const item of candidates) {
+    const url = imageUrl(item.id)
+    if (await verifyImageUrl(url)) return { image: url, imageAlt: item.alt }
+    failed.push(item.id)
+  }
+
+  failImagePool(
+    `Every unused pool image failed verification (HTTP 200 and an image content-type). Failed ids: ${failed.join(', ')}.`,
+  )
 }
 
 function repairJson(str) {
@@ -1015,7 +1097,6 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
   "readTime": "6 min",
   "keywords": "6-10 comma separated keywords",
   "tags": ${JSON.stringify(topic.tags)},
-  "image": "https://images.unsplash.com/photo-XXXXXXXXXXXXXXXXXX?w=1200&q=80",
   "body": [
     { "type": "paragraph", "text": "..." },
     { "type": "heading", "text": "..." },
@@ -1030,7 +1111,7 @@ Block rules
 - paragraph, callout, heading, list, orderedlist, and code are the only types.
 - The first block is a paragraph, a callout, or a list. It is not a heading and not a code block.
 - paragraph, callout, and list item text may use <strong>, <em>, <code>, and <a href> inline tags only.
-- For the featured image, use a direct Unsplash CDN URL you are confident exists.
+- Do not choose a featured image. The script assigns one from a pool of unused photos.
 - Target roughly 500 to 800 words. Say the thing and stop.${retry}`
 }
 
@@ -1241,7 +1322,6 @@ function buildFixture(topic, format, opening) {
     readTime: '6 min',
     keywords: topic.keywords,
     tags: topic.tags,
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80',
     body: bodyForFormat(topic, format.key, lead, pointsFor(topic)),
   }
 }
@@ -1697,7 +1777,7 @@ function buildPostHtml(post) {
           <h1 class="post-title">${escapeHtml(post.title)}</h1>
         </header>
 
-        <img class="post-hero-img" src="${post.image}" alt="${escapeHtml(post.title)}" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="${post.image}" alt="${escapeHtml(post.imageAlt || post.title)}" onerror="this.style.display='none'">
 
         <div class="post-body">
           ${bodyHtml}
@@ -1769,6 +1849,7 @@ function toMeta(post) {
     date: post.date,
     dateISO: post.dateISO,
     image: post.image,
+    imageAlt: post.imageAlt,
   }
   if (post.series) meta.series = post.series
   if (post.topicKey) meta.topicKey = post.topicKey
@@ -1798,6 +1879,7 @@ function writeRunFile(post, topic, format, opening) {
 }
 
 async function main() {
+  requireApiKey()
   mkdirSync(POSTS_DIR, { recursive: true })
   mkdirSync(path.dirname(POSTS_JSON), { recursive: true })
 
@@ -1858,7 +1940,10 @@ async function main() {
     )
   }
 
-  post.image = await safeImageUrl(post.image)
+  const chosen = await assignImage(posts, topic)
+  post.image = chosen.image
+  post.imageAlt = chosen.imageAlt
+  console.log(`[Blog] image: ${imageId(post.image)} (${topicGroup(topic)})`)
 
   const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
   writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
@@ -1888,9 +1973,16 @@ async function main() {
   ].join('\n'))
 }
 
-main().catch(err => {
-  console.error(`[Blog] ${err.message}`)
-  if (err.summary) writeSummary(err.summary)
-  else writeSummary(`## Weekly blog draft failed\n\n${err.message}\n`)
-  process.exit(1)
-})
+const invokedDirectly = process.argv[1]
+  && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+
+if (invokedDirectly) {
+  main().catch(err => {
+    console.error(`[Blog] ${err.message}`)
+    if (err.summary) writeSummary(err.summary)
+    else writeSummary(`## Weekly blog draft failed\n\n${err.message}\n`)
+    process.exit(1)
+  })
+}
+
+export { IMAGE_POOL, assignImage, imageId, imageUrl, topicGroup }

@@ -7,7 +7,8 @@
     "readTime": "2 min",
     "date": "November 2, 2026",
     "dateISO": "2026-11-02",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200&q=80",
+    "imageAlt": "A cashier at a counter using a card reader beside a tablet point-of-sale screen",
     "series": "appsec-methodology",
     "topicKey": "third-party",
     "tags": [
@@ -24,7 +25,8 @@
     "readTime": "2 min",
     "date": "October 5, 2026",
     "dateISO": "2026-10-05",
-    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&q=80",
+    "imageAlt": "A long empty office hallway lined with glass-walled rooms and no one in sight",
     "series": "appsec-methodology",
     "topicKey": "inventory",
     "tags": [
@@ -41,7 +43,8 @@
     "readTime": "2 min",
     "date": "September 28, 2026",
     "dateISO": "2026-09-28",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+    "imageAlt": "A close-up of a circuit board covered with chips, capacitors, and solder joints",
     "series": "appsec-methodology",
     "topicKey": "misconfig",
     "tags": [
@@ -58,7 +61,8 @@
     "readTime": "2 min",
     "date": "September 21, 2026",
     "dateISO": "2026-09-21",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+    "imageAlt": "Earth at night seen from orbit, with city lights spread across the dark surface",
     "series": "appsec-methodology",
     "topicKey": "ssrf",
     "tags": [
@@ -75,7 +79,8 @@
     "readTime": "2 min",
     "date": "September 14, 2026",
     "dateISO": "2026-09-14",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80",
+    "imageAlt": "An aerial view of a crowded highway interchange with traffic filling every lane",
     "series": "appsec-methodology",
     "topicKey": "resource-abuse",
     "tags": [
@@ -92,7 +97,8 @@
     "readTime": "2 min",
     "date": "September 7, 2026",
     "dateISO": "2026-09-07",
-    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=1200&q=80",
+    "imageAlt": "A hand holding a phone with a smart-lock app next to a lock on a white door",
     "series": "appsec-methodology",
     "topicKey": "bfla",
     "tags": [
@@ -128,7 +134,8 @@
     "readTime": "2 min",
     "date": "August 24, 2026",
     "dateISO": "2026-08-24",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80",
+    "imageAlt": "A clipboard holding a short form, a pen, and the corner of a laptop on a desk",
     "series": "appsec-methodology",
     "topicKey": "bopla",
     "tags": [
@@ -159,7 +166,8 @@
     "readTime": "2 min",
     "date": "August 1, 2026",
     "dateISO": "2026-08-01",
-    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
+    "imageAlt": "An apartment building with many separate balconies and windows, each unit its own",
     "series": "appsec-methodology",
     "topicKey": "bola",
     "tags": [
@@ -204,7 +212,8 @@
     "readTime": "3 min",
     "date": "July 20, 2026",
     "dateISO": "2026-07-20",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200&q=80",
+    "imageAlt": "Labeled network ports on a patch panel, with ethernet cables plugged into a few of them",
     "tags": [
       "rest",
       "graphql",
@@ -228,7 +237,7 @@
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
-    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle\u2014and the ones that didn't.",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
     "category": "Backend",
     "readTime": "3 min",
     "date": "July 6, 2026",
@@ -246,7 +255,8 @@
     "readTime": "3 min",
     "date": "June 29, 2026",
     "dateISO": "2026-06-29",
-    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=1200&q=80",
+    "imageAlt": "A git commit graph on a screen, with colored branch lines beside commit messages",
     "tags": [
       "career"
     ]
@@ -311,7 +321,8 @@
     "readTime": "4 min",
     "date": "May 11, 2026",
     "dateISO": "2026-05-11",
-    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
+    "imageAlt": "A construction crew standing over a foundation still filled with exposed rebar",
     "tags": [
       "career"
     ]
@@ -353,7 +364,8 @@
     "readTime": "3 min",
     "date": "April 20, 2026",
     "dateISO": "2026-04-20",
-    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80",
+    "imageAlt": "Two people leaning over one laptop while one points at a list on the screen",
     "tags": [
       "career"
     ]
