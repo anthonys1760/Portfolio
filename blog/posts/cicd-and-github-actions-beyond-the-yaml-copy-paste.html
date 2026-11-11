@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>Your CI pipeline has one job: tell engineers if they broke something, as fast as possible. Every minute your pipeline takes is a minute an engineer is context-switching or waiting. I aim for sub-5-minute feedback on PRs. Here's a production workflow that prioritizes speed through parallelization and caching:</p>
 
-<pre><code class="lang-yaml">name: CI
+<pre><code class="language-yaml">name: CI
 
 on:
   pull_request:
@@ -381,7 +381,7 @@ jobs:
 
 <p>One of the biggest mistakes I see is running the entire pipeline for every change. If someone updates documentation, you don't need to run integration tests. GitHub Actions supports path filtering, but here's the pattern I actually use in production—it's more explicit and easier to debug:</p>
 
-<pre><code class="lang-yaml">name: Smart CI
+<pre><code class="language-yaml">name: Smart CI
 
 on:
   pull_request:
@@ -446,7 +446,7 @@ jobs:
 
 <p>Deployment workflows need guardrails. I use environments with protection rules and required reviewers for production, but here's the part most tutorials skip: integration with your actual infrastructure. This example deploys to AWS but shows the pattern for any platform:</p>
 
-<pre><code class="lang-yaml">name: Deploy
+<pre><code class="language-yaml">name: Deploy
 
 on:
   push:
@@ -550,6 +550,9 @@ jobs:
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

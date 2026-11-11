@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -315,7 +315,7 @@
 
 <p>The durable fix is to enforce ownership where the row is loaded, not only in the route. A query that fetches by id also filters by the authenticated user. A miss returns not found, so the response does not reveal that the other invoice exists.</p>
 
-<pre><code class="lang-js">// Enforce ownership in the data layer
+<pre><code class="language-javascript">// Enforce ownership in the data layer
 async function getInvoice(invoiceId, userId) {
   const invoice = await db.invoices.findOne({
     id: invoiceId,
@@ -364,6 +364,9 @@ async function getInvoice(invoiceId, userId) {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

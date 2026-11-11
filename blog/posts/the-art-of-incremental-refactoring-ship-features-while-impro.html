@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>The Boy Scout Rule — "leave the code better than you found it" — sounds great in theory but fails in practice without constraints. The key is defining <strong>better</strong> narrowly. When touching a file for a feature, I limit improvements to the immediate context: the function I'm modifying and its direct dependencies. Not the entire module. Not the architectural pattern. Just the code I'm already changing.</p>
 
-<pre><code class="lang-typescript">// Before: Adding a feature to this mess
+<pre><code class="language-typescript">// Before: Adding a feature to this mess
 function processOrder(order: any) {
   if (order.items &amp;&amp; order.items.length &gt; 0) {
     let total = 0;
@@ -351,7 +351,7 @@ function processOrder(order: Order): number {
 
 <p>When you need to change something architectural — like replacing a legacy API client or migrating state management — the strangler fig pattern is your friend. Wrap the old system with a new interface, route new code through the wrapper, and gradually migrate old call sites. The key is that <strong>both systems run in parallel</strong> until the migration is complete.</p>
 
-<pre><code class="lang-typescript">// Legacy API client we want to replace
+<pre><code class="language-typescript">// Legacy API client we want to replace
 class LegacyAPIClient {
   async fetchUser(id: string) {
     // Old implementation with weird quirks
@@ -438,6 +438,9 @@ class APIClient {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

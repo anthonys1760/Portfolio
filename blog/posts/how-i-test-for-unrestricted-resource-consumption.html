@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -315,7 +315,7 @@
 
 <p>Jobs, webhook deliveries, and other background work triggered by the request often bypass the HTTP limiter because the response already returned. Count that work against the same identity, or the limit is a number on the wrong timeline.</p>
 
-<pre><code class="lang-javascript">// Apply rate limit before expensive operation
+<pre><code class="language-javascript">// Apply rate limit before expensive operation
 const rateLimitKey = `export:${userId}`;
 const limit = await rateLimiter.check(rateLimitKey, {
   max: 10,
@@ -367,6 +367,9 @@ const report = await generateReport(userId, params);</code></pre>
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

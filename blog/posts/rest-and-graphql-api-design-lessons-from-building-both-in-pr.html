@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -305,7 +305,7 @@
 
 <p>REST isn't outdated—it's <em>predictable</em>. For public APIs, third-party integrations, or webhook systems, REST is often the better choice. Why? HTTP caching works out of the box. Every developer understands it. Tools like Postman and curl make it trivial to debug. Here's a well-designed REST endpoint that leverages HTTP semantics properly:</p>
 
-<pre><code class="lang-typescript">// Good REST design uses HTTP methods and status codes correctly
+<pre><code class="language-typescript">// Good REST design uses HTTP methods and status codes correctly
 app.get('/api/v1/users/:id', async (req, res) =&gt; {
   const user = await db.users.findUnique({
     where: { id: req.params.id },
@@ -350,7 +350,7 @@ app.patch('/api/v1/users/:id', async (req, res) =&gt; {
 
 <p>The other killer feature: <strong>eliminating overfetching and underfetching</strong>. In REST, you either make multiple requests or return too much data. GraphQL lets clients request exactly what they need in one round trip. Here's a practical example:</p>
 
-<pre><code class="lang-typescript">// GraphQL resolver with DataLoader to prevent N+1 queries
+<pre><code class="language-typescript">// GraphQL resolver with DataLoader to prevent N+1 queries
 import DataLoader from 'dataloader';
 
 const userLoader = new DataLoader(async (userIds) =&gt; {
@@ -429,6 +429,9 @@ const resolvers = {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

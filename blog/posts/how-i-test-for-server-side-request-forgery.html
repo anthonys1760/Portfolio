@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-server-side-request-forgery.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -313,7 +313,7 @@
 
 <h2>A check that fails closed</h2>
 
-<pre><code class="lang-js">const ALLOWED_HOSTS = ['cdn.example.com', 'api.partner.com'];
+<pre><code class="language-javascript">const ALLOWED_HOSTS = ['cdn.example.com', 'api.partner.com'];
 const BLOCKED_RANGES = ['127.0.0.0/8', '169.254.0.0/16', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
 
 function isUrlSafe(url) {
@@ -362,6 +362,9 @@ function isUrlSafe(url) {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

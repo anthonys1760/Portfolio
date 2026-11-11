@@ -707,9 +707,25 @@ function cleanProse(str) {
     .trim()
 }
 
+// Editor notes that leaked into a published excerpt. Body examples are allowed
+// to say "illustration"; the excerpt and meta description are not.
+const EXCERPT_META_NOTE = /illustration|labeled as|\bplaceholder\b|\bnote\s*:|\bTODO\b|editor(?:'s)?\s+note|\bas an AI\b|\[[^\]]*(?:\bnote\b|\bTODO\b|\beditor\b|\binstruction\b)[^\]]*\]/i
+
+function excerptHasMetaNote(text) {
+  return EXCERPT_META_NOTE.test(String(text || ''))
+}
+
+function stripMetaNotes(text) {
+  let out = String(text || '')
+  out = out.replace(/\[[^\]]*(?:\bnote\b|\bTODO\b|\beditor\b|\binstruction\b)[^\]]*\]/gi, '')
+  const sentences = out.split(/(?<=[.!?])\s+/)
+  out = sentences.filter(sentence => sentence.trim() && !excerptHasMetaNote(sentence)).join(' ')
+  return out.replace(/\s+/g, ' ').trim()
+}
+
 function enforceVoice(post) {
   if (post.title) post.title = cleanProse(post.title)
-  if (post.excerpt) post.excerpt = cleanProse(post.excerpt)
+  if (post.excerpt) post.excerpt = stripMetaNotes(cleanProse(post.excerpt))
   for (const block of post.body || []) {
     if (block.type === 'code') continue
     if (typeof block.text === 'string') block.text = cleanProse(block.text)
@@ -1071,7 +1087,8 @@ Accuracy
 - If you name a standard, an RFC, or a vendor behavior, put one of the allowed URLs in that same block. If you are not sure, describe the mechanism with no number and no citation.
 - You may use only these URLs, copied exactly:
 ${urls}
-- Label every example as an illustration. Do not present an illustration as something that happened.
+- Label every example as an illustration in the body. Do not present an illustration as something that happened.
+- The excerpt is the reader-facing summary. Do not write "illustration", "labeled as", "placeholder", "TODO", "note:", "editor note", "as an AI", or a bracketed instruction in the excerpt.
 
 Defense
 - Defensive framing only. Describe the boundary, the check, and what the application refuses.
@@ -1103,7 +1120,7 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
     { "type": "list", "items": ["...", "..."] },
     { "type": "orderedlist", "items": ["...", "..."] },
     { "type": "callout", "text": "..." },
-    { "type": "code", "lang": "js", "code": "..." }
+    { "type": "code", "lang": "javascript", "code": "..." }
   ]
 }
 
@@ -1112,6 +1129,7 @@ Block rules
 - The first block is a paragraph, a callout, or a list. It is not a heading and not a code block.
 - paragraph, callout, and list item text may use <strong>, <em>, <code>, and <a href> inline tags only.
 - Do not choose a featured image. The script assigns one from a pool of unused photos.
+- A code block needs "lang". Use one of: javascript, typescript, json, bash, python, yaml, sql, http, markdown, plaintext.
 - Target roughly 500 to 800 words. Say the thing and stop.${retry}`
 }
 
@@ -1364,6 +1382,9 @@ function validatePost(post, topic, format, corpus) {
   const excerpt = visible(post.excerpt || '')
   if (!excerpt) problems.push('Excerpt is missing.')
   if (excerpt.length > 200) problems.push(`Excerpt is ${excerpt.length} characters. Maximum is 200.`)
+  if (excerptHasMetaNote(excerpt)) {
+    problems.push('Excerpt reads like an editor note. Write a reader-facing summary without illustration labels, placeholders, TODOs, or bracketed instructions.')
+  }
 
   if (!Array.isArray(body) || body.length < 4) {
     problems.push('Body must be an array of at least 4 blocks.')
@@ -1447,6 +1468,42 @@ function finalizePost(post, dateISO) {
   return post
 }
 
+const CODE_LANG_ALIASES = {
+  js: 'javascript',
+  jsx: 'javascript',
+  javascript: 'javascript',
+  ts: 'typescript',
+  tsx: 'typescript',
+  typescript: 'typescript',
+  sh: 'bash',
+  shell: 'bash',
+  bash: 'bash',
+  zsh: 'bash',
+  yml: 'yaml',
+  yaml: 'yaml',
+  py: 'python',
+  python: 'python',
+  md: 'markdown',
+  markdown: 'markdown',
+  json: 'json',
+  sql: 'sql',
+  http: 'http',
+  https: 'http',
+  html: 'xml',
+  xml: 'xml',
+  css: 'css',
+  text: 'plaintext',
+  txt: 'plaintext',
+  plaintext: 'plaintext',
+  plain: 'plaintext',
+}
+
+function codeLanguage(lang) {
+  const raw = String(lang || 'plaintext').toLowerCase().trim()
+  const mapped = CODE_LANG_ALIASES[raw] || raw
+  return /^[a-z0-9_+-]+$/.test(mapped) ? mapped : 'plaintext'
+}
+
 function renderBlock(block) {
   switch (block.type) {
     case 'heading':
@@ -1460,7 +1517,7 @@ function renderBlock(block) {
     case 'orderedlist':
       return `<ol>${(block.items || []).map(i => `<li>${i}</li>`).join('')}</ol>`
     case 'code':
-      return `<pre><code class="lang-${block.lang || 'text'}">${escapeCode(block.code || '')}</code></pre>`
+      return `<pre><code class="language-${codeLanguage(block.lang)}">${escapeCode(block.code || '')}</code></pre>`
     default:
       return ''
   }
@@ -1563,7 +1620,7 @@ function buildPostHtml(post) {
     "url": "https://anthonysdigital.net/blog/posts/${post.slug}.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -1652,12 +1709,23 @@ function buildPostHtml(post) {
       border-radius: 10px;
       padding: 20px 22px;
       overflow-x: auto;
+      max-width: 100%;
+      white-space: pre;
+      box-sizing: border-box;
       margin: 24px 0;
     }
     .post-body code {
-      font-family: 'Roboto Mono', 'Courier New', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 0.875rem;
       color: #4bffa5;
+    }
+    .post-body pre code {
+      display: block;
+      white-space: pre;
+      overflow-wrap: normal;
+      word-wrap: normal;
+      color: #e6edf3;
+      background: transparent;
     }
     .post-body p code, .post-body li code {
       background: rgba(75,255,165,0.08);
@@ -1696,6 +1764,8 @@ function buildPostHtml(post) {
     @media (max-width: 600px) {
       .post-title { font-size: clamp(30px, 4vw, 40px); }
       .post-wrap { padding: 130px 18px 80px; }
+      .post-body pre { padding: 12px; }
+      .post-body pre code { font-size: 13px; }
     }
   </style>
 <link rel="stylesheet" href="/css/review-fixes.css">
@@ -1741,7 +1811,7 @@ function buildPostHtml(post) {
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -1811,6 +1881,9 @@ function buildPostHtml(post) {
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -252,7 +252,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
 
 <p>A PR description should answer three questions before anyone looks at the code: <strong>Why does this change matter?</strong> <strong>What approach did you take and why?</strong> <strong>What should reviewers focus on?</strong> Junior engineers write "Fixed bug in checkout flow." Senior engineers write context that makes reviewers smarter. Here's the template I use for every non-trivial PR:</p>
 
-<pre><code class="lang-markdown">## Problem
+<pre><code class="language-markdown">## Problem
 Users were experiencing checkout failures when applying multiple discount codes
 simultaneously. Error rate spiked to 12% during our Black Friday sale.
 Datadog trace: [link]
@@ -335,7 +335,7 @@ Feature flag: `checkout_transactional_discounts`
 
 <p>The best PRs have inline comments from the <em>author</em> explaining non-obvious decisions. This isn't about apologizing for complexity—it's about teaching and building trust. When I see a complex algorithm or an unusual pattern, I add a comment before anyone asks. This demonstrates self-awareness and saves review cycles.</p>
 
-<pre><code class="lang-typescript">export class RateLimiter {
+<pre><code class="language-typescript">export class RateLimiter {
   private buckets = new Map&lt;string, TokenBucket&gt;();
 
   async checkLimit(userId: string): Promise&lt;boolean&gt; {
@@ -383,7 +383,7 @@ Feature flag: `checkout_transactional_discounts`
 
 <p>How you respond to PR feedback reveals your maturity more than the code itself. I've seen brilliant engineers plateau because they get defensive in PR comments. When someone suggests a change, you have three options: <strong>accept it, discuss it, or explain why you're declining it.</strong> All three are valid. What's not valid is going silent or getting snippy.</p>
 
-<pre><code class="lang-markdown">// Reviewer: "Why not use a Set instead of an array here?"
+<pre><code class="language-markdown">// Reviewer: "Why not use a Set instead of an array here?"
 
 // ❌ Defensive response:
 // "It doesn't matter for this use case."
@@ -440,6 +440,9 @@ Feature flag: `checkout_transactional_discounts`
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>

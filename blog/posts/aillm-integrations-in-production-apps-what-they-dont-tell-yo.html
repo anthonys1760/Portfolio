@@ -76,7 +76,7 @@
     "url": "https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html",
     "isPartOf": {
       "@type": "Blog",
-      "name": "Anthony Smith — Technical Blog",
+      "name": "Anthony Smith — Field Notes",
       "url": "https://anthonysdigital.net/blog/"
     }
   }
@@ -254,7 +254,7 @@
                 <li class="menu-item"><a href="/index.html">Home</a></li>
                 <li class="menu-item"><a href="/about.html">About</a></li>
                 <li class="menu-item"><a href="/portfolio.html">Portfolio</a></li>
-                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Technical Blog</a></li>
+                <li class="menu-item current-menu-item"><a href="/blog/" aria-current="page">Field Notes</a></li>
                 <li class="menu-item"><a href="/contact.html">Contact</a></li>
               </ul>
             </div>
@@ -301,7 +301,7 @@
 
 <p>The response is to <strong>instrument everything</strong> and treat cost as a first-class metric. Track token usage per request, per user, and per feature. Alert when it spikes. Use a smaller model for simpler tasks and reserve a more capable model for harder reasoning. Recheck the vendor's current rates when you choose, because yesterday's price list goes stale.</p>
 
-<pre><code class="lang-typescript">// Track costs in real-time with custom metrics
+<pre><code class="language-typescript">// Track costs in real-time with custom metrics
 import { trackMetric } from './monitoring';
 
 async function callLLM(prompt: string, userId: string) {
@@ -336,7 +336,7 @@ async function callLLM(prompt: string, userId: string) {
 
 <p>LLM responses can take 5-15 seconds. That's an eternity in user experience terms. If you're waiting for the full response before showing anything, your users will think your app is broken. <strong>Streaming responses is not optional for production applications.</strong></p>
 
-<pre><code class="lang-typescript">// Server-side streaming endpoint
+<pre><code class="language-typescript">// Server-side streaming endpoint
 export async function POST(req: Request) {
   const { prompt } = await req.json();
   
@@ -378,7 +378,7 @@ export async function POST(req: Request) {
 
 <p>I store prompts in the database with versioning. Each prompt has a key, version number, and the actual template. The application fetches the active version at runtime. This lets product managers iterate on prompts without engineering deploys, and gives you an audit trail when something goes wrong.</p>
 
-<pre><code class="lang-sql">CREATE TABLE prompts (
+<pre><code class="language-sql">CREATE TABLE prompts (
   id UUID PRIMARY KEY,
   key VARCHAR(255) NOT NULL,
   version INTEGER NOT NULL,
@@ -437,6 +437,9 @@ CREATE INDEX idx_prompts_active ON prompts(key, is_active) WHERE is_active = tru
   </div>
 
   <script src="/js/jquery.min.js"></script>
+  <script src="/js/highlight.min.js"></script>
+  <script src="/js/highlight-http.min.js"></script>
+  <script src="/js/highlight-blog.js"></script>
   <script src="/js/scripts.js"></script>
   <script src="/js/enhancements.js"></script>
 </body>
