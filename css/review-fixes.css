@@ -1,70 +1,94 @@
 /* Review fixes — loaded after the theme so these values win. */
 
-/* 1. Homepage can grow; buttons are not clipped by a locked viewport. */
-.home .section.started {
+/* 1. Homepage split hero. The section grows with the content.
+   Do not lock it to the viewport — that left a void under the card. */
+body.home .section.started {
 	height: auto;
-	min-height: 100svh;
+	min-height: 0;
 	overflow: visible;
+	padding: 0;
 }
-.home .section.started .centrize {
+body.home.hero-themed .section.started .centrize {
 	display: block !important;
 	height: auto !important;
+	padding: 0;
 }
-.home .section.started .vertical-center {
+body.home .section.started .vertical-center {
 	display: block !important;
 }
-.home .section.started .started-content.started-chat {
+body.home .section.started .started-content.started-chat {
 	display: block;
 	height: auto;
-	padding: 108px 8px 56px;
+	padding: 108px 0 0;
 }
-.home .hero-chat-wrap {
-	max-width: 1120px;
+body.home .hero-chat-wrap {
+	width: min(1200px, calc(100% - 48px));
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0;
 }
-.home .hero-cta-wrap,
-.home #hero-cta-wrap {
+body.home .hero-cta-wrap,
+body.home #hero-cta-wrap {
 	opacity: 1 !important;
 	transform: none !important;
-	margin-top: 16px;
+	margin-top: 18px;
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
+	align-items: flex-start;
 	gap: 4px;
+	max-width: none;
 }
-.home #chat-bubble-assistant {
+body.home #chat-bubble-assistant {
+	display: block;
 	width: 100%;
-	max-width: 720px;
+	max-width: none;
 	min-height: 0;
 	max-height: none;
 	overflow: visible;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 20px 22px 22px;
 }
 
 /* 2. Hire-me hero */
-.hero-eyebrow {
-	margin: 0 0 10px;
+body.home p.hero-eyebrow {
+	margin: 0 0 12px;
 	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 	font-size: 12px;
+	line-height: 1.4;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: rgba(255, 255, 255, 0.62);
+	color: rgba(255, 255, 255, 0.66);
 }
-.home .hero-role {
+body.home p.hero-eyebrow .place {
+	white-space: nowrap;
+}
+body.home.hero-themed .hero-role {
 	margin: 0;
-	font-size: clamp(34px, 4vw, 52px);
+	font-size: clamp(34px, 4.2vw, 56px);
 	font-weight: 700;
 	line-height: 1.1;
 	letter-spacing: -0.5px;
+	color: #ffffff;
 }
-.home .hero-tagline {
-	margin: 12px 0 0;
+body.home .hero-role strong {
+	color: #4bffa5;
+	font-weight: 700;
+}
+body.home .hero-tagline {
+	margin: 18px 0 0;
 	max-width: 640px;
 	font-size: 16.5px;
 	line-height: 1.5;
-	color: rgba(255, 255, 255, 0.72);
+	color: rgba(255, 255, 255, 0.78);
 }
-.home .hero-tagline strong {
+body.home .hero-tagline strong {
 	color: #fff;
 	font-weight: 500;
+}
+body.home .hero-copy {
+	padding-top: 20px;
 }
 .hire-chips {
 	display: flex;
@@ -83,155 +107,256 @@
 	border-radius: 999px;
 	padding: 6px 11px;
 }
-.home .hero-cta.hero-cta-primary {
-	display: flex;
+body.home .hero-cta.hero-cta-primary {
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	align-self: flex-start;
+	width: auto;
+	min-width: 280px;
 	min-height: 52px;
-	padding: 0 18px;
+	padding: 0 22px;
 	border-radius: 14px;
 	background: #4bffa5;
 	color: #071a10;
 	font-weight: 700;
 	font-size: 17px;
 	text-decoration: none;
+	white-space: nowrap;
 	box-shadow: 0 10px 28px -12px rgba(75, 255, 165, 0.7);
 }
-.home .hero-text-link {
+body.home a.hero-cta.hero-cta-primary,
+body.home a.hero-cta.hero-cta-primary:hover {
+	color: #071a10;
+}
+body.home .hero-text-link,
+body.home a.hero-text-link:hover {
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	align-self: flex-start;
+	gap: 6px;
 	min-height: 44px;
 	color: #4bffa5;
 	font-weight: 500;
 	font-size: 15px;
 	text-decoration: none;
 }
-.hero-proof {
-	margin: 6px 0 0;
-	font-size: 13px;
+body.home .hero-proof,
+body.home .hero-availability {
+	margin: 8px 0 0;
+	font-size: 14px;
 	line-height: 1.45;
-	color: rgba(255, 255, 255, 0.62);
+	color: rgba(255, 255, 255, 0.66);
 }
-.hero-proof strong {
+body.home .hero-proof strong {
 	color: #f0f0f5;
 	font-weight: 500;
 }
-.hero-availability {
-	margin: 4px 0 0;
-	font-size: 13px;
-	line-height: 1.45;
-	color: rgba(255, 255, 255, 0.62);
+
+body.home .hero-top {
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.15fr);
+	gap: 48px;
+	align-items: start;
+	padding-bottom: 32px;
 }
 
-@media (min-width: 1000px) {
-	.home .hero-top {
-		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(260px, 380px);
-		gap: 36px;
-		align-items: start;
-	}
-	.home .hero-cta-wrap {
-		align-items: flex-start;
-		max-width: 420px;
-	}
-}
-
-.feat-card {
-	display: block;
+body.home a.feat-card,
+body.home a.feat-card:hover {
+	display: flex;
+	flex-direction: column;
 	position: relative;
-	margin-top: 16px;
+	margin-top: 0;
+	min-width: 0;
 	border: 1px solid rgba(255, 255, 255, 0.1);
-	border-radius: 18px;
+	border-radius: 22px;
 	background: rgba(255, 255, 255, 0.04);
-	padding: 14px 14px 16px;
+	padding: 18px 18px 8px;
 	text-decoration: none;
 	color: inherit;
 	overflow: hidden;
 }
-.feat-card .lbl {
+body.home .feat-card .stage-top {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	padding: 2px 6px 0;
+}
+body.home .feat-card .lbl {
 	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 	font-size: 12px;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: rgba(255, 255, 255, 0.62);
+	color: rgba(255, 255, 255, 0.66);
 }
-.feat-card h2 {
-	font-size: 18px;
+body.home .feat-card h2 {
+	font-size: 28px;
 	font-weight: 700;
-	margin: 4px 0 0;
+	line-height: 1.15;
+	margin: 8px 6px 0;
 	color: #fff;
 }
-.feat-card p {
-	margin: 2px 0 0;
-	font-size: 13.5px;
+body.home .feat-card .deck {
+	margin: 4px 6px 0;
+	max-width: none;
+	font-size: 15px;
 	line-height: 1.4;
-	color: rgba(255, 255, 255, 0.72);
-	max-width: 220px;
+	color: rgba(255, 255, 255, 0.78);
 }
-.feat-card .status {
+body.home .feat-card .status {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	margin-top: 8px;
+	margin: 0;
 	font-size: 12.5px;
 	font-weight: 500;
 	color: #4bffa5;
+	letter-spacing: 0;
+	text-transform: none;
 }
-.feat-card .status i {
+body.home .feat-card .status i {
 	width: 7px;
 	height: 7px;
 	border-radius: 50%;
 	background: #4bffa5;
 	display: inline-block;
+	font-style: normal;
 }
-.feat-card .stack {
-	margin-top: 10px;
-	font-size: 12.5px;
-	color: rgba(255, 255, 255, 0.62);
-}
-.feat-card .more {
+body.home .feat-card .more {
 	display: inline-flex;
 	align-items: center;
+	gap: 6px;
 	min-height: 44px;
-	margin-top: 4px;
+	margin: 4px 6px 8px;
 	font-size: 14px;
 	font-weight: 500;
 	color: #4bffa5;
 }
-.feat-card img {
+body.home .feat-card img {
 	display: block;
-	width: 100%;
-	max-width: 100%;
+	width: calc(100% + 12px);
+	max-width: none;
 	height: auto;
-	margin-top: 12px;
-	border-radius: 12px;
-	aspect-ratio: 1600 / 1000;
+	margin: 8px -6px 0;
+	border-radius: 0;
+	aspect-ratio: auto;
 	object-fit: contain;
 	flex: none;
 }
-@media (min-width: 1000px) {
-	.feat-card { margin-top: 0; }
-}
 
-.home .hero-chat {
-	margin-top: 28px;
+body.home .hero-band {
+	margin-top: 8px;
+	padding: 36px 0 12px;
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+	display: grid;
+	grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+	gap: 36px;
+	align-items: stretch;
 }
-.trust-split {
-	margin-top: 28px;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+body.home .hero-band .hero-chat,
+body.home .hero-band .chat-row {
+	display: block;
+	margin: 0;
+	min-width: 0;
 }
-.trust-split p {
+body.home .chat-bubble.assistant.thinking-done .meta-mode {
+	color: rgba(75, 255, 165, 0.85);
+}
+body.home #chat-bubble-assistant p {
+	margin: 0 0 12px;
+	font-size: 15px;
+	line-height: 1.55;
+	color: #f0f0f5;
+}
+body.home #chat-bubble-assistant p:last-child {
+	margin-bottom: 0;
+}
+body.home .trust-split {
+	margin: 0;
+	display: grid;
+	grid-template-columns: 118px minmax(0, 1fr);
+	column-gap: 14px;
+	row-gap: 14px;
+	align-content: center;
+	min-width: 0;
+}
+body.home .trust-split p {
+	display: contents;
 	margin: 0;
 	font-size: 14px;
 	line-height: 1.5;
 	color: rgba(255, 255, 255, 0.78);
 }
-.trust-split .trusted-label {
-	display: inline-block;
-	margin: 0 8px 0 0;
+body.home .trust-split .trusted-label {
+	display: block;
+	margin: 0;
+	padding-top: 2px;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 11px !important;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.66) !important;
+}
+body.home .trust-split .trust-val {
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+@media (max-width: 899px) {
+	body.home .section.started .started-content.started-chat {
+		padding-top: 88px;
+	}
+	body.home .hero-chat-wrap {
+		width: calc(100% - 32px);
+	}
+	body.home .hero-copy {
+		padding-top: 0;
+	}
+	body.home.hero-themed .hero-role {
+		font-size: 34px;
+	}
+	body.home .hero-top {
+		grid-template-columns: 1fr;
+		gap: 24px;
+		padding-bottom: 16px;
+	}
+	body.home .hero-cta.hero-cta-primary {
+		width: 100%;
+		align-self: stretch;
+	}
+	body.home a.feat-card,
+	body.home a.feat-card:hover {
+		padding: 16px 14px 6px;
+	}
+	body.home .feat-card h2 {
+		font-size: 24px;
+	}
+	body.home .feat-card img {
+		margin-top: 4px;
+	}
+	body.home .hero-band {
+		grid-template-columns: 1fr;
+		gap: 20px;
+		padding-top: 28px;
+	}
+	body.home .trust-split {
+		grid-template-columns: 1fr;
+		row-gap: 2px;
+		align-content: start;
+	}
+	body.home .trust-split p {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		margin: 0 0 10px;
+	}
+	body.home .trust-split .trusted-label {
+		padding-top: 0;
+	}
 }
 
 /* 3. Project cards */
@@ -943,4 +1068,172 @@ svg.ico {
 }
 .post-series-nav a {
 	color: #4bffa5;
+}
+
+/* Homepage chrome: drop the leftover logo dot, put GitHub and LinkedIn
+   in the header, and replace the vertical "Connect With Me" rail with
+   a compact footer row. Other pages keep their header spacing and rail. */
+body.hero-themed .header .logo a::before {
+	content: none;
+	display: none;
+	width: 0;
+	height: 0;
+	box-shadow: none;
+}
+.header-social {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex: none;
+}
+.header-icon {
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.82);
+}
+.header-icon .icon {
+	font-size: 18px;
+	line-height: 1;
+	color: inherit;
+}
+body.hero-themed a.header-icon,
+body.hero-themed a.header-icon:hover,
+body.hero-themed a.header-icon:focus-visible {
+	color: rgba(255, 255, 255, 0.82);
+	text-decoration: none;
+}
+body.hero-themed a.header-icon:hover,
+body.hero-themed a.header-icon:focus-visible {
+	color: #4bffa5;
+}
+@media (min-width: 1200px) {
+	body.home.hero-themed .header {
+		height: 72px;
+		padding: 0;
+	}
+	body.home.hero-themed .header .head-top {
+		width: min(1200px, calc(100% - 48px));
+		height: 72px;
+		margin: 0 auto;
+		gap: 22px;
+	}
+	body.home .header .top-menu ul li {
+		margin-left: 22px;
+	}
+	body.home .header .top-menu ul li:first-child {
+		margin-left: 0;
+	}
+	body.home .header .top-menu ul li a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1;
+		opacity: 1;
+		color: rgba(255, 255, 255, 0.78);
+	}
+	body.home .header .top-menu ul li a:hover,
+	body.home .header .top-menu ul li.current-menu-item a {
+		color: #4bffa5;
+		font-weight: 500;
+	}
+}
+@media (max-width: 1199px) {
+	body.home .header-social {
+		display: none;
+	}
+	body.home.hero-themed .header {
+		top: 0;
+		min-height: 60px;
+		height: auto;
+		padding: 0 16px;
+	}
+	body.home.hero-themed .header .head-top {
+		min-height: 60px;
+	}
+}
+
+/* Homepage footer sits under the about band instead of as a fixed rail. */
+body.home .footer {
+	position: relative;
+	left: auto;
+	right: auto;
+	top: auto;
+	bottom: auto;
+	width: 100%;
+	height: auto;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0;
+	padding: 22px max(24px, calc((100% - 1200px) / 2)) 32px;
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+	background: transparent;
+	box-sizing: border-box;
+}
+body.home .footer .copy {
+	position: static;
+	float: none;
+	display: block;
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.4;
+	color: rgba(255, 255, 255, 0.66);
+}
+body.home .footer .follow-label {
+	display: none;
+}
+body.home.hero-themed .footer .soc-box {
+	position: static;
+	float: none;
+	display: block;
+	width: auto;
+	right: auto;
+	left: auto;
+	top: auto;
+	bottom: auto;
+	text-align: right;
+}
+body.home .footer .soc {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+body.home .footer .soc a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	color: rgba(255, 255, 255, 0.78);
+	text-decoration: none;
+}
+body.home .footer .soc a .icon,
+body.home .footer .soc a:hover .icon {
+	font-size: 18px;
+	color: inherit;
+}
+body.home .footer .soc a:hover {
+	color: #4bffa5;
+}
+@media (max-width: 899px) {
+	body.home .footer {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		padding: 22px 16px 32px;
+	}
+	body.home .footer .soc-box,
+	body.home.hero-themed .footer .soc-box {
+		text-align: left;
+	}
 }
