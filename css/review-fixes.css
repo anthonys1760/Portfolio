@@ -251,8 +251,9 @@
 }
 .case-card {
 	display: grid;
-	grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
 	gap: 32px;
+	align-items: center;
 	background: #0e0e14;
 	border: 1px solid rgba(255, 255, 255, 0.1);
 	border-radius: 22px;
@@ -261,7 +262,14 @@
 .case-shots {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	min-width: 0;
 	gap: 12px;
+}
+.case-shots figure {
+	margin: 0;
+	width: 100%;
 }
 .case-shots img {
 	width: 100%;
@@ -529,6 +537,10 @@ body.hero-themed .header .logo a {
 	flex: none;
 }
 @media (min-width: 1200px) {
+	body.hero-themed .section.works {
+		padding-left: max(48px, calc((100% - 1100px) / 2));
+		padding-right: max(48px, calc((100% - 1100px) / 2));
+	}
 	body.hero-themed .header .head-top {
 		display: flex;
 		align-items: center;
