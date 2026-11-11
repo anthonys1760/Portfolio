@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.">
+  <meta name="description" content="Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.">
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html">
   <meta property="og:title" content="PostgreSQL and Supabase for Production Apps: What You Need to Know — Anthony Smith">
-  <meta property="og:description" content="Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.">
+  <meta property="og:description" content="Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-07-13">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="Architecture">
+  <meta property="article:section" content="Backend">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="PostgreSQL and Supabase for Production Apps: What You Need to Know">
-  <meta name="twitter:description" content="Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.">
+  <meta name="twitter:description" content="Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80">
 
   <title>PostgreSQL and Supabase for Production Apps: What You Need to Know — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html"
+      "@id": "https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html"
     },
     "headline": "PostgreSQL and Supabase for Production Apps: What You Need to Know",
-    "description": "Real-world lessons from shipping production apps with Supabase. Row-level security, connection pooling, and the tradeoffs that matter.",
+    "description": "Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.",
     "keywords": "",
-    "articleSection": "Architecture",
+    "articleSection": "Backend",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80"
     },
     "datePublished": "2026-07-13",
-    "dateModified": "2026-07-13",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html",
+    "url": "https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">Architecture</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Backend</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">July 13, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">postgres</span><span class="post-tag">supabase</span></span>
           </div>
           <h1 class="post-title">PostgreSQL and Supabase for Production Apps: What You Need to Know</h1>
         </header>
@@ -291,7 +293,7 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80" alt="PostgreSQL and Supabase for Production Apps: What You Need to Know" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've shipped three production applications using Supabase in the past 18 months. The first one had a security incident within two weeks. The second one hit connection pool limits at 500 concurrent users. The third one? It's been running smoothly for 8 months with 50k+ users. Here's what I learned the hard way about using PostgreSQL and Supabase for real applications.</p>
+<p>PostgreSQL with Supabase is ready for production only after row-level security, connection pooling, and indexes are deliberate choices. Those are the pieces that surprise people once traffic shows up. Query syntax is rarely the hard part.</p>
 
 <h2>Row-Level Security Is Non-Negotiable</h2>
 

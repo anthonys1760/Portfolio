@@ -2,7 +2,7 @@
 
 ## Deployment
 - **Site deploys from the `gh-pages` branch**, NOT `master`
-- GitHub Pages serves from `gh-pages` to www.anthonysdigital.net
+- GitHub Pages serves from `gh-pages` to https://anthonysdigital.net (the apex; www already redirects there)
 - Always push changes to `gh-pages` for them to go live
 
 ## Background & Theme

@@ -13,16 +13,16 @@
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
   <meta property="og:title" content="REST and GraphQL API Design: Lessons from Building Both in Production — Anthony Smith">
   <meta property="og:description" content="After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-07-20">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="API Design">
+  <meta property="article:section" content="Backend">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="REST and GraphQL API Design: Lessons from Building Both in Production">
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html"
+      "@id": "https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html"
     },
     "headline": "REST and GraphQL API Design: Lessons from Building Both in Production",
     "description": "After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.",
     "keywords": "",
-    "articleSection": "API Design",
+    "articleSection": "Backend",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
     },
     "datePublished": "2026-07-20",
-    "dateModified": "2026-07-20",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html",
+    "url": "https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">API Design</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Backend</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">July 20, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">rest</span><span class="post-tag">graphql</span><span class="post-tag">api-security</span></span>
           </div>
           <h1 class="post-title">REST and GraphQL API Design: Lessons from Building Both in Production</h1>
         </header>
@@ -291,7 +293,7 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="REST and GraphQL API Design: Lessons from Building Both in Production" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've built and maintained both REST and GraphQL APIs in production for years. The discourse around which is "better" misses the point entirely. The real question isn't REST vs GraphQL—it's understanding the tradeoffs and knowing when each shines. Here's what I've learned shipping both to production with teams of varying sizes.</p>
+<p>I've built and maintained both REST and GraphQL APIs in production for years. The discourse around which is "better" misses the point entirely. The real question isn't REST vs GraphQL—it's understanding the tradeoffs and knowing when each shines. Here's what I've learned shipping both to production with teams of varying sizes.</p>
 
 <h2>The Real Difference Nobody Talks About</h2>
 
@@ -395,6 +397,8 @@ const resolvers = {
 <ul><li><strong>Choose REST when:</strong> You're building a public API, need simple HTTP caching, have straightforward CRUD operations, or want maximum tooling compatibility</li><li><strong>Choose GraphQL when:</strong> You have multiple clients with different data needs, complex nested relationships, or want to avoid endpoint proliferation</li><li><strong>Use both when:</strong> Your public API is REST but internal services use GraphQL, or you expose GraphQL for web/mobile but REST webhooks for integrations</li><li><strong>Avoid GraphQL if:</strong> Your team is small, your data model is simple, or you don't have time to invest in proper tooling and monitoring</li></ul>
 
 <p>The best API design isn't about choosing the "right" technology—it's about understanding your constraints. I've seen elegant REST APIs and nightmare GraphQL schemas. The technology matters less than the thought you put into the contract between client and server. Design for your team's strengths, your client's needs, and your operational capabilities. Everything else is just syntax.</p>
+<h2>Authorization is a separate decision</h2>
+<p>REST or GraphQL does not decide who may call a route. Object ownership is <a href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">Login Is Not Ownership</a>. Function access is <a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">When a Valid Session Can Call Admin</a>. Fields a client should not send or receive are <a href="/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">A Field-Level Checklist for Mass Assignment and Data Exposure</a>.</p>
         </div>
 
         <nav class="post-footer-nav">

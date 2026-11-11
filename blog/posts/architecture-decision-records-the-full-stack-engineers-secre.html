@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.">
+  <meta name="description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
   <meta property="og:title" content="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon — Anthony Smith">
-  <meta property="og:description" content="ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.">
+  <meta property="og:description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-06-15">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="Architecture">
+  <meta property="article:section" content="Engineering">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon">
-  <meta name="twitter:description" content="ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.">
+  <meta name="twitter:description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80">
 
   <title>Architecture Decision Records: The Full-Stack Engineer's Secret Weapon — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html"
+      "@id": "https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html"
     },
     "headline": "Architecture Decision Records: The Full-Stack Engineer's Secret Weapon",
-    "description": "ADRs aren't documentation overhead—they're your team's memory. Here's how to write them so they actually get read and prevent repeated architectural mistakes.",
+    "description": "How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.",
     "keywords": "",
-    "articleSection": "Architecture",
+    "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80"
     },
     "datePublished": "2026-06-15",
-    "dateModified": "2026-06-15",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html",
+    "url": "https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">Architecture</span>
-            <span class="post-read">7 min read</span>
+            <span class="post-category">Engineering</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">June 15, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">documentation</span></span>
           </div>
           <h1 class="post-title">Architecture Decision Records: The Full-Stack Engineer's Secret Weapon</h1>
         </header>
@@ -291,13 +293,13 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80" alt="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've watched teams waste weeks re-debating the same architectural choices because no one remembered why we chose PostgreSQL over MongoDB, or why we split that monolith into services. Architecture Decision Records (ADRs) solve this, but most teams either don't write them or write them so poorly they become shelfware. After maintaining ADRs across three different full-stack projects, I've learned what actually works.</p>
+<p>An architecture decision record is a short, dated note of a choice: the context, what you picked, and the consequences. It is not a wiki about how the system works. Team how-to pages live in <a href="/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">Documentation Debt</a>. A private scratch log of the same decision lives in <a href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">The Engineering Journal</a>. This post is only the team record.</p>
 
-<h2>What Makes ADRs Different from Regular Documentation</h2>
+<h2>What the record is for</h2>
 
-<p>ADRs aren't design docs or technical specs. They're lightweight records of <strong>why</strong> you made a choice at a specific point in time. The key insight: ADRs are immutable. You don't update them when circumstances change—you write a new one that supersedes the old one. This creates a decision history that's invaluable when debugging architecture or onboarding new engineers.</p>
+<p>Code shows what the system does now. It does not show which alternatives you rejected, or which constraint forced the choice. An ADR is immutable on purpose. When the context changes, you write a new record that supersedes the old one. You do not quietly rewrite history. That chain is what you want when someone asks why sessions live in Redis, or why a monolith was split.</p>
 
-<p>The format is deliberately minimal. I use a modified version of Michael Nygard's template that works well for full-stack decisions:</p>
+<p>The format stays small. This is a modified Michael Nygard template:</p>
 
 <pre><code class="lang-markdown"># ADR-015: Use Redis for Session Storage
 
@@ -314,19 +316,6 @@ We will use Redis for session storage with a 24-hour TTL.
 
 ### Positive
 - Horizontal scaling works immediately
-- Built-in TTL handles session expiration
-- Redis persistence handles restarts gracefully
-- 5ms p95 latency is acceptable for our use case
-
-### Negative
-- Adds Redis as a new operational dependency
-- Session data leaves the application boundary (security consideration)
-- Redis failure means all users lose sessions
-- Monthly cost: ~$25 for managed Redis
-
-### Neutral
-- Need to implement Redis connection pooling
-- Monitoring: add Redis metrics to Datadog
 
 ## Alternatives Considered
 
@@ -339,15 +328,15 @@ Rejected: Can't invalidate sessions on logout, token size bloats requests
 ### Sticky sessions
 Rejected: Complicates deployments, uneven load distribution</code></pre>
 
-<h2>Where to Store ADRs (and Why It Matters)</h2>
+<div class="post-callout">If the note takes a long writing session, it has become a design doc. An ADR captures the decision while the context is still fresh. The design doc can still exist. It is a different file.</div>
 
-<p>Store ADRs in your codebase, not in Confluence or Notion. I keep them in <code>docs/adr/</code> at the repo root. This has three major benefits: ADRs version with the code, they're reviewable via pull requests, and engineers actually find them because they're in the repo. For monorepos, I structure it like <code>docs/adr/backend/</code>, <code>docs/adr/frontend/</code>, <code>docs/adr/infrastructure/</code>.</p>
+<h2>Where the files go</h2>
 
-<div class="post-callout"><strong>Hot take:</strong> If your ADR requires more than 30 minutes to write, you're writing a design doc, not an ADR. The value is in capturing decisions quickly while context is fresh, not in creating comprehensive architecture documentation.</div>
+<p>Store them in the repo, in <code>docs/adr/</code>, not in a wiki the deploy never sees. They version with the code, they show up in pull requests, and people find them because they are next to the change. In a monorepo, split by area: <code>docs/adr/backend/</code>, <code>docs/adr/frontend/</code>, <code>docs/adr/infrastructure/</code>.</p>
 
-<h2>Real-World ADR: Choosing a Frontend State Management Solution</h2>
+<h2>An example: frontend state</h2>
 
-<p>Here's an actual ADR I wrote when choosing between Redux, Zustand, and React Query for a React application. Notice how it focuses on our specific constraints, not general pros/cons:</p>
+<p>The following is an example of the shape, not a claim that a particular team published this record. It is specific about constraints, which is the part general library comparisons leave out.</p>
 
 <pre><code class="lang-markdown"># ADR-023: Use React Query + Zustand for State Management
 
@@ -386,8 +375,8 @@ import create from 'zustand'
 const useUIStore = create((set) =&gt; ({
   sidebarOpen: true,
   selectedFilters: [],
-  toggleSidebar: () =&gt; set((state) =&gt; ({ 
-    sidebarOpen: !state.sidebarOpen 
+  toggleSidebar: () =&gt; set((state) =&gt; ({
+    sidebarOpen: !state.sidebarOpen
   }))
 }))
 
@@ -398,19 +387,23 @@ const { data, isLoading } = useQuery(
   { staleTime: 5 * 60 * 1000 }
 )</code></pre>
 
-<h2>When to Write an ADR (and When to Skip It)</h2>
+<p>The numbers in that sample are part of the example's context section. They show how an ADR names constraints. They are not a measurement from a confirmed project.</p>
 
-<p>Write an ADR when the decision has long-term consequences, affects multiple engineers, or will be questioned later. I write them for: database choices, authentication strategies, deployment architecture, API design patterns, state management approaches, and third-party service selections. Skip ADRs for: coding style preferences (use linters), temporary workarounds, obvious choices with no alternatives, and decisions easily reversed in a day.</p>
+<h2>When to write one, and when to skip it</h2>
 
-<ul><li><strong>Triggers for writing an ADR:</strong> Someone says 'we should document this decision'</li><li>You're about to add a new major dependency to package.json</li><li>The decision impacts multiple teams or services</li><li>You find yourself explaining the same architectural choice twice</li><li>The choice has security, performance, or cost implications</li><li>You're superseding a previous architectural decision</li></ul>
+<p>Write one when the choice will still matter later, when more than one person has to live with it, or when you can already hear the future argument. Database, authentication, deployment, API style, state management, and third-party services usually qualify. Skip coding-style preferences a linter can hold, temporary workarounds, choices with no real alternative, and decisions you can reverse in a day.</p>
 
-<h2>Making ADRs Part of Your Workflow</h2>
+<ul>
+<li>Someone is about to add a major dependency.</li>
+<li>The choice crosses teams or services.</li>
+<li>You are explaining the same architectural choice again.</li>
+<li>Security, performance, or cost will be questioned later.</li>
+<li>You are superseding an older decision. Say so in the status line.</li>
+</ul>
 
-<p>The best ADR process is invisible. I include ADR creation in our definition of done for architecture-heavy tickets. The PR that implements the change includes the ADR. This means the ADR gets reviewed alongside the code, and they're merged together. No separate documentation phase, no falling behind.</p>
+<h2>Put it in the same pull request as the change</h2>
 
-<div class="post-callout">Create a template file at <code>docs/adr/000-template.md</code> and a simple CLI script to generate new ADRs with auto-incrementing numbers. Make it <em>easier</em> to write an ADR than to skip it. I use a 10-line bash script that copies the template and opens it in my editor.</div>
-
-<p>ADRs have saved my teams from architectural amnesia more times than I can count. Six months from now, when someone asks 'why did we choose this?', you'll have an answer that includes the constraints and alternatives you considered. That's the difference between a team that learns from decisions and one that keeps making the same mistakes. Start with your next architectural choice—write it down, make it reviewable, and watch your team's architectural memory improve.</p>
+<p>The record that ships is the one in the pull request that implements the decision. Review sees the code and the why together. A template at <code>docs/adr/000-template.md</code>, plus a small script that copies it and numbers the file, makes writing the record easier than skipping it. For how the personal version of a decision differs from this file, see <a href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">The Engineering Journal</a>.</p>
         </div>
 
         <nav class="post-footer-nav">

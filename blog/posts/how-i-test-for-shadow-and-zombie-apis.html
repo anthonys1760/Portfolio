@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.">
+  <meta name="description" content="Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.">
   <meta name="keywords" content="shadow API, zombie API, API inventory, API discovery, endpoint enumeration, deprecated endpoints, API security, undocumented APIs">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">
-  <meta property="og:title" content="How I Test for Shadow and Zombie APIs — Anthony Smith">
-  <meta property="og:description" content="Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">
+  <meta property="og:title" content="The Routes That Never Made the Inventory — Anthony Smith">
+  <meta property="og:description" content="Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-10-05">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Shadow and Zombie APIs">
-  <meta name="twitter:description" content="Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.">
+  <meta name="twitter:title" content="The Routes That Never Made the Inventory">
+  <meta name="twitter:description" content="Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
 
-  <title>How I Test for Shadow and Zombie APIs — Anthony Smith</title>
+  <title>The Routes That Never Made the Inventory — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html"
     },
-    "headline": "How I Test for Shadow and Zombie APIs",
-    "description": "Most organizations have no complete inventory of their API endpoints. I look for undocumented, deprecated, and forgotten routes that still process requests.",
+    "headline": "The Routes That Never Made the Inventory",
+    "description": "Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.",
     "keywords": "shadow API, zombie API, API inventory, API discovery, endpoint enumeration, deprecated endpoints, API security, undocumented APIs",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
     },
     "datePublished": "2026-10-05",
-    "dateModified": "2026-10-05",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,36 +284,40 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">5 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">October 5, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Shadow and Zombie APIs</h1>
+          <h1 class="post-title">The Routes That Never Made the Inventory</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for Shadow and Zombie APIs" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="The Routes That Never Made the Inventory" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Most organizations cannot tell you every API endpoint they expose. Teams ship features, merge branches, deploy microservices, and move on. Nobody updates the central inventory. What remains is a sprawl of undocumented routes, old versions still running in production, and endpoints that were supposed to be decommissioned months ago. These are shadow APIs and zombie APIs. Shadow endpoints were never documented. Zombie endpoints were documented once, then forgotten when a newer version launched.</p>
+<p><code>/api/v2/users</code> requires a token. <code>/api/v1/users</code> still returns the same records and does not. The v1 route was the previous contract. Shipping v2 did not remove it. That responding leftover is a zombie API. A route that was never written down, and still answers, is a shadow API.</p>
 
-<p>The risk is straightforward. An endpoint you do not know about is an endpoint you are not monitoring, patching, or reviewing. I have seen authentication added to <code>/api/v2/users</code> while <code>/api/v1/users</code> still returns the same data with no token required. I have seen internal admin routes left exposed because someone assumed the load balancer would block them. The assumption is always that deployment equals decommission. It does not.</p>
+<p>Both exist because shipping is append-only unless someone makes removal a step. A feature branch adds a path. A rewrite adds a version. An internal admin route is left in place because a load balancer was supposed to hide it. Documentation is updated later, or once, and then the code moves on. Gateways route traffic. They do not, by themselves, produce a list of every process behind them.</p>
 
-<h2>Why It Hides</h2>
+<h2>How a route falls out of the inventory</h2>
 
-<p>These endpoints hide because there is no forcing function that makes them visible. API gateways route traffic, but they do not generate an authoritative list of what exists behind them. Documentation goes stale the moment it is written. Developers know the routes they work on, but not the routes three teams over or two years ago. Code review catches new vulnerabilities in new code, but it does not flag the presence of an old endpoint still listening. The application works, traffic flows, and nobody notices that ten percent of the surface area is undocumented or deprecated until someone external starts poking around.</p>
+<p>The people who added a path know that path. They do not automatically know a path from another team or from a previous version. Code review looks at the diff, not at a listener that was already deployed. A deprecation note in a doc is not the same as a route that returns 410 and is gone from the gateway. If the old code is deployed and the path resolves, it is still part of the product.</p>
 
-<h2>The Method</h2>
+<p>Old hostnames, acquired products, and renamed services linger in DNS the same way. Debug and health routes that were meant to stay internal show up here too. Those settings are the sweep in <a href="/blog/posts/how-i-test-for-security-misconfiguration.html">A Production Sweep for Security Misconfiguration</a>.</p>
 
-<ol><li>Map every route the application actually responds to, not just the ones in the OpenAPI spec. Use a proxy to capture traffic during normal use, then supplement with directory and version enumeration. Look for <code>/v1/</code>, <code>/v2/</code>, <code>/internal/</code>, <code>/admin/</code>, <code>/debug/</code>, and common resource names.</li><li>Compare discovered endpoints against official documentation and the API gateway configuration. Anything that responds but is not documented is a shadow endpoint. Anything documented as deprecated but still processing requests is a zombie.</li><li>Test whether deprecated or undocumented endpoints enforce the same security controls as current ones. Check for authentication, rate limiting, input validation, and logging. Often the old version has none of these.</li><li>Look for internal or debug routes that were meant to be firewalled but are reachable from the public internet. Examples include health checks that leak version info, admin panels with default credentials, or GraphQL introspection left enabled in production.</li><li>Check for endpoints that reference old domain names, acquisitions, or rebranded products. These often survive in DNS and routing config long after the product team considers them dead.</li><li>Build or update an inventory that includes every responding endpoint, its intended audience, its authentication requirements, and its deprecation status. Treat this as a living artifact tied to deployment, not a document written once.</li></ol>
+<h2>What a living inventory has to match</h2>
 
-<h2>The Deeper Issue</h2>
+<p>Build the list from what responds, not only from the OpenAPI file. Capture traffic from ordinary use, then compare that set with the spec and the gateway. A path that responds and is undocumented is shadow. A path marked deprecated that still accepts requests is a zombie.</p>
 
-<div class="post-callout">Versioning does not mean isolation. Running <code>/v2/</code> does not turn off <code>/v1/</code>. I see teams assume that deploying a new version is the same as removing the old one. It is not. Deprecation requires active decommissioning: removing routes from the gateway, returning 410 Gone, and blocking traffic. If the old code is still deployed and the route still resolves, it is still attack surface.</div>
+<p>For each of those, record who it is for, whether it authenticates, whether it is rate limited, and whether it is supposed to exist. Old versions often missed the controls that were added later. An export or admin function on a forgotten path is the same authorization problem as on a current path, covered in <a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">When a Valid Session Can Call Admin</a>.</p>
 
-<h2>Why It Stays a Problem</h2>
+<div class="post-callout">Versioning is not isolation. Deploying <code>/v2/</code> does not turn off <code>/v1/</code>. Decommissioning means taking the route off the gateway, refusing the traffic, and deleting the deployed handler. A document that says "deprecated" does not do that.</div>
 
-<p>This stays a problem because inventory is treated as a documentation task, not an operational one. Nobody is responsible for knowing the full surface area. Security teams scan what they know about. Developers ship what they are assigned. Operations deploy what is in the pipeline. The gaps between these workflows are where shadow and zombie APIs live. There is no automated enforcement that says a route must be in the inventory to be routed, and there is no process that removes a route when it is deprecated. The system is append only.</p>
-
-<p>I treat API inventory as a continuous discovery problem, not a one time audit. If you cannot list every endpoint that will respond to a request, you cannot secure them all.</p>
+<p>Tie the inventory to deploy, so a route has to be listed to be routed, and a retired route has to be removed in the same change that replaces it. Security review can only cover the surface someone can name.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-security-misconfiguration.html">Previous: A Production Sweep for Security Misconfiguration</a>
+<a href="/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">Next: Treat Upstream Responses as Untrusted Input</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

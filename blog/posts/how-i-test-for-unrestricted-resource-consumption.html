@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.">
+  <meta name="description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
   <meta name="keywords" content="rate limiting, resource consumption, API security, denial of service, application security, DoS prevention, backend security, resource exhaustion">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
-  <meta property="og:title" content="How I Test for Unrestricted Resource Consumption — Anthony Smith">
-  <meta property="og:description" content="Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
+  <meta property="og:title" content="A Rate-Limit Checklist Beyond the Login Endpoint — Anthony Smith">
+  <meta property="og:description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-09-14">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Unrestricted Resource Consumption">
-  <meta name="twitter:description" content="Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.">
+  <meta name="twitter:title" content="A Rate-Limit Checklist Beyond the Login Endpoint">
+  <meta name="twitter:description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
 
-  <title>How I Test for Unrestricted Resource Consumption — Anthony Smith</title>
+  <title>A Rate-Limit Checklist Beyond the Login Endpoint — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html"
     },
-    "headline": "How I Test for Unrestricted Resource Consumption",
-    "description": "Most APIs implement rate limiting but miss the endpoints that drain compute, memory, or storage. Here's how I find the gaps.",
+    "headline": "A Rate-Limit Checklist Beyond the Login Endpoint",
+    "description": "Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.",
     "keywords": "rate limiting, resource consumption, API security, denial of service, application security, DoS prevention, backend security, resource exhaustion",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
     },
     "datePublished": "2026-09-14",
-    "dateModified": "2026-09-14",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,34 +284,36 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">4 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">September 14, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Unrestricted Resource Consumption</h1>
+          <h1 class="post-title">A Rate-Limit Checklist Beyond the Login Endpoint</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="How I Test for Unrestricted Resource Consumption" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="A Rate-Limit Checklist Beyond the Login Endpoint" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Most applications add rate limiting to authentication endpoints and call it done. The mistake is assuming that login attempts are the only expensive operation worth protecting. Meanwhile, search endpoints run full table scans, export functions generate multi-megabyte PDFs in memory, and image processing routes happily resize a 50MB upload on every request. No authentication required, no rate limit applied, no cost consideration until the server falls over.</p>
+<p>Search, export, and upload are where the bill shows up. A search that scans a large table, an export that builds a PDF in memory, or an image route that resizes a large upload on every request can be unbounded even when login is tightly limited. Rate limiting that exists only to slow password guesses does not cover those routes.</p>
 
-<p>The gap is that rate limiting gets bolted on as a security feature for brute force prevention, not as a resource management layer for the entire application. Developers protect what they think attackers want, not what actually costs money to run.</p>
+<h2>Which routes are expensive</h2>
 
-<h2>Why It Hides</h2>
+<p>List operations that do more than a cheap indexed read. External calls, heavy computation, storage, and large result sets qualify. Include public routes. Rate-limit middleware is often skipped when there is no session, and those routes are still work.</p>
 
-<p>Normal usage never triggers the problem. A legitimate user searches once, exports a single report, uploads one reasonably sized file. Load testing usually simulates this same polite behavior at scale, which surfaces infrastructure limits but not abuse cases. Code review catches missing auth checks because we look for them, but expensive operations blend into business logic. A function that aggregates six months of transaction data looks like a feature, not a liability. The cost only becomes visible when someone makes the same request two hundred times in parallel.</p>
+<h2>Does a limit exist, and does it run first</h2>
 
-<h2>The Method</h2>
+<p>For each expensive route, check for a per-user or per-key limit, not only a per-IP limit. Then check whether the limit is evaluated before the upload is processed, the query runs, or the export starts. A counter that increments after the work still pays the cost.</p>
 
-<ol><li>Inventory every endpoint and identify operations that touch external services, perform computation, access storage, or return large datasets. Anything that does more than a simple indexed database lookup is a candidate.</li><li>Check whether each expensive endpoint has per-user or per-IP rate limiting in place. Test both authenticated and unauthenticated paths, since public endpoints are often excluded from rate limit middleware entirely.</li><li>For endpoints with limits, verify that the limit is appropriate to the cost of the operation. A search endpoint limited to 100 requests per minute can still exhaust resources if each search is unbounded.</li><li>Test whether limits apply before or after the expensive work happens. If the rate limit check occurs after file upload processing or after the database query executes, the damage is already done.</li><li>Examine whether resource limits exist at the operation level. File upload size caps, query result pagination, timeout values on external API calls, and maximum complexity limits on search filters all matter independent of rate limits.</li><li>Verify that costs are tracked correctly across the request lifecycle. Async jobs, webhook deliveries, and background processing triggered by API calls often bypass rate limiting entirely because the HTTP response returns before the work starts.</li></ol>
+<p>A ceiling of many requests per minute is not enough if each request is itself unbounded. Pagination, a maximum upload size, a timeout on outbound calls, and a cap on search complexity limit the work inside one request. Request count does not.</p>
 
-<h2>The Deeper Nuance</h2>
+<h2>What the limit should bound</h2>
 
-<div class="post-callout">Rate limiting by IP address is not effective for authenticated endpoints. A single attacker with valid credentials can exhaust resources without ever hitting an IP-based limit. The correct boundary is per user or per API key, and the limit must reflect what that user is entitled to consume, not just what seems like a lot of requests. A free tier user and an enterprise customer cannot share the same rate limit.</div>
+<div class="post-callout">IP limits do not contain an authenticated caller. One valid account can spend CPU, memory, and storage without looking like a flood from many addresses. Key the limit on the user or API key, and size it to what that caller is allowed to consume. A free account and a large customer are not the same budget. The budget is CPU, memory, payload size, and downstream cost, not only "how many HTTP calls."</div>
 
-<h2>Defensive Implementation</h2>
+<h2>Work that starts after the response</h2>
 
-<p>When I build or review rate limiting, I treat it as cost control first and abuse prevention second. Every endpoint gets a limit based on its resource profile, not its perceived attack surface. The implementation applies limits before work begins, tracks consumption by the authenticated identity, and fails gracefully with proper HTTP 429 responses that include retry-after headers.</p>
+<p>Jobs, webhook deliveries, and other background work triggered by the request often bypass the HTTP limiter because the response already returned. Count that work against the same identity, or the limit is a number on the wrong timeline.</p>
 
 <pre><code class="lang-javascript">// Apply rate limit before expensive operation
 const rateLimitKey = `export:${userId}`;
@@ -330,11 +332,11 @@ if (!limit.allowed) {
 // Only now perform the expensive export
 const report = await generateReport(userId, params);</code></pre>
 
-<h2>Why It Stays a Problem</h2>
-
-<p>Resource consumption issues survive in production because they do not look like security vulnerabilities. There is no injection, no data leak, no privilege escalation. The application works exactly as designed until someone uses it more than expected. Performance problems get triaged as infrastructure issues, and the fix is often to add more servers rather than add limits. By the time the cost shows up in the cloud bill, the code is in production and rate limiting feels like a breaking change to existing clients.</p>
-
-<p>Rate limiting belongs in the initial design of every endpoint, not added after abuse occurs. The goal is to make resource consumption predictable and contained, so the application scales with revenue instead of with attacker effort.</p>
+<p>When this is missing, the API still matches its design. It gets expensive only when a route is used harder than the polite case the load test ran. Adding servers hides that. A 429 with <code>Retry-After</code>, applied before the work, makes the cost predictable. Login-specific limits are only one slice of this, which is why the series map points here from <a href="/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">Application Security and OWASP: Start Here</a>.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">Previous: When a Valid Session Can Call Admin</a>
+<a href="/blog/posts/how-i-test-for-server-side-request-forgery.html">Next: What I Inspect When an API Fetches a User-Supplied URL</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

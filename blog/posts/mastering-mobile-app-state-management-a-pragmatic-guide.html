@@ -12,10 +12,10 @@
   <meta name="description" content="Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.">
   <meta name="keywords" content="mobile state management, React Native state, Redux, Zustand, mobile architecture, app development patterns, React Native, cross-platform mobile">
   <meta name="author" content="Anthony Smith">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
   <meta property="og:title" content="Mastering Mobile App State Management: A Pragmatic Guide — Anthony Smith">
   <meta property="og:description" content="Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80">
@@ -29,7 +29,7 @@
   <meta name="twitter:description" content="Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80">
 
-  <title>Mastering Mobile App State Management: A Pragmatic Guide — Anthony Smith</title>
+  <title>This article has moved — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -43,20 +43,6 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#4bffa5">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Mastering Mobile App State Management: A Pragmatic Guide",
-    "description": "Navigate the complex world of mobile app state management with proven strategies and patterns that scale. Learn how to build robust, maintainable mobile applications with clean state architecture.",
-    "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80",
-    "datePublished": "2026-04-08",
-    "author": { "@type": "Person", "name": "Anthony Smith", "url": "https://www.anthonysdigital.net" },
-    "publisher": { "@type": "Person", "name": "Anthony Smith" },
-    "url": "https://www.anthonysdigital.net/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html"
-  }
-  </script>
 
   <style>
     .post-wrap {
@@ -186,6 +172,8 @@
     }
   </style>
 <link rel="stylesheet" href="/css/review-fixes.css">
+  <meta http-equiv="refresh" content="0; url=https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
+  <script>location.replace("https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html");</script>
 </head>
 
 <body class="hero-themed">
@@ -252,84 +240,13 @@
 
       <!-- Post Content -->
       <article class="post-wrap">
-
         <a href="/blog/" class="post-back">&larr; All posts</a>
-
         <header class="post-header">
-          <div class="post-meta">
-            <span class="post-category">React Native</span>
-            <span class="post-read">7 min read</span>
-            <span class="post-date">April 8, 2026</span>
-          </div>
-          <h1 class="post-title">Mastering Mobile App State Management: A Pragmatic Guide</h1>
+          <h1 class="post-title">This article has moved</h1>
         </header>
-
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80" alt="Mastering Mobile App State Management: A Pragmatic Guide" onerror="this.style.display='none'">
-
         <div class="post-body">
-          <p>State management is the silent architecture that can make or break a mobile application's performance and developer experience. As mobile apps grow in complexity, choosing the right state management approach becomes critical for maintaining code quality, performance, and developer sanity.</p>
-
-<h2>The State Management Landscape</h2>
-
-<p>Modern mobile development offers multiple state management solutions, each with unique strengths and trade-offs. The key is understanding when to apply each approach based on your specific application requirements.</p>
-
-<ul><li>Local component state</li><li>Context API</li><li>Redux</li><li>MobX</li><li>Recoil</li><li>Custom hook-based solutions</li></ul>
-
-<h2>Choosing the Right Approach</h2>
-
-<div class="post-callout"><strong>Pro Tip:</strong> Start simple and evolve. Don't prematurely optimize your state management. Begin with React Native's built-in state and context mechanisms, then graduate to more complex solutions as your app's complexity demands.</div>
-
-<pre><code class="lang-javascript">// Simple React Native state management with hooks
-const UserProfile = () =&gt; {
-  const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    preferences: {}
-  });
-
-  const updateProfile = (updates) =&gt; {
-    setProfile(current =&gt; ({...current, ...updates}));
-  };</code></pre>
-
-<h2>Advanced State Management Patterns</h2>
-
-<p>For larger applications, consider implementing a more structured approach. Redux and MobX provide robust solutions for complex state interactions, offering centralized state management with predictable update mechanisms.</p>
-
-<pre><code class="lang-javascript">// Redux slice for user authentication
-const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
-    user: null,
-    token: null,
-    isAuthenticated: false
-  },
-  reducers: {
-    login: (state, action) =&gt; {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isAuthenticated = true;
-    },
-    logout: (state) =&gt; {
-      state.user = null;
-      state.token = null;
-      state.isAuthenticated = false;
-    }
-  }
-});</code></pre>
-
-<div class="post-callout"><em>Warning:</em> Avoid <strong>over-engineering</strong> your state management. Complex solutions introduce cognitive overhead and potential performance bottlenecks. Always measure and profile before committing to a complex architecture.</div>
-
-<h2>Performance Considerations</h2>
-
-<p>Performance in state management isn't just about the library you choose, but how you structure and update your state. Minimize unnecessary re-renders, use memoization techniques, and leverage immutable update patterns.</p>
-
-<p>By thoughtfully designing your state management strategy, you can create mobile applications that are not just functional, but truly performant and maintainable.</p>
+          <p>This article now lives at <a href="https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html">React Native Mobile Architecture: Lessons from Production</a>.</p>
         </div>
-
-        <nav class="post-footer-nav">
-          <a href="/blog/">&larr; Back to all posts</a>
-        </nav>
-
       </article>
 
       <!-- Footer -->

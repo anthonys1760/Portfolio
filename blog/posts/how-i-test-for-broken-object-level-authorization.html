@@ -9,15 +9,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.">
+  <meta name="description" content="A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.">
   <meta name="keywords" content="BOLA, IDOR, API security, authorization testing, object level authorization, access control, OWASP API Security">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html">
-  <meta property="og:title" content="How I Test for Broken Object Level Authorization — Anthony Smith">
-  <meta property="og:description" content="Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html">
+  <meta property="og:title" content="Login Is Not Ownership — Anthony Smith">
+  <meta property="og:description" content="A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-08-01">
@@ -25,11 +25,11 @@
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="How I Test for Broken Object Level Authorization">
-  <meta name="twitter:description" content="Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.">
+  <meta name="twitter:title" content="Login Is Not Ownership">
+  <meta name="twitter:description" content="A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80">
 
-  <title>How I Test for Broken Object Level Authorization — Anthony Smith</title>
+  <title>Login Is Not Ownership — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -50,10 +50,10 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html"
+      "@id": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html"
     },
-    "headline": "How I Test for Broken Object Level Authorization",
-    "description": "Most APIs check if you're logged in, but forget to verify you should access that specific resource. Here's how I find those gaps.",
+    "headline": "Login Is Not Ownership",
+    "description": "A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.",
     "keywords": "BOLA, IDOR, API security, authorization testing, object level authorization, access control, OWASP API Security",
     "articleSection": "Security",
     "image": {
@@ -61,23 +61,23 @@
       "url": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80"
     },
     "datePublished": "2026-08-01",
-    "dateModified": "2026-08-01",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html",
+    "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -284,38 +284,36 @@
         <header class="post-header">
           <div class="post-meta">
             <span class="post-category">Security</span>
-            <span class="post-read">4 min read</span>
+            <span class="post-read">2 min read</span>
             <span class="post-date">August 1, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">authorization</span><span class="post-tag">owasp</span></span>
           </div>
-          <h1 class="post-title">How I Test for Broken Object Level Authorization</h1>
+          <h1 class="post-title">Login Is Not Ownership</h1>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="How I Test for Broken Object Level Authorization" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80" alt="Login Is Not Ownership" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>The most common authorization mistake I see is treating authentication as authorization. An API verifies you're logged in, then hands you whatever resource ID you requested. The code checks <em>who you are</em> but never asks <em>whether this thing belongs to you</em>.</p>
+<p>A user who can load <code>GET /api/invoices/4021</code> tries <code>GET /api/invoices/4022</code> and receives someone else's invoice. The session token was valid. The record exists. Nothing in the request asked whether invoice 4022 belongs to that user, and nothing in the handler answered.</p>
 
-<p>This breaks down at the object level. A user can retrieve their own invoice at <code>GET /api/invoices/4021</code>, so they try <code>GET /api/invoices/4022</code> and receive someone else's data. The session token was valid. The resource exists. No one checked ownership.</p>
+<p>That gap is broken object level authorization, sometimes called IDOR. Login answered who the caller is. It did not answer whose record this is. The mistakes below are how that second question gets skipped. Function access, where a valid session calls an admin route, is a different problem and is covered in <a href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">When a Valid Session Can Call Admin</a>.</p>
 
-<h2>Why It Hides in Plain Sight</h2>
+<h2>Treating a session as ownership</h2>
 
-<p>Normal use never exposes this flaw. Users click links and buttons that only reference their own resources. The frontend filters lists and hides IDs that don't belong to them. Code review misses it because the authorization logic lives in a different layer than the route handler, or because the reviewer assumes the ORM or middleware handles it. Integration tests pass because they use a single test account that owns all the fixture data. The API works perfectly until someone changes a number in the URL.</p>
+<p>The handler checks that a token is present, then loads whatever id arrived in the path, query, or body. The check and the query live in different layers, so a review can see "this route is authenticated" and stop. Ownership is custom logic. Frameworks ship authentication middleware. They do not know that an invoice belongs to a customer.</p>
 
-<h2>The Method</h2>
+<h2>Trusting the screen to hide other ids</h2>
 
-<ol><li>Create two accounts with different privilege levels or organizational boundaries. I use one standard user and one from a separate tenant or team if the app has that concept.</li><li>Perform a legitimate action with the first account and capture the request. Note every identifier in the path, query string, and body. This includes obvious IDs and less obvious ones like file keys or reference tokens.</li><li>Replay that exact request using the second account's session token. Change nothing else. If it succeeds, the API is not checking object ownership.</li><li>Test every HTTP verb on that endpoint. A <code>GET</code> might be locked down while <code>DELETE</code> or <code>PATCH</code> is wide open. Different verbs often route through different handlers with different authorization logic.</li><li>Enumerate adjacent IDs. Try sequential integers, decrement by one, increment by 100. Try common patterns like switching the last digit or flipping between odd and even. The goal is to confirm the scope of exposure.</li><li>Check for indirect references. If the API uses UUIDs or opaque tokens, look for endpoints that list resources or leak identifiers in error messages, webhooks, or email notifications.</li><li>Test boundary cases. Try accessing resources that are soft deleted, in draft status, or marked private. These states often bypass the normal authorization path.</li></ol>
+<p>Ordinary use never sends a foreign id. The client lists the caller's own invoices and only links those. Reviewers and integration tests then exercise one account that owns every fixture. The API looks correct until the id changes. A <code>GET</code> can be locked down while <code>PATCH</code> or <code>DELETE</code> on the same path uses another handler that forgot the filter. Soft-deleted, draft, and private rows often take a different path and skip the check that the live row got.</p>
 
-<h2>The UUID Trap</h2>
+<h2>Treating a UUID as a permission</h2>
 
-<div class="post-callout">A UUID is not an authorization control. It makes enumeration harder, but if an attacker obtains a valid UUID through any channel (a shared link, a webhook payload, a leaked log), the API must still verify ownership. Obscurity is not permission. I see this mistake constantly: teams switch from integer IDs to UUIDs and assume they've solved BOLA. They've only made it less obvious.</div>
+<div class="post-callout">A UUID is not an authorization control. It makes guessing harder. If a valid id shows up in a shared link, a webhook, a log, or an email, the API still has to decide whether this caller may have this row. Switching from integers to UUIDs only makes the missing check less obvious. Opaque ids also leak from list endpoints and error messages, which is enough for someone who was never supposed to know the id.</div>
 
-<h2>Why This Survives in Production</h2>
+<h2>Put the owner on the query</h2>
 
-<p>Authorization is boring and repetitive. Every endpoint needs it, but it's not a feature anyone demos. Frameworks provide authentication middleware out of the box, but object level checks are custom business logic. Developers write the happy path, QA tests the happy path, and no one thinks to test cross account access until it's reported. The code works, the tests pass, and the vulnerability ships.</p>
-
-<h2>How I Defend Against It</h2>
-
-<p>I enforce authorization at the data access layer, not the route layer. Every query that retrieves a resource by ID also filters by the authenticated user's ownership or role. I make it structurally difficult to forget.</p>
+<p>The durable fix is to enforce ownership where the row is loaded, not only in the route. A query that fetches by id also filters by the authenticated user. A miss returns not found, so the response does not reveal that the other invoice exists.</p>
 
 <pre><code class="lang-js">// Enforce ownership in the data layer
 async function getInvoice(invoiceId, userId) {
@@ -323,15 +321,19 @@ async function getInvoice(invoiceId, userId) {
     id: invoiceId,
     userId: userId  // Always scope by owner
   });
-  
+
   if (!invoice) {
     throw new NotFoundError();  // Don't leak existence
   }
-  
+
   return invoice;
 }</code></pre>
 
-<p>Broken object level authorization persists because it requires discipline at every endpoint. The fix is simple but must be applied everywhere, and everywhere is the hard part.</p>
+<p>The same idea has to hold for every verb and every id the handler trusts, including file keys and reference tokens that are not labeled as the resource id. One careful endpoint does not fix the one next to it.</p>
+<nav class="post-series-nav" aria-label="More in this series">
+<a href="/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">Previous: Application Security and OWASP: Start Here</a>
+<a href="/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">Next: A Field-Level Checklist for Mass Assignment and Data Exposure</a>
+</nav>
         </div>
 
         <nav class="post-footer-nav">

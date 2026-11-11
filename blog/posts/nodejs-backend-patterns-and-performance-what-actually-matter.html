@@ -13,16 +13,16 @@
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html">
   <meta property="og:title" content="Node.js Backend Patterns and Performance: What Actually Matters in Production — Anthony Smith">
   <meta property="og:description" content="After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-07-06">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="Node.js">
+  <meta property="article:section" content="Backend">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Node.js Backend Patterns and Performance: What Actually Matters in Production">
@@ -50,12 +50,12 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html"
+      "@id": "https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html"
     },
     "headline": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
     "description": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
     "keywords": "",
-    "articleSection": "Node.js",
+    "articleSection": "Backend",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
@@ -65,19 +65,19 @@
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html",
+    "url": "https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">Node.js</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Backend</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">July 6, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">nodejs</span></span>
           </div>
           <h1 class="post-title">Node.js Backend Patterns and Performance: What Actually Matters in Production</h1>
         </header>
@@ -291,7 +293,7 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80" alt="Node.js Backend Patterns and Performance: What Actually Matters in Production" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>I've seen too many Node.js backends collapse under load because engineers optimized the wrong things. They micro-optimized array methods while ignoring blocking I/O. They added caching layers that increased complexity without reducing database load. After years of running Node.js services handling millions of requests daily, I've learned that <strong>performance in production comes down to a handful of patterns that most teams ignore</strong>.</p>
+<p>I've seen too many Node.js backends collapse under load because engineers optimized the wrong things. They micro-optimized array methods while ignoring blocking I/O. They added caching layers that increased complexity without reducing database load. After years of running Node.js services handling millions of requests daily, I've learned that <strong>performance in production comes down to a handful of patterns that most teams ignore</strong>.</p>
 
 <h2>The Event Loop Is Your Bottleneck (And You're Probably Blocking It)</h2>
 

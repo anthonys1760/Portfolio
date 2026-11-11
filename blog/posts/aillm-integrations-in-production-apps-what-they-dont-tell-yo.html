@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.">
-  <meta name="keywords" content="LLM production, OpenAI integration, AI cost management, prompt engineering, LLM observability, streaming responses, AI error handling, GPT-4 production">
+  <meta name="description" content="Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.">
+  <meta name="keywords" content="LLM production, OpenAI integration, AI cost management, prompt engineering, LLM observability, streaming responses, AI error handling, production LLM features">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html">
   <meta property="og:title" content="AI/LLM Integrations in Production Apps: What They Don't Tell You — Anthony Smith">
-  <meta property="og:description" content="Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.">
+  <meta property="og:description" content="Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-08-10">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="AI &amp; ML">
+  <meta property="article:section" content="AI">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="AI/LLM Integrations in Production Apps: What They Don't Tell You">
-  <meta name="twitter:description" content="Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.">
+  <meta name="twitter:description" content="Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80">
 
   <title>AI/LLM Integrations in Production Apps: What They Don't Tell You — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html"
+      "@id": "https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html"
     },
     "headline": "AI/LLM Integrations in Production Apps: What They Don't Tell You",
-    "description": "Hard lessons from shipping LLM features to real users: cost control, latency, prompt versioning, and the infrastructure you actually need.",
-    "keywords": "LLM production, OpenAI integration, AI cost management, prompt engineering, LLM observability, streaming responses, AI error handling, GPT-4 production",
-    "articleSection": "AI &amp; ML",
+    "description": "Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.",
+    "keywords": "LLM production, OpenAI integration, AI cost management, prompt engineering, LLM observability, streaming responses, AI error handling, production LLM features",
+    "articleSection": "AI",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80"
     },
     "datePublished": "2026-08-10",
-    "dateModified": "2026-08-10",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html",
+    "url": "https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -283,9 +283,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">AI &amp; ML</span>
-            <span class="post-read">9 min read</span>
+            <span class="post-category">AI</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">August 10, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">llm</span></span>
           </div>
           <h1 class="post-title">AI/LLM Integrations in Production Apps: What They Don't Tell You</h1>
         </header>
@@ -293,13 +295,11 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80" alt="AI/LLM Integrations in Production Apps: What They Don't Tell You" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>Everyone's adding AI features to their apps. Most are doing it wrong. After shipping LLM-powered features to production serving thousands of users, I've learned that integrating AI into real applications is less about the model and more about the infrastructure around it. The demo is easy. Production is where you find out if you know what you're doing.</p>
+<p>Adding a model to a product is the easy part. Production is the infrastructure around it: what a request costs, how you stream the response, how you version a prompt, and what you do when the provider fails. The demo does not teach that.</p>
 
-<h2>The Cost Problem Nobody Talks About</h2>
+<p>The first surprise is the bill. Vendors publish separate rates for input and output tokens, and those rates change. A conversation that resends a long context on every turn costs more than a short prompt, and a feature people actually use will show up on the invoice. Do not freeze an old rate card into the design.</p>
 
-<p>Your first surprise will be the bill. GPT-4 costs about $0.03 per 1K input tokens and $0.06 per 1K output tokens. That sounds cheap until you realize a typical conversation can easily hit 5K-10K tokens with context. If 1,000 users each have 10 conversations per month, you're looking at $1,500-$3,000 just in API costs. This scales fast.</p>
-
-<p>The solution isn't to avoid AI features—it's to <strong>instrument everything</strong> and make cost a first-class metric. Track token usage per request, per user, per feature. Set up alerts when costs spike. Use cheaper models (GPT-3.5, Claude Haiku) for simpler tasks and reserve GPT-4 for complex reasoning.</p>
+<p>The response is to <strong>instrument everything</strong> and treat cost as a first-class metric. Track token usage per request, per user, and per feature. Alert when it spikes. Use a smaller model for simpler tasks and reserve a more capable model for harder reasoning. Recheck the vendor's current rates when you choose, because yesterday's price list goes stale.</p>
 
 <pre><code class="lang-typescript">// Track costs in real-time with custom metrics
 import { trackMetric } from './monitoring';
@@ -308,18 +308,19 @@ async function callLLM(prompt: string, userId: string) {
   const startTime = Date.now();
   
   const response = await openai.chat.completions.create({
-    model: 'gpt-4-turbo-preview',
+    model: process.env.LLM_MODEL,
     messages: [{ role: 'user', content: prompt }],
   });
 
   const inputTokens = response.usage?.prompt_tokens || 0;
   const outputTokens = response.usage?.completion_tokens || 0;
-  const cost = (inputTokens * 0.00003) + (outputTokens * 0.00006);
+  // Read inputRate and outputRate from the vendor's current price list.
+  const cost = (inputTokens * inputRate) + (outputTokens * outputRate);
 
   await trackMetric({
     metric: 'llm.cost',
     value: cost,
-    tags: { userId, model: 'gpt-4' },
+    tags: { userId, model: process.env.LLM_MODEL },
   });
 
   await trackMetric({
@@ -397,7 +398,7 @@ CREATE INDEX idx_prompts_active ON prompts(key, is_active) WHERE is_active = tru
 
 <p>LLM APIs fail. They rate limit, timeout, return malformed responses, or just have bad days. Your error handling needs to be more sophisticated than <code>try/catch</code> and showing a generic error message. Implement exponential backoff, circuit breakers, and meaningful fallbacks.</p>
 
-<ul><li><strong>Rate limiting:</strong> OpenAI has per-minute token limits. Queue requests and implement backpressure instead of failing immediately.</li><li><strong>Timeouts:</strong> Set aggressive timeouts (30s max) and fail fast. A slow response is worse than an error message with a retry button.</li><li><strong>Fallback responses:</strong> For non-critical features, have pre-written fallback content. Better to show something useful than an error.</li><li><strong>Model fallback:</strong> If GPT-4 fails, automatically retry with GPT-3.5. Most users won't notice the quality difference.</li><li><strong>User communication:</strong> Be honest. 'AI is experiencing high demand' is better than 'Something went wrong'.</li></ul>
+<ul><li><strong>Rate limiting:</strong> OpenAI has per-minute token limits. Queue requests and implement backpressure instead of failing immediately.</li><li><strong>Timeouts:</strong> Set aggressive timeouts (30s max) and fail fast. A slow response is worse than an error message with a retry button.</li><li><strong>Fallback responses:</strong> For non-critical features, have pre-written fallback content. Better to show something useful than an error.</li><li><strong>Model fallback:</strong> If the primary model errors, retry once with a fallback model when the feature can tolerate a different answer. Say so in the interface when the fallback is a worse experience.</li><li><strong>User communication:</strong> Be honest. 'AI is experiencing high demand' is better than 'Something went wrong'.</li></ul>
 
 <h2>Observability Is Everything</h2>
 

@@ -9,24 +9,24 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.">
+  <meta name="description" content="Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.">
   <meta name="keywords" content="">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html">
+  <link rel="canonical" href="https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html">
+  <meta property="og:url" content="https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html">
   <meta property="og:title" content="TypeScript Patterns for Large Codebases — Anthony Smith">
-  <meta property="og:description" content="Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.">
+  <meta property="og:description" content="Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80">
   <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
   <meta property="article:published_time" content="2026-04-11">
   <meta property="article:author" content="Anthony Smith">
-  <meta property="article:section" content="TypeScript">
+  <meta property="article:section" content="Engineering">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="TypeScript Patterns for Large Codebases">
-  <meta name="twitter:description" content="Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.">
+  <meta name="twitter:description" content="Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80">
 
   <title>TypeScript Patterns for Large Codebases — Anthony Smith</title>
@@ -50,34 +50,34 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://www.anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html"
+      "@id": "https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html"
     },
     "headline": "TypeScript Patterns for Large Codebases",
-    "description": "Battle-tested patterns for scaling TypeScript applications beyond 100k lines. Learn how to maintain type safety and developer velocity as your codebase grows.",
+    "description": "Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.",
     "keywords": "",
-    "articleSection": "TypeScript",
+    "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
       "url": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80"
     },
     "datePublished": "2026-04-11",
-    "dateModified": "2026-04-11",
+    "dateModified": "2026-11-11",
     "author": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net",
+      "url": "https://anthonysdigital.net",
       "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
     },
     "publisher": {
       "@type": "Person",
       "name": "Anthony Smith",
-      "url": "https://www.anthonysdigital.net"
+      "url": "https://anthonysdigital.net"
     },
-    "url": "https://www.anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html",
+    "url": "https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html",
     "isPartOf": {
       "@type": "Blog",
       "name": "Anthony Smith — Technical Blog",
-      "url": "https://www.anthonysdigital.net/blog/"
+      "url": "https://anthonysdigital.net/blog/"
     }
   }
   </script>
@@ -281,9 +281,11 @@
 
         <header class="post-header">
           <div class="post-meta">
-            <span class="post-category">TypeScript</span>
-            <span class="post-read">8 min read</span>
+            <span class="post-category">Engineering</span>
+            <span class="post-read">3 min read</span>
             <span class="post-date">April 11, 2026</span>
+          
+            <span class="post-tags"><span class="post-tag">typescript</span></span>
           </div>
           <h1 class="post-title">TypeScript Patterns for Large Codebases</h1>
         </header>
@@ -291,7 +293,7 @@
         <img class="post-hero-img" src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80" alt="TypeScript Patterns for Large Codebases" onerror="this.style.display='none'">
 
         <div class="post-body">
-          <p>After maintaining TypeScript codebases ranging from 50k to 500k+ lines of code, I've learned that the patterns that work for small projects often become liabilities at scale. The type system that once felt like a safety net starts to slow down your IDE, your build times balloon, and your team starts adding <code>any</code> types just to ship features. Here's what actually works when your codebase grows beyond the tutorial phase.</p>
+<p>The patterns that work for a small TypeScript project often become liabilities once the codebase is large. The type system that once felt like a safety net starts to slow the editor down, builds get heavier, and <code>any</code> shows up because it is the fastest way to ship. These are the patterns that still hold after the tutorial phase.</p>
 
 <h2>Nominal Types Over Structural Typing</h2>
 
@@ -434,6 +436,7 @@ function updateEntity&lt;T extends DomainEntity&lt;string&gt;&gt;(
 }</code></pre>
 
 <p>These patterns aren't theoretical—they're born from pain points in real production systems. The initial investment in setting up branded types, validation layers, and proper module boundaries pays dividends as your team and codebase scale. TypeScript's type system is powerful enough to encode your business rules and prevent entire classes of bugs, but only if you use it strategically. Start with these patterns early, and your future self will thank you when you're refactoring a feature that touches 50 files across 10 teams.</p>
+<p>Related reading: choices the team will have to defend belong in <a href="/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">Architecture Decision Records</a>. Changing the code while features still ship is <a href="/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html">The Art of Incremental Refactoring</a>.</p>
         </div>
 
         <nav class="post-footer-nav">
