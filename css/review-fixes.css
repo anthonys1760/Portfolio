@@ -436,13 +436,9 @@ body.home .trust-split .trust-val .trust-note {
 	margin-top: 8px;
 	text-align: center;
 }
-.case-top {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	flex-wrap: wrap;
-}
 .case-kicker {
+	display: block;
+	margin-top: 8px;
 	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 	font-size: 12px;
 	letter-spacing: 0.08em;
@@ -453,8 +449,11 @@ body.home .trust-split .trust-val .trust-note {
 	display: inline-flex;
 	align-items: center;
 	gap: 7px;
+	width: fit-content;
+	max-width: 100%;
+	margin-top: 10px;
 	min-height: 30px;
-	padding: 0 12px;
+	padding: 4px 12px;
 	border-radius: 999px;
 	background: rgba(75, 255, 165, 0.1);
 	border: 1px solid rgba(75, 255, 165, 0.35);
@@ -472,7 +471,7 @@ body.home .trust-split .trust-val .trust-note {
 .case-card h2,
 .case-row h3 {
 	color: #fff;
-	margin: 10px 0 0;
+	margin: 0;
 }
 .case-card h2 { font-size: clamp(26px, 3vw, 32px); }
 .case-one {
@@ -558,6 +557,7 @@ body.home .trust-split .trust-val .trust-note {
 	padding: 18px 20px;
 	min-width: 0;
 }
+.case-card .mark,
 .case-row .mark {
 	width: 44px;
 	height: 44px;
@@ -572,12 +572,6 @@ body.home .trust-split .trust-val .trust-note {
 	margin-bottom: 10px;
 }
 .case-row h3 { font-size: 18px; margin: 0; }
-.case-row .st {
-	font-size: 12.5px;
-	color: #4bffa5;
-	margin-top: 2px;
-	font-weight: 500;
-}
 .case-row p {
 	font-size: 14px;
 	color: rgba(255, 255, 255, 0.72);
@@ -1389,4 +1383,109 @@ body.home .footer .soc a:hover {
 		font-size: 13px;
 		line-height: 1.45;
 	}
+}
+
+/* Filled mint controls keep a dark label in every state. The generic
+   themed link hover was turning .case-links a.primary (and its icon)
+   the same green as the fill. Hover and press only shift the fill. */
+button,
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta,
+	.case-links a,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a,
+	a.skip,
+	.case-row a.row-link
+) {
+	-webkit-tap-highlight-color: transparent;
+}
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta:not(.outline),
+	.case-links a.primary,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a,
+	a.skip
+) {
+	transition-property: background-color, border-color, box-shadow, transform;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+}
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta:not(.outline),
+	.case-links a.primary,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a,
+	a.skip
+):is(:link, :visited, :hover, :focus, :focus-visible, :active),
+body.hero-themed :is(button.btn, button[type="submit"], a.btn):is(:hover, :focus, :focus-visible, :active),
+body.hero-themed :is(button.btn, button[type="submit"], a.btn) .lnk,
+body.hero-themed .case-links a.primary:is(:link, :visited, :hover, :focus, :focus-visible, :active) svg {
+	color: #071a10 !important;
+}
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta:not(.outline),
+	.case-links a.primary,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a
+):is(:hover, :focus-visible) {
+	background-color: #3eea98 !important;
+}
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta:not(.outline),
+	.case-links a.primary,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a
+):active {
+	background-color: #2bdc8c !important;
+}
+body.hero-themed :is(
+	a.header-touch,
+	a.hero-cta:not(.outline),
+	.case-links a.primary,
+	a.btn,
+	button.btn,
+	button[type="submit"],
+	.filter-menu a,
+	a.skip
+):focus-visible {
+	outline: 2px solid #f4fff9 !important;
+	outline-offset: 3px;
+}
+
+/* Outlined buttons stay mint on a transparent or lightly tinted ground. */
+body.hero-themed :is(.case-links a.secondary, a.hero-cta.outline):is(:link, :visited, :hover, :focus, :focus-visible, :active),
+body.hero-themed :is(.case-links a.secondary, a.hero-cta.outline):is(:link, :visited, :hover, :focus, :focus-visible, :active) svg {
+	color: #4bffa5 !important;
+}
+body.hero-themed :is(.case-links a.secondary, a.hero-cta.outline):is(:hover, :focus, :focus-visible) {
+	background-color: rgba(75, 255, 165, 0.1);
+	border-color: #4bffa5;
+}
+body.hero-themed :is(.case-links a.secondary, a.hero-cta.outline):active {
+	background-color: rgba(75, 255, 165, 0.18);
+	border-color: #4bffa5;
+}
+body.hero-themed :is(.case-links a.secondary, a.hero-cta.outline, .case-links a.textish, .case-row a.row-link):focus-visible {
+	outline: 2px solid #4bffa5 !important;
+	outline-offset: 3px;
+}
+body.hero-themed :is(.case-links a.textish, .case-row a.row-link):is(:link, :visited, :hover, :focus, :focus-visible, :active),
+body.hero-themed :is(.case-links a.textish, .case-row a.row-link):is(:link, :visited, :hover, :focus, :focus-visible, :active) svg {
+	color: #4bffa5 !important;
+	background-color: transparent;
 }
