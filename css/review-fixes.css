@@ -1507,6 +1507,8 @@ body.hero-themed :is(.case-links a.textish, .case-row a.row-link):is(:link, :vis
 body.portfolio {
 	--portfolio-section-gap: 80px;
 	--portfolio-card-gap: 24px;
+	--portfolio-hero-gap: 64px;
+	--portfolio-page-end: 72px;
 }
 body.portfolio .section.started.layout-creative {
 	margin: 0;
@@ -1527,7 +1529,7 @@ body.portfolio .hero-chat-wrap {
 	width: min(1100px, calc(100% - 60px));
 	max-width: 1100px;
 	margin: 0 auto;
-	padding: 166px 0 0;
+	padding: 166px 0 48px;
 }
 body.portfolio .hero-name,
 body.portfolio .hero-role,
@@ -1553,7 +1555,7 @@ body.portfolio .section.started + .section {
 	margin-top: 0;
 }
 body.portfolio .section.works {
-	padding: var(--portfolio-section-gap) 0;
+	padding: var(--portfolio-hero-gap) 0 var(--portfolio-page-end);
 }
 body.portfolio .section.works .content {
 	width: min(1100px, calc(100% - 60px));
@@ -1613,6 +1615,17 @@ body.portfolio .project-ctas {
 body.portfolio .project-archive {
 	margin-top: var(--portfolio-section-gap);
 }
+/* Below 1200px the footer is in the document, directly after Early work.
+   The section's bottom padding would land after that footer, so the gap
+   sits on the archive instead. */
+@media (max-width: 1199px) {
+	body.portfolio .project-archive {
+		margin-bottom: var(--portfolio-page-end);
+	}
+	body.portfolio .section.works {
+		padding-bottom: 0;
+	}
+}
 @media (min-width: 641px) {
 	body.portfolio .hero-chat-wrap {
 		padding-top: 174px;
@@ -1622,6 +1635,7 @@ body.portfolio .project-archive {
 	body.portfolio .hero-chat-wrap {
 		width: min(1100px, calc(100% - 100px));
 		padding-top: 194px;
+		padding-bottom: 72px;
 	}
 	body.portfolio .section.works .content {
 		width: min(1100px, calc(100% - 100px));
@@ -1638,15 +1652,41 @@ body.portfolio .project-archive {
 		width: min(1100px, calc(100% - 96px));
 	}
 	body.portfolio .hero-chat-wrap {
-		padding-top: 144px;
+		/* Header is 145px. 250px puts the eyebrow ~104px under the nav. */
+		padding-top: 250px;
+	}
+	body.portfolio {
+		--portfolio-hero-gap: 88px;
+		--portfolio-page-end: 112px;
 	}
 	body.portfolio .section.works {
 		padding-left: 0;
 		padding-right: 0;
 	}
+	body.portfolio .case-card {
+		padding: 40px;
+	}
+	body.portfolio .case-row {
+		padding: 36px 32px;
+	}
+	body.portfolio .project-cta-card {
+		padding: 36px 28px !important;
+	}
 }
 @media (max-width: 720px) {
 	body.portfolio {
 		--portfolio-section-gap: 64px;
+	}
+	body.portfolio .case-card,
+	body.portfolio .case-row {
+		padding: 24px 20px;
+	}
+}
+@media (min-width: 721px) and (max-width: 1199px) {
+	body.portfolio .case-card {
+		padding: 32px;
+	}
+	body.portfolio .case-row {
+		padding: 32px 28px;
 	}
 }
