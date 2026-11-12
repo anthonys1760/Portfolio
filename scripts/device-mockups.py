@@ -5,6 +5,7 @@ Uses headless Chrome (DevTools protocol). Requires Pillow and the websockets
 package. Regenerates the WebP files the portfolio cards use:
 
     python3 scripts/device-mockups.py
+    python3 scripts/device-mockups.py callcatch rogueriverlabs
 
 Nothing here is a placeholder. Each screen is an above-the-fold capture of
 the project's own site.
@@ -15,7 +16,9 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
+import re
 import subprocess
+import sys
 import time
 import urllib.request
 from pathlib import Path
@@ -26,12 +29,24 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "images" / "projects"
 RAW_DIR = Path("/tmp/device-mockup-raw")
 
-PROJECTS = (
-    {"slug": "castlog", "url": "https://castlogapp.com/"},
-    {"slug": "nutrilogix", "url": "https://nutrilogix-ai.com/"},
-    # Same host the earlier VoiceLift card capture used.
-    {"slug": "voicelift", "url": "https://voicelift.app/"},
-)
+def callcatch_url() -> str:
+    """The public href in portfolio.html. Temporary until CallCatch has its own domain."""
+    html = (ROOT / "portfolio.html").read_text(encoding="utf-8")
+    match = re.search(r'id="callcatch"[\s\S]*?href="(https://[^"]+)"', html)
+    if not match:
+        raise SystemExit("portfolio.html is missing the CallCatch href")
+    return match.group(1)
+
+
+def all_projects() -> tuple[dict, ...]:
+    return (
+        {"slug": "castlog", "url": "https://castlogapp.com/"},
+        {"slug": "nutrilogix", "url": "https://nutrilogix-ai.com/"},
+        # Same host the earlier VoiceLift card capture used.
+        {"slug": "voicelift", "url": "https://voicelift.app/"},
+        {"slug": "callcatch", "url": callcatch_url()},
+        {"slug": "rogueriverlabs", "url": "https://rogueriverlabs.dev/"},
+    )
 
 # Above-the-fold viewports. The composed canvas is identical for every project.
 # The tablet is a landscape iPad (1194×834 is 4:3).
@@ -119,7 +134,20 @@ SETTLE_JS = r"""
 """
 
 
-async def capture_all(port: int) -> dict[str, dict[str, Image.Image]]:
+def projects_from_args(argv: list[str]) -> tuple[dict, ...]:
+    """Default captures every project. Pass slugs to refresh only those cards."""
+    catalog = all_projects()
+    if len(argv) <= 1:
+        return catalog
+    wanted = argv[1:]
+    known = {project["slug"]: project for project in catalog}
+    missing = [slug for slug in wanted if slug not in known]
+    if missing:
+        raise SystemExit(f"Unknown project slug: {', '.join(missing)}")
+    return tuple(known[slug] for slug in wanted)
+
+
+async def capture_all(port: int, projects: tuple[dict, ...]) -> dict[str, dict[str, Image.Image]]:
     import websockets
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -143,7 +171,7 @@ async def capture_all(port: int) -> dict[str, dict[str, Image.Image]]:
 
         await call("Page.enable")
         await call("Runtime.enable")
-        for project in PROJECTS:
+        for project in projects:
             shots[project["slug"]] = {}
             for name, width, height in VIEWPORTS:
                 print(f"opening {project['slug']} {name}", flush=True)
@@ -236,9 +264,9 @@ def draw_device(canvas: Image.Image, shot: Image.Image, spec: dict) -> None:
         canvas.alpha_composite(deck, (deck_x, deck_y))
 
 
-def compose(shots: dict[str, dict[str, Image.Image]]) -> None:
+def compose(shots: dict[str, dict[str, Image.Image]], projects: tuple[dict, ...]) -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for project in PROJECTS:
+    for project in projects:
         canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
         for name in ("laptop", "tablet", "phone"):
             draw_device(canvas, shots[project["slug"]][name], LAYOUT[name])
@@ -248,9 +276,10 @@ def compose(shots: dict[str, dict[str, Image.Image]]) -> None:
 
 
 def main() -> None:
+    projects = projects_from_args(sys.argv)
     ensure_chrome(CHROME_PORT)
-    shots = asyncio.run(capture_all(CHROME_PORT))
-    compose(shots)
+    shots = asyncio.run(capture_all(CHROME_PORT, projects))
+    compose(shots, projects)
 
 
 if __name__ == "__main__":
