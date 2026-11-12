@@ -2,7 +2,22 @@
 
 > Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work. Based in Grand Rapids, Michigan, US.
 
-Knows about application security, API security, the OWASP API Security Top 10, React Native, TypeScript, Supabase, and AI and LLM integrations.
+Knows about application security, API security, the OWASP API Security Top 10, React Native, TypeScript, Supabase, and AI and LLM integrations. Google Ads and Analytics certified. CompTIA PenTest+ certified.
+
+## What I do
+- [What I do](https://anthonysdigital.net/#what-i-do): 15+ years building production systems across web, iOS, SaaS, and databases.
+- Ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs, including [CastLog](https://castlogapp.com/), [Nutrilogix](https://nutrilogix-ai.com/), and [VoiceLift](https://voicelift.app/).
+- API and application security focus: BOLA, rate limiting, and prompt injection, with OWASP-aligned secure coding.
+- [CallCatch](https://anthonys1760.github.io/callcatch-landing/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. [Rogue River Labs](https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
+- Open to full-time roles and to contract or freelance work.
+
+## FAQ
+- [FAQ](https://anthonysdigital.net/#faq): What kind of work does Anthony Smith do? He has 15+ years building production systems across web, iOS, SaaS, and databases. He ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs.
+- Is he open to full-time work or contract work? Both. He is open to full-time roles and to contract or freelance work.
+- What stack does he use? React Native, TypeScript, and Supabase for mobile apps, plus web, iOS, SaaS, and database work. Those apps use the OpenAI, Anthropic, and Gemini APIs. He is Google Ads and Analytics certified, and CompTIA PenTest+ certified.
+- What products has he shipped? He has shipped CastLog, Nutrilogix, VoiceLift, and CallCatch. CallCatch answers from a business's own website and is a Rogue River Labs product. Rogue River Labs builds mobile apps and the APIs behind them, and finds where access checks break.
+- What security experience does he have? He focuses on API and application security, including BOLA, rate limiting, and prompt injection, and on OWASP-aligned secure coding. He is CompTIA PenTest+ certified and writes about testing the OWASP API Security Top 10.
+- How do I get in touch? Use the [contact page](https://anthonysdigital.net/contact.html), or email anthony.smith1760@gmail.com.
 
 ## About
 - [About](https://anthonysdigital.net/about.html): Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Grand Rapids, Michigan.

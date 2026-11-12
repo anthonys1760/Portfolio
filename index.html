@@ -34,6 +34,9 @@
 	<meta property="og:title" content="Anthony Smith — I ship secure apps. Then I break them.">
 	<meta property="og:description" content="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan.">
 	<meta property="og:image" content="https://anthonysdigital.net/images/og-card.jpg">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="Anthony Smith, Senior Software Engineer. Mobile apps, APIs and AppSec. 15+ years.">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Anthony Smith — I ship secure apps. Then I break them.">
 	<meta name="twitter:description" content="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan.">
@@ -103,7 +106,10 @@
         "https://www.linkedin.com/in/anthony-smith-b1085389",
         "https://github.com/anthonys1760",
         "https://dev.to/anthonys1760"
-      ]
+      ],
+      "subjectOf": {
+        "@id": "https://anthonysdigital.net/#faq"
+      }
     },
     {
       "@type": "WebSite",
@@ -113,6 +119,9 @@
       "description": "Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work.",
       "publisher": {
         "@id": "https://anthonysdigital.net/#person"
+      },
+      "hasPart": {
+        "@id": "https://anthonysdigital.net/#faq"
       }
     },
     {
@@ -124,6 +133,67 @@
       "founder": {
         "@id": "https://anthonysdigital.net/#person"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://anthonysdigital.net/#faq",
+      "url": "https://anthonysdigital.net/#faq",
+      "isPartOf": {
+        "@id": "https://anthonysdigital.net/#website"
+      },
+      "about": {
+        "@id": "https://anthonysdigital.net/#person"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What kind of work does Anthony Smith do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "He has 15+ years building production systems across web, iOS, SaaS, and databases. He ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is he open to full-time work or contract work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. He is open to full-time roles and to contract or freelance work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What stack does he use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "React Native, TypeScript, and Supabase for mobile apps, plus web, iOS, SaaS, and database work. Those apps use the OpenAI, Anthropic, and Gemini APIs. He is Google Ads and Analytics certified, and CompTIA PenTest+ certified."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What products has he shipped?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "He has shipped CastLog, Nutrilogix, VoiceLift, and CallCatch. CallCatch answers from a business's own website and is a Rogue River Labs product. Rogue River Labs builds mobile apps and the APIs behind them, and finds where access checks break."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What security experience does he have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "He focuses on API and application security, including BOLA, rate limiting, and prompt injection, and on OWASP-aligned secure coding. He is CompTIA PenTest+ certified and writes about testing the OWASP API Security Top 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get in touch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the contact page, or email anthony.smith1760@gmail.com."
+          }
+        }
+      ]
     }
   ]
 }
@@ -293,6 +363,71 @@
 				</div>
 
 			</div>
+
+			<section class="section home-panel what-i-do" id="what-i-do" aria-labelledby="what-i-do-title">
+				<div class="home-panel-inner">
+					<h2 id="what-i-do-title">What I do</h2>
+					<ul class="do-list">
+						<li>
+							<p class="do-index">01</p>
+							<h3>Production systems</h3>
+							<p>15+ years building production systems: web, iOS, SaaS, and database work.</p>
+						</li>
+						<li>
+							<p class="do-index">02</p>
+							<h3>Mobile apps</h3>
+							<p>Ships React Native and TypeScript apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs, including <a href="https://castlogapp.com/" target="_blank" rel="noopener">CastLog</a>, <a href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">Nutrilogix</a>, and <a href="https://voicelift.app/" target="_blank" rel="noopener">VoiceLift</a>.</p>
+						</li>
+						<li>
+							<p class="do-index">03</p>
+							<h3>API and application security</h3>
+							<p>Focus on BOLA, rate limiting, and prompt injection, with OWASP-aligned secure coding. CompTIA PenTest+ certified.</p>
+						</li>
+						<li>
+							<p class="do-index">04</p>
+							<h3>CallCatch and Rogue River Labs</h3>
+							<p><a href="https://anthonys1760.github.io/callcatch-landing/" target="_blank" rel="noopener">CallCatch</a> answers from a business's own website, does not invent a price, and turns unanswered questions into leads. <a href="https://rogueriverlabs.dev/" target="_blank" rel="noopener">Rogue River Labs</a> builds mobile apps and the APIs behind them, and finds where access checks break.</p>
+						</li>
+						<li>
+							<p class="do-index">05</p>
+							<h3>Open to work</h3>
+							<p>Google Ads and Analytics certified. Open to full-time roles and to contract or freelance work.</p>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section class="section home-panel home-faq" id="faq" aria-labelledby="faq-title">
+				<div class="home-panel-inner">
+					<h2 id="faq-title">FAQ</h2>
+					<ul class="faq-list">
+						<li>
+							<h3>What kind of work does Anthony Smith do?</h3>
+							<p>He has 15+ years building production systems across web, iOS, SaaS, and databases. He ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs.</p>
+						</li>
+						<li>
+							<h3>Is he open to full-time work or contract work?</h3>
+							<p>Both. He is open to full-time roles and to contract or freelance work.</p>
+						</li>
+						<li>
+							<h3>What stack does he use?</h3>
+							<p>React Native, TypeScript, and Supabase for mobile apps, plus web, iOS, SaaS, and database work. Those apps use the OpenAI, Anthropic, and Gemini APIs. He is Google Ads and Analytics certified, and CompTIA PenTest+ certified.</p>
+						</li>
+						<li>
+							<h3>What products has he shipped?</h3>
+							<p>He has shipped <a href="https://castlogapp.com/" target="_blank" rel="noopener">CastLog</a>, <a href="https://nutrilogix-ai.com/" target="_blank" rel="noopener">Nutrilogix</a>, <a href="https://voicelift.app/" target="_blank" rel="noopener">VoiceLift</a>, and <a href="https://anthonys1760.github.io/callcatch-landing/" target="_blank" rel="noopener">CallCatch</a>. CallCatch answers from a business's own website and is a <a href="https://rogueriverlabs.dev/" target="_blank" rel="noopener">Rogue River Labs</a> product. Rogue River Labs builds mobile apps and the APIs behind them, and finds where access checks break.</p>
+						</li>
+						<li>
+							<h3>What security experience does he have?</h3>
+							<p>He focuses on API and application security, including BOLA, rate limiting, and prompt injection, and on OWASP-aligned secure coding. He is CompTIA PenTest+ certified and writes about testing the OWASP API Security Top 10.</p>
+						</li>
+						<li>
+							<h3>How do I get in touch?</h3>
+							<p>Use the <a href="contact.html">contact page</a>, or email anthony.smith1760@gmail.com.</p>
+						</li>
+					</ul>
+				</div>
+			</section>
 
 		</div>
 
