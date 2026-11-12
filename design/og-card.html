@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Anthony Smith — Open Graph card</title>
+	<style>
+		html, body {
+			margin: 0;
+			width: 1200px;
+			height: 630px;
+			overflow: hidden;
+			background: #050509;
+		}
+		.card {
+			position: relative;
+			box-sizing: border-box;
+			width: 1200px;
+			height: 630px;
+			padding: 76px 88px 64px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			background:
+				radial-gradient(820px 460px at 8% 0%, rgba(75, 255, 165, 0.16), transparent 62%),
+				#050509;
+			color: #ffffff;
+			font-family: Inter, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+		}
+		.mark {
+			width: 84px;
+			height: 84px;
+			display: block;
+		}
+		h1 {
+			margin: 28px 0 0;
+			font-size: 72px;
+			font-weight: 700;
+			line-height: 1;
+			letter-spacing: -1.6px;
+		}
+		.role {
+			margin: 16px 0 0;
+			font-size: 34px;
+			font-weight: 600;
+			line-height: 1.15;
+			letter-spacing: -0.3px;
+			color: #4bffa5;
+		}
+		.rule {
+			width: 88px;
+			height: 4px;
+			margin: 28px 0 0;
+			border-radius: 2px;
+			background: #4bffa5;
+		}
+		.line {
+			margin: 22px 0 0;
+			font-size: 28px;
+			font-weight: 500;
+			line-height: 1.3;
+			letter-spacing: -0.2px;
+			color: rgba(255, 255, 255, 0.82);
+		}
+		.domain {
+			margin: 28px 0 0;
+			font-family: "JetBrains Mono", "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+			font-size: 18px;
+			line-height: 1.4;
+			letter-spacing: 0.04em;
+			color: rgba(255, 255, 255, 0.5);
+		}
+		.watermark {
+			position: absolute;
+			right: 64px;
+			bottom: 56px;
+			width: 220px;
+			height: 220px;
+			opacity: 0.14;
+		}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<svg class="watermark" viewBox="0 0 32 32" aria-hidden="true">
+			<rect x="0.8" y="0.8" width="30.4" height="30.4" rx="6.5" fill="none" stroke="#4bffa5" stroke-width="1.5"/>
+			<path d="M7.6 9.4L15.2 16L7.6 22.6" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M18.2 22.2H26.4" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round"/>
+		</svg>
+		<svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+			<rect x="0.8" y="0.8" width="30.4" height="30.4" rx="6.5" fill="#050509" stroke="#4bffa5" stroke-width="1.5"/>
+			<path d="M7.6 9.4L15.2 16L7.6 22.6" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M18.2 22.2H26.4" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round"/>
+		</svg>
+		<h1>Anthony Smith</h1>
+		<p class="role">Senior Software Engineer</p>
+		<div class="rule"></div>
+		<p class="line">Mobile apps, APIs &amp; AppSec. 15+ years.</p>
+		<p class="domain">anthonysdigital.net</p>
+	</div>
+</body>
+</html>
