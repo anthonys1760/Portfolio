@@ -584,6 +584,11 @@ body.home .trust-split .trust-val a:is(:hover, :focus, :focus-visible) {
 	font-size: 13px;
 	margin-bottom: 10px;
 }
+#rogue-river-labs .mark {
+	background: rgba(255, 159, 67, 0.12);
+	border-color: rgba(255, 159, 67, 0.4);
+	color: #FF9F43;
+}
 .case-row h3 { font-size: 18px; margin: 0; }
 .case-row p {
 	font-size: 14px;
