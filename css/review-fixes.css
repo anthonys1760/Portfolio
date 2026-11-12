@@ -1502,3 +1502,333 @@ body.hero-themed :is(.case-links a.textish, .case-row a.row-link):is(:link, :vis
 	color: #4bffa5 !important;
 	background-color: transparent;
 }
+
+/* Shared by the portfolio and about pages. The homepage keeps its own hero. */
+body.portfolio,
+body.about {
+	--portfolio-section-gap: 80px;
+	--portfolio-card-gap: 24px;
+	--portfolio-hero-gap: 64px;
+	--portfolio-page-end: 72px;
+}
+body.portfolio .section.started.layout-creative,
+body.about .section.started.layout-creative {
+	margin: 0;
+	padding: 0;
+	height: auto !important;
+}
+body.portfolio .section.started .centrize,
+body.about .section.started .centrize {
+	display: block !important;
+	height: auto !important;
+	padding: 0;
+}
+body.portfolio .section.started .vertical-center,
+body.portfolio .section.started .started-content.started-chat,
+body.about .section.started .vertical-center,
+body.about .section.started .started-content.started-chat {
+	display: block !important;
+	height: auto;
+}
+body.portfolio .hero-chat-wrap,
+body.about .hero-chat-wrap {
+	width: min(1100px, calc(100% - 60px));
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 166px 0 48px;
+}
+body.portfolio .hero-name,
+body.portfolio .hero-role,
+body.portfolio .portfolio-support,
+body.about .hero-name,
+body.about .hero-role {
+	margin-left: 0;
+	margin-right: 0;
+}
+body.portfolio .hero-role {
+	margin-bottom: 10px;
+}
+body.portfolio .portfolio-support {
+	margin: 0 0 22px;
+	max-width: 40em;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, 0.72);
+}
+body.portfolio .hero-chat-wrap .chat-row:last-child,
+body.about .hero-chat-wrap .chat-row:last-child {
+	margin-bottom: 0;
+}
+body.portfolio .section.started + .section,
+body.about .section.started + .section {
+	margin-top: 0;
+}
+body.portfolio .section.works {
+	padding: var(--portfolio-hero-gap) 0 var(--portfolio-page-end);
+}
+body.portfolio .section.works .content,
+body.about .section > .content {
+	width: min(1100px, calc(100% - 60px));
+	max-width: 1100px;
+	margin: 0 auto;
+}
+body.portfolio .project-cards {
+	display: flex;
+	flex-direction: column;
+	gap: var(--portfolio-section-gap);
+	margin: 0;
+}
+body.portfolio .case-card {
+	align-items: start;
+}
+body.portfolio .case-shots {
+	justify-content: flex-start;
+	align-self: start;
+}
+body.portfolio .case-shots img,
+body.portfolio .case-row .case-media img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1600 / 1000;
+	object-fit: contain;
+	flex: none;
+}
+body.portfolio .case-rows {
+	align-items: stretch;
+	margin-top: 0;
+	gap: var(--portfolio-card-gap);
+}
+body.portfolio .case-row {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	min-height: 100%;
+}
+body.portfolio .case-row .case-media {
+	flex: none;
+}
+body.portfolio .case-row .row-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 12px;
+	margin-top: auto;
+	padding-top: 4px;
+}
+body.portfolio .security-note,
+body.portfolio .project-ctas {
+	margin-top: 0;
+}
+body.portfolio .project-ctas {
+	gap: var(--portfolio-card-gap);
+}
+body.portfolio .project-archive {
+	margin-top: var(--portfolio-section-gap);
+}
+/* Below 1200px the footer is in the document, directly after Early work.
+   The section's bottom padding would land after that footer, so the gap
+   sits on the archive instead. */
+@media (max-width: 1199px) {
+	body.portfolio .project-archive {
+		margin-bottom: var(--portfolio-page-end);
+	}
+	body.portfolio .section.works {
+		padding-bottom: 0;
+	}
+}
+@media (min-width: 641px) {
+	body.portfolio .hero-chat-wrap,
+	body.about .hero-chat-wrap {
+		padding-top: 174px;
+	}
+}
+@media (min-width: 721px) {
+	body.portfolio .hero-chat-wrap,
+	body.about .hero-chat-wrap {
+		width: min(1100px, calc(100% - 100px));
+		padding-top: 194px;
+		padding-bottom: 72px;
+	}
+	body.portfolio .section.works .content,
+	body.about .section > .content {
+		width: min(1100px, calc(100% - 100px));
+	}
+}
+@media (min-width: 769px) {
+	body.portfolio .hero-chat-wrap,
+	body.about .hero-chat-wrap {
+		padding-top: 224px;
+	}
+}
+@media (min-width: 1200px) {
+	body.portfolio .hero-chat-wrap,
+	body.about .hero-chat-wrap,
+	body.portfolio .section.works .content,
+	body.about .section > .content {
+		width: min(1100px, calc(100% - 96px));
+	}
+	body.portfolio .hero-chat-wrap,
+	body.about .hero-chat-wrap {
+		/* Header is 145px. 250px puts the eyebrow ~104px under the nav. */
+		padding-top: 250px;
+	}
+	body.portfolio,
+	body.about {
+		--portfolio-hero-gap: 88px;
+		--portfolio-page-end: 112px;
+	}
+	body.portfolio .section.works {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	body.portfolio .case-card {
+		padding: 40px;
+	}
+	body.portfolio .case-row {
+		padding: 36px 32px;
+	}
+	body.portfolio .project-cta-card {
+		padding: 36px 28px !important;
+	}
+}
+@media (max-width: 720px) {
+	body.portfolio,
+	body.about {
+		--portfolio-section-gap: 64px;
+	}
+	body.portfolio .case-card,
+	body.portfolio .case-row {
+		padding: 24px 20px;
+	}
+}
+@media (min-width: 721px) and (max-width: 1199px) {
+	body.portfolio .case-card {
+		padding: 32px;
+	}
+	body.portfolio .case-row {
+		padding: 32px 28px;
+	}
+}
+
+/* About page. Same column, rhythm, and padding as the portfolio page. */
+body.about .hero-cta-wrap {
+	padding-left: 0;
+}
+body.about .section:not(.started) {
+	padding: var(--portfolio-section-gap) 0 0;
+}
+body.about .section.started + .section {
+	padding-top: var(--portfolio-hero-gap);
+}
+body.about #section-skills {
+	padding-bottom: var(--portfolio-page-end);
+}
+body.about .section .title {
+	margin: 0 0 var(--portfolio-card-gap);
+}
+body.about .section .content-box {
+	margin-right: 0;
+}
+body.about .section.about > .content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--portfolio-card-gap);
+}
+body.about .about-tldr,
+body.about .about-stats,
+body.about .tech-stack-strip,
+body.about .about-now,
+body.about .about-contact-strip {
+	margin: 0;
+}
+body.about .about-stats,
+body.about .credentials-grid {
+	align-items: stretch;
+	gap: var(--portfolio-card-gap);
+}
+body.about .about-stat,
+body.about .cred-card {
+	height: 100%;
+}
+body.about .exp-timeline {
+	display: flex;
+	flex-direction: column;
+	gap: var(--portfolio-card-gap);
+}
+body.about .exp-item {
+	margin: 0;
+}
+body.about .service-items {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--portfolio-card-gap);
+	margin: 0;
+	font-size: 16px;
+	text-align: left;
+}
+body.about .service-items .service-col {
+	display: flex;
+	width: auto;
+	margin: 0;
+	min-width: 0;
+}
+body.about .service-items .service-col .content-box {
+	margin: 0;
+}
+body.about .service-item {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+body.about #section-ai-systems .skills-groups {
+	margin-top: var(--portfolio-card-gap);
+}
+body.about .adr-list {
+	max-width: none;
+	gap: var(--portfolio-card-gap);
+}
+body.about .about-tldr,
+body.about .about-stat,
+body.about .about-now,
+body.about .skills-groups,
+body.about .service-item {
+	padding: 32px;
+}
+body.about .cred-card,
+body.about .exp-body,
+body.about .adr {
+	padding: 32px 28px;
+}
+@media (min-width: 1200px) {
+	body.about .about-tldr,
+	body.about .about-stat,
+	body.about .about-now,
+	body.about .skills-groups,
+	body.about .service-item {
+		padding: 40px;
+	}
+	body.about .cred-card,
+	body.about .exp-body,
+	body.about .adr {
+		padding: 36px 32px;
+	}
+}
+@media (max-width: 900px) {
+	body.about .service-items {
+		grid-template-columns: 1fr;
+	}
+}
+@media (max-width: 720px) {
+	body.about .about-tldr,
+	body.about .about-stat,
+	body.about .about-now,
+	body.about .skills-groups,
+	body.about .service-item,
+	body.about .cred-card,
+	body.about .exp-body,
+	body.about .adr {
+		padding: 24px 20px;
+	}
+}
