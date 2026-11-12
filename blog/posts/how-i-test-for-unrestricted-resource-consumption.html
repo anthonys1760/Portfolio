@@ -3,10 +3,22 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
   </script>
-
-
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
@@ -18,7 +30,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
   <meta property="og:title" content="API Rate Limits Beyond Login — Anthony Smith">
   <meta property="og:description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80">
+  <meta property="og:image" content="https://anthonysdigital.net/blog/images/how-i-test-for-unrestricted-resource-consumption.webp">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-09-14">
   <meta property="article:author" content="Anthony Smith">
@@ -27,11 +39,14 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="API Rate Limits Beyond Login — Anthony Smith">
   <meta name="twitter:description" content="Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80">
+  <meta name="twitter:image" content="https://anthonysdigital.net/blog/images/how-i-test-for-unrestricted-resource-consumption.webp">
 
   <title>API Rate Limits Beyond Login — Anthony Smith</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/blog/images/how-i-test-for-unrestricted-resource-consumption.webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -62,7 +77,7 @@
     "articleSection": "Security",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80"
+      "url": "https://anthonysdigital.net/blog/images/how-i-test-for-unrestricted-resource-consumption.webp"
     },
     "datePublished": "2026-09-14",
     "dateModified": "2026-11-11",
@@ -159,6 +174,8 @@
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
@@ -308,14 +325,14 @@
           <div class="post-meta">
             <span class="post-category">Security</span>
             <span class="post-read">2 min read</span>
-            <span class="post-date">September 14, 2026</span>
-          
             <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
           <h1 class="post-title">A Rate-Limit Checklist Beyond the Login Endpoint</h1>
+          <p class="post-byline">By Anthony Smith · <time datetime="2026-09-14">September 14, 2026</time></p>
+          <p class="post-tldr"><strong>TL;DR:</strong> Login limits do not cover search, export, or uploads.</p>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80" alt="An aerial view of a crowded highway interchange with traffic filling every lane" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="/blog/images/how-i-test-for-unrestricted-resource-consumption.webp" alt="An aerial view of a crowded highway interchange with traffic filling every lane" width="1600" height="1200" fetchpriority="high">
 
         <div class="post-body">
 <p>Search, export, and upload are where the bill shows up. A search that scans a large table, an export that builds a PDF in memory, or an image route that resizes a large upload on every request can be unbounded even when login is tightly limited. Rate limiting that exists only to slow password guesses does not cover those routes.</p>
@@ -361,6 +378,10 @@ const report = await generateReport(userId, params);</code></pre>
 <a href="/blog/posts/how-i-test-for-server-side-request-forgery.html">Next: What I Inspect When an API Fetches a User-Supplied URL</a>
 </nav>
         </div>
+
+        <aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>

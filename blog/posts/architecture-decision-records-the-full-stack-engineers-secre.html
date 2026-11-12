@@ -3,10 +3,22 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
   </script>
-
-
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
@@ -18,7 +30,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
   <meta property="og:title" content="Architecture Decision Records — Anthony Smith">
   <meta property="og:description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80">
+  <meta property="og:image" content="https://anthonysdigital.net/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-06-15">
   <meta property="article:author" content="Anthony Smith">
@@ -27,11 +39,14 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Architecture Decision Records — Anthony Smith">
   <meta name="twitter:description" content="How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80">
+  <meta name="twitter:image" content="https://anthonysdigital.net/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp">
 
   <title>Architecture Decision Records — Anthony Smith</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -62,7 +77,7 @@
     "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80"
+      "url": "https://anthonysdigital.net/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp"
     },
     "datePublished": "2026-06-15",
     "dateModified": "2026-11-11",
@@ -159,6 +174,8 @@
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
@@ -306,14 +323,14 @@
           <div class="post-meta">
             <span class="post-category">Engineering</span>
             <span class="post-read">2 min read</span>
-            <span class="post-date">June 15, 2026</span>
-          
             <span class="post-tags"><span class="post-tag">documentation</span></span>
           </div>
           <h1 class="post-title">Architecture Decision Records: The Full-Stack Engineer's Secret Weapon</h1>
+          <p class="post-byline">By Anthony Smith · <time datetime="2026-06-15">June 15, 2026</time></p>
+          <p class="post-tldr"><strong>TL;DR:</strong> How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.</p>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80" alt="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp" alt="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon" width="1600" height="1060" fetchpriority="high">
 
         <div class="post-body">
 <p>An architecture decision record is a short, dated note of a choice: the context, what you picked, and the consequences. It is not a wiki about how the system works. Team how-to pages live in <a href="/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">Documentation Debt</a>. A private scratch log of the same decision lives in <a href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">The Engineering Journal</a>. This post is only the team record.</p>
@@ -428,6 +445,10 @@ const { data, isLoading } = useQuery(
 
 <p>The record that ships is the one in the pull request that implements the decision. Review sees the code and the why together. A template at <code>docs/adr/000-template.md</code>, plus a small script that copies it and numbers the file, makes writing the record easier than skipping it. For how the personal version of a decision differs from this file, see <a href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">The Engineering Journal</a>.</p>
         </div>
+
+        <aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>

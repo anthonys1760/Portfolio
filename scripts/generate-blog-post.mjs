@@ -18,11 +18,14 @@
  * is set, the failure is also written there for the Actions job summary.
  *
  * Featured images come from IMAGE_POOL. The script assigns a photo that is
- * not already used in posts.json. It does not reuse one when the pool is empty.
+ * not already used in posts.json, downloads it, and saves a WebP at most
+ * 1600px wide under blog/images/ with width and height. It does not reuse a
+ * photo when the pool is empty. New posts are also written into the static
+ * list in blog/index.html.
  */
 
 import { execFile } from 'child_process'
-import { appendFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs'
+import { appendFileSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'fs'
 import path from 'path'
 import { promisify } from 'util'
 import { fileURLToPath } from 'url'
@@ -611,6 +614,150 @@ function imageUrl(id) {
   return `https://images.unsplash.com/photo-${id}?w=1200&q=80`
 }
 
+const HERO_DIR = path.join(ROOT, 'blog/images')
+const BLOG_INDEX = path.join(ROOT, 'blog/index.html')
+const SITE_ORIGIN = 'https://anthonysdigital.net'
+
+function publicImageUrl(src) {
+  const value = String(src || '')
+  if (!value) return ''
+  if (/^https?:\/\//i.test(value)) return value
+  return `${SITE_ORIGIN}${value.startsWith('/') ? '' : '/'}${value}`
+}
+
+function unsplashDownloadUrl(url) {
+  const id = imageId(url)
+  if (!id) return url
+  return `https://images.unsplash.com/photo-${id}?auto=format&fit=max&w=1600&q=70&fm=webp`
+}
+
+function tldrSentence(text) {
+  const plain = visible(text).replace(/\s+/g, ' ').trim()
+  if (!plain) return ''
+  // Split on sentence punctuation only when the next sentence starts. A period
+  // inside "Node.js" or "e.g." is not a boundary.
+  const parts = []
+  let start = 0
+  const boundary = /[.!?](?=\s+[A-Z"“])/g
+  let match
+  while ((match = boundary.exec(plain))) {
+    parts.push(plain.slice(start, match.index + 1).trim())
+    start = match.index + 1
+  }
+  const tail = plain.slice(start).trim()
+  if (tail) parts.push(tail)
+  const cleaned = parts.filter(Boolean)
+  return cleaned.find(sentence => sentence.length >= 40) || cleaned[0] || plain
+}
+
+function gtmBootstrap() {
+  return `<!-- Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
+  </script>
+  <!-- End Google Tag Manager -->
+`
+}
+
+function blogFontLinks() {
+  return `<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">`
+}
+
+function authorBoxHtml() {
+  return `<aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>`
+}
+
+function bylineHtml(post) {
+  return `<p class="post-byline">By Anthony Smith · <time datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.date)}</time></p>`
+}
+
+function tldrHtml(post) {
+  const sentence = tldrSentence(post.excerpt || post.tldr)
+  if (!sentence) return ''
+  return `<p class="post-tldr"><strong>TL;DR:</strong> ${escapeHtml(sentence)}</p>`
+}
+
+function deferGtmInHtml(html) {
+  if (html.includes('function loadGoogleTagManager')) return html
+  const marked = /<!-- Google Tag Manager -->\s*<script>[\s\S]*?googletagmanager\.com\/gtm\.js[\s\S]*?<\/script>\s*(<!-- End Google Tag Manager -->)?/
+  if (marked.test(html)) return html.replace(marked, gtmBootstrap())
+  const bare = /<script>\s*\(function\s*\(\s*w\s*,\s*d\s*,\s*s\s*,\s*l\s*,\s*i\s*\)[\s\S]*?googletagmanager\.com\/gtm\.js[\s\S]*?<\/script>/
+  if (bare.test(html)) return html.replace(bare, gtmBootstrap())
+  return html
+}
+
+function trimBlogFonts(html) {
+  const oldLink = /[ \t]*<link href="https:\/\/fonts\.googleapis\.com\/css\?family=Roboto:100,300,400,500,700,900&(?:amp;)?display=swap" rel="stylesheet">\n?/g
+  return html.replace(oldLink, `${blogFontLinks()}\n`)
+}
+
+async function materializeHero(remoteUrl, slug) {
+  if (!/^[a-z0-9-]+$/.test(slug)) {
+    throw new BlogError(`Refusing to save a hero with an unexpected slug: ${slug}`)
+  }
+  mkdirSync(HERO_DIR, { recursive: true })
+  const dest = path.join(HERO_DIR, `${slug}.webp`)
+  const tmp = path.join(HERO_DIR, `.${slug}.download`)
+  const source = unsplashDownloadUrl(remoteUrl)
+  const response = await fetch(source, { signal: AbortSignal.timeout(20000) })
+  if (!response.ok) {
+    throw new BlogError(`Hero download failed (${response.status}) for ${source}`)
+  }
+  const bytes = Buffer.from(await response.arrayBuffer())
+  if (bytes.length < 32) throw new BlogError(`Hero download was empty for ${source}`)
+  writeFileSync(tmp, bytes)
+  try {
+    await execFileAsync('ffmpeg', [
+      '-y',
+      '-i', tmp,
+      '-vf', "scale='min(1600,iw)':-2",
+      '-c:v', 'libwebp',
+      '-quality', '68',
+      '-compression_level', '6',
+      dest,
+    ], { timeout: 30000 })
+  } catch (err) {
+    throw new BlogError(`Could not convert the hero to WebP (${err.message}). ffmpeg is required.`)
+  } finally {
+    try { unlinkSync(tmp) } catch { /* already removed */ }
+  }
+  const probe = await execFileAsync('ffprobe', [
+    '-v', 'error',
+    '-select_streams', 'v:0',
+    '-show_entries', 'stream=width,height',
+    '-of', 'csv=s=x:p=0',
+    dest,
+  ], { timeout: 10000 })
+  const [width, height] = probe.stdout.trim().split('x').map(value => Number(value))
+  if (!width || !height || width > 1600) {
+    throw new BlogError(`Hero ${slug} has unexpected dimensions (${probe.stdout.trim()}).`)
+  }
+  const size = statSync(dest).size
+  console.log(`[Blog] saved hero ${slug}.webp ${width}x${height} (${size} bytes)`)
+  return {
+    image: `/blog/images/${slug}.webp`,
+    imageWidth: width,
+    imageHeight: height,
+  }
+}
+
 function topicGroup(topic) {
   const category = String(topic?.category || '').toLowerCase()
   const area = String(topic?.area || '')
@@ -622,7 +769,7 @@ function topicGroup(topic) {
 }
 
 function usedImageIds(posts) {
-  return new Set(posts.map(post => imageId(post.image)).filter(Boolean))
+  return new Set(posts.flatMap(post => [post.unsplashId, imageId(post.image)]).filter(Boolean))
 }
 
 async function verifyImageUrl(url) {
@@ -1598,13 +1745,15 @@ function buildPostHtml(post) {
     ],
   }, null, 2).replace(/</g, '\\u003c')
 
+  const shareImage = publicImageUrl(post.image)
+  const heroWidth = Number(post.imageWidth) || 0
+  const heroHeight = Number(post.imageHeight) || 0
+  const heroDims = heroWidth && heroHeight ? ` width="${heroWidth}" height="${heroHeight}"` : ''
+
   return `<!doctype html>
 <html lang="en-US">
 <head>
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
-  </script>
+  ${gtmBootstrap()}
 
 
   <meta charset="UTF-8">
@@ -1618,7 +1767,7 @@ function buildPostHtml(post) {
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:title" content="${escapeHtml(seoTitle)}">
   <meta property="og:description" content="${escapeHtml(seoDescription)}">
-  <meta property="og:image" content="${post.image}">
+  <meta property="og:image" content="${shareImage}">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="${post.dateISO}">
   <meta property="article:author" content="Anthony Smith">
@@ -1627,11 +1776,12 @@ function buildPostHtml(post) {
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
   <meta name="twitter:description" content="${escapeHtml(seoDescription)}">
-  <meta name="twitter:image" content="${post.image}">
+  <meta name="twitter:image" content="${shareImage}">
 
   <title>${escapeHtml(seoTitle)}</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+  ${blogFontLinks()}
+  <link rel="preload" as="image" href="${post.image}" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -1662,7 +1812,7 @@ function buildPostHtml(post) {
     "articleSection": "${escapeHtml(post.category)}",
     "image": {
       "@type": "ImageObject",
-      "url": "${post.image}"
+      "url": "${shareImage}"
     },
     "datePublished": "${post.dateISO}",
     "dateModified": "${post.dateISO}",
@@ -1736,11 +1886,44 @@ function buildPostHtml(post) {
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
       object-fit: cover;
     }
+    .post-byline {
+      margin: -4px 0 18px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .post-byline time { color: rgba(255,255,255,0.62); }
+    .post-tldr {
+      margin: 0 0 28px;
+      padding: 12px 16px;
+      border-left: 3px solid #4bffa5;
+      background: rgba(75,255,165,0.07);
+      border-radius: 0 8px 8px 0;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+    .post-author {
+      margin-top: 48px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+    }
+    .post-author p {
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+    .post-author a { color: #4bffa5; text-decoration: none; }
+    .post-author a:hover { text-decoration: underline; }
     .post-body h2 {
       font-size: 1.45rem;
       font-weight: 600;
@@ -1898,16 +2081,19 @@ function buildPostHtml(post) {
           <div class="post-meta">
             <span class="post-category">${escapeHtml(post.category)}</span>
             <span class="post-read">${escapeHtml(post.readTime)} read</span>
-            <span class="post-date">${escapeHtml(post.date)}</span>
           </div>
           <h1 class="post-title">${escapeHtml(post.title)}</h1>
+          ${bylineHtml(post)}
+          ${tldrHtml(post)}
         </header>
 
-        <img class="post-hero-img" src="${post.image}" alt="${escapeHtml(post.imageAlt || post.title)}" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="${post.image}" alt="${escapeHtml(post.imageAlt || post.title)}"${heroDims} fetchpriority="high">
 
         <div class="post-body">
           ${bodyHtml}
         </div>
+
+        ${authorBoxHtml()}
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>
@@ -2013,6 +2199,69 @@ function updateLlmsFiles(post) {
     console.log('[Blog] llms-full.txt already contains this post, skipping')
   }
 }
+function renderBlogCard(post, index) {
+  const eager = index === 0
+  const attrs = [
+    'class="blog-card-img"',
+    `src="${escapeHtml(post.image)}"`,
+    `alt="${escapeHtml(post.imageAlt || post.title)}"`,
+  ]
+  if (post.imageWidth && post.imageHeight) {
+    attrs.push(`width="${Number(post.imageWidth)}"`, `height="${Number(post.imageHeight)}"`)
+  }
+  if (eager) attrs.push('fetchpriority="high"')
+  else attrs.push('loading="lazy"', 'decoding="async"')
+  const tags = (post.tags || []).map(tag => `<span class="blog-card-tag">${escapeHtml(tag)}</span>`).join('')
+  return `				<a class="blog-card" href="/blog/posts/${post.slug}.html">
+					<img ${attrs.join(' ')}>
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">${escapeHtml(post.category)}</span>
+							<span class="blog-card-read">${escapeHtml(post.readTime)} read</span>
+						</div>
+						<h2 class="blog-card-title">${escapeHtml(post.title)}</h2>
+						<div class="blog-card-tags">${tags}</div>
+						<p class="blog-card-excerpt">${escapeHtml(post.excerpt)}</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.date)}</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>`
+}
+
+function updateBlogIndex(posts) {
+  let html = readFileSync(BLOG_INDEX, 'utf8')
+  const cards = posts.map(renderBlogCard).join('\n')
+  const block = `<!-- BLOG_POSTS:START -->\n${cards}\n\t\t\t\t\t<!-- BLOG_POSTS:END -->`
+  if (html.includes('<!-- BLOG_POSTS:START -->') && html.includes('<!-- BLOG_POSTS:END -->')) {
+    html = html.replace(/<!-- BLOG_POSTS:START -->[\s\S]*?<!-- BLOG_POSTS:END -->/, block)
+  } else {
+    const replaced = html.replace(
+      /<div id="blog-grid" class="blog-grid">\s*<div class="blog-loading">[\s\S]*?<\/div>\s*<\/div>/,
+      `<div id="blog-grid" class="blog-grid">\n\t\t\t\t\t${block}\n\t\t\t\t</div>`,
+    )
+    if (replaced === html) {
+      throw new BlogError('blog/index.html has no BLOG_POSTS markers and no loading placeholder to replace.')
+    }
+    html = replaced
+  }
+  const first = posts[0]
+  if (first?.image) {
+    const preload = `<link rel="preload" as="image" href="${first.image}" fetchpriority="high">`
+    if (html.includes('rel="preload" as="image"')) {
+      html = html.replace(/<link rel="preload" as="image" href="[^"]*" fetchpriority="high">/, preload)
+    } else {
+      html = html.replace(
+        /(<link href="https:\/\/fonts\.googleapis\.com\/css2\?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">)/,
+        `$1\n\t${preload}`,
+      )
+    }
+  }
+  writeFileSync(BLOG_INDEX, html, 'utf8')
+  console.log(`[Blog] Wrote static list of ${posts.length} posts to blog/index.html`)
+}
+
 function toMeta(post) {
   // Strip body from listing JSON. series, topicKey, format, and tags are
   // extra keys the index ignores. format is how the next run avoids the
@@ -2028,6 +2277,9 @@ function toMeta(post) {
     image: post.image,
     imageAlt: post.imageAlt,
   }
+  if (post.imageWidth) meta.imageWidth = post.imageWidth
+  if (post.imageHeight) meta.imageHeight = post.imageHeight
+  if (post.unsplashId) meta.unsplashId = post.unsplashId
   if (post.series) meta.series = post.series
   if (post.topicKey) meta.topicKey = post.topicKey
   if (post.format) meta.format = post.format
@@ -2118,9 +2370,13 @@ async function main() {
   }
 
   const chosen = await assignImage(posts, topic)
-  post.image = chosen.image
+  post.unsplashId = imageId(chosen.image)
+  const localHero = await materializeHero(chosen.image, post.slug)
+  post.image = localHero.image
+  post.imageWidth = localHero.imageWidth
+  post.imageHeight = localHero.imageHeight
   post.imageAlt = chosen.imageAlt
-  console.log(`[Blog] image: ${imageId(post.image)} (${topicGroup(topic)})`)
+  console.log(`[Blog] image: ${post.unsplashId} -> ${post.image} ${post.imageWidth}x${post.imageHeight} (${topicGroup(topic)})`)
 
   const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
   writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
@@ -2128,6 +2384,7 @@ async function main() {
 
   posts.unshift(toMeta(post))
   savePosts(posts)
+  updateBlogIndex(posts)
   updateSitemap(post.slug, post.dateISO)
   updateLlmsFiles(post)
   writeRunFile(post, topic, format, opening)
@@ -2163,4 +2420,20 @@ if (invokedDirectly) {
   })
 }
 
-export { IMAGE_POOL, assignImage, imageId, imageUrl, topicGroup }
+export {
+  IMAGE_POOL,
+  assignImage,
+  authorBoxHtml,
+  blogFontLinks,
+  bylineHtml,
+  deferGtmInHtml,
+  imageId,
+  imageUrl,
+  materializeHero,
+  publicImageUrl,
+  tldrHtml,
+  tldrSentence,
+  topicGroup,
+  trimBlogFonts,
+  updateBlogIndex,
+}

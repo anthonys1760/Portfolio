@@ -1833,3 +1833,48 @@ body.about .adr {
 		padding: 24px 20px;
 	}
 }
+
+/* Field Notes: byline, summary, and author box. The hero keeps its
+   intrinsic ratio so the image does not shift the article when it loads. */
+.post-byline {
+	margin: -4px 0 18px;
+	font-size: 0.95rem;
+	color: rgba(255, 255, 255, 0.8);
+}
+.post-byline time {
+	color: rgba(255, 255, 255, 0.62);
+}
+.post-tldr {
+	margin: 0 0 28px;
+	padding: 12px 16px;
+	border-left: 3px solid #4bffa5;
+	background: rgba(75, 255, 165, 0.07);
+	border-radius: 0 8px 8px 0;
+	color: rgba(255, 255, 255, 0.86);
+	line-height: 1.6;
+	font-size: 0.98rem;
+}
+.post-author {
+	margin-top: 48px;
+	padding: 18px 20px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.04);
+}
+.post-author p {
+	margin: 0;
+	color: rgba(255, 255, 255, 0.78);
+	line-height: 1.65;
+	font-size: 0.95rem;
+}
+.post-author a {
+	color: #4bffa5;
+	text-decoration: none;
+}
+.post-author a:hover {
+	text-decoration: underline;
+}
+.post-hero-img {
+	height: auto;
+	background: #111;
+}

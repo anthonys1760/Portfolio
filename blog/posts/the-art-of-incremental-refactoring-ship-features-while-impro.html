@@ -3,10 +3,22 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
   </script>
-
-
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
@@ -18,7 +30,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html">
   <meta property="og:title" content="Incremental Refactoring While Shipping — Anthony Smith">
   <meta property="og:description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80">
+  <meta property="og:image" content="https://anthonysdigital.net/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-05-11">
   <meta property="article:author" content="Anthony Smith">
@@ -27,11 +39,14 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Incremental Refactoring While Shipping — Anthony Smith">
   <meta name="twitter:description" content="How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80">
+  <meta name="twitter:image" content="https://anthonysdigital.net/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp">
 
   <title>Incremental Refactoring While Shipping — Anthony Smith</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -62,7 +77,7 @@
     "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80"
+      "url": "https://anthonysdigital.net/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp"
     },
     "datePublished": "2026-05-11",
     "dateModified": "2026-05-11",
@@ -159,6 +174,8 @@
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
@@ -306,14 +323,14 @@
           <div class="post-meta">
             <span class="post-category">Engineering</span>
             <span class="post-read">4 min read</span>
-            <span class="post-date">May 11, 2026</span>
-          
             <span class="post-tags"><span class="post-tag">career</span></span>
           </div>
           <h1 class="post-title">The Art of Incremental Refactoring: Ship Features While Improving Code</h1>
+          <p class="post-byline">By Anthony Smith · <time datetime="2026-05-11">May 11, 2026</time></p>
+          <p class="post-tldr"><strong>TL;DR:</strong> How to refactor production systems without stopping feature work.</p>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80" alt="A construction crew standing over a foundation still filled with exposed rebar" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp" alt="A construction crew standing over a foundation still filled with exposed rebar" width="1600" height="1068" fetchpriority="high">
 
         <div class="post-body">
 <p>Every engineer has been there: you open a file to add a simple feature and discover a tangled mess of legacy code. Your options seem binary — either hold your nose and add to the mess, or propose a massive refactor that will block feature work for weeks. But there's a third path that senior engineers master: <strong>incremental refactoring</strong>. This isn't about being cautious or slow. It's about being strategic. The best engineers I've worked with ship features <em>faster</em> precisely because they know how to improve code quality without stopping the train.</p>
@@ -432,6 +449,10 @@ class APIClient {
 
 <p>The craft of software engineering isn't about writing perfect code the first time — it's about knowing how to evolve imperfect code into better code while continuously delivering value. Master incremental refactoring, and you'll ship faster than the engineers who either ignore code quality or get stuck in endless refactoring cycles. That's the real 10x skill.</p>
         </div>
+
+        <aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>

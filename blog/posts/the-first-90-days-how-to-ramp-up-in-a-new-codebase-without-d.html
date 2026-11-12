@@ -3,10 +3,22 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
   </script>
-
-
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.">
@@ -18,7 +30,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html">
   <meta property="og:title" content="The First 90 Days in a New Codebase — Anthony Smith">
   <meta property="og:description" content="Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+  <meta property="og:image" content="https://anthonysdigital.net/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-07-27">
   <meta property="article:author" content="Anthony Smith">
@@ -27,11 +39,14 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="The First 90 Days in a New Codebase — Anthony Smith">
   <meta name="twitter:description" content="Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+  <meta name="twitter:image" content="https://anthonysdigital.net/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp">
 
   <title>The First 90 Days in a New Codebase — Anthony Smith</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -62,7 +77,7 @@
     "articleSection": "Engineering",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+      "url": "https://anthonysdigital.net/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp"
     },
     "datePublished": "2026-07-27",
     "dateModified": "2026-07-27",
@@ -159,6 +174,8 @@
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
@@ -306,14 +323,14 @@
           <div class="post-meta">
             <span class="post-category">Engineering</span>
             <span class="post-read">3 min read</span>
-            <span class="post-date">July 27, 2026</span>
-          
             <span class="post-tags"><span class="post-tag">career</span></span>
           </div>
           <h1 class="post-title">The First 90 Days: How to Ramp Up in a New Codebase Without Drowning</h1>
+          <p class="post-byline">By Anthony Smith · <time datetime="2026-07-27">July 27, 2026</time></p>
+          <p class="post-tldr"><strong>TL;DR:</strong> Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.</p>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80" alt="The First 90 Days: How to Ramp Up in a New Codebase Without Drowning" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp" alt="The First 90 Days: How to Ramp Up in a New Codebase Without Drowning" width="1600" height="1068" fetchpriority="high">
 
         <div class="post-body">
 <p>You've accepted the offer, finished onboarding, and now you're staring at a codebase with 500k+ lines of code, unfamiliar architecture decisions, and a backlog of tickets labeled "good first issue" that are anything but. I've joined five different engineering teams in my career, and the first 90 days are always the hardest—but they're also the most important. How you ramp up sets the tone for your entire tenure. Here's what actually works.</p>
@@ -422,6 +439,10 @@ export function parseJson&lt;T = unknown&gt;(
 
 <p>The first 90 days are uncomfortable. You'll feel behind. You'll ask obvious questions. You'll accidentally break staging. That's normal. The engineers who ramp up fastest aren't the ones who pretend to know everything—they're the ones who ask good questions, document their learning, and ship incremental value while they're still figuring things out. Three months from now, you'll be the one helping the next new hire navigate the codebase. Make sure you remember what it felt like to be lost.</p>
         </div>
+
+        <aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>
