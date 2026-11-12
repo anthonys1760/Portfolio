@@ -367,13 +367,21 @@ body.hero-themed .btn:hover {
 	box-shadow: 0 10px 30px rgba(75, 255, 165, 0.25);
 }
 
-/* Links */
+/* Links. Accent green is for text links. Filled and outlined buttons are
+   excluded: this hover rule (0,2,2) was beating .case-links a.primary
+   (0,2,1) and painting the label the same green as the fill. iOS leaves
+   :hover applied after a tap, so the button looked empty. */
 body.hero-themed a { color: #cfcfdb; }
-body.hero-themed a:hover { color: #4bffa5; }
-body.hero-themed a.hero-cta,
-body.hero-themed a.hero-cta:hover,
-.hero-cta,
-.hero-cta:hover { color: #071a10; }
+body.hero-themed a:hover:not(:where(
+	.hero-cta,
+	.header-touch,
+	.btn,
+	.primary,
+	.secondary,
+	.skip
+)) { color: #4bffa5; }
+body.hero-themed a.hero-cta:not(.outline):is(:link, :visited, :hover, :focus, :focus-visible, :active),
+.hero-cta:not(.outline):is(:link, :visited, :hover, :focus, :focus-visible, :active) { color: #071a10; }
 
 /* Tightened consistency layer */
 body.hero-themed .section.started .centrize { padding: 120px 0 80px; }
@@ -1030,9 +1038,9 @@ body.hero-themed .section.skills .skills-groups ul.stack-chips li {
 	color: #4bffa5;
 	border: 1px solid rgba(75, 255, 165, 0.45);
 }
-body.hero-themed a.hero-cta.outline,
-body.hero-themed a.hero-cta.outline:hover { color: #4bffa5; }
-.hero-cta.outline:hover {
+body.hero-themed a.hero-cta.outline:is(:link, :visited, :hover, :focus, :focus-visible, :active),
+.hero-cta.outline:is(:link, :visited, :hover, :focus, :focus-visible, :active) { color: #4bffa5; }
+.hero-cta.outline:is(:hover, :focus, :focus-visible, :active) {
 	background: rgba(75, 255, 165, 0.08);
 	border-color: #4bffa5;
 }
