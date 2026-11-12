@@ -158,7 +158,7 @@
 	/*
 		Grained
 	*/
-	if(!reduceMotion && !$('.grained-off').length && typeof grained === 'function'){
+	if(!reduceMotion && !$('.grained-off').length && typeof grained === 'function' && document.getElementById('grained_container')){
 	var grained_options = {
 		'animate': true,
 		'patternWidth': 400,
@@ -340,28 +340,35 @@
 		Initialize Portfolio
 	*/
 	var $container = $('.portfolio-items');
-	$container.imagesLoaded(function() {
-		$container.isotope({
-			percentPosition: true,
-			itemSelector: '.box-item'
+	if (typeof $.fn.imagesLoaded === 'function') {
+		$container.imagesLoaded(function() {
+			if (typeof $.fn.isotope !== 'function') {
+				return;
+			}
+			$container.isotope({
+				percentPosition: true,
+				itemSelector: '.box-item'
+			});
+
+			/*
+				Portfolio items parallax
+			*/
+			if(!reduceMotion && $('.portfolio-items').length && typeof simpleParallax === 'function'){
+				var s_parallax = document.getElementsByClassName('wp-post-image');
+				new simpleParallax(s_parallax);
+			}
+
 		});
-
-		/*
-			Portfolio items parallax
-		*/
-		if(!reduceMotion && $('.portfolio-items').length && typeof simpleParallax === 'function'){
-			var s_parallax = document.getElementsByClassName('wp-post-image');
-			new simpleParallax(s_parallax);
-		}
-
-	});
+	}
 
 	/*
 		Filter items on button click
 	*/
 	$('.filters').on( 'click', '.btn-group', function() {
 		var filterValue = $(this).find('input').val();
-		$container.isotope({ filter: filterValue });
+		if (typeof $container.isotope === 'function') {
+			$container.isotope({ filter: filterValue });
+		}
 		$('.filters .btn-group label').removeClass('glitch-effect');
 		$(this).find('label').addClass('glitch-effect');
 	});
@@ -369,7 +376,7 @@
 	/*
 		Gallery popup
 	*/
-	if(/\.(?:jpg|jpeg|gif|png)$/i.test($('.gallery-item:first a').attr('href'))){
+	if ($.fn.magnificPopup && /\.(?:jpg|jpeg|gif|png)$/i.test($('.gallery-item:first a').attr('href'))){
 		$('.gallery-item a').magnificPopup({
 			gallery: {
 				enabled: true
@@ -383,7 +390,7 @@
 	/*
 		Media popup
 	*/
-	$('.has-popup-media').magnificPopup({
+	if ($.fn.magnificPopup) $('.has-popup-media').magnificPopup({
 		type: 'inline',
 		overflowY: 'auto',
 		closeBtnInside: true,
@@ -393,7 +400,7 @@
 	/*
 		Image popup
 	*/
-	$('.has-popup-image').magnificPopup({
+	if ($.fn.magnificPopup) $('.has-popup-image').magnificPopup({
 		type: 'image',
 		closeOnContentClick: true,
 		mainClass: 'mfp-fade',
@@ -405,7 +412,7 @@
 	/*
 		Video popup
 	*/
-	$('.has-popup-video').magnificPopup({
+	if ($.fn.magnificPopup) $('.has-popup-video').magnificPopup({
 		disableOn: 700,
 		type: 'iframe',
 		iframe: {
@@ -431,7 +438,7 @@
 	/*
 		Music popup
 	*/
-	$('.has-popup-music').magnificPopup({
+	if ($.fn.magnificPopup) $('.has-popup-music').magnificPopup({
 		disableOn: 700,
 		type: 'iframe',
 		removalDelay: 160,
@@ -444,6 +451,7 @@
 		Gallery popup
 	*/
 	$('.has-popup-gallery').on('click', function() {
+        if (!$.fn.magnificPopup) return false;
         var gallery = $(this).attr('href');
     
         $(gallery).magnificPopup({
@@ -569,7 +577,7 @@
 	/*
 		Validate Contact Form
 	*/
-	$('#cform').validate({
+	if ($.fn.validate) $('#cform').validate({
 		rules: {
 			name: {
 				required: true

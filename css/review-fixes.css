@@ -884,7 +884,8 @@ h2.title_inner {
 	display: flex;
 	align-items: center;
 }
-.archive-list li a {
+.archive-list li a,
+.archive-list li .archive-title {
 	display: inline-flex;
 	align-items: center;
 	min-height: 44px;

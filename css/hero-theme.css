@@ -1123,6 +1123,9 @@ body.hero-themed .archive-list li a {
 	transition: color 0.2s ease;
 }
 body.hero-themed .archive-list li a:hover { color: #4bffa5; }
+body.hero-themed .archive-list li .archive-title {
+	color: #e8e8ef;
+}
 .archive-list .cat {
 	color: rgba(255, 255, 255, 0.4);
 	font-size: 12px;
