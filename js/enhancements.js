@@ -18,7 +18,8 @@
 })();
 
 // ── Count-up animation ────────────────────────────────────────────────────────
-// Triggers on .about-stat .num elements when they scroll into view
+// Triggers on .about-stat .num elements when they scroll into view.
+// Only values that start with a number (e.g. "15+") are counted up.
 (function () {
   var statsWrap = document.querySelector('.about-stats');
   if (!statsWrap) return;
@@ -26,19 +27,27 @@
   var nums = statsWrap.querySelectorAll('.num');
   if (!nums.length) return;
 
+  // Authored text is already the final value; skip the count-up entirely.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   function parseNum(text) {
+    if (!/^\s*\d[\d,]*/.test(text)) return null;
     var suffix = text.replace(/[\d,]/g, '').trim();
     var value = parseInt(text.replace(/[^\d]/g, ''), 10);
+    if (isNaN(value)) return null;
     return { value: value, suffix: suffix };
   }
 
   function animateNum(el, target, suffix, duration) {
+    if (isNaN(target)) return;
     var start = null;
     function step(ts) {
       if (!start) start = ts;
       var progress = Math.min((ts - start) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-      el.textContent = Math.floor(eased * target).toLocaleString('en-US') + suffix;
+      var current = Math.floor(eased * target);
+      if (isNaN(current)) return;
+      el.textContent = current.toLocaleString('en-US') + suffix;
       if (progress < 1) requestAnimationFrame(step);
       else el.textContent = target.toLocaleString('en-US') + suffix;
     }
@@ -51,6 +60,7 @@
     fired = true;
     nums.forEach(function (el) {
       var p = parseNum(el.textContent);
+      if (!p || isNaN(p.value)) return;
       animateNum(el, p.value, p.suffix, p.value > 1000 ? 2000 : 1200);
     });
   }, { threshold: 0.4 });
