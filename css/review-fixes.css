@@ -1502,3 +1502,151 @@ body.hero-themed :is(.case-links a.textish, .case-row a.row-link):is(:link, :vis
 	color: #4bffa5 !important;
 	background-color: transparent;
 }
+
+/* Portfolio page only. Index and about keep the shared hero and section rules. */
+body.portfolio {
+	--portfolio-section-gap: 80px;
+	--portfolio-card-gap: 24px;
+}
+body.portfolio .section.started.layout-creative {
+	margin: 0;
+	padding: 0;
+	height: auto !important;
+}
+body.portfolio .section.started .centrize {
+	display: block !important;
+	height: auto !important;
+	padding: 0;
+}
+body.portfolio .section.started .vertical-center,
+body.portfolio .section.started .started-content.started-chat {
+	display: block !important;
+	height: auto;
+}
+body.portfolio .hero-chat-wrap {
+	width: min(1100px, calc(100% - 60px));
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 166px 0 0;
+}
+body.portfolio .hero-name,
+body.portfolio .hero-role,
+body.portfolio .portfolio-support {
+	margin-left: 0;
+	margin-right: 0;
+}
+body.portfolio .hero-role {
+	margin-bottom: 10px;
+}
+body.portfolio .portfolio-support {
+	margin: 0 0 22px;
+	max-width: 40em;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, 0.72);
+}
+body.portfolio .hero-chat-wrap .chat-row:last-child {
+	margin-bottom: 0;
+}
+body.portfolio .section.started + .section {
+	margin-top: 0;
+}
+body.portfolio .section.works {
+	padding: var(--portfolio-section-gap) 0;
+}
+body.portfolio .section.works .content {
+	width: min(1100px, calc(100% - 60px));
+	max-width: 1100px;
+	margin: 0 auto;
+}
+body.portfolio .project-cards {
+	display: flex;
+	flex-direction: column;
+	gap: var(--portfolio-section-gap);
+	margin: 0;
+}
+body.portfolio .case-card {
+	align-items: start;
+}
+body.portfolio .case-shots {
+	justify-content: flex-start;
+	align-self: start;
+}
+body.portfolio .case-shots img,
+body.portfolio .case-row .case-media img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1600 / 1000;
+	object-fit: contain;
+	flex: none;
+}
+body.portfolio .case-rows {
+	align-items: stretch;
+	margin-top: 0;
+	gap: var(--portfolio-card-gap);
+}
+body.portfolio .case-row {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	min-height: 100%;
+}
+body.portfolio .case-row .case-media {
+	flex: none;
+}
+body.portfolio .case-row .row-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 12px;
+	margin-top: auto;
+	padding-top: 4px;
+}
+body.portfolio .security-note,
+body.portfolio .project-ctas {
+	margin-top: 0;
+}
+body.portfolio .project-ctas {
+	gap: var(--portfolio-card-gap);
+}
+body.portfolio .project-archive {
+	margin-top: var(--portfolio-section-gap);
+}
+@media (min-width: 641px) {
+	body.portfolio .hero-chat-wrap {
+		padding-top: 174px;
+	}
+}
+@media (min-width: 721px) {
+	body.portfolio .hero-chat-wrap {
+		width: min(1100px, calc(100% - 100px));
+		padding-top: 194px;
+	}
+	body.portfolio .section.works .content {
+		width: min(1100px, calc(100% - 100px));
+	}
+}
+@media (min-width: 769px) {
+	body.portfolio .hero-chat-wrap {
+		padding-top: 224px;
+	}
+}
+@media (min-width: 1200px) {
+	body.portfolio .hero-chat-wrap,
+	body.portfolio .section.works .content {
+		width: min(1100px, calc(100% - 96px));
+	}
+	body.portfolio .hero-chat-wrap {
+		padding-top: 144px;
+	}
+	body.portfolio .section.works {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+@media (max-width: 720px) {
+	body.portfolio {
+		--portfolio-section-gap: 64px;
+	}
+}
