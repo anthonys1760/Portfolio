@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Terminal prompt, home screen</title>
+  <rect width="64" height="64" fill="#050509"/>
+  <path d="M15 18L33 34L15 50" fill="none" stroke="#4bffa5" stroke-width="6.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39 48H54" fill="none" stroke="#4bffa5" stroke-width="6.8" stroke-linecap="round"/>
+</svg>

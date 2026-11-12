@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <title>Terminal prompt</title>
+  <path fill="#4bffa5" d="M2 0H14V1H15V2H16V14H15V15H14V16H2V15H1V14H0V2H1V1H2Z"/>
+  <path fill="#050509" d="M2 1H14V2H15V14H14V15H2V14H1V2H2Z"/>
+  <path fill="#4bffa5" d="M2 3H4V4H5V5H6V6H7V7H6V8H5V9H4V10H2V8H3V7H4V6H3V5H2Z"/>
+  <path fill="#4bffa5" d="M8 8H14V10H8Z"/>
+</svg>

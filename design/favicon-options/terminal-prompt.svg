@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <title>Terminal prompt</title>
-  <path fill="#4bffa5" d="M2 0H14V1H15V2H16V14H15V15H14V16H2V15H1V14H0V2H1V1H2Z"/>
-  <path fill="#050509" d="M2 1H14V2H15V14H14V15H2V14H1V2H2Z"/>
-  <path fill="#4bffa5" d="M2 3H4V4H5V5H6V6H7V7H6V8H5V9H4V10H2V8H3V7H4V6H3V5H2Z"/>
-  <path fill="#4bffa5" d="M8 8H14V10H8Z"/>
+  <rect x="0.8" y="0.8" width="30.4" height="30.4" rx="6.5" fill="#050509" stroke="#4bffa5" stroke-width="1.5"/>
+  <path d="M7.6 9.4L15.2 16L7.6 22.6" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18.2 22.2H26.4" fill="none" stroke="#4bffa5" stroke-width="3.1" stroke-linecap="round"/>
 </svg>
