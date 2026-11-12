@@ -1351,9 +1351,8 @@ body.hero-themed .top-menu-social { display: none; }
 	body.hero-themed .top-menu-social-link .icon { font-size: 16px; }
 }
 
-/* On mobile, retire the orphaned GitHub soc-box in the footer. The
-   link now lives in the mobile menu; the footer keeps only the
-   Codementor badge, centered. */
+/* On mobile, hide the footer social box. Those links live in the
+   mobile menu, and the remaining copyright stays centered. */
 @media (max-width: 720px) {
 	/* Remove the translateY(50%) offset so hamburger sits inline with the logo */
 	body.hero-themed .header .menu-btn {
