@@ -1696,9 +1696,10 @@ body.hero-themed .skills-group.featured .group-label {
 }
 
 /* ── Back-to-top button ───────────────────────────────────────────────────── */
+/* Sit above the CallCatch launcher (bottom-right, ~48px tall, 12–20px inset). */
 #back-to-top {
 	position: fixed;
-	bottom: 32px;
+	bottom: 84px;
 	right: 32px;
 	z-index: 999;
 	width: 44px;
