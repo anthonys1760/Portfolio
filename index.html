@@ -23,8 +23,8 @@
 
 	<!-- Meta -->
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta name="description" content="Anthony Smith — I ship secure apps. Then I break them. 15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Based in Grand Rapids, Michigan. Open to full-time roles and contract or freelance work.">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan.">
 	<meta name="keywords" content="senior software engineer, application security, api security, react native, typescript, supabase, owasp, grand rapids michigan, portfolio">
 	<meta name="author" content="Anthony Smith">
 	<meta name="robots" content="index, follow">
@@ -32,11 +32,11 @@
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://anthonysdigital.net/">
 	<meta property="og:title" content="Anthony Smith — I ship secure apps. Then I break them.">
-	<meta property="og:description" content="15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Grand Rapids, Michigan.">
+	<meta property="og:description" content="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan.">
 	<meta property="og:image" content="https://anthonysdigital.net/images/og-card.jpg">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Anthony Smith — I ship secure apps. Then I break them.">
-	<meta name="twitter:description" content="15+ years building production systems. Mobile apps, API security testing, and AI features. Grand Rapids, Michigan.">
+	<meta name="twitter:description" content="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan.">
 	<meta name="twitter:image" content="https://anthonysdigital.net/images/og-card.jpg">
 
 	<!-- Title -->
@@ -72,26 +72,61 @@
 
 	<!-- Structured Data: Person schema for Google rich results -->
 	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "Person",
-		"name": "Anthony Smith",
-		"url": "https://anthonysdigital.net",
-		"jobTitle": "I ship secure apps. Then I break them.",
-		"description": "Senior Software Engineer with 15+ years building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10. Open to full-time roles and contract or freelance work.",
-		"email": "mailto:anthony.smith1760@gmail.com",
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Grand Rapids",
-			"addressRegion": "Michigan",
-			"addressCountry": "US"
-		},
-		"sameAs": [
-			"https://github.com/anthonys1760",
-			"https://www.linkedin.com/in/anthony-smith-b1085389"
-		]
-	}
-	</script>
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://anthonysdigital.net/#person",
+      "name": "Anthony Smith",
+      "url": "https://anthonysdigital.net/",
+      "jobTitle": "Senior Software Engineer",
+      "description": "Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work.",
+      "email": "mailto:anthony.smith1760@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Grand Rapids",
+        "addressRegion": "Michigan",
+        "addressCountry": "US"
+      },
+      "knowsAbout": [
+        "Application security",
+        "API security",
+        "OWASP API Security Top 10",
+        "React Native",
+        "TypeScript",
+        "Supabase",
+        "AI and LLM integrations"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/anthony-smith-b1085389",
+        "https://github.com/anthonys1760",
+        "https://dev.to/anthonys1760"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://anthonysdigital.net/#website",
+      "url": "https://anthonysdigital.net/",
+      "name": "Anthony Smith",
+      "description": "Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work.",
+      "publisher": {
+        "@id": "https://anthonysdigital.net/#person"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://rogueriverlabs.dev/#organization",
+      "name": "Rogue River Labs",
+      "url": "https://rogueriverlabs.dev/",
+      "description": "Rogue River Labs builds mobile apps and the APIs behind them, and finds where access checks break.",
+      "founder": {
+        "@id": "https://anthonysdigital.net/#person"
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body class="home hero-themed">

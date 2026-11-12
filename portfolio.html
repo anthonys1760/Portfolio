@@ -23,8 +23,8 @@
 
 	<!-- Meta -->
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta name="description" content="Selected work by Anthony Smith — CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native apps, on-device and multi-provider AI, and API security writing." />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security." />
 	<meta name="keywords" content="anthony smith portfolio, react native projects, ai apps, full stack projects, senior engineer portfolio" />
 	<meta name="author" content="Anthony Smith" />
 	<meta name="robots" content="index, follow">
@@ -39,11 +39,11 @@
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://anthonysdigital.net/portfolio.html">
 	<meta property="og:title" content="Portfolio — Anthony Smith | Selected Work">
-	<meta property="og:description" content="Selected work: React Native apps, AI integrations, and full-stack web platforms.">
+	<meta property="og:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security.">
 	<meta property="og:image" content="https://anthonysdigital.net/images/og-card.jpg">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Portfolio — Anthony Smith | Selected Work">
-	<meta name="twitter:description" content="Selected work: React Native apps, AI integrations, and full-stack web platforms.">
+	<meta name="twitter:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security.">
 	<meta name="twitter:image" content="https://anthonysdigital.net/images/og-card.jpg">
 
 	<!-- Title -->
@@ -89,26 +89,114 @@
 
 	<!-- Structured Data: Person schema for Google rich results -->
 	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "Person",
-		"name": "Anthony Smith",
-		"url": "https://anthonysdigital.net",
-		"jobTitle": "I ship secure apps. Then I break them.",
-		"description": "Senior Software Engineer with 15+ years building production systems. Open to full-time roles and contract or freelance work.",
-		"email": "mailto:anthony.smith1760@gmail.com",
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Grand Rapids",
-			"addressRegion": "Michigan",
-			"addressCountry": "US"
-		},
-		"sameAs": [
-			"https://github.com/anthonys1760",
-			"https://www.linkedin.com/in/anthony-smith-b1085389"
-		]
-	}
-	</script>
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://anthonysdigital.net/#person",
+      "name": "Anthony Smith",
+      "url": "https://anthonysdigital.net/",
+      "jobTitle": "Senior Software Engineer",
+      "description": "Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work.",
+      "email": "mailto:anthony.smith1760@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Grand Rapids",
+        "addressRegion": "Michigan",
+        "addressCountry": "US"
+      },
+      "knowsAbout": [
+        "Application security",
+        "API security",
+        "OWASP API Security Top 10",
+        "React Native",
+        "TypeScript",
+        "Supabase",
+        "AI and LLM integrations"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/anthony-smith-b1085389",
+        "https://github.com/anthonys1760",
+        "https://dev.to/anthonys1760"
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://rogueriverlabs.dev/#organization",
+      "name": "Rogue River Labs",
+      "url": "https://rogueriverlabs.dev/",
+      "description": "Rogue River Labs builds mobile apps and the APIs behind them, and finds where access checks break.",
+      "founder": {
+        "@id": "https://anthonysdigital.net/#person"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://anthonysdigital.net/portfolio.html#work",
+      "name": "Selected work",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 4,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "CastLog",
+            "url": "https://castlogapp.com/",
+            "description": "Voice-first fishing journal. Say what you caught and CastLog attaches the lake, weather, and moon phase, including with no signal. The iOS app is on the App Store, and an Android test is open.",
+            "creator": {
+              "@id": "https://anthonysdigital.net/#person"
+            },
+            "operatingSystem": "iOS, Android"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "Nutrilogix",
+            "url": "https://nutrilogix-ai.com/",
+            "description": "AI nutrition tracking. Take a photo or say what you ate to log calories and macros, and sync workouts from Apple Health and Google Fit. The iOS beta is open. Android is coming soon.",
+            "creator": {
+              "@id": "https://anthonysdigital.net/#person"
+            },
+            "operatingSystem": "iOS"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "VoiceLift",
+            "url": "https://voicelift.app/",
+            "description": "Voice-first workout logging. Say a set, including gym slang, supersets, and partials, and it is logged. Typing is also available. A waitlist is open.",
+            "creator": {
+              "@id": "https://anthonysdigital.net/#person"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "CallCatch",
+            "url": "https://anthonys1760.github.io/callcatch-landing/",
+            "description": "Answers questions on a business website using that business's own pages, does not invent a price, and turns questions it cannot answer into leads. A Rogue River Labs product for HVAC, plumbing, and electrical companies in West Michigan.",
+            "creator": {
+              "@id": "https://anthonysdigital.net/#person"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 
 <body class="portfolio hero-themed">
