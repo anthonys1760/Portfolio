@@ -64,3 +64,4 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 ## Profiles
 - [LinkedIn](https://www.linkedin.com/in/anthony-smith-b1085389)
 - [GitHub](https://github.com/anthonys1760)
+- [Dev.to](https://dev.to/anthonys1760)
