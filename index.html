@@ -3,23 +3,23 @@
 
 <head>
 	<!-- Google Tag Manager -->
-	<script>
-		(function (w, d, s, l, i) {
-			w[l] = w[l] || [];
-			w[l].push({
-				'gtm.start': new Date().getTime(),
-				event: 'gtm.js'
-			});
-			var f = d.getElementsByTagName(s)[0],
-				j = d.createElement(s),
-				dl = l != 'dataLayer' ? '&l=' + l : '';
-			j.async = true;
-			j.src =
-				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
-	</script>
-	<!-- End Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
+  </script>
+  <!-- End Google Tag Manager -->
 
 	<!-- Meta -->
 	<meta charset="UTF-8">
@@ -45,6 +45,7 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preload" as="image" href="images/projects/castlog-devices.webp" fetchpriority="high">
 	<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
@@ -258,7 +259,7 @@
 										</div>
 										<h2>CastLog</h2>
 										<p class="deck">Fishing journal you log by voice. Built solo, offline-first.</p>
-										<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, landscape iPad and phone">
+										<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, landscape iPad and phone" fetchpriority="high">
 										<span class="more">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
 									</a>
 								</div>

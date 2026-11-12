@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
       - name: Generate blog post
         env:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
@@ -54,7 +57,7 @@ jobs:
           set -euo pipefail
           git config user.name "Anthony Smith Blog Bot"
           git config user.email "anthony.smith1760@gmail.com"
-          git add blog/posts/ blog/data/posts.json sitemap.xml
+          git add blog/posts/ blog/data/posts.json blog/index.html blog/images sitemap.xml llms.txt llms-full.txt
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0

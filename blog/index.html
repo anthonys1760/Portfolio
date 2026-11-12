@@ -3,17 +3,23 @@
 
 <head>
 	<!-- Google Tag Manager -->
-	<script>
-		(function (w, d, s, l, i) {
-			w[l] = w[l] || [];
-			w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-			var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-			j.async = true;
-			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
-	</script>
-	<!-- End Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
+  </script>
+  <!-- End Google Tag Manager -->
 
 
 	<meta charset="UTF-8">
@@ -33,7 +39,10 @@
 
 	<title>Field Notes — Anthony Smith</title>
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="preload" as="image" href="/blog/images/how-i-test-for-unsafe-consumption-of-third-party-apis.webp" fetchpriority="high">
 	<link rel="stylesheet" href="/css/basic.css" />
 	<link rel="stylesheet" href="/css/layout.css" />
 	<link rel="stylesheet" href="/css/animate.css" />
@@ -286,7 +295,424 @@
 			<!-- Blog Grid -->
 			<section class="blog-grid-section" style="position:relative;z-index:2;">
 				<div id="blog-grid" class="blog-grid">
-					<div class="blog-loading">Loading posts…</div>
+					<!-- BLOG_POSTS:START -->
+				<a class="blog-card" href="/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-unsafe-consumption-of-third-party-apis.webp" alt="A cashier at a counter using a card reader beside a tablet point-of-sale screen" width="1600" height="1068" fetchpriority="high">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">Treat Upstream Responses as Untrusted Input</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Payment, map, and webhook responses are still input. Validate their types, bounds, and shape before they reach your own logic.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-11-02">November 2, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-shadow-and-zombie-apis.webp" alt="A long empty office hallway lined with glass-walled rooms and no one in sight" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Routes That Never Made the Inventory</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Deprecated and undocumented routes often still answer. How they appear while shipping, and how to keep an inventory that matches what is actually deployed.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-10-05">October 5, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-security-misconfiguration.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-security-misconfiguration.webp" alt="A close-up of a circuit board covered with chips, capacitors, and solder joints" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">A Production Sweep for Security Misconfiguration</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-09-28">September 28, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-server-side-request-forgery.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-server-side-request-forgery.webp" alt="Earth at night seen from orbit, with city lights spread across the dark surface" width="1600" height="1066" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">What I Inspect When an API Fetches a User-Supplied URL</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">A defensive review of avatar, webhook, and import URLs: where the URL is accepted, what the server may fetch, and how allowlists hold up after DNS resolution.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-09-21">September 21, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-unrestricted-resource-consumption.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-unrestricted-resource-consumption.webp" alt="An aerial view of a crowded highway interchange with traffic filling every lane" width="1600" height="1200" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">A Rate-Limit Checklist Beyond the Login Endpoint</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Login limits do not cover search, export, or uploads. A checklist of which routes are expensive, and what a useful limit bounds before the work runs.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-09-14">September 14, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-broken-function-level-authorization.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-broken-function-level-authorization.webp" alt="A hand holding a phone with a smart-lock app next to a lock on a white door" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">When a Valid Session Can Call Admin</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">authorization</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Object access and function access are different checks. This one is a logged-in user calling an admin route that never asks about permission.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-09-07">September 7, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-jwt-validation-flaws.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-jwt-validation-flaws.webp" alt="JWT Validation Mistakes That Still Ship" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">JWT Validation Mistakes That Still Ship</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">jwt</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Decoding a token is not verification. JWT mistakes that still ship, including unsigned tokens, skipped expiry, and algorithm mixups, and the check that should reject each one.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-08-31">August 31, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-mass-assignment-and-excessive-data-exposure.webp" alt="A clipboard holding a short form, a pen, and the corner of a laptop on a desk" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">A Field-Level Checklist for Mass Assignment and Data Exposure</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">authorization</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-08-24">August 24, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html">
+					<img class="blog-card-img" src="/blog/images/aillm-integrations-in-production-apps-what-they-dont-tell-yo.webp" alt="AI/LLM Integrations in Production Apps: What They Don't Tell You" width="1600" height="900" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">AI</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">AI/LLM Integrations in Production Apps: What They Don't Tell You</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">llm</span></div>
+						<p class="blog-card-excerpt">Cost, streaming, prompt versioning, fallbacks, and observability for production LLM features. Token prices change, so the design should not depend on a frozen rate card.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-08-10">August 10, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/how-i-test-for-broken-object-level-authorization.html">
+					<img class="blog-card-img" src="/blog/images/how-i-test-for-broken-object-level-authorization.webp" alt="An apartment building with many separate balconies and windows, each unit its own" width="1600" height="2134" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">Login Is Not Ownership</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">authorization</span><span class="blog-card-tag">owasp</span></div>
+						<p class="blog-card-excerpt">A user who can open invoice 4021 can often open 4022. The ownership mistakes that allow it, including treating a UUID as access control.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-08-01">August 1, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html">
+					<img class="blog-card-img" src="/blog/images/the-engineering-journal-why-writing-about-your-work-makes-yo.webp" alt="The Engineering Journal: Why Writing About Your Work Makes You Better at It" width="1600" height="1202" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Engineering Journal: Why Writing About Your Work Makes You Better at It</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">documentation</span><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">A private log of decisions, debugging notes, and patterns. It is not team documentation, and it is not a substitute for an architecture decision record.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-08-01">August 1, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html">
+					<img class="blog-card-img" src="/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp" alt="The First 90 Days: How to Ramp Up in a New Codebase Without Drowning" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">The First 90 Days: How to Ramp Up in a New Codebase Without Drowning</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">Starting a new engineering role? Here's how to navigate unfamiliar codebases, build credibility, and ship meaningful work in your first three months.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-07-27">July 27, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html">
+					<img class="blog-card-img" src="/blog/images/rest-and-graphql-api-design-lessons-from-building-both-in-pr.webp" alt="Labeled network ports on a patch panel, with ethernet cables plugged into a few of them" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Backend</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">REST and GraphQL API Design: Lessons from Building Both in Production</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">rest</span><span class="blog-card-tag">graphql</span><span class="blog-card-tag">api-security</span></div>
+						<p class="blog-card-excerpt">After shipping both REST and GraphQL APIs to millions of users, here's what actually matters when choosing and designing your API layer.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-07-20">July 20, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html">
+					<img class="blog-card-img" src="/blog/images/postgresql-and-supabase-for-production-apps-what-you-need-to.webp" alt="PostgreSQL and Supabase for Production Apps: What You Need to Know" width="1600" height="1112" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Backend</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">PostgreSQL and Supabase for Production Apps: What You Need to Know</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">postgres</span><span class="blog-card-tag">supabase</span></div>
+						<p class="blog-card-excerpt">Row-level security, connection pooling, indexes, database functions, and the Supabase tradeoffs that show up once an app has real traffic.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-07-13">July 13, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html">
+					<img class="blog-card-img" src="/blog/images/nodejs-backend-patterns-and-performance-what-actually-matter.webp" alt="Node.js Backend Patterns and Performance: What Actually Matters in Production" width="1600" height="898" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Backend</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">Node.js Backend Patterns and Performance: What Actually Matters in Production</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">nodejs</span></div>
+						<p class="blog-card-excerpt">After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-07-06">July 6, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html">
+					<img class="blog-card-img" src="/blog/images/the-pull-request-your-most-underutilized-career-growth-tool.webp" alt="A git commit graph on a screen, with colored branch lines beside commit messages" width="1600" height="1060" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Pull Request: Your Most Underutilized Career Growth Tool</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">Most engineers treat PRs as a formality. Senior engineers use them as a platform to build influence, teach, and accelerate their career.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-06-29">June 29, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html">
+					<img class="blog-card-img" src="/blog/images/the-debugging-mindset-how-senior-engineers-approach-producti.webp" alt="The Debugging Mindset: How Senior Engineers Approach Production Incidents" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Debugging Mindset: How Senior Engineers Approach Production Incidents</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">Production fires reveal who actually knows their systems. Here's how to move from panic-driven debugging to systematic problem-solving.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-06-22">June 22, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html">
+					<img class="blog-card-img" src="/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp" alt="Architecture Decision Records: The Full-Stack Engineer's Secret Weapon" width="1600" height="1060" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">Architecture Decision Records: The Full-Stack Engineer's Secret Weapon</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">documentation</span></div>
+						<p class="blog-card-excerpt">How to write an architecture decision record, where to keep it, and when to skip it, including a frontend state-management example.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-06-15">June 15, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html">
+					<img class="blog-card-img" src="/blog/images/documentation-debt-why-your-team-moves-slower-than-you-think.webp" alt="Documentation Debt: Why Your Team Moves Slower Than You Think" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">Documentation Debt: Why Your Team Moves Slower Than You Think</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">documentation</span></div>
+						<p class="blog-card-excerpt">What a team should write down so other people can change, deploy, and call the system. Architecture decisions live in a separate post.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-06-01">June 1, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html">
+					<img class="blog-card-img" src="/blog/images/cicd-and-github-actions-beyond-the-yaml-copy-paste.webp" alt="CI/CD and GitHub Actions: Beyond the YAML Copy-Paste" width="1600" height="1046" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Backend</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">CI/CD and GitHub Actions: Beyond the YAML Copy-Paste</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">cicd</span></div>
+						<p class="blog-card-excerpt">Most teams treat GitHub Actions like magic YAML they copy from the internet. Here's how to build CI/CD pipelines that actually scale with your team.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-05-18">May 18, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html">
+					<img class="blog-card-img" src="/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp" alt="A construction crew standing over a foundation still filled with exposed rebar" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">4 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Art of Incremental Refactoring: Ship Features While Improving Code</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">How to refactor production systems without stopping feature work. Real strategies for improving code quality incrementally while maintaining velocity.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-05-11">May 11, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html">
+					<img class="blog-card-img" src="/blog/images/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.webp" alt="The Myth of the 10x Engineer: What Actually Makes Someone Senior" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">4 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Myth of the 10x Engineer: What Actually Makes Someone Senior</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">Seniority is risk reduction, communication, and making other people effective. Promotion metrics that only count individual output miss the same point.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-05-04">May 4, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/application-security-and-owasp-best-practices-a-production-e.html">
+					<img class="blog-card-img" src="/blog/images/application-security-and-owasp-best-practices-a-production-e.webp" alt="Application Security and OWASP: Start Here" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Security</span>
+							<span class="blog-card-read">2 min read</span>
+						</div>
+						<h2 class="blog-card-title">Application Security and OWASP: Start Here</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">appsec</span><span class="blog-card-tag">api-security</span><span class="blog-card-tag">owasp</span><span class="blog-card-tag">authorization</span></div>
+						<p class="blog-card-excerpt">A map of the API security posts on this site: authorization, tokens, expensive routes, misconfiguration, forgotten routes, and untrusted partner responses.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-04-27">April 27, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html">
+					<img class="blog-card-img" src="/blog/images/the-code-review-mindset-how-to-give-and-receive-feedback-tha.webp" alt="Two people leaning over one laptop while one points at a list on the screen" width="1600" height="1068" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">career</span></div>
+						<p class="blog-card-excerpt">Code reviews are where good engineers become great ones. Here's how to make them collaborative, educational, and ego-free.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-04-20">April 20, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/react-native-mobile-architecture-lessons-from-production.html">
+					<img class="blog-card-img" src="/blog/images/react-native-mobile-architecture-lessons-from-production.webp" alt="React Native Mobile Architecture: Lessons from Production" width="1600" height="1200" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Mobile</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">React Native Mobile Architecture: Lessons from Production</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">react-native</span></div>
+						<p class="blog-card-excerpt">Module boundaries, native bridges, navigation, and where state should live in a React Native app.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-04-13">April 13, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+				<a class="blog-card" href="/blog/posts/typescript-patterns-for-large-codebases.html">
+					<img class="blog-card-img" src="/blog/images/typescript-patterns-for-large-codebases.webp" alt="TypeScript Patterns for Large Codebases" width="1600" height="1000" loading="lazy" decoding="async">
+					<div class="blog-card-body">
+						<div class="blog-card-meta">
+							<span class="blog-card-category">Engineering</span>
+							<span class="blog-card-read">3 min read</span>
+						</div>
+						<h2 class="blog-card-title">TypeScript Patterns for Large Codebases</h2>
+						<div class="blog-card-tags"><span class="blog-card-tag">typescript</span></div>
+						<p class="blog-card-excerpt">Patterns that keep type safety and editor speed as a TypeScript codebase grows, including branded types, assertions, and module boundaries.</p>
+						<div class="blog-card-footer">
+							<time class="blog-card-date" datetime="2026-04-11">April 11, 2026</time>
+							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+						</div>
+					</div>
+				</a>
+					<!-- BLOG_POSTS:END -->
 				</div>
 			</section>
 
@@ -323,39 +749,53 @@
 	<script>
 		(async function () {
 			const grid = document.getElementById('blog-grid');
+			if (!grid) return;
+			const empty = '<div class="blog-empty"><strong>Coming soon</strong>New posts drop every week. Check back soon.</div>';
 
-			let posts = [];
-			try {
-				const res = await fetch('/blog/data/posts.json?v=' + Date.now());
-				posts = await res.json();
-			} catch (e) {
-				grid.innerHTML = '<div class="blog-empty"><strong>Coming soon</strong>New posts drop every week. Check back soon.</div>';
-				return;
-			}
-
-			if (!posts.length) {
-				grid.innerHTML = '<div class="blog-empty"><strong>Coming soon</strong>New posts drop every week. Check back soon.</div>';
-				return;
-			}
-
-			grid.innerHTML = posts.map(post => `
+			function card(post, index) {
+				const eager = index === 0;
+				const dims = post.imageWidth && post.imageHeight ? ` width="${post.imageWidth}" height="${post.imageHeight}"` : '';
+				const priority = eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"';
+				const tags = (post.tags || []).map(tag => `<span class="blog-card-tag">${tag}</span>`).join('');
+				return `
 				<a class="blog-card" href="/blog/posts/${post.slug}.html">
-					<img class="blog-card-img" src="${post.image}" alt="${post.imageAlt || post.title}" loading="lazy" onerror="this.style.display='none'">
+					<img class="blog-card-img" src="${post.image}" alt="${post.imageAlt || post.title}"${dims}${priority}>
 					<div class="blog-card-body">
 						<div class="blog-card-meta">
 							<span class="blog-card-category">${post.category}</span>
 							<span class="blog-card-read">${post.readTime} read</span>
 						</div>
 						<h2 class="blog-card-title">${post.title}</h2>
-						<div class="blog-card-tags">${(post.tags || []).map(tag => `<span class="blog-card-tag">${tag}</span>`).join('')}</div>
+						<div class="blog-card-tags">${tags}</div>
 						<p class="blog-card-excerpt">${post.excerpt}</p>
 						<div class="blog-card-footer">
-							<span class="blog-card-date">${post.date}</span>
+							<time class="blog-card-date" datetime="${post.dateISO || ''}">${post.date}</time>
 							<span class="blog-card-arrow">Read more<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
 						</div>
 					</div>
-				</a>
-			`).join('');
+				</a>`;
+			}
+
+			// The server-rendered list is the page. This only fills the grid
+			// when that list is missing, so a crawler and a browser see the same posts.
+			if (grid.querySelector('.blog-card')) return;
+
+			let posts = [];
+			try {
+				const res = await fetch('/blog/data/posts.json?v=' + Date.now());
+				if (!res.ok) throw new Error('posts.json');
+				posts = await res.json();
+			} catch (e) {
+				grid.innerHTML = empty;
+				return;
+			}
+
+			if (!posts.length) {
+				grid.innerHTML = empty;
+				return;
+			}
+
+			grid.innerHTML = posts.map(card).join('');
 		})();
 	</script>
 

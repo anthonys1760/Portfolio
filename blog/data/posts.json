@@ -7,7 +7,7 @@
     "readTime": "2 min",
     "date": "November 2, 2026",
     "dateISO": "2026-11-02",
-    "image": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-unsafe-consumption-of-third-party-apis.webp",
     "imageAlt": "A cashier at a counter using a card reader beside a tablet point-of-sale screen",
     "series": "appsec-methodology",
     "topicKey": "third-party",
@@ -15,7 +15,10 @@
       "appsec",
       "api-security",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1556740738-b6a63e27c4df"
   },
   {
     "slug": "how-i-test-for-shadow-and-zombie-apis",
@@ -25,7 +28,7 @@
     "readTime": "2 min",
     "date": "October 5, 2026",
     "dateISO": "2026-10-05",
-    "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-shadow-and-zombie-apis.webp",
     "imageAlt": "A long empty office hallway lined with glass-walled rooms and no one in sight",
     "series": "appsec-methodology",
     "topicKey": "inventory",
@@ -33,7 +36,10 @@
       "appsec",
       "api-security",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1497366754035-f200968a6e72"
   },
   {
     "slug": "how-i-test-for-security-misconfiguration",
@@ -43,7 +49,7 @@
     "readTime": "2 min",
     "date": "September 28, 2026",
     "dateISO": "2026-09-28",
-    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-security-misconfiguration.webp",
     "imageAlt": "A close-up of a circuit board covered with chips, capacitors, and solder joints",
     "series": "appsec-methodology",
     "topicKey": "misconfig",
@@ -51,7 +57,10 @@
       "appsec",
       "api-security",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1518770660439-4636190af475"
   },
   {
     "slug": "how-i-test-for-server-side-request-forgery",
@@ -61,7 +70,7 @@
     "readTime": "2 min",
     "date": "September 21, 2026",
     "dateISO": "2026-09-21",
-    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-server-side-request-forgery.webp",
     "imageAlt": "Earth at night seen from orbit, with city lights spread across the dark surface",
     "series": "appsec-methodology",
     "topicKey": "ssrf",
@@ -69,7 +78,10 @@
       "appsec",
       "api-security",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1066,
+    "unsplashId": "1451187580459-43490279c0fa"
   },
   {
     "slug": "how-i-test-for-unrestricted-resource-consumption",
@@ -79,7 +91,7 @@
     "readTime": "2 min",
     "date": "September 14, 2026",
     "dateISO": "2026-09-14",
-    "image": "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-unrestricted-resource-consumption.webp",
     "imageAlt": "An aerial view of a crowded highway interchange with traffic filling every lane",
     "series": "appsec-methodology",
     "topicKey": "resource-abuse",
@@ -87,7 +99,10 @@
       "appsec",
       "api-security",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "unsplashId": "1465447142348-e9952c393450"
   },
   {
     "slug": "how-i-test-for-broken-function-level-authorization",
@@ -97,7 +112,7 @@
     "readTime": "2 min",
     "date": "September 7, 2026",
     "dateISO": "2026-09-07",
-    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-broken-function-level-authorization.webp",
     "imageAlt": "A hand holding a phone with a smart-lock app next to a lock on a white door",
     "series": "appsec-methodology",
     "topicKey": "bfla",
@@ -106,7 +121,10 @@
       "api-security",
       "authorization",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1558002038-1055907df827"
   },
   {
     "slug": "how-i-test-for-jwt-validation-flaws",
@@ -116,7 +134,7 @@
     "readTime": "2 min",
     "date": "August 31, 2026",
     "dateISO": "2026-08-31",
-    "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-jwt-validation-flaws.webp",
     "series": "appsec-methodology",
     "topicKey": "authn-jwt",
     "tags": [
@@ -124,7 +142,10 @@
       "api-security",
       "jwt",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1614064641938-3bbee52942c7"
   },
   {
     "slug": "how-i-test-for-mass-assignment-and-excessive-data-exposure",
@@ -134,7 +155,7 @@
     "readTime": "2 min",
     "date": "August 24, 2026",
     "dateISO": "2026-08-24",
-    "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-mass-assignment-and-excessive-data-exposure.webp",
     "imageAlt": "A clipboard holding a short form, a pen, and the corner of a laptop on a desk",
     "series": "appsec-methodology",
     "topicKey": "bopla",
@@ -143,7 +164,10 @@
       "api-security",
       "authorization",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1586281380349-632531db7ed4"
   },
   {
     "slug": "aillm-integrations-in-production-apps-what-they-dont-tell-yo",
@@ -153,10 +177,13 @@
     "readTime": "3 min",
     "date": "August 10, 2026",
     "dateISO": "2026-08-10",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
+    "image": "/blog/images/aillm-integrations-in-production-apps-what-they-dont-tell-yo.webp",
     "tags": [
       "llm"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 900,
+    "unsplashId": "1677442136019-21780ecad995"
   },
   {
     "slug": "how-i-test-for-broken-object-level-authorization",
@@ -166,7 +193,7 @@
     "readTime": "2 min",
     "date": "August 1, 2026",
     "dateISO": "2026-08-01",
-    "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
+    "image": "/blog/images/how-i-test-for-broken-object-level-authorization.webp",
     "imageAlt": "An apartment building with many separate balconies and windows, each unit its own",
     "series": "appsec-methodology",
     "topicKey": "bola",
@@ -175,7 +202,10 @@
       "api-security",
       "authorization",
       "owasp"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 2134,
+    "unsplashId": "1545324418-cc1a3fa10c00"
   },
   {
     "slug": "the-engineering-journal-why-writing-about-your-work-makes-yo",
@@ -185,11 +215,14 @@
     "readTime": "2 min",
     "date": "August 1, 2026",
     "dateISO": "2026-08-01",
-    "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80",
+    "image": "/blog/images/the-engineering-journal-why-writing-about-your-work-makes-yo.webp",
     "tags": [
       "documentation",
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1202,
+    "unsplashId": "1455390582262-044cdead277a"
   },
   {
     "slug": "the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d",
@@ -199,10 +232,13 @@
     "readTime": "3 min",
     "date": "July 27, 2026",
     "dateISO": "2026-07-27",
-    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+    "image": "/blog/images/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.webp",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1517694712202-14dd9538aa97"
   },
   {
     "slug": "rest-and-graphql-api-design-lessons-from-building-both-in-pr",
@@ -212,13 +248,16 @@
     "readTime": "3 min",
     "date": "July 20, 2026",
     "dateISO": "2026-07-20",
-    "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200&q=80",
+    "image": "/blog/images/rest-and-graphql-api-design-lessons-from-building-both-in-pr.webp",
     "imageAlt": "Labeled network ports on a patch panel, with ethernet cables plugged into a few of them",
     "tags": [
       "rest",
       "graphql",
       "api-security"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1544197150-b99a580bb7a8"
   },
   {
     "slug": "postgresql-and-supabase-for-production-apps-what-you-need-to",
@@ -228,11 +267,14 @@
     "readTime": "3 min",
     "date": "July 13, 2026",
     "dateISO": "2026-07-13",
-    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80",
+    "image": "/blog/images/postgresql-and-supabase-for-production-apps-what-you-need-to.webp",
     "tags": [
       "postgres",
       "supabase"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1112,
+    "unsplashId": "1544383835-bda2bc66a55d"
   },
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
@@ -242,10 +284,13 @@
     "readTime": "3 min",
     "date": "July 6, 2026",
     "dateISO": "2026-07-06",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    "image": "/blog/images/nodejs-backend-patterns-and-performance-what-actually-matter.webp",
     "tags": [
       "nodejs"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 898,
+    "unsplashId": "1558494949-ef010cbdcc31"
   },
   {
     "slug": "the-pull-request-your-most-underutilized-career-growth-tool",
@@ -255,11 +300,14 @@
     "readTime": "3 min",
     "date": "June 29, 2026",
     "dateISO": "2026-06-29",
-    "image": "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=1200&q=80",
+    "image": "/blog/images/the-pull-request-your-most-underutilized-career-growth-tool.webp",
     "imageAlt": "A git commit graph on a screen, with colored branch lines beside commit messages",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1060,
+    "unsplashId": "1556075798-4825dfaaf498"
   },
   {
     "slug": "the-debugging-mindset-how-senior-engineers-approach-producti",
@@ -269,10 +317,13 @@
     "readTime": "3 min",
     "date": "June 22, 2026",
     "dateISO": "2026-06-22",
-    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    "image": "/blog/images/the-debugging-mindset-how-senior-engineers-approach-producti.webp",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1551288049-bebda4e38f71"
   },
   {
     "slug": "architecture-decision-records-the-full-stack-engineers-secre",
@@ -282,10 +333,13 @@
     "readTime": "2 min",
     "date": "June 15, 2026",
     "dateISO": "2026-06-15",
-    "image": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80",
+    "image": "/blog/images/architecture-decision-records-the-full-stack-engineers-secre.webp",
     "tags": [
       "documentation"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1060,
+    "unsplashId": "1507925921958-8a62f3d1a50d"
   },
   {
     "slug": "documentation-debt-why-your-team-moves-slower-than-you-think",
@@ -295,10 +349,13 @@
     "readTime": "2 min",
     "date": "June 1, 2026",
     "dateISO": "2026-06-01",
-    "image": "https://images.unsplash.com/photo-1456324463128-7ff6903988d8?w=1200&q=80",
+    "image": "/blog/images/documentation-debt-why-your-team-moves-slower-than-you-think.webp",
     "tags": [
       "documentation"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1456324463128-7ff6903988d8"
   },
   {
     "slug": "cicd-and-github-actions-beyond-the-yaml-copy-paste",
@@ -308,10 +365,13 @@
     "readTime": "3 min",
     "date": "May 18, 2026",
     "dateISO": "2026-05-18",
-    "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80",
+    "image": "/blog/images/cicd-and-github-actions-beyond-the-yaml-copy-paste.webp",
     "tags": [
       "cicd"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1046,
+    "unsplashId": "1618401471353-b98afee0b2eb"
   },
   {
     "slug": "the-art-of-incremental-refactoring-ship-features-while-impro",
@@ -321,11 +381,14 @@
     "readTime": "4 min",
     "date": "May 11, 2026",
     "dateISO": "2026-05-11",
-    "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
+    "image": "/blog/images/the-art-of-incremental-refactoring-ship-features-while-impro.webp",
     "imageAlt": "A construction crew standing over a foundation still filled with exposed rebar",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1541888946425-d81bb19240f5"
   },
   {
     "slug": "the-myth-of-the-10x-engineer-what-actually-makes-someone-sen",
@@ -335,10 +398,13 @@
     "readTime": "4 min",
     "date": "May 4, 2026",
     "dateISO": "2026-05-04",
-    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+    "image": "/blog/images/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.webp",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1522071820081-009f0129c71c"
   },
   {
     "slug": "application-security-and-owasp-best-practices-a-production-e",
@@ -348,13 +414,16 @@
     "readTime": "2 min",
     "date": "April 27, 2026",
     "dateISO": "2026-04-27",
-    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80",
+    "image": "/blog/images/application-security-and-owasp-best-practices-a-production-e.webp",
     "tags": [
       "appsec",
       "api-security",
       "owasp",
       "authorization"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1555949963-aa79dcee981c"
   },
   {
     "slug": "the-code-review-mindset-how-to-give-and-receive-feedback-tha",
@@ -364,11 +433,14 @@
     "readTime": "3 min",
     "date": "April 20, 2026",
     "dateISO": "2026-04-20",
-    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80",
+    "image": "/blog/images/the-code-review-mindset-how-to-give-and-receive-feedback-tha.webp",
     "imageAlt": "Two people leaning over one laptop while one points at a list on the screen",
     "tags": [
       "career"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1531482615713-2afd69097998"
   },
   {
     "slug": "react-native-mobile-architecture-lessons-from-production",
@@ -378,10 +450,13 @@
     "readTime": "3 min",
     "date": "April 13, 2026",
     "dateISO": "2026-04-13",
-    "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80",
+    "image": "/blog/images/react-native-mobile-architecture-lessons-from-production.webp",
     "tags": [
       "react-native"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "unsplashId": "1551650975-87deedd944c3"
   },
   {
     "slug": "typescript-patterns-for-large-codebases",
@@ -391,9 +466,12 @@
     "readTime": "3 min",
     "date": "April 11, 2026",
     "dateISO": "2026-04-11",
-    "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&q=80",
+    "image": "/blog/images/typescript-patterns-for-large-codebases.webp",
     "tags": [
       "typescript"
-    ]
+    ],
+    "imageWidth": 1600,
+    "imageHeight": 1000,
+    "unsplashId": "1516116216624-53e697fedbea"
   }
 ]

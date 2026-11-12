@@ -3,10 +3,22 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-52FVS76');
+    window.dataLayer = window.dataLayer || [];
+    function loadGoogleTagManager() {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-52FVS76');
+    }
+    window.addEventListener('load', loadGoogleTagManager, { once: true });
   </script>
-
-
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
@@ -18,7 +30,7 @@
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html">
   <meta property="og:title" content="Security Misconfiguration Sweep — Anthony Smith">
   <meta property="og:description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80">
+  <meta property="og:image" content="https://anthonysdigital.net/blog/images/how-i-test-for-security-misconfiguration.webp">
   <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-09-28">
   <meta property="article:author" content="Anthony Smith">
@@ -27,11 +39,14 @@
   <meta name="twitter:site" content="@anthonys1760">
   <meta name="twitter:title" content="Security Misconfiguration Sweep — Anthony Smith">
   <meta name="twitter:description" content="A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80">
+  <meta name="twitter:image" content="https://anthonysdigital.net/blog/images/how-i-test-for-security-misconfiguration.webp">
 
   <title>Security Misconfiguration Sweep — Anthony Smith</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/blog/images/how-i-test-for-security-misconfiguration.webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/basic.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/animate.css">
@@ -62,7 +77,7 @@
     "articleSection": "Security",
     "image": {
       "@type": "ImageObject",
-      "url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80"
+      "url": "https://anthonysdigital.net/blog/images/how-i-test-for-security-misconfiguration.webp"
     },
     "datePublished": "2026-09-28",
     "dateModified": "2026-11-11",
@@ -159,6 +174,8 @@
     }
     .post-hero-img {
       width: 100%;
+      height: auto;
+      background: #111;
       border-radius: 12px;
       margin-bottom: 48px;
       max-height: 420px;
@@ -308,14 +325,14 @@
           <div class="post-meta">
             <span class="post-category">Security</span>
             <span class="post-read">2 min read</span>
-            <span class="post-date">September 28, 2026</span>
-          
             <span class="post-tags"><span class="post-tag">appsec</span><span class="post-tag">api-security</span><span class="post-tag">owasp</span></span>
           </div>
           <h1 class="post-title">A Production Sweep for Security Misconfiguration</h1>
+          <p class="post-byline">By Anthony Smith · <time datetime="2026-09-28">September 28, 2026</time></p>
+          <p class="post-tldr"><strong>TL;DR:</strong> A release sweep for debug routes, open CORS, default credentials, verbose errors, unused HTTP methods, and headers that give away the stack.</p>
         </header>
 
-        <img class="post-hero-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80" alt="A close-up of a circuit board covered with chips, capacitors, and solder joints" onerror="this.style.display='none'">
+        <img class="post-hero-img" src="/blog/images/how-i-test-for-security-misconfiguration.webp" alt="A close-up of a circuit board covered with chips, capacitors, and solder joints" width="1600" height="1068" fetchpriority="high">
 
         <div class="post-body">
 <p>Run this before a release. The questions are about what is still turned on: debug routes, CORS, default credentials, verbose errors, unused verbs, and headers that describe the stack. None of these need a novel bug. They are leftovers.</p>
@@ -350,6 +367,10 @@
 <a href="/blog/posts/how-i-test-for-shadow-and-zombie-apis.html">Next: The Routes That Never Made the Inventory</a>
 </nav>
         </div>
+
+        <aside class="post-author">
+          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+        </aside>
 
         <nav class="post-footer-nav">
           <a href="/blog/">&larr; Back to all posts</a>
