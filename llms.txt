@@ -1,0 +1,51 @@
+# Anthony Smith
+
+> Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Open to full-time roles and contract or freelance work. Based in Grand Rapids, Michigan, US.
+
+Knows about application security, API security, the OWASP API Security Top 10, React Native, TypeScript, Supabase, and AI and LLM integrations.
+
+## About
+- [About](https://anthonysdigital.net/about.html): Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Grand Rapids, Michigan.
+
+## Contact
+- [Contact](https://anthonysdigital.net/contact.html): Open to full-time roles and contract or freelance work. Grand Rapids, Michigan.
+
+## Products
+- [CastLog](https://castlogapp.com/): Voice-first fishing journal. Say the catch and it logs the lake, weather, and moon phase, including offline. iOS is on the App Store, and an Android test is open.
+- [Nutrilogix](https://nutrilogix-ai.com/): AI nutrition tracking. Snap a plate or say what you ate to log calories and macros, and sync workouts from Apple Health. The iOS beta is open.
+- [VoiceLift](https://voicelift.app/): Voice-first workout logging. Say a set and it is logged, including gym slang, supersets, and partials. A waitlist is open.
+- [CallCatch](https://anthonys1760.github.io/callcatch-landing/): Answers from a business's own website, does not invent a price, and turns unanswered questions into leads. A Rogue River Labs product for HVAC, plumbing, and electrical companies.
+- [Rogue River Labs](https://rogueriverlabs.dev/): Builds mobile apps and the APIs behind them, and finds where access checks break. Founded by Anthony Smith.
+- [Portfolio](https://anthonysdigital.net/portfolio.html): Selected work, including CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs.
+
+## API security writing
+- [Treat Upstream Responses as Untrusted Input](https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html)
+- [The Routes That Never Made the Inventory](https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html)
+- [A Production Sweep for Security Misconfiguration](https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html)
+- [What I Inspect When an API Fetches a User-Supplied URL](https://anthonysdigital.net/blog/posts/how-i-test-for-server-side-request-forgery.html)
+- [A Rate-Limit Checklist Beyond the Login Endpoint](https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html)
+- [When a Valid Session Can Call Admin](https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html)
+- [JWT Validation Mistakes That Still Ship](https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html)
+- [A Field-Level Checklist for Mass Assignment and Data Exposure](https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html)
+- [AI/LLM Integrations in Production Apps: What They Don't Tell You](https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html)
+- [Login Is Not Ownership](https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html)
+- [The Engineering Journal: Why Writing About Your Work Makes You Better at It](https://anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html)
+- [The First 90 Days: How to Ramp Up in a New Codebase Without Drowning](https://anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html)
+- [REST and GraphQL API Design: Lessons from Building Both in Production](https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html)
+- [PostgreSQL and Supabase for Production Apps: What You Need to Know](https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html)
+- [Node.js Backend Patterns and Performance: What Actually Matters in Production](https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html)
+- [The Pull Request: Your Most Underutilized Career Growth Tool](https://anthonysdigital.net/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html)
+- [The Debugging Mindset: How Senior Engineers Approach Production Incidents](https://anthonysdigital.net/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html)
+- [Architecture Decision Records: The Full-Stack Engineer's Secret Weapon](https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html)
+- [Documentation Debt: Why Your Team Moves Slower Than You Think](https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html)
+- [CI/CD and GitHub Actions: Beyond the YAML Copy-Paste](https://anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html)
+- [The Art of Incremental Refactoring: Ship Features While Improving Code](https://anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html)
+- [The Myth of the 10x Engineer: What Actually Makes Someone Senior](https://anthonysdigital.net/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html)
+- [Application Security and OWASP: Start Here](https://anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html)
+- [The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code](https://anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html)
+- [React Native Mobile Architecture: Lessons from Production](https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html)
+- [TypeScript Patterns for Large Codebases](https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html)
+
+## Profiles
+- [LinkedIn](https://www.linkedin.com/in/anthony-smith-b1085389)
+- [GitHub](https://github.com/anthonys1760)

@@ -8,7 +8,7 @@
 
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta name="keywords" content="mass assignment, excessive data exposure, API security, broken object property level authorization, BOPLA, data over-exposure, parameter binding">
   <meta name="author" content="Anthony Smith">
@@ -16,20 +16,20 @@
   <link rel="canonical" href="https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html">
-  <meta property="og:title" content="A Field-Level Checklist for Mass Assignment and Data Exposure — Anthony Smith">
+  <meta property="og:title" content="Mass Assignment and Data Exposure — Anthony Smith">
   <meta property="og:description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80">
-  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="2026-08-24">
   <meta property="article:author" content="Anthony Smith">
   <meta property="article:section" content="Security">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="A Field-Level Checklist for Mass Assignment and Data Exposure">
+  <meta name="twitter:title" content="Mass Assignment and Data Exposure — Anthony Smith">
   <meta name="twitter:description" content="Run this on one endpoint: extra fields in the body, a missing write allowlist, and a response that returns the whole record.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80">
 
-  <title>A Field-Level Checklist for Mass Assignment and Data Exposure — Anthony Smith</title>
+  <title>Mass Assignment and Data Exposure — Anthony Smith</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -67,15 +67,10 @@
     "datePublished": "2026-08-24",
     "dateModified": "2026-11-11",
     "author": {
-      "@type": "Person",
-      "name": "Anthony Smith",
-      "url": "https://anthonysdigital.net",
-      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+      "@id": "https://anthonysdigital.net/#person"
     },
     "publisher": {
-      "@type": "Person",
-      "name": "Anthony Smith",
-      "url": "https://anthonysdigital.net"
+      "@id": "https://anthonysdigital.net/#person"
     },
     "url": "https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html",
     "isPartOf": {
@@ -85,6 +80,33 @@
     }
   }
   </script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://anthonysdigital.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Field Notes",
+      "item": "https://anthonysdigital.net/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "A Field-Level Checklist for Mass Assignment and Data Exposure",
+      "item": "https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html"
+    }
+  ]
+}
+</script>
 
   <style>
     .post-wrap {

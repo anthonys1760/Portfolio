@@ -1,0 +1,2524 @@
+# Treat Upstream Responses as Untrusted Input
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-unsafe-consumption-of-third-party-apis.html
+Date: 2026-11-02
+
+A payment provider, a maps API, or a webhook is on your side of the diagram. The response still has to be validated like user input. A transaction id, a set of coordinates, or a block of customer details will be stored, rendered, or built into a query. The TLS session and the vendor's reputation do not do that validation.
+
+Why an upstream response is still input
+
+Integration code is reviewed for the happy path: retries, error logs, the fields the documentation promised. Tests stub the partner with a tidy JSON object, so a defensive parser never runs in CI. A signature proves the bytes came from the holder of a key. It does not prove the values fit your types, your lengths, or your business rules. The partner can have a bug, a bad deploy, or a compromised account, and the signature can still be valid.
+
+A service escapes comments that users type into a form, then inserts HTML that a content API returned. The form field was treated as untrusted. The partner payload was treated as content. The same split shows up when internal queries are parameterized, but a string from an analytics response is concatenated into a query or a file path.
+
+Follow the field
+
+List every external API, including services owned by another team whose deploys you do not control. For each response field, write down where it goes: a log line, a column, a template, a redirect, a file path, a generated document. Then decide the type, the bounds, and the format before that value is allowed into application logic.
+
+If the contract says "an integer in a range," a string, a negative, or a missing field needs a handled failure, not a guess. When the partner times out, returns an error, or sends an empty body, fail closed. Do not fill the gap with a default that came from the caller. If you cache the response, the checks apply when the cache is written and still apply when it is read, so a stale payload cannot skip a rule you added later.
+
+Logs and error pages need the same pass. Tokens, keys, and personal data from the partner response should be redacted before they are stored or shown.
+
+Parse into a known shape
+
+function parsePaymentResponse(response) {
+  const schema = {
+    transactionId: { type: 'string', maxLength: 64, pattern: /^[a-zA-Z0-9_-]+$/ },
+    amount: { type: 'number', min: 0, max: 1000000 },
+    status: { type: 'string', enum: ['pending', 'completed', 'failed'] }
+  };
+
+  for (const [field, rules] of Object.entries(schema)) {
+    const value = response[field];
+
+    if (typeof value !== rules.type) {
+      throw new ValidationError(`Invalid type for ${field}`);
+    }
+
+    if (rules.maxLength && value.length > rules.maxLength) {
+      throw new ValidationError(`Field ${field} exceeds max length`);
+    }
+
+    if (rules.pattern && !rules.pattern.test(value)) {
+      throw new ValidationError(`Field ${field} format invalid`);
+    }
+
+    if (rules.enum && !rules.enum.includes(value)) {
+      throw new ValidationError(`Field ${field} not in allowed values`);
+    }
+  }
+
+  return response;
+}
+
+The schema is the point, not the vendor name. Your checks become the weakest partner you trust without a parser. Unexpected types and oversized values should fail that parser the same way a bad form field would. Partner endpoints that never made your own inventory still count, which is The Routes That Never Made the Inventory.
+
+# The Routes That Never Made the Inventory
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-shadow-and-zombie-apis.html
+Date: 2026-10-05
+
+/api/v2/users requires a token. /api/v1/users still returns the same records and does not. The v1 route was the previous contract. Shipping v2 did not remove it. That responding leftover is a zombie API. A route that was never written down, and still answers, is a shadow API.
+
+Both exist because shipping is append-only unless someone makes removal a step. A feature branch adds a path. A rewrite adds a version. An internal admin route is left in place because a load balancer was supposed to hide it. Documentation is updated later, or once, and then the code moves on. Gateways route traffic. They do not, by themselves, produce a list of every process behind them.
+
+How a route falls out of the inventory
+
+The people who added a path know that path. They do not automatically know a path from another team or from a previous version. Code review looks at the diff, not at a listener that was already deployed. A deprecation note in a doc is not the same as a route that returns 410 and is gone from the gateway. If the old code is deployed and the path resolves, it is still part of the product.
+
+Old hostnames, acquired products, and renamed services linger in DNS the same way. Debug and health routes that were meant to stay internal show up here too. Those settings are the sweep in A Production Sweep for Security Misconfiguration.
+
+What a living inventory has to match
+
+Build the list from what responds, not only from the OpenAPI file. Capture traffic from ordinary use, then compare that set with the spec and the gateway. A path that responds and is undocumented is shadow. A path marked deprecated that still accepts requests is a zombie.
+
+For each of those, record who it is for, whether it authenticates, whether it is rate limited, and whether it is supposed to exist. Old versions often missed the controls that were added later. An export or admin function on a forgotten path is the same authorization problem as on a current path, covered in When a Valid Session Can Call Admin.
+
+Versioning is not isolation. Deploying /v2/ does not turn off /v1/. Decommissioning means taking the route off the gateway, refusing the traffic, and deleting the deployed handler. A document that says "deprecated" does not do that.
+
+Tie the inventory to deploy, so a route has to be listed to be routed, and a retired route has to be removed in the same change that replaces it. Security review can only cover the surface someone can name.
+
+# A Production Sweep for Security Misconfiguration
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-security-misconfiguration.html
+Date: 2026-09-28
+
+Run this before a release. The questions are about what is still turned on: debug routes, CORS, default credentials, verbose errors, unused verbs, and headers that describe the stack. None of these need a novel bug. They are leftovers.
+
+Debug and admin routes
+
+Walk the app and record every path the client calls. Then look for routes that are not linked: /admin, /debug, /internal, health checks, and /.well-known. A health check that prints versions, or an admin page that assumes a firewall, is still part of the surface if the public host answers. Routes that were never documented are the subject of The Routes That Never Made the Inventory.
+
+Verbose errors
+
+Send malformed JSON, omit a required field, and send an overly long value. The production response should be generic. Stack traces, file paths, SQL, and framework versions are configuration, not helpful UX. The same pass applies to X-Powered-By and Server headers that advertise the stack.
+
+CORS and security headers
+
+Note Access-Control-Allow-Origin. An allow-any origin is a setting, not a default you have to live with. Confirm Strict-Transport-Security and Content-Security-Policy are present and match what you meant to ship. Headers are easy to drift when someone later "fixes" a client by loosening them.
+
+Default credentials and leaked config
+
+Try the sample usernames and passwords that shipped with the framework or the tutorial you copied. Request paths that often hold config, such as /.env and /config.json. Example files and environment dumps are misconfiguration when they are reachable.
+
+Verbs you do not implement
+
+On a path you do support, try OPTIONS, TRACE, PUT, and DELETE. A method that should not exist sometimes still dispatches. Function-level checks for the verbs you do intend are covered in When a Valid Session Can Call Admin.
+
+Defaults that moved
+
+Configuration is not finished at the first deploy. A framework default can change between major versions, so a setting that was safe until you upgraded now needs an explicit choice. Re-run this sweep after a major dependency bump, not only when the app is new. Third-party libraries with insecure defaults belong in the same pass. How those dependencies' responses are handled is separate, in Treat Upstream Responses as Untrusted Input.
+
+Each item is small, which is why it gets deferred. Together they are the surface you did not mean to publish.
+
+# What I Inspect When an API Fetches a User-Supplied URL
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-server-side-request-forgery.html
+Date: 2026-09-21
+
+An avatar URL, a webhook callback, or an import address is a normal feature. The product asks the user where to fetch something, and the server fetches it. The review question is not whether that feature is useful. It is where the URL is accepted, what the server is willing to request, and how those rules hold after DNS resolution and redirects.
+
+This is a defensive walkthrough. It does not describe how to aim a server at an internal target.
+
+Where a URL enters
+
+List every field, header, or body property the server treats as a URL, URI, or host. Webhook endpoints and image fetchers are the obvious ones. Also look at import jobs, PDF or HTML renderers that load remote stylesheets, and parsers that resolve external references. If the server will open a connection because of that value, it belongs on the list.
+
+What the server is allowed to fetch
+
+Decide the schemes and hosts before any client is created. HTTP and HTTPS are usually the whole list. An allowlist of partner or CDN hosts beats a denylist of bad ones, because the dangerous destinations are "everything else," including loopback, private ranges, and link-local addresses used by cloud metadata services.
+
+Validate the URL, resolve the name, and validate the address you actually got. A check that only looks at the string can disagree with the connection the client opens. Disable redirect following, or apply the same allowlist to every hop. A permitted host that returns a redirect should not become a tunnel to some other address. If an allowed host can store user-controlled content or redirect anywhere, the allowlist is only as strict as that host.
+
+Check the destination before the request and again after resolution. The name in the URL and the address that name becomes are both part of the decision. Treat the network around the server as reachable, not as an authorization boundary.
+
+A check that fails closed
+
+const ALLOWED_HOSTS = ['cdn.example.com', 'api.partner.com'];
+const BLOCKED_RANGES = ['127.0.0.0/8', '169.254.0.0/16', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
+
+function isUrlSafe(url) {
+  const parsed = new URL(url);
+  if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+  if (!ALLOWED_HOSTS.includes(parsed.hostname)) return false;
+  const resolved = dns.resolve(parsed.hostname);
+  if (BLOCKED_RANGES.some(range => ipInRange(resolved, range))) return false;
+  return true;
+}
+
+The client should use that result. It should not follow redirects on its own, and it should not speak schemes other than the ones you allowed. Log the host you resolved, not a raw copy of every internal response body. Unexpected schemes, private addresses, and redirects are reasons to refuse the fetch, not details to return to the caller.
+
+Features like this stay in the product because webhooks and remote content are ordinary. The control belongs next to the fetch, reviewed whenever a new URL field appears. Forgotten routes that still perform a fetch are an inventory problem, covered in The Routes That Never Made the Inventory.
+
+# A Rate-Limit Checklist Beyond the Login Endpoint
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-unrestricted-resource-consumption.html
+Date: 2026-09-14
+
+Search, export, and upload are where the bill shows up. A search that scans a large table, an export that builds a PDF in memory, or an image route that resizes a large upload on every request can be unbounded even when login is tightly limited. Rate limiting that exists only to slow password guesses does not cover those routes.
+
+Which routes are expensive
+
+List operations that do more than a cheap indexed read. External calls, heavy computation, storage, and large result sets qualify. Include public routes. Rate-limit middleware is often skipped when there is no session, and those routes are still work.
+
+Does a limit exist, and does it run first
+
+For each expensive route, check for a per-user or per-key limit, not only a per-IP limit. Then check whether the limit is evaluated before the upload is processed, the query runs, or the export starts. A counter that increments after the work still pays the cost.
+
+A ceiling of many requests per minute is not enough if each request is itself unbounded. Pagination, a maximum upload size, a timeout on outbound calls, and a cap on search complexity limit the work inside one request. Request count does not.
+
+What the limit should bound
+
+IP limits do not contain an authenticated caller. One valid account can spend CPU, memory, and storage without looking like a flood from many addresses. Key the limit on the user or API key, and size it to what that caller is allowed to consume. A free account and a large customer are not the same budget. The budget is CPU, memory, payload size, and downstream cost, not only "how many HTTP calls."
+
+Work that starts after the response
+
+Jobs, webhook deliveries, and other background work triggered by the request often bypass the HTTP limiter because the response already returned. Count that work against the same identity, or the limit is a number on the wrong timeline.
+
+// Apply rate limit before expensive operation
+const rateLimitKey = `export:${userId}`;
+const limit = await rateLimiter.check(rateLimitKey, {
+  max: 10,
+  window: '1h'
+});
+
+if (!limit.allowed) {
+  return res.status(429).json({
+    error: 'Rate limit exceeded',
+    retryAfter: limit.resetAt
+  });
+}
+
+// Only now perform the expensive export
+const report = await generateReport(userId, params);
+
+When this is missing, the API still matches its design. It gets expensive only when a route is used harder than the polite case the load test ran. Adding servers hides that. A 429 with Retry-After, applied before the work, makes the cost predictable. Login-specific limits are only one slice of this, which is why the series map points here from Application Security and OWASP: Start Here.
+
+# When a Valid Session Can Call Admin
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-broken-function-level-authorization.html
+Date: 2026-09-07
+
+Object access asks whether this user may have this record. That question is Login Is Not Ownership. Function access asks something else: may this user call this operation at all?
+
+A logged-in user opens POST /api/users or DELETE /api/users/:id because the route exists. Authentication middleware already ran. The handler never asks whether this session is allowed to create users or delete them. The UI never showed the button, so the path looks unused. The route still runs.
+
+What "protected" often means
+
+A decorator, a guard, or a middleware checks for a session and the code reads as protected. The missing piece is the comparison between this user's permissions and what the function requires. Admin, export, approval, configuration, and other people's resources are the functions to list. Try each one with a low-privilege session, and try the verbs the screen does not use. A 200 or 201 where you expected 403 means the action ran. Some handlers fail open and return a generic success after doing the privileged work.
+
+Watch for a role field in the body or query that the server treats as authority rather than as a label. Watch for a pair of routes that disagree: GET /api/users limited to admins, GET /api/users/export returning the same data without that check. Also call the function with no session at all. A missing user is sometimes treated as "nothing to check" instead of as anonymous.
+
+A role is not a permission
+
+Checking admin couples every sensitive function to a job title. A new moderator or support role means finding every admin branch. It also hides bugs: a tester who only uses an admin account will never notice that support can call the same function. Name the permission the function needs, such as users:create or can_delete_users, and test with the lowest privilege that should be refused.
+
+One module that maps functions to permissions
+
+Authentication can sit at the edge of the request. Authorization has to sit on the decision. Put the required permission on the route and enforce it in one helper, so a new admin function cannot ship with only a login check.
+
+// Authorization middleware that checks specific permissions
+function requirePermission(permission) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    if (!req.user.permissions.includes(permission)) {
+      return res.status(403).json({ error: 'Insufficient permissions' });
+    }
+    next();
+  };
+}
+
+// Apply to sensitive routes
+app.post('/api/users',
+  requirePermission('users:create'),
+  createUserHandler
+);
+
+app.delete('/api/users/:id',
+  requirePermission('users:delete'),
+  deleteUserHandler
+);
+
+Frameworks hand you the session check. The permission map is yours. If it is missing, the happy path still works, because the people using the admin screen really are admins.
+
+# JWT Validation Mistakes That Still Ship
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-jwt-validation-flaws.html
+Date: 2026-08-31
+
+Decoding a JWT is not the same as verifying it. Any string of three base64 segments separated by periods will decode. No secret is required. An API that decodes the payload, reads sub or user_id, and loads that user has not checked that this system signed the token.
+
+Libraries make that split easy. Decode works in development. The claims look right. Nothing errors. Verification is a different function, and it is easy to never call it. The mistakes below are the ones that still ship, with the check that should reject each one.
+
+Trusting claims from an unverified payload
+
+The signature exists so the payload cannot be swapped. If the application never compares it to the secret or public key, a change to sub, email, or a role claim is just another decoded field. Do not read claims until verification has succeeded. Until then the caller controls the whole token body.
+
+A token that parses is not a token you can trust. Parsing succeeds when the signature is wrong, missing, or never checked.
+
+Honoring alg: none
+
+Some libraries skip verification when the header says none, including a token that keeps the trailing period and drops the signature. The defensive check is to pass an explicit allowlist of algorithms, such as HS256 only, and to reject none. Do not let the token choose the algorithm from a default that includes unsigned tokens.
+
+Using one key for two algorithms
+
+If the API signs with RS256, a confused verifier may accept a token whose header says HS256 and whose signature was produced with the public key as an HMAC secret. The server then uses the same key material for two different meanings. Pin the algorithm you issue. Do not verify HMAC with the RSA public key.
+
+Skipping expiry, issuer, and audience
+
+A signature check without exp accepts a token forever, and removing exp should not make the token more valid. iss and aud tie the token to a specific issuer and client. If they are not checked, a token from another system that happens to share key material still passes. Set a short lifetime on access tokens, reject expired tokens, and pass issuer and audience into the verify call.
+
+Call verify, and tell it the rules
+
+const jwt = require('jsonwebtoken');
+
+function verifyToken(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: ['HS256'],
+      issuer: 'api.example.com',
+      audience: 'web-client'
+    });
+    return decoded;
+  } catch (err) {
+    throw new Error('Invalid token');
+  }
+}
+
+Store the secret outside the repo and rotate it. The failure mode of a decode-only middleware is silence: the API behaves like a careful one until a claim changes and nobody rejects it. The same authentication topic, from the series map, starts at Application Security and OWASP: Start Here.
+
+# A Field-Level Checklist for Mass Assignment and Data Exposure
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-mass-assignment-and-excessive-data-exposure.html
+Date: 2026-08-24
+
+Pick one endpoint you can call as yourself, such as PATCH /api/users/me. Then run the checks below. This is property-level authorization: the object can be yours and still expose fields you should not read, or accept fields you should not write.
+
+Extra fields in the body
+
+Send the profile update the screen sends, then add a field the form never includes. {"email": "new@example.com", "role": "admin"} is the usual shape. If the user record has a role, balance, is_verified, or internal flag, and the handler copies the JSON onto the model, the extra field is stored. Repeat the same fields on POST, PUT, and PATCH. Those verbs often bind parameters in different code.
+
+A missing write allowlist
+
+There is often no line that says which keys a caller may set. The framework binds the body because that is the short version. A review sees a normal update. Tests pass because the test uses the same payload as the UI. Compare the GET of the same resource with the form: anything that comes back and is not editable is a candidate to try on the write.
+
+Also try a resource you can touch without owning it outright, such as another member of a team. A property check and an object check fail in different places. Object ownership is the subject of Login Is Not Ownership.
+
+The response returns the whole record
+
+Closing the write does not close the read. An update can allowlist email and name and still respond with the full user row: password hash, tokens, soft-delete flags, internal ids, columns joined in from another table. Both directions need an explicit field list. A filter such as ?fields=, or a GraphQL selection, deserves the same question: can the client name a field the screen never shows?
+
+Allow the write, shape the read
+
+Define a schema per endpoint. Copy only the writable keys onto the update. Return a serializer or DTO for that operation, not the database row.
+
+// Allowlist pattern for update
+const userUpdateSchema = {
+  email: { type: 'string', writable: true },
+  name: { type: 'string', writable: true },
+  role: { type: 'string', writable: false },
+  balance: { type: 'number', writable: false }
+};
+
+function updateUser(req, user) {
+  const allowed = Object.keys(userUpdateSchema)
+    .filter(k => userUpdateSchema[k].writable);
+
+  const updates = {};
+  allowed.forEach(field => {
+    if (req.body[field] !== undefined) {
+      updates[field] = req.body[field];
+    }
+  });
+
+  return db.users.update(user.id, updates);
+}
+
+If the allowlist is missing, nothing fails at compile time. The feature still works for anyone who only uses the screen.
+
+# AI/LLM Integrations in Production Apps: What They Don't Tell You
+URL: https://anthonysdigital.net/blog/posts/aillm-integrations-in-production-apps-what-they-dont-tell-yo.html
+Date: 2026-08-10
+
+Adding a model to a product is the easy part. Production is the infrastructure around it: what a request costs, how you stream the response, how you version a prompt, and what you do when the provider fails. The demo does not teach that.
+
+The first surprise is the bill. Vendors publish separate rates for input and output tokens, and those rates change. A conversation that resends a long context on every turn costs more than a short prompt, and a feature people actually use will show up on the invoice. Do not freeze an old rate card into the design.
+
+The response is to instrument everything and treat cost as a first-class metric. Track token usage per request, per user, and per feature. Alert when it spikes. Use a smaller model for simpler tasks and reserve a more capable model for harder reasoning. Recheck the vendor's current rates when you choose, because yesterday's price list goes stale.
+
+// Track costs in real-time with custom metrics
+import { trackMetric } from './monitoring';
+
+async function callLLM(prompt: string, userId: string) {
+  const startTime = Date.now();
+  
+  const response = await openai.chat.completions.create({
+    model: process.env.LLM_MODEL,
+    messages: [{ role: 'user', content: prompt }],
+  });
+
+  const inputTokens = response.usage?.prompt_tokens || 0;
+  const outputTokens = response.usage?.completion_tokens || 0;
+  // Read inputRate and outputRate from the vendor's current price list.
+  const cost = (inputTokens * inputRate) + (outputTokens * outputRate);
+
+  await trackMetric({
+    metric: 'llm.cost',
+    value: cost,
+    tags: { userId, model: process.env.LLM_MODEL },
+  });
+
+  await trackMetric({
+    metric: 'llm.latency',
+    value: Date.now() - startTime,
+    tags: { userId },
+  });
+
+  return response.choices[0].message.content;
+}
+
+Streaming Is Non-Negotiable
+
+LLM responses can take 5-15 seconds. That's an eternity in user experience terms. If you're waiting for the full response before showing anything, your users will think your app is broken. Streaming responses is not optional for production applications.
+
+// Server-side streaming endpoint
+export async function POST(req: Request) {
+  const { prompt } = await req.json();
+  
+  const stream = await openai.chat.completions.create({
+    model: 'gpt-4-turbo-preview',
+    messages: [{ role: 'user', content: prompt }],
+    stream: true,
+  });
+
+  const encoder = new TextEncoder();
+  
+  const readableStream = new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content || '';
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+        }
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+        controller.close();
+      } catch (error) {
+        controller.error(error);
+      }
+    },
+  });
+
+  return new Response(readableStream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  });
+}
+
+Prompt Versioning and Management
+
+Here's a mistake I see constantly: hardcoding prompts in your application code. When you need to tweak the prompt (and you will), you're redeploying your entire app. Worse, you have no history of what changed or why. Treat prompts like database migrations—version them, store them separately, and make them easy to roll back.
+
+I store prompts in the database with versioning. Each prompt has a key, version number, and the actual template. The application fetches the active version at runtime. This lets product managers iterate on prompts without engineering deploys, and gives you an audit trail when something goes wrong.
+
+CREATE TABLE prompts (
+  id UUID PRIMARY KEY,
+  key VARCHAR(255) NOT NULL,
+  version INTEGER NOT NULL,
+  template TEXT NOT NULL,
+  variables JSONB,
+  is_active BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT NOW(),
+  created_by VARCHAR(255),
+  UNIQUE(key, version)
+);
+
+CREATE INDEX idx_prompts_active ON prompts(key, is_active) WHERE is_active = true;
+
+Key insight: Use a simple templating system for variable interpolation in prompts. I use {{variableName}} syntax and replace at runtime. Keep it simple—you don't need a complex DSL.
+
+Error Handling and Fallbacks
+
+LLM APIs fail. They rate limit, timeout, return malformed responses, or just have bad days. Your error handling needs to be more sophisticated than try/catch and showing a generic error message. Implement exponential backoff, circuit breakers, and meaningful fallbacks.
+
+- Rate limiting: OpenAI has per-minute token limits. Queue requests and implement backpressure instead of failing immediately.
+- Timeouts: Set aggressive timeouts (30s max) and fail fast. A slow response is worse than an error message with a retry button.
+- Fallback responses: For non-critical features, have pre-written fallback content. Better to show something useful than an error.
+- Model fallback: If the primary model errors, retry once with a fallback model when the feature can tolerate a different answer. Say so in the interface when the fallback is a worse experience.
+- User communication: Be honest. 'AI is experiencing high demand' is better than 'Something went wrong'.
+
+Observability Is Everything
+
+You need visibility into your LLM usage that goes beyond basic logging. Track token usage, latency, error rates, and cost per user. But also track quality metrics—are users regenerating responses? Editing them heavily? Abandoning the feature? These signals tell you if your prompts are actually working.
+
+I use a combination of Datadog for metrics and a custom events table for LLM interactions. Every request logs: prompt version used, tokens consumed, latency, model, user feedback (thumbs up/down), and whether the user edited the output. This data is gold for optimization.
+
+The hardest part of production LLM features isn't the integration—it's building the infrastructure to make them reliable, cost-effective, and observable. Start with these patterns, measure everything, and iterate based on real usage data. The companies winning with AI aren't using better models; they're using better infrastructure around those models.
+
+# Login Is Not Ownership
+URL: https://anthonysdigital.net/blog/posts/how-i-test-for-broken-object-level-authorization.html
+Date: 2026-08-01
+
+A user who can load GET /api/invoices/4021 tries GET /api/invoices/4022 and receives someone else's invoice. The session token was valid. The record exists. Nothing in the request asked whether invoice 4022 belongs to that user, and nothing in the handler answered.
+
+That gap is broken object level authorization, sometimes called IDOR. Login answered who the caller is. It did not answer whose record this is. The mistakes below are how that second question gets skipped. Function access, where a valid session calls an admin route, is a different problem and is covered in When a Valid Session Can Call Admin.
+
+Treating a session as ownership
+
+The handler checks that a token is present, then loads whatever id arrived in the path, query, or body. The check and the query live in different layers, so a review can see "this route is authenticated" and stop. Ownership is custom logic. Frameworks ship authentication middleware. They do not know that an invoice belongs to a customer.
+
+Trusting the screen to hide other ids
+
+Ordinary use never sends a foreign id. The client lists the caller's own invoices and only links those. Reviewers and integration tests then exercise one account that owns every fixture. The API looks correct until the id changes. A GET can be locked down while PATCH or DELETE on the same path uses another handler that forgot the filter. Soft-deleted, draft, and private rows often take a different path and skip the check that the live row got.
+
+Treating a UUID as a permission
+
+A UUID is not an authorization control. It makes guessing harder. If a valid id shows up in a shared link, a webhook, a log, or an email, the API still has to decide whether this caller may have this row. Switching from integers to UUIDs only makes the missing check less obvious. Opaque ids also leak from list endpoints and error messages, which is enough for someone who was never supposed to know the id.
+
+Put the owner on the query
+
+The durable fix is to enforce ownership where the row is loaded, not only in the route. A query that fetches by id also filters by the authenticated user. A miss returns not found, so the response does not reveal that the other invoice exists.
+
+// Enforce ownership in the data layer
+async function getInvoice(invoiceId, userId) {
+  const invoice = await db.invoices.findOne({
+    id: invoiceId,
+    userId: userId  // Always scope by owner
+  });
+
+  if (!invoice) {
+    throw new NotFoundError();  // Don't leak existence
+  }
+
+  return invoice;
+}
+
+The same idea has to hold for every verb and every id the handler trusts, including file keys and reference tokens that are not labeled as the resource id. One careful endpoint does not fix the one next to it.
+
+# The Engineering Journal: Why Writing About Your Work Makes You Better at It
+URL: https://anthonysdigital.net/blog/posts/the-engineering-journal-why-writing-about-your-work-makes-yo.html
+Date: 2026-08-01
+
+An engineering journal is a private log. It is not the team handbook, and it is not an architecture decision record. Team pages explain how to run the system for anyone on the team. Those are Documentation Debt. ADRs are the shared, reviewed history of a choice. Those are Architecture Decision Records. The journal is the messy version you keep for yourself: what you tried, what you learned, and what you would do differently.
+
+A log, not a blog
+
+Each entry can be a date, the context, what you did, what you learned, and what you would change. Some are a paragraph. Some grow a snippet. A single Markdown file in a private repo, one folder per month, is enough. Consistency beats a polished writeup you never start. Five minutes while the details are fresh beats a blank page.
+
+Debugging notes you can search later
+
+The entries that pay off are investigations. Write the trail, not only the final patch: what you thought, what you checked, what the cause was. The sample below is an illustration of that shape. It is not a claim about a particular outage.
+
+## 2023-04-12: Postgres Connection Pool Exhaustion
+
+**Context**: API started timing out under load during demo. Postgres connections maxed at 100.
+
+**Root Cause**: Sequelize wasn't releasing connections on query errors. We were catching errors but not ending transactions.
+
+**The Fix**:
+```javascript
+try {
+  const result = await sequelize.transaction(async (t) => {
+    return await Model.findAll({ transaction: t });
+  });
+} catch (error) {
+  // Transaction auto-rolls back on error
+  // Connection is released
+  throw error;
+}
+```
+
+**What I Learned**:
+- Always use Sequelize's managed transactions, not manual ones
+- Monitor `pg_stat_activity` to see active connections
+- Set `pool.max` based on (num_connections / num_app_instances)
+
+**What I'd Do Differently**:
+Add connection pool metrics from day one. We were flying blind.
+
+A later search for "connection pool" should find the entry. Tags such as #debugging, #performance, and #postgres make that search boring, which is what you want. How to run the investigation itself is The Debugging Mindset. The journal is where the notes land afterward.
+
+Decisions that are not ready for the team record
+
+The team ADR is the version other people review. The journal can hold the rougher reasoning: options, the tradeoff you accepted, and the measurement you had at the time. That file can be wrong, incomplete, and still useful to you. This sample shows the shape. The latency figures are part of the illustration, not a confirmed benchmark.
+
+## 2023-09-15: Caching Strategy for User Permissions
+
+**Options**:
+1. In-memory cache (node-cache) - fast, but inconsistent across instances
+2. Redis - consistent, but adds latency and infrastructure
+3. Database query with aggressive connection pooling - simple, slower
+
+**Decision**: Redis with 5-minute TTL
+
+**Why**:
+- Permissions change infrequently but need to be consistent across all API instances
+- 5-minute stale data is acceptable per product requirements
+- Redis already in stack for session storage
+- Measured latency: 2ms vs 0.5ms for in-memory, acceptable tradeoff
+
+**Tradeoffs Accepted**:
+- Added Redis as critical path dependency
+- More complex invalidation logic
+- Slightly higher P95 latency (measured in staging)
+
+When the decision is one the team will have to defend, promote it into an ADR. Do not pretend the private note is that record.
+
+Reading it back
+
+Skim recent entries on a cadence you will keep. Monthly is enough to notice a repeated mistake. A longer look, around a quarter or a year, is for what you want to learn next. Before a role change, the log is a better memory than a blank page. None of that requires a quota of entries.
+
+Do not paste proprietary code, customer data, or secrets into a journal you might keep after you leave. Write the pattern and the lesson. Anonymize the rest. The point is what you learned, not a copy of a private system.
+
+Start with one entry
+
+A Markdown file, a private note, or a folder you already have is enough. Write one thing you learned this week. Do not edit it into a post. A short stack of those notes becomes a record you can search. Waiting for the perfect system is how the file stays empty.
+
+# The First 90 Days: How to Ramp Up in a New Codebase Without Drowning
+URL: https://anthonysdigital.net/blog/posts/the-first-90-days-how-to-ramp-up-in-a-new-codebase-without-d.html
+Date: 2026-07-27
+
+You've accepted the offer, finished onboarding, and now you're staring at a codebase with 500k+ lines of code, unfamiliar architecture decisions, and a backlog of tickets labeled "good first issue" that are anything but. I've joined five different engineering teams in my career, and the first 90 days are always the hardest—but they're also the most important. How you ramp up sets the tone for your entire tenure. Here's what actually works.
+
+Week 1-2: Build Your Mental Map
+
+Don't start by reading code top-to-bottom. That's a trap. Instead, trace actual user flows through the system. Pick the most critical feature—user authentication, checkout flow, data sync—and follow a single request from entry point to database and back. Use your debugger. Set breakpoints everywhere. This gives you a mental map of how the pieces connect.
+
+// Create a "learning journal" file in your local workspace
+// I literally keep a LEARNING.md file that looks like this:
+
+## Auth Flow
+- Entry: POST /api/auth/login (src/routes/auth.ts)
+- Middleware: validateCredentials() checks against users table
+- Session created via Redis (lib/session.ts)
+- JWT signed with RS256, 15min expiry
+- Refresh token stored in httpOnly cookie
+
+## Questions:
+- Why RS256 instead of HS256? (Ask Sarah)
+- Where do we handle token refresh? (Found: src/middleware/auth.ts:45)
+- What happens if Redis is down? (TODO: trace error path)
+
+## Gotchas:
+- Password reset tokens expire in 1hr but UI says 24hrs (bug?)
+- Social auth bypasses 2FA check (intentional per Alex)
+
+Pro tip: In your first week, schedule 30-minute "code walkthrough" sessions with different team members. Ask them to show you one thing they built recently. You'll learn the codebase and build relationships simultaneously.
+
+Week 3-4: Ship Something Small But Visible
+
+Your first PR shouldn't be a massive refactor or architectural change. It should be something small that touches multiple parts of the system. This forces you to understand testing patterns, deployment pipelines, and code review culture. I look for bugs that require changes in both frontend and backend—fixing these teaches you how the layers communicate.
+
+- Fix a bug that's annoying the team but not critical
+- Add missing error handling or logging to an existing feature
+- Improve a user-facing error message (requires understanding the full flow)
+- Add tests to an under-tested module (you'll learn expected behavior)
+- Update documentation that confused you during onboarding
+
+The goal isn't impact—it's learning the development loop. How do you run tests locally? What's the code review process? How long do CI/CD pipelines take? What's the deployment schedule? You need this muscle memory before tackling bigger work.
+
+Week 5-8: Find the Pain Points
+
+By week five, you have enough context to spot problems that insiders have become blind to. Maybe the local development setup takes 45 minutes. Maybe there's no easy way to test payment flows. Maybe the API returns inconsistent error formats. These observations are gold. New engineers see the sharp edges that veterans have learned to avoid.
+
+// I once joined a team where every engineer had this helper function
+// duplicated across multiple files:
+
+function safeJsonParse(str: string): any {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return null;
+  }
+}
+
+// My "ramp-up project" was creating a shared utilities package:
+
+// lib/utils/json.ts
+export function parseJson<T = unknown>(
+  input: string,
+  fallback: T
+): T {
+  try {
+    return JSON.parse(input) as T;
+  } catch (error) {
+    logger.warn('JSON parse failed', { input, error });
+    return fallback;
+  }
+}
+
+// Small change, but it:
+// 1. Eliminated code duplication
+// 2. Added proper logging
+// 3. Made types explicit
+// 4. Gave me a reason to touch 15+ files and learn the codebase
+
+Warning: Don't propose sweeping changes in your first month. Frame your observations as questions: "I noticed we handle errors differently in these three places—is there a reason for that?" You might be missing important context.
+
+Week 9-12: Own Something End-to-End
+
+By month three, you should ship a feature from design to production. Not a trivial one—something that requires making architectural decisions, coordinating with other teams, and handling edge cases. This is where you prove you're not just ramped up, you're contributing. Pick something aligned with team priorities but scoped small enough to finish in 2-3 weeks.
+
+During this phase, I intentionally over-communicate. I write design docs even for medium-sized features. I ask for early feedback on prototypes. I document my decisions in PR descriptions. This isn't just about building trust—it's about learning how the team makes decisions. What trade-offs do they care about? What level of testing is expected? How much documentation is enough?
+
+The Meta-Skill: Learning How to Learn
+
+The real skill isn't ramping up in this codebase—it's getting better at ramping up in any codebase. Every new role is a chance to refine your onboarding process. I keep a personal checklist that I update after each job change. What worked? What wasted time? What questions should I have asked earlier?
+
+# My Personal Onboarding Checklist
+
+## Week 1
+- [ ] Set up local environment and run full test suite
+- [ ] Deploy a trivial change to staging
+- [ ] Trace 3 critical user flows with debugger
+- [ ] Read last 10 post-mortems (learn from past mistakes)
+- [ ] Identify the "go-to" person for each system component
+
+## Week 2-4
+- [ ] Ship first PR (bug fix or small improvement)
+- [ ] Attend on-call shadowing session
+- [ ] Review 20+ recent PRs to learn code style
+- [ ] Document one thing that confused me during setup
+
+## Week 5-12
+- [ ] Propose one developer experience improvement
+- [ ] Ship one feature end-to-end
+- [ ] Give my first code review with detailed feedback
+- [ ] Present something at team show-and-tell
+
+The first 90 days are uncomfortable. You'll feel behind. You'll ask obvious questions. You'll accidentally break staging. That's normal. The engineers who ramp up fastest aren't the ones who pretend to know everything—they're the ones who ask good questions, document their learning, and ship incremental value while they're still figuring things out. Three months from now, you'll be the one helping the next new hire navigate the codebase. Make sure you remember what it felt like to be lost.
+
+# REST and GraphQL API Design: Lessons from Building Both in Production
+URL: https://anthonysdigital.net/blog/posts/rest-and-graphql-api-design-lessons-from-building-both-in-pr.html
+Date: 2026-07-20
+
+I've built and maintained both REST and GraphQL APIs in production for years. The discourse around which is "better" misses the point entirely. The real question isn't REST vs GraphQL—it's understanding the tradeoffs and knowing when each shines. Here's what I've learned shipping both to production with teams of varying sizes.
+
+The Real Difference Nobody Talks About
+
+REST and GraphQL aren't just different query syntaxes. They represent fundamentally different contracts between client and server. REST is resource-oriented—you're asking for things. GraphQL is requirement-oriented—you're describing what you need. This distinction affects everything from caching to versioning to team dynamics.
+
+In REST, the server dictates the shape of responses. In GraphQL, the client does. This sounds like a minor detail, but it changes who owns the complexity. With REST, backend engineers absorb the complexity of creating the right endpoints. With GraphQL, that complexity shifts to the schema design and resolver implementation.
+
+When REST Actually Wins
+
+REST isn't outdated—it's predictable. For public APIs, third-party integrations, or webhook systems, REST is often the better choice. Why? HTTP caching works out of the box. Every developer understands it. Tools like Postman and curl make it trivial to debug. Here's a well-designed REST endpoint that leverages HTTP semantics properly:
+
+// Good REST design uses HTTP methods and status codes correctly
+app.get('/api/v1/users/:id', async (req, res) => {
+  const user = await db.users.findUnique({
+    where: { id: req.params.id },
+    select: { id: true, email: true, name: true, createdAt: true }
+  });
+  
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  
+  // Set proper cache headers for GET requests
+  res.set('Cache-Control', 'private, max-age=300');
+  res.set('ETag', `"${user.id}-${user.updatedAt.getTime()}"`);
+  
+  return res.json({ data: user });
+});
+
+app.patch('/api/v1/users/:id', async (req, res) => {
+  // PATCH for partial updates, PUT for full replacement
+  const { name, email } = req.body;
+  
+  try {
+    const updated = await db.users.update({
+      where: { id: req.params.id },
+      data: { name, email },
+    });
+    
+    return res.json({ data: updated });
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    throw error;
+  }
+});
+
+Key insight: REST forces you to think in resources and HTTP semantics. This constraint is actually valuable—it prevents bikeshedding and gives you a standard vocabulary. Every engineer knows what a 404 means. Not everyone agrees on what a GraphQL error extension should look like.
+
+When GraphQL Solves Real Problems
+
+GraphQL shines when you have multiple clients with different data requirements. Mobile apps need less data than web dashboards. Internal tools need different fields than customer-facing apps. With REST, you end up with endpoint sprawl: /users/basic, /users/detailed, /users/with-posts. GraphQL eliminates this.
+
+The other killer feature: eliminating overfetching and underfetching. In REST, you either make multiple requests or return too much data. GraphQL lets clients request exactly what they need in one round trip. Here's a practical example:
+
+// GraphQL resolver with DataLoader to prevent N+1 queries
+import DataLoader from 'dataloader';
+
+const userLoader = new DataLoader(async (userIds) => {
+  const users = await db.users.findMany({
+    where: { id: { in: userIds } }
+  });
+  
+  // Return in same order as requested IDs
+  const userMap = new Map(users.map(u => [u.id, u]));
+  return userIds.map(id => userMap.get(id) || null);
+});
+
+const resolvers = {
+  Query: {
+    user: (_, { id }) => userLoader.load(id),
+  },
+  User: {
+    posts: async (user, { limit = 10 }) => {
+      return db.posts.findMany({
+        where: { authorId: user.id },
+        take: limit,
+        orderBy: { createdAt: 'desc' }
+      });
+    },
+    // Resolver runs only if client requests this field
+    followerCount: async (user) => {
+      return db.followers.count({
+        where: { followingId: user.id }
+      });
+    }
+  }
+};
+
+Warning: GraphQL's flexibility is also its biggest footgun. Without proper query complexity analysis and depth limiting, clients can craft queries that bring down your database. Always implement query cost analysis in production—libraries like graphql-query-complexity are non-negotiable.
+
+The Versioning Question
+
+REST versioning is explicit: /v1/users vs /v2/users. You maintain multiple versions until clients migrate. GraphQL proponents claim you never need versioning because you just add fields and deprecate old ones. In theory, this is true. In practice, I've seen teams struggle with schema bloat and unclear deprecation timelines.
+
+My take: both approaches require discipline. With REST, you need a sunset policy for old versions. With GraphQL, you need strict governance around schema changes and clear communication about deprecations. Neither is easier—they're just different types of work.
+
+Practical Decision Framework
+
+- Choose REST when: You're building a public API, need simple HTTP caching, have straightforward CRUD operations, or want maximum tooling compatibility
+- Choose GraphQL when: You have multiple clients with different data needs, complex nested relationships, or want to avoid endpoint proliferation
+- Use both when: Your public API is REST but internal services use GraphQL, or you expose GraphQL for web/mobile but REST webhooks for integrations
+- Avoid GraphQL if: Your team is small, your data model is simple, or you don't have time to invest in proper tooling and monitoring
+
+The best API design isn't about choosing the "right" technology—it's about understanding your constraints. I've seen elegant REST APIs and nightmare GraphQL schemas. The technology matters less than the thought you put into the contract between client and server. Design for your team's strengths, your client's needs, and your operational capabilities. Everything else is just syntax.
+
+Authorization is a separate decision
+
+REST or GraphQL does not decide who may call a route. Object ownership is Login Is Not Ownership. Function access is When a Valid Session Can Call Admin. Fields a client should not send or receive are A Field-Level Checklist for Mass Assignment and Data Exposure.
+
+# PostgreSQL and Supabase for Production Apps: What You Need to Know
+URL: https://anthonysdigital.net/blog/posts/postgresql-and-supabase-for-production-apps-what-you-need-to.html
+Date: 2026-07-13
+
+PostgreSQL with Supabase is ready for production only after row-level security, connection pooling, and indexes are deliberate choices. Those are the pieces that surprise people once traffic shows up. Query syntax is rarely the hard part.
+
+Row-Level Security Is Non-Negotiable
+
+The biggest mistake teams make with Supabase is treating Row-Level Security (RLS) as optional. It's not. When you expose your database directly to the client via Supabase's auto-generated APIs, RLS is your only security layer. I learned this when a user discovered they could modify the request payload to access other users' data. We had RLS disabled during development and forgot to enable it before launch.
+
+Here's a production-ready RLS policy pattern I use for every multi-tenant table:
+
+-- Enable RLS on the table
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+
+-- Policy for SELECT: users can only see their own projects
+CREATE POLICY "Users can view own projects"
+  ON projects
+  FOR SELECT
+  USING (auth.uid() = user_id);
+
+-- Policy for INSERT: users can only create projects for themselves
+CREATE POLICY "Users can insert own projects"
+  ON projects
+  FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+-- Policy for UPDATE: users can only update their own projects
+CREATE POLICY "Users can update own projects"
+  ON projects
+  FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+-- Policy for DELETE: users can only delete their own projects
+CREATE POLICY "Users can delete own projects"
+  ON projects
+  FOR DELETE
+  USING (auth.uid() = user_id);
+
+Critical: Test your RLS policies by attempting to access data as different users. Create a test suite that tries to bypass your policies. If you can't prove your policies work, assume they don't.
+
+Connection Pooling: The Silent Killer
+
+PostgreSQL has a hard limit on connections. Supabase's free tier gives you 60 connections, paid tiers give you 200. Sounds like a lot until you realize that every serverless function, every browser tab with an active subscription, and every API client holds a connection. We hit the limit at 500 concurrent users because each user's browser maintained a realtime subscription.
+
+The solution is to use Supabase's connection pooler for transactional queries and be aggressive about closing connections:
+
+import { createClient } from '@supabase/supabase-js';
+
+// Use the pooler connection string for server-side operations
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY!;
+
+// For Edge Functions or API routes, use transaction mode
+const supabase = createClient(
+  supabaseUrl.replace('https://', 'https://').replace('.supabase.co', '.pooler.supabase.com'),
+  supabaseKey,
+  {
+    db: {
+      schema: 'public',
+    },
+    auth: {
+      persistSession: false, // Critical for serverless
+      autoRefreshToken: false,
+    },
+  }
+);
+
+// For long-lived connections (realtime), use the standard connection
+const supabaseRealtime = createClient(supabaseUrl, supabaseKey);
+
+// Always clean up realtime subscriptions
+const channel = supabaseRealtime
+  .channel('changes')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, (payload) => {
+    console.log('Change received!', payload);
+  })
+  .subscribe();
+
+// When component unmounts or user leaves
+const cleanup = () => {
+  channel.unsubscribe();
+};
+
+Indexes Are Your Friend (Until They're Not)
+
+PostgreSQL query performance lives and dies by indexes. But here's the thing: Supabase's automatic API generation doesn't create indexes for you. Every foreign key, every column you filter on, every column you sort by—these all need indexes in production.
+
+- Index all foreign keys (Supabase doesn't do this automatically)
+- Index columns used in WHERE clauses and JOIN conditions
+- Use partial indexes for soft-deleted records: CREATE INDEX idx_active_projects ON projects(user_id) WHERE deleted_at IS NULL;
+- Monitor with pg_stat_statements to find slow queries
+- Use EXPLAIN ANALYZE religiously before deploying queries
+
+I once had a query that took 8 seconds on a table with 100k rows. Added a composite index on (user_id, created_at) and it dropped to 12ms. The query planner needs help—give it the tools.
+
+Database Functions: The Underrated Powerhouse
+
+Want to know the biggest performance win I've implemented? Moving complex business logic from JavaScript to PostgreSQL functions. When you need to aggregate data, perform calculations, or handle complex transactions, doing it in the database is 10-100x faster than round-tripping data to your application layer.
+
+-- Complex aggregation that would require multiple queries in JS
+CREATE OR REPLACE FUNCTION get_user_dashboard_stats(user_uuid UUID)
+RETURNS JSON AS $$
+DECLARE
+  result JSON;
+BEGIN
+  SELECT json_build_object(
+    'total_projects', COUNT(DISTINCT p.id),
+    'active_tasks', COUNT(DISTINCT t.id) FILTER (WHERE t.status = 'active'),
+    'completed_this_month', COUNT(DISTINCT t.id) FILTER (
+      WHERE t.status = 'completed' 
+      AND t.completed_at >= date_trunc('month', CURRENT_DATE)
+    ),
+    'team_members', COUNT(DISTINCT tm.user_id)
+  )
+  INTO result
+  FROM projects p
+  LEFT JOIN tasks t ON t.project_id = p.id
+  LEFT JOIN team_members tm ON tm.project_id = p.id
+  WHERE p.user_id = user_uuid AND p.deleted_at IS NULL;
+  
+  RETURN result;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+Then call it from your client with a single query: supabase.rpc('get_user_dashboard_stats', { user_uuid: userId }). One round trip instead of five. One transaction instead of five. No N+1 queries.
+
+Warning: Use SECURITY DEFINER carefully. It runs with the permissions of the function creator, bypassing RLS. Only use it when you've validated inputs and need to perform operations the user couldn't do directly.
+
+The Supabase Tradeoffs
+
+Supabase is incredible for moving fast, but it's not magic. You're trading operational complexity for architectural constraints. You get instant APIs, auth, and realtime subscriptions, but you're locked into their client libraries and API patterns. You get managed PostgreSQL, but you're sharing resources on lower tiers and dealing with connection limits.
+
+For early-stage products and MVPs, this tradeoff is absolutely worth it. For high-scale applications with complex requirements, you'll eventually need to run your own PostgreSQL instance or use Supabase's paid tiers with dedicated resources. The key is knowing when you're approaching those limits and planning the migration before you're in crisis mode. Monitor your connection count, query performance, and database size. Set up alerts. Don't wait until your app is down to realize you've outgrown your tier.
+
+# Node.js Backend Patterns and Performance: What Actually Matters in Production
+URL: https://anthonysdigital.net/blog/posts/nodejs-backend-patterns-and-performance-what-actually-matter.html
+Date: 2026-07-06
+
+I've seen too many Node.js backends collapse under load because engineers optimized the wrong things. They micro-optimized array methods while ignoring blocking I/O. They added caching layers that increased complexity without reducing database load. After years of running Node.js services handling millions of requests daily, I've learned that performance in production comes down to a handful of patterns that most teams ignore.
+
+The Event Loop Is Your Bottleneck (And You're Probably Blocking It)
+
+Node.js is single-threaded. Every millisecond you spend doing synchronous work is a millisecond your server can't process other requests. The most common performance killer I see? Synchronous JSON parsing of large payloads. When you call JSON.parse() on a 5MB webhook payload, you're blocking the event loop for 50-100ms. At 1000 req/s, that's a disaster.
+
+// Bad: Blocking the event loop
+app.post('/webhook', express.json({ limit: '10mb' }), (req, res) => {
+  // express.json() already parsed synchronously - damage done
+  processWebhook(req.body);
+  res.sendStatus(200);
+});
+
+// Better: Stream and parse incrementally
+const JSONStream = require('JSONStream');
+
+app.post('/webhook', (req, res) => {
+  const parser = JSONStream.parse('*');
+  
+  req.pipe(parser);
+  
+  parser.on('data', (chunk) => {
+    // Process incrementally, yielding to event loop
+    setImmediate(() => processWebhookChunk(chunk));
+  });
+  
+  parser.on('end', () => res.sendStatus(200));
+  parser.on('error', (err) => res.status(400).send(err.message));
+});
+
+Rule of thumb: If any synchronous operation takes more than 10ms, you need to either offload it to a worker thread or break it into async chunks using setImmediate().
+
+Connection Pooling: The Optimization Everyone Forgets
+
+Database connection pools are configured once and forgotten. Then production traffic spikes and suddenly your app is spending 80% of its time waiting for available connections. Default pool sizes are almost always wrong. PostgreSQL's default is 10 connections. MongoDB's is 5. For a service handling 100 concurrent requests, that's a 10:1 queue.
+
+// Naive approach - connection per request
+const { Pool } = require('pg');
+const pool = new Pool({
+  max: 10, // Default - way too small
+  idleTimeoutMillis: 30000
+});
+
+// Production-ready approach
+const pool = new Pool({
+  max: process.env.DB_POOL_SIZE || 50,
+  min: 10, // Keep warm connections
+  idleTimeoutMillis: 60000,
+  connectionTimeoutMillis: 5000,
+  // Critical: limit queue size to fail fast
+  maxUses: 7500, // Recycle connections
+});
+
+// Monitor pool health
+setInterval(() => {
+  console.log({
+    total: pool.totalCount,
+    idle: pool.idleCount,
+    waiting: pool.waitingCount
+  });
+}, 10000);
+
+I size pools based on this formula: (num_cpu_cores * 2) + effective_spindle_count. For cloud databases, start with 50 connections per instance and monitor. If waitingCount is consistently above 0, increase the pool. If queries are slow but idleCount is high, your bottleneck is elsewhere.
+
+The Repository Pattern Prevents Performance Disasters
+
+Raw SQL scattered across route handlers makes performance optimization impossible. You can't identify N+1 queries. You can't add caching layers. You can't switch databases. The repository pattern isn't just about clean architecture—it's about having a single place to optimize data access.
+
+// repositories/UserRepository.js
+class UserRepository {
+  constructor(pool, cache) {
+    this.pool = pool;
+    this.cache = cache;
+  }
+
+  async findById(id) {
+    const cacheKey = `user:${id}`;
+    const cached = await this.cache.get(cacheKey);
+    if (cached) return JSON.parse(cached);
+
+    const result = await this.pool.query(
+      'SELECT * FROM users WHERE id = $1',
+      [id]
+    );
+    
+    if (result.rows[0]) {
+      await this.cache.set(cacheKey, JSON.stringify(result.rows[0]), 'EX', 300);
+    }
+    
+    return result.rows[0];
+  }
+
+  async findByIds(ids) {
+    // Single query instead of N queries
+    const result = await this.pool.query(
+      'SELECT * FROM users WHERE id = ANY($1)',
+      [ids]
+    );
+    return result.rows;
+  }
+}
+
+module.exports = UserRepository;
+
+Now when you discover an N+1 query in production, you fix it in one place. When you need to add DataLoader for GraphQL, you modify the repository. When Redis becomes a bottleneck, you swap in a local LRU cache. This pattern has saved me countless times during incidents.
+
+Async Middleware Chains Will Burn You
+
+Express middleware seems elegant until you have 12 middleware functions running on every request. Each one adds latency. Worse, if one middleware does blocking work, it affects every request. I've seen authentication middleware that validates JWTs synchronously add 50ms to every single request.
+
+- Minimize middleware count: Combine related middleware (auth + rate limiting) into single functions
+- Make middleware conditional: Only run body parsing on routes that need it, not globally
+- Cache aggressively: JWT validation results can be cached in-memory for 30-60 seconds
+- Profile middleware: Add timing logs to identify which middleware is slow
+
+In one project, we reduced P99 latency by 200ms by simply removing unused middleware and making body parsing route-specific instead of global. The fastest code is the code you don't run.
+
+Worker Threads for CPU-Bound Tasks
+
+If you're doing image processing, PDF generation, or complex data transformations in your request handlers, you're doing it wrong. These tasks should run in worker threads or separate processes. I use worker_threads for short CPU-intensive tasks and Bull queues for longer jobs. The pattern is simple: accept the request, queue the work, return immediately.
+
+const { Worker } = require('worker_threads');
+const Queue = require('bull');
+
+const imageQueue = new Queue('image-processing', process.env.REDIS_URL);
+
+app.post('/images/process', async (req, res) => {
+  const job = await imageQueue.add({
+    imageUrl: req.body.imageUrl,
+    operations: req.body.operations
+  });
+  
+  res.json({ jobId: job.id, status: 'processing' });
+});
+
+// worker.js - separate process
+imageQueue.process(async (job) => {
+  const { imageUrl, operations } = job.data;
+  
+  // CPU-intensive work happens here, not in main process
+  const result = await processImage(imageUrl, operations);
+  
+  return result;
+});
+
+This pattern transformed our API response times from 2-3 seconds to under 100ms. Users get instant feedback, and heavy processing happens asynchronously. If your API endpoints take more than 500ms, you're probably doing work that should be queued. The only exception is when users explicitly need to wait for results—and even then, consider WebSockets for progress updates.
+
+# The Pull Request: Your Most Underutilized Career Growth Tool
+URL: https://anthonysdigital.net/blog/posts/the-pull-request-your-most-underutilized-career-growth-tool.html
+Date: 2026-06-29
+
+The difference between engineers who grow quickly and those who plateau is rarely raw technical ability. It is how they use the pull request as communication. A description written like paperwork hides the judgment. A description that explains the change teaches the reviewer. The diff is not the whole artifact. Giving and receiving the comments is The Code Review Mindset.
+
+The PR Description is Your Executive Summary
+
+A PR description should answer three questions before anyone looks at the code: Why does this change matter? What approach did you take and why? What should reviewers focus on? Junior engineers write "Fixed bug in checkout flow." Senior engineers write context that makes reviewers smarter. Here's the template I use for every non-trivial PR:
+
+## Problem
+Users were experiencing checkout failures when applying multiple discount codes
+simultaneously. Error rate spiked to 12% during our Black Friday sale.
+Datadog trace: [link]
+
+## Solution
+Refactored discount calculation to use a transaction with row-level locking
+instead of optimistic locking. This prevents race conditions when multiple
+discount validations happen concurrently.
+
+### Why not optimistic locking?
+- Retry logic was causing UX issues (spinner hell)
+- High contention during sales made conflicts frequent (40% retry rate)
+- Transaction overhead is negligible for this code path (<5ms p99)
+
+## Testing
+- Added integration test simulating concurrent discount applications
+- Load tested with 100 concurrent users applying discounts
+- Verified in staging with production traffic replay
+
+## Rollout Plan
+Feature flag: `checkout_transactional_discounts`
+- 10% for 24h, monitoring error rates
+- 50% if metrics look good
+- 100% after 72h
+
+## Review Focus
+- Transaction isolation level choice (line 145)
+- Timeout handling in DiscountService (line 203)
+
+Career insight: Your PR description is read by more people than you think. Engineering managers scan PRs to understand what their team is working on. Staff engineers review PRs to spot architectural issues early. Your PM might read it to understand technical constraints. Write for that audience.
+
+Use PR Comments to Pre-empt Questions
+
+The best PRs have inline comments from the author explaining non-obvious decisions. This isn't about apologizing for complexity—it's about teaching and building trust. When I see a complex algorithm or an unusual pattern, I add a comment before anyone asks. This demonstrates self-awareness and saves review cycles.
+
+export class RateLimiter {
+  private buckets = new Map<string, TokenBucket>();
+
+  async checkLimit(userId: string): Promise<boolean> {
+    const bucket = this.getBucket(userId);
+    
+    // Note: Using token bucket instead of sliding window here.
+    // Sliding window would be more accurate, but token bucket
+    // gives us burst tolerance which product wants for the
+    // "rapid fire" feature. See RFC-024 for full analysis.
+    if (bucket.tokens < 1) {
+      await this.metrics.increment('rate_limit.exceeded', {
+        user_id: userId
+      });
+      return false;
+    }
+
+    bucket.consume(1);
+    return true;
+  }
+
+  private getBucket(userId: string): TokenBucket {
+    if (!this.buckets.has(userId)) {
+      // Buckets are never cleaned up in this implementation.
+      // This is intentional: memory growth is ~50KB per 1000 users,
+      // and we have a separate cleanup job that runs hourly.
+      // Tried cleaning up inline but it caused p99 latency spikes.
+      this.buckets.set(userId, new TokenBucket({
+        capacity: 100,
+        refillRate: 10 // tokens per second
+      }));
+    }
+    return this.buckets.get(userId)!;
+  }
+}
+
+Small PRs Are a Career Multiplier
+
+I used to think big PRs demonstrated that I could handle complex work. They actually demonstrated that I couldn't break down problems. Now I aim for PRs under 400 lines. When I'm building a large feature, I break it into a sequence of small, independently reviewable PRs. Each PR should be complete, correct, and safe to merge—even if the full feature isn't done yet.
+
+- PR 1: Add database schema and migrations (no application code)
+- PR 2: Add data access layer with tests (feature flag returns early)
+- PR 3: Add business logic layer (still behind feature flag)
+- PR 4: Add API endpoints (feature flag controls exposure)
+- PR 5: Add frontend UI (feature flag controls visibility)
+- PR 6: Enable feature flag for 10% of users
+
+Small PRs get reviewed faster, have fewer bugs, and are easier to revert. More importantly, they create a paper trail that shows you can execute. When promotion time comes, your manager can point to 30 merged PRs over two months instead of 3 giant ones. Velocity is visible.
+
+Responding to Review Comments is a Test
+
+How you respond to PR feedback reveals your maturity more than the code itself. I've seen brilliant engineers plateau because they get defensive in PR comments. When someone suggests a change, you have three options: accept it, discuss it, or explain why you're declining it. All three are valid. What's not valid is going silent or getting snippy.
+
+// Reviewer: "Why not use a Set instead of an array here?"
+
+// ❌ Defensive response:
+// "It doesn't matter for this use case."
+
+// ❌ Silent response:
+// [Makes the change without commenting]
+
+// ✅ Good response:
+// "Good catch! Changed to Set since we're doing frequent lookups."
+
+// ✅ Also good:
+// "I considered Set, but we need to preserve insertion order for the
+// audit log, and we're not doing lookups in this code path. The array
+// is iterated exactly once. Happy to add a comment explaining this?"
+
+// ✅ Also good:
+// "Great question. I'm going to keep the array for now because this
+// code is hot path and Set allocation showed up in profiling (see
+// screenshot). But you're right that Set is more semantically correct.
+// Filed TECH-456 to revisit this with a benchmark."
+
+The meta-game: Senior engineers are always watching how you collaborate, not just what you ship. Your PR comments are a permanent record of your communication skills, humility, and technical judgment. Every interaction is an interview for the next level.
+
+Your PR Velocity is Your Brand
+
+In every company I've worked at, there are engineers who consistently get their PRs merged quickly, and engineers whose PRs sit for days. The difference is rarely the quality of the code—it's the quality of the PR itself. When you write clear descriptions, add helpful comments, keep the scope tight, and respond promptly to feedback, reviewers prioritize your PRs. They know reviewing your work will be easy and educational. This compounds over time. Fast PR velocity means you ship more, learn more, and become more visible. Slow PR velocity means you're always context-switching and fighting to get attention. Your PR habits determine which category you fall into. Treat every PR like it's a presentation to the entire engineering team, because it is.
+
+# The Debugging Mindset: How Senior Engineers Approach Production Incidents
+URL: https://anthonysdigital.net/blog/posts/the-debugging-mindset-how-senior-engineers-approach-producti.html
+Date: 2026-06-22
+
+At 3 AM, your phone buzzes. Error rates are spiking. Users can't check out. Revenue is bleeding. Junior engineers grep logs frantically, restart services randomly, and hope something sticks. Senior engineers take a breath, open their mental playbook, and start asking the right questions. The difference isn't intelligence or experience alone—it's a systematic debugging mindset that can be learned and practiced.
+
+Start With the System, Not the Code
+
+The biggest mistake during incidents is diving straight into code. Your first five minutes should be spent understanding what changed and what's actually broken. I keep a mental checklist: recent deploys, infrastructure changes, traffic patterns, dependency health, and data anomalies. Most production issues aren't bugs—they're emergent behaviors from system interactions.
+
+# My incident response starter commands
+# 1. Check recent deploys
+git log --since="2 hours ago" --oneline --all
+
+# 2. Compare error rates (assuming DataDog/similar)
+curl -X GET "https://api.datadoghq.com/api/v1/query" \
+  -H "DD-API-KEY: ${DD_API_KEY}" \
+  -d "query=sum:trace.express.request.errors{env:prod}.as_count()"
+
+# 3. Check external dependencies
+for service in payment-api user-service inventory-db; do
+  curl -sf "https://${service}.internal/health" || echo "${service} DOWN"
+done
+
+# 4. Traffic patterns (looking for spikes/drops)
+kubectl top pods -n production | sort -k3 -hr | head -20
+
+The 5-Minute Rule: If you can't form a hypothesis about the root cause within 5 minutes, you're looking at the wrong layer. Step back, check system-level metrics, and resist the urge to "try things" randomly.
+
+Build Observability Into Your Daily Work
+
+You can't debug what you can't see. Senior engineers don't add logging during incidents—they build observability while writing features. Every critical path in your application should emit structured logs, metrics, and traces. The time to instrument your code is when you understand it best: while you're writing it.
+
+// Bad: Debugging nightmare
+async function processOrder(orderId: string) {
+  const order = await db.orders.findOne(orderId);
+  const payment = await paymentService.charge(order);
+  await inventory.reserve(order.items);
+  return order;
+}
+
+// Good: Observable and debuggable
+async function processOrder(orderId: string) {
+  const startTime = Date.now();
+  const logger = getLogger({ orderId, operation: 'processOrder' });
+  
+  try {
+    logger.info('Starting order processing');
+    
+    const order = await db.orders.findOne(orderId);
+    if (!order) {
+      logger.error('Order not found');
+      throw new OrderNotFoundError(orderId);
+    }
+    
+    logger.info('Charging payment', { 
+      amount: order.total, 
+      customerId: order.customerId 
+    });
+    const payment = await paymentService.charge(order);
+    
+    logger.info('Reserving inventory', { 
+      itemCount: order.items.length 
+    });
+    await inventory.reserve(order.items);
+    
+    const duration = Date.now() - startTime;
+    metrics.histogram('order.process.duration', duration, {
+      status: 'success'
+    });
+    
+    logger.info('Order processed successfully', { duration });
+    return order;
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    logger.error('Order processing failed', { 
+      error: error.message,
+      duration,
+      stack: error.stack
+    });
+    metrics.histogram('order.process.duration', duration, {
+      status: 'error',
+      errorType: error.constructor.name
+    });
+    throw error;
+  }
+}
+
+The Hypothesis-Driven Debugging Loop
+
+Random changes are not debugging. Every action should test a specific hypothesis. I literally write these down during incidents: "Hypothesis: Database connection pool exhausted due to long-running queries." Then I find evidence to prove or disprove it. This prevents the thrashing that makes incidents drag on for hours.
+
+- State your hypothesis clearly: Write it in Slack or your incident doc. "I think X is causing Y because Z."
+- Identify the test: What specific metric, log line, or behavior would prove your hypothesis?
+- Time-box investigation: Give yourself 5-10 minutes per hypothesis. If you can't find evidence, move on.
+- Document dead ends: What you ruled out is as valuable as what you found. Prevents circular debugging.
+- Share findings continuously: Keep your team updated. Someone else might spot the pattern you're missing.
+
+Practice Debugging When Nothing Is Broken
+
+The best debugging practice happens during normal development. When you encounter unexpected behavior—even minor quirks—resist the urge to just "fix it and move on." Dig deeper. Understand why it happened. This builds the pattern recognition that makes you fast during real incidents. I schedule "debugging practice" sessions where I intentionally break things in staging and practice my incident response workflow.
+
+Production incidents are learning opportunities, not just problems to solve. Every incident should result in: (1) a fix, (2) improved observability, (3) updated runbooks, and (4) a blameless postmortem. If you're not capturing learnings, you'll debug the same issue twice.
+
+Know When to Rollback vs. Roll Forward
+
+This is where engineering judgment matters most. Rollbacks are safe but sometimes impossible (database migrations, external API changes, data corruption). Rolling forward is risky but sometimes necessary. My rule: if I can't identify root cause in 15 minutes and we have a clean rollback path, I roll back. Then debug without the pressure. If rollback isn't clean, I focus on mitigation first (circuit breakers, feature flags, traffic shifting), then root cause.
+
+// Feature flags save lives during incidents
+// Deploy this BEFORE you need it
+class FeatureFlags {
+  constructor(flagService) {
+    this.flags = flagService;
+    this.cache = new Map();
+  }
+  
+  async isEnabled(flagName, context = {}) {
+    // Cache with short TTL for performance
+    const cacheKey = `${flagName}:${JSON.stringify(context)}`;
+    if (this.cache.has(cacheKey)) {
+      return this.cache.get(cacheKey);
+    }
+    
+    const enabled = await this.flags.evaluate(flagName, context);
+    this.cache.set(cacheKey, enabled);
+    setTimeout(() => this.cache.delete(cacheKey), 5000);
+    return enabled;
+  }
+}
+
+// Usage in critical paths
+async function processPayment(order) {
+  const useNewPaymentFlow = await flags.isEnabled(
+    'new-payment-processor',
+    { userId: order.userId }
+  );
+  
+  if (useNewPaymentFlow) {
+    // New code path - can be disabled instantly if broken
+    return await newPaymentProcessor.charge(order);
+  } else {
+    // Old reliable code path
+    return await legacyPaymentProcessor.charge(order);
+  }
+}
+
+The debugging mindset isn't about being smarter—it's about being more systematic. Build observability into everything you ship. Practice your incident response workflow when stakes are low. Approach production issues like a scientist, not a firefighter. The engineers who stay calm during incidents aren't superhuman; they've just done their homework before the fire started.
+
+Keep the trail
+
+The notes from an investigation are easier to reuse when they live somewhere you can search later. That private log is The Engineering Journal. It is not a substitute for the team runbook.
+
+# Architecture Decision Records: The Full-Stack Engineer's Secret Weapon
+URL: https://anthonysdigital.net/blog/posts/architecture-decision-records-the-full-stack-engineers-secre.html
+Date: 2026-06-15
+
+An architecture decision record is a short, dated note of a choice: the context, what you picked, and the consequences. It is not a wiki about how the system works. Team how-to pages live in Documentation Debt. A private scratch log of the same decision lives in The Engineering Journal. This post is only the team record.
+
+What the record is for
+
+Code shows what the system does now. It does not show which alternatives you rejected, or which constraint forced the choice. An ADR is immutable on purpose. When the context changes, you write a new record that supersedes the old one. You do not quietly rewrite history. That chain is what you want when someone asks why sessions live in Redis, or why a monolith was split.
+
+The format stays small. This is a modified Michael Nygard template:
+
+# ADR-015: Use Redis for Session Storage
+
+## Status
+Accepted (supersedes ADR-008)
+
+## Context
+Our Node.js API currently stores sessions in-memory, which breaks when we scale horizontally. We're adding a second API instance behind a load balancer next sprint. Session data is ~2KB per user, 10K active sessions at peak.
+
+## Decision
+We will use Redis for session storage with a 24-hour TTL.
+
+## Consequences
+
+### Positive
+- Horizontal scaling works immediately
+
+## Alternatives Considered
+
+### PostgreSQL sessions table
+Rejected: Adds load to primary DB, requires active cleanup jobs
+
+### JWT tokens (stateless)
+Rejected: Can't invalidate sessions on logout, token size bloats requests
+
+### Sticky sessions
+Rejected: Complicates deployments, uneven load distribution
+
+If the note takes a long writing session, it has become a design doc. An ADR captures the decision while the context is still fresh. The design doc can still exist. It is a different file.
+
+Where the files go
+
+Store them in the repo, in docs/adr/, not in a wiki the deploy never sees. They version with the code, they show up in pull requests, and people find them because they are next to the change. In a monorepo, split by area: docs/adr/backend/, docs/adr/frontend/, docs/adr/infrastructure/.
+
+An example: frontend state
+
+The following is an example of the shape, not a claim that a particular team published this record. It is specific about constraints, which is the part general library comparisons leave out.
+
+# ADR-023: Use React Query + Zustand for State Management
+
+## Status
+Accepted
+
+## Context
+Our React dashboard has three types of state:
+1. Server cache (API data): User profiles, analytics data, settings
+2. UI state: Modal open/closed, selected filters, sidebar collapsed
+3. Form state: Handled by React Hook Form (out of scope)
+
+Current pain: Redux boilerplate is slowing feature development. Engineers spend 40% of PR time on action creators and reducers. We have 12 API endpoints with manual cache invalidation logic that's buggy.
+
+## Decision
+Use React Query for server state, Zustand for UI state.
+
+## Consequences
+
+### Positive
+- React Query handles caching, refetching, invalidation automatically
+- Zustand is 10 lines of code vs 50+ for Redux equivalents
+- Bundle size: -45KB (Redux + toolkit + saga removed)
+- Onboarding: New engineers productive in hours, not days
+
+### Negative
+- Team needs to learn two libraries instead of one
+- Existing Redux code needs gradual migration
+- Less established patterns than Redux (smaller community)
+
+## Implementation Notes
+
+// Zustand store example
+import create from 'zustand'
+
+const useUIStore = create((set) => ({
+  sidebarOpen: true,
+  selectedFilters: [],
+  toggleSidebar: () => set((state) => ({
+    sidebarOpen: !state.sidebarOpen
+  }))
+}))
+
+// React Query usage
+const { data, isLoading } = useQuery(
+  ['user', userId],
+  () => fetchUser(userId),
+  { staleTime: 5 * 60 * 1000 }
+)
+
+The numbers in that sample are part of the example's context section. They show how an ADR names constraints. They are not a measurement from a confirmed project.
+
+When to write one, and when to skip it
+
+Write one when the choice will still matter later, when more than one person has to live with it, or when you can already hear the future argument. Database, authentication, deployment, API style, state management, and third-party services usually qualify. Skip coding-style preferences a linter can hold, temporary workarounds, choices with no real alternative, and decisions you can reverse in a day.
+
+- Someone is about to add a major dependency.
+- The choice crosses teams or services.
+- You are explaining the same architectural choice again.
+- Security, performance, or cost will be questioned later.
+- You are superseding an older decision. Say so in the status line.
+
+Put it in the same pull request as the change
+
+The record that ships is the one in the pull request that implements the decision. Review sees the code and the why together. A template at docs/adr/000-template.md, plus a small script that copies it and numbers the file, makes writing the record easier than skipping it. For how the personal version of a decision differs from this file, see The Engineering Journal.
+
+# Documentation Debt: Why Your Team Moves Slower Than You Think
+URL: https://anthonysdigital.net/blog/posts/documentation-debt-why-your-team-moves-slower-than-you-think.html
+Date: 2026-06-01
+
+Team documentation is how someone other than the author can change a system, deploy it, or explain its contract. When the authentication flow of a service lives only in the code, the next person rebuilds that story from scratch. When a third-party integration's quirks live in one person's head, everyone else waits. When the API contract is not written down, frontend and backend spend the time in meetings instead. That cost is real, and it is not a number I can put on a sprint.
+
+This post is about what the team should keep. Personal notes belong in The Engineering Journal. Architecture decisions belong in Architecture Decision Records, not in a second copy of that practice here.
+
+What is worth writing down
+
+Comments that restate the next line are noise. The test for a page is whether a new teammate would lose time without it. These usually pass that test:
+
+- Runbooks: what to do when the service is down, how to roll back, how to debug the failures you have already seen.
+- API contracts: request and response shapes, error codes, rate limits, authentication.
+- Local setup: environment variables, dependencies, seeds, and the gotchas that block a first run.
+- Domain rules: business behavior the code does not make obvious, including regulatory constraints and legacy quirks.
+- Pointers to decisions: a short link to the ADR when the question is why a choice was made, not how the code runs today.
+
+The documentation paradox: the people who understand a system well enough to document it feel the least need, and the people who need the page cannot write it yet. The page has to be part of the change that introduces the behavior, or it does not get written.
+
+Keep it in the repository
+
+The copy that stays current lives next to the code and is reviewed with it. One way to force API docs to move with the route is to generate them from the same schema the handler validates. A feature branch updates that schema or the checklist fails.
+
+// routes/users.ts
+import { z } from 'zod';
+import { createRoute } from '../lib/route-factory';
+
+const CreateUserSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(2),
+  role: z.enum(['admin', 'user', 'viewer'])
+});
+
+export const createUser = createRoute({
+  method: 'POST',
+  path: '/api/users',
+  schema: CreateUserSchema,
+  description: 'Creates a new user account. Requires admin role.',
+  exampleRequest: {
+    email: 'jane@example.com',
+    name: 'Jane Doe',
+    role: 'user'
+  },
+  exampleResponse: {
+    id: 'usr_123',
+    email: 'jane@example.com',
+    name: 'Jane Doe',
+    role: 'user',
+    createdAt: '2024-01-15T10:30:00Z'
+  },
+  handler: async (req, res) => {
+    // Implementation here
+  }
+});
+
+// scripts/generate-api-docs.ts
+import { routes } from '../routes';
+import fs from 'fs';
+
+function generateMarkdown(routes: Route[]) {
+  let md = '# API Documentation\n\n';
+
+  routes.forEach(route => {
+    md += `## ${route.method} ${route.path}\n\n`;
+    md += `${route.description}\n\n`;
+    md += `**Request Body:**\n\`\`\`json\n${JSON.stringify(route.exampleRequest, null, 2)}\n\`\`\`\n\n`;
+    md += `**Response:**\n\`\`\`json\n${JSON.stringify(route.exampleResponse, null, 2)}\n\`\`\`\n\n`;
+  });
+
+  return md;
+}
+
+fs.writeFileSync('./docs/API.md', generateMarkdown(routes));
+
+The markdown is a build product. When the route changes, the contract changes with it. There is no separate wiki page to forget.
+
+Decisions are a different document
+
+An ADR captures why a choice was made, in a form you do not edit in place when you change your mind. You write a new record that supersedes the old one. The template, where to store the files, and when to skip one are all in Architecture Decision Records. A team doc should link the record. It should not restate the whole method.
+
+Make the missing page part of review
+
+Treat a missing runbook or contract like a missing test when you review. Put the docs in the repo so a pull request can show the diff. A short update is more useful than a perfect page that waits for a writing week. Timebox it, ship it, and fix it in the next change that touches that code. How to talk about that in the review itself is The Code Review Mindset.
+
+# CI/CD and GitHub Actions: Beyond the YAML Copy-Paste
+URL: https://anthonysdigital.net/blog/posts/cicd-and-github-actions-beyond-the-yaml-copy-paste.html
+Date: 2026-05-18
+
+Elaborate GitHub Actions workflows still break the first day a team depends on them. Copied YAML does not explain the trade-offs. A useful pipeline fails fast, recovers cleanly, and does not become the bottleneck.
+
+The Baseline: Fast Feedback Loops
+
+Your CI pipeline has one job: tell engineers if they broke something, as fast as possible. Every minute your pipeline takes is a minute an engineer is context-switching or waiting. I aim for sub-5-minute feedback on PRs. Here's a production workflow that prioritizes speed through parallelization and caching:
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Lint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Run tests
+        run: npm test -- --coverage --maxWorkers=2
+      
+      - name: Upload coverage
+        if: matrix.node-version == 20
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: dist/
+          retention-days: 7
+
+Speed wins: Notice the --prefer-offline flag and cache: 'npm'. These small optimizations cut 30-60 seconds from every run. Also, --maxWorkers=2 prevents Jest from spawning too many workers in CI, which paradoxically slows things down.
+
+Conditional Workflows: Don't Run What You Don't Need
+
+One of the biggest mistakes I see is running the entire pipeline for every change. If someone updates documentation, you don't need to run integration tests. GitHub Actions supports path filtering, but here's the pattern I actually use in production—it's more explicit and easier to debug:
+
+name: Smart CI
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package*.json'
+      - '.github/workflows/**'
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'src/api/**'
+              - 'src/db/**'
+            frontend:
+              - 'src/components/**'
+              - 'src/pages/**'
+
+  test-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run backend tests
+        run: npm run test:api
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+
+  test-frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run frontend tests
+        run: npm run test:ui
+
+This approach saves significant CI minutes on large repos. The dorny/paths-filter action is more reliable than GitHub's built-in path filtering, and the explicit outputs make it clear what's running and why.
+
+Deployment: Progressive Rollouts with Confidence
+
+Deployment workflows need guardrails. I use environments with protection rules and required reviewers for production, but here's the part most tutorials skip: integration with your actual infrastructure. This example deploys to AWS but shows the pattern for any platform:
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.example.com
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Deploy to staging
+        run: |
+          aws s3 sync dist/ s3://staging-bucket/ --delete
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.STAGING_CF_ID }} --paths "/*"
+      
+      - name: Run smoke tests
+        run: npm run test:smoke -- --env=staging
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://example.com
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Deploy to production
+        run: |
+          aws s3 sync dist/ s3://prod-bucket/ --delete
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_CF_ID }} --paths "/*"
+      
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: 'Production deployment ${{ job.status }}'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+Use OIDC, not access keys: The role-to-assume pattern uses GitHub's OIDC provider to get temporary AWS credentials. No long-lived secrets in your repo. This is significantly more secure and is how you should authenticate to cloud providers in 2024.
+
+Reusable Workflows: DRY for YAML
+
+Once you have multiple repos, you'll want to share workflow logic. GitHub supports reusable workflows, which I use extensively. Here's a reusable workflow for Node.js testing that I call from multiple repositories:
+
+- Create a .github/workflows/reusable-node-test.yml in a central repo with on: workflow_call
+- Define inputs for customization (Node version, test command, etc.)
+- Call it from other repos using uses: org/repo/.github/workflows/reusable-node-test.yml@main
+- Version your reusable workflows with tags, not @main, once they're stable
+- Keep secrets at the caller level—reusable workflows inherit secrets from the calling workflow
+
+The key insight: reusable workflows are for process, not configuration. If you find yourself passing 15 inputs to customize behavior, you're doing it wrong. Instead, encode your team's standards (run these checks, in this order, with these quality gates) and let individual repos provide minimal configuration.
+
+Debugging and Observability
+
+When workflows fail at 2 AM, you need visibility. Enable debug logging with ACTIONS_STEP_DEBUG and ACTIONS_RUNNER_DEBUG secrets. Use job summaries to surface important information directly in the Actions UI. Most importantly: make your failure messages actionable. Don't just say 'tests failed'—tell engineers which test failed and link to the logs. I add custom annotations using echo "::error file=app.js,line=10::Something broke here" to make failures scannable.
+
+The best CI/CD pipeline is one your team doesn't think about. If engineers are regularly debugging workflows instead of writing code, your automation has become the problem it was meant to solve. Prioritize reliability and clear error messages over clever optimizations.
+
+GitHub Actions isn't perfect—the YAML can get verbose, the minute limits on free tiers are restrictive, and debugging can be painful. But it's good enough for most teams, and the integration with GitHub's ecosystem is unmatched. Focus on fast feedback, clear failures, and progressive rollouts. Your future self (and your team) will thank you.
+
+# The Art of Incremental Refactoring: Ship Features While Improving Code
+URL: https://anthonysdigital.net/blog/posts/the-art-of-incremental-refactoring-ship-features-while-impro.html
+Date: 2026-05-11
+
+Every engineer has been there: you open a file to add a simple feature and discover a tangled mess of legacy code. Your options seem binary — either hold your nose and add to the mess, or propose a massive refactor that will block feature work for weeks. But there's a third path that senior engineers master: incremental refactoring. This isn't about being cautious or slow. It's about being strategic. The best engineers I've worked with ship features faster precisely because they know how to improve code quality without stopping the train.
+
+The Boy Scout Rule in Practice
+
+The Boy Scout Rule — "leave the code better than you found it" — sounds great in theory but fails in practice without constraints. The key is defining better narrowly. When touching a file for a feature, I limit improvements to the immediate context: the function I'm modifying and its direct dependencies. Not the entire module. Not the architectural pattern. Just the code I'm already changing.
+
+// Before: Adding a feature to this mess
+function processOrder(order: any) {
+  if (order.items && order.items.length > 0) {
+    let total = 0;
+    for (let i = 0; i < order.items.length; i++) {
+      total += order.items[i].price * order.items[i].qty;
+    }
+    if (order.discount) {
+      total = total - (total * order.discount);
+    }
+    order.total = total;
+  }
+  // Need to add tax calculation here...
+}
+
+// After: Refactor ONLY what you touch
+interface OrderItem {
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  items: OrderItem[];
+  discount?: number;
+  taxRate?: number;
+}
+
+function calculateSubtotal(items: OrderItem[]): number {
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+
+function applyDiscount(subtotal: number, discount?: number): number {
+  return discount ? subtotal * (1 - discount) : subtotal;
+}
+
+function calculateTax(amount: number, taxRate?: number): number {
+  return taxRate ? amount * taxRate : 0;
+}
+
+function processOrder(order: Order): number {
+  const subtotal = calculateSubtotal(order.items);
+  const afterDiscount = applyDiscount(subtotal, order.discount);
+  const tax = calculateTax(afterDiscount, order.taxRate);
+  return afterDiscount + tax;
+}
+
+Notice what I didn't do: I didn't refactor the entire order processing system, migrate to a new architecture, or fix every any type in the codebase. I extracted functions for the calculations I needed to modify, added types for clarity, and made my new feature (tax calculation) trivial to implement. The PR is reviewable. The risk is contained. The code is measurably better.
+
+The Strangler Fig Pattern for Architectural Changes
+
+When you need to change something architectural — like replacing a legacy API client or migrating state management — the strangler fig pattern is your friend. Wrap the old system with a new interface, route new code through the wrapper, and gradually migrate old call sites. The key is that both systems run in parallel until the migration is complete.
+
+// Legacy API client we want to replace
+class LegacyAPIClient {
+  async fetchUser(id: string) {
+    // Old implementation with weird quirks
+  }
+}
+
+// New, better implementation
+class ModernAPIClient {
+  async getUser(id: string): Promise<User> {
+    // Clean implementation with proper types
+  }
+}
+
+// Adapter that lets us migrate incrementally
+class APIClient {
+  private legacy = new LegacyAPIClient();
+  private modern = new ModernAPIClient();
+  private migratedEndpoints = new Set(['users', 'orders']);
+
+  async fetchUser(id: string): Promise<User> {
+    if (this.migratedEndpoints.has('users')) {
+      return this.modern.getUser(id);
+    }
+    return this.legacy.fetchUser(id);
+  }
+
+  // Add feature flag support for gradual rollout
+  async fetchUserWithFlag(id: string, useModern: boolean): Promise<User> {
+    return useModern 
+      ? this.modern.getUser(id)
+      : this.legacy.fetchUser(id);
+  }
+}
+
+// Now you can migrate call sites one at a time
+// Old code keeps working, new code uses the better client
+
+Production tip: Always add metrics when introducing an adapter. Track which code path is used and compare error rates. I've caught subtle bugs in "improved" implementations because I could compare them directly against the legacy behavior in production traffic.
+
+Refactoring Debt vs. Technical Debt
+
+Not all messy code needs refactoring. I distinguish between technical debt (code that slows down future work) and refactoring debt (code that offends my sensibilities but doesn't actually cause problems). That ugly 500-line function in a stable, rarely-changed module? Probably refactoring debt. The inconsistent error handling that makes debugging production issues take hours? Technical debt. Pay down the latter ruthlessly. Ignore the former unless you're already there.
+
+- Technical debt indicators: Bugs cluster in certain modules, features take longer than they should, new engineers get confused in specific areas, production debugging is painful
+- Refactoring debt indicators: Code doesn't follow current style guides, uses outdated patterns, isn't "elegant" but works fine
+- Decision rule: If fixing it would measurably improve velocity or reliability, it's technical debt worth addressing. If it just makes the code "nicer," deprioritize it
+- Track it: Keep a lightweight technical debt log in your team's docs. When someone hits a painful area, they add it. Review quarterly and tackle the highest-impact items
+
+Making Refactoring Visible
+
+The biggest career mistake I see engineers make with refactoring is doing it invisibly. They spend days improving code quality, then hide it in a feature PR or worse, don't mention it at all. Make your refactoring work visible. Not to brag, but because it's valuable work that should be recognized and because it teaches others the skill.
+
+I structure refactoring PRs with a clear before/after narrative: "This function was doing X, Y, and Z. I extracted Y into a helper because we need it for the new feature. This makes the original function clearer and makes the new feature a 3-line change instead of 30." Show the value.
+
+When to Stop and Do a Big Refactor
+
+Sometimes incremental refactoring isn't enough. If you're hitting the same painful area repeatedly, or if the architecture is fundamentally wrong for current requirements, you need dedicated time. The key is getting buy-in by quantifying the cost of not refactoring. Track how much time the team spends working around the problem. Estimate how much faster you could ship features with the improved architecture. Present it as an investment with measurable returns, not as "we want to rewrite things because the code is ugly." I've successfully advocated for month-long refactors by showing they'd pay for themselves in saved engineering time within a quarter.
+
+The craft of software engineering isn't about writing perfect code the first time — it's about knowing how to evolve imperfect code into better code while continuously delivering value. Master incremental refactoring, and you'll ship faster than the engineers who either ignore code quality or get stuck in endless refactoring cycles. That's the real 10x skill.
+
+# The Myth of the 10x Engineer: What Actually Makes Someone Senior
+URL: https://anthonysdigital.net/blog/posts/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen.html
+Date: 2026-05-04
+
+The engineers who become force multipliers are rarely the ones who can invert a binary tree on a whiteboard. They ask whether the thing should be built before they write it. Seniority shows up as judgment, communication, and making the rest of the team more effective.
+
+Seniority is About Reducing Risk, Not Writing Code
+
+Junior engineers solve problems by writing code. Senior engineers solve problems by not writing code. Every line of code is a liability: it needs to be tested, maintained, debugged, and eventually rewritten. The best engineers I know have prevented more disasters by killing bad ideas early than by shipping clever solutions. This isn't about being negative — it's about understanding that engineering is a business function, not an academic exercise.
+
+The 10x engineer myth is dangerous because it focuses on individual output instead of team leverage. A truly senior engineer makes their entire team 2x more effective, which is far more valuable than being personally productive.
+
+Communication is Your Most Important Skill
+
+Here's something they don't teach in CS programs: your ability to write clear documentation, design docs, and Slack messages will determine your career trajectory more than your algorithm skills. I've seen brilliant engineers plateau because they couldn't explain their work to non-technical stakeholders. I've also seen mediocre coders become CTOs because they could translate business needs into technical strategy and rally teams around a vision.
+
+- Write design docs before coding anything that takes more than 2 days
+- Over-communicate in async environments — write like your teammates are in different timezones (they probably are)
+- Learn to say no with data, not opinions — "this will take 3 sprints and delay the Q2 roadmap" beats "I don't think that's a good idea"
+- Practice explaining technical decisions to your PM in business terms — "this refactor will reduce our AWS costs by 30%" resonates more than "we need to optimize our database queries"
+
+The Code You Don't Write
+
+Let me give you a real example from last year. A mid-level engineer on my team proposed building a custom feature flag system. They had a beautiful design, clean architecture diagrams, even a proof of concept. A junior engineer would have said "cool!" A senior engineer asks different questions:
+
+// What they wanted to build:
+class FeatureFlagService {
+  constructor(configStore, cache, analytics) {
+    this.store = configStore;
+    this.cache = cache;
+    this.analytics = analytics;
+  }
+
+  async isEnabled(flagName, userId, context = {}) {
+    const cacheKey = `flag:${flagName}:${userId}`;
+    const cached = await this.cache.get(cacheKey);
+    if (cached) return cached;
+
+    const config = await this.store.getFlag(flagName);
+    const enabled = this.evaluate(config, userId, context);
+    
+    await this.cache.set(cacheKey, enabled, 300);
+    this.analytics.track('feature_flag_checked', { flagName, enabled });
+    
+    return enabled;
+  }
+
+  evaluate(config, userId, context) {
+    // Custom evaluation logic: rollout %, user segments, etc.
+    // This is where 2000 lines of code would go
+  }
+}
+
+// What we actually did:
+import LaunchDarkly from 'launchdarkly-node-server-sdk';
+
+const ldClient = LaunchDarkly.init(process.env.LD_SDK_KEY);
+
+export const isEnabled = (flagName, user) => {
+  return ldClient.variation(flagName, user, false);
+};
+
+// Saved 3 months of development, got better features, moved on to actual business problems
+
+The difference? The senior engineer recognized this was a solved problem. We paid LaunchDarkly $200/month instead of spending 3 engineer-months building and maintaining a custom solution. That's $45,000 saved in the first year alone, not counting the opportunity cost of what we built instead.
+
+Judgment Comes From Scars, Not Certifications
+
+You become senior by making mistakes and learning from them. I've caused production outages, shipped features nobody used, architected systems that collapsed under load, and picked technologies that became unmaintainable. Every scar taught me something. The key is to make mistakes cheaply — fail fast in staging, not in production. Use feature flags. Write runbooks. Have rollback plans. Senior engineers aren't the ones who never fail; they're the ones who fail gracefully and learn systematically.
+
+Keep a "lessons learned" document. After every incident, outage, or failed project, write down what happened and what you'd do differently. Review it quarterly. This is your actual education — more valuable than any bootcamp or certification.
+
+The Real 10x Multiplier: Making Others Better
+
+The best engineers I've worked with share a common trait: they make everyone around them better. They write documentation that answers questions before they're asked. They build tools that eliminate entire classes of bugs. They mentor junior engineers and give feedback that actually helps people grow. They push back on bad requirements and protect their team from scope creep and technical debt.
+
+// Junior: Solves their own problem
+function formatCurrency(amount: number): string {
+  return `$${amount.toFixed(2)}`;
+}
+
+// Senior: Solves the problem for the entire team
+import { Currency } from './types';
+
+/**
+ * Formats monetary values with proper localization and currency symbols.
+ * 
+ * @example
+ * formatCurrency(1234.5, 'USD', 'en-US') // "$1,234.50"
+ * formatCurrency(1234.5, 'EUR', 'de-DE') // "1.234,50 €"
+ * 
+ * @see https://wiki.company.com/currency-formatting for business rules
+ * @see tests/formatCurrency.test.ts for edge cases
+ */
+export function formatCurrency(
+  amount: number,
+  currency: Currency = 'USD',
+  locale: string = 'en-US'
+): string {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+  }).format(amount);
+}
+
+// Bonus: They also add it to the team's shared utility library,
+// write tests, update the style guide, and teach the pattern in code review
+
+Notice the difference? The senior engineer thinks about the next person who needs to format currency. They document edge cases, link to business context, use proper types, and consider internationalization from the start. This isn't about showing off — it's about reducing the cognitive load for everyone who comes after them. That's leverage. That's what makes someone senior.
+
+Promotion metrics fall into the same trap
+
+An engineering ladder often measures the same mistaken idea of seniority: individual output. Ticket counts, lines changed, and pull requests merged are easy to display. They are also linear. The work that compounds is the work that still helps after you stop touching it. A decision other people can follow, an abstraction that makes the next change smaller, and tooling that removes a class of defects all outlast another feature with your name on it.
+
+The promotion paradox: the behaviors that get someone to senior are not the behaviors that got them from junior to mid-level. Individual output stops being the point, and teams often keep rewarding it anyway.
+
+- Linear work: implementing the next request, fixing a bug in isolation, collecting activity that looks busy in a review.
+- Leverage: a change later changes reuse, a note that prevents the same question, a system other people can modify without you in the room.
+
+There is a heroics version of the same mistake. If one person is the only one who can rescue a system, the team depends on that person. Seniority is making the rescue unnecessary. The incident habits are in The Debugging Mindset.
+
+A small example of leverage is encoding the failure path so a caller cannot ignore it:
+
+type Result<T, E = Error> =
+  | { ok: true; value: T }
+  | { ok: false; error: E };
+
+async function fetchUser(id: string): Promise<Result<User>> {
+  try {
+    const user = await db.user.findUnique({ where: { id } });
+    if (!user) return { ok: false, error: new NotFoundError('User not found') };
+    return { ok: true, value: user };
+  } catch (error) {
+    return { ok: false, error: error as Error };
+  }
+}
+
+The pattern is not there to look clever. It makes the error path part of the type, which helps the next person more than another isolated feature would.
+
+Related reading: The First 90 Days is the ramp into an unfamiliar codebase, and The Pull Request is where that judgment shows up in public.
+
+# Application Security and OWASP: Start Here
+URL: https://anthonysdigital.net/blog/posts/application-security-and-owasp-best-practices-a-production-e.html
+Date: 2026-04-27
+
+This page is the map for the API security posts on this site. Each later article owns one topic. The notes below only say which question that article answers, so this one does not repeat them.
+
+Who can have this record, this function, or this field
+
+- Login Is Not Ownership covers a valid session that can still request someone else's object by changing an id.
+- When a Valid Session Can Call Admin covers a valid session that can call a privileged function because the route never checks a permission.
+- A Field-Level Checklist for Mass Assignment and Data Exposure covers fields a client should not send, and fields a response should not return.
+
+Tokens, expensive routes, and fetches
+
+- JWT Validation Mistakes That Still Ship is about verification, algorithms, expiry, issuer, and audience. Decoding a token is not that check.
+- A Rate-Limit Checklist Beyond the Login Endpoint is about search, export, uploads, and other work that login limits never see.
+- What I Inspect When an API Fetches a User-Supplied URL is a defensive review of URL fetch features: allowlists, resolution, and redirects.
+
+What is deployed, and what you accept from partners
+
+- A Production Sweep for Security Misconfiguration is the release pass for debug routes, CORS, default credentials, verbose errors, unused methods, and security headers such as Content-Security-Policy, Strict-Transport-Security, and X-Content-Type-Options.
+- The Routes That Never Made the Inventory is about undocumented and deprecated paths that still respond.
+- Treat Upstream Responses as Untrusted Input is about validating partner and webhook payloads before they enter your logic.
+
+Topics that do not have their own post yet
+
+Injection, across SQL, NoSQL, and command interpreters, is still the habit of treating input as data rather than as part of a query or a command. Parameterized queries and a schema that rejects unexpected types are the practical controls. Cross-site scripting in API-driven frontends, insecure deserialization, and agent or tool-call scoping are not separate articles here yet. When an LLM feature is already in production, the operational side of that work is AI/LLM Integrations in Production Apps: What They Don't Tell You, which is about cost, streaming, and fallbacks rather than tool-call permissions.
+
+Start with the authorization trio if you are deciding what to read first, then tokens, then the sweep. The next article in the series is Login Is Not Ownership.
+
+# The Code Review Mindset: How to Give and Receive Feedback That Actually Improves Code
+URL: https://anthonysdigital.net/blog/posts/the-code-review-mindset-how-to-give-and-receive-feedback-tha.html
+Date: 2026-04-20
+
+Teams that treat code reviews as a checkbox exercise ship buggy code and burn engineers out. Teams that treat them as collaborative learning ship better code and build stronger engineers. The difference is the mindset, not the tool. How to write the pull request itself, including a clear description and a small diff, lives in The Pull Request. This post stays on giving and receiving the review.
+
+The Two Types of Feedback (And Why You Need Both)
+
+Most engineers conflate two fundamentally different types of feedback: blocking feedback (things that must change before merge) and teaching feedback (suggestions for improvement that aren't dealbreakers). Mixing these up creates confusion and resentment. When I review code, I explicitly label my comments.
+
+// ❌ BLOCKING: This will cause a memory leak in long-running processes
+const cache = {};
+
+export function memoize(fn) {
+  return (...args) => {
+    const key = JSON.stringify(args);
+    if (cache[key]) return cache[key];
+    cache[key] = fn(...args);
+    return cache[key];
+  };
+}
+
+// ✅ SUGGESTION: Consider using a WeakMap or LRU cache for better memory management
+import LRU from 'lru-cache';
+
+const cache = new LRU({ max: 500, ttl: 1000 * 60 * 5 });
+
+export function memoize(fn) {
+  return (...args) => {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+Pro tip: Use prefixes like blocking:, nit:, or question: in your review comments. This single change will eliminate 80% of the friction in your code reviews. The author immediately knows what requires action versus what's optional discussion.
+
+Ask Questions, Don't Make Demands
+
+The fastest way to make someone defensive is to tell them their code is wrong without understanding their constraints. I've learned to phrase most comments as questions: "What happens if this API returns null?" or "Have you considered using a Set here for O(1) lookups?" This approach serves two purposes: it makes the author think through edge cases, and it gives them space to explain constraints you might not be aware of. Sometimes the answer is "Good catch, I'll fix that" and sometimes it's "The API contract guarantees non-null, see line 15"—both are valuable outcomes.
+
+Review for Architecture First, Style Last
+
+I review PRs in three passes, and the order matters. First pass: architecture and approach. Does this solve the right problem? Are there glaring performance issues or security holes? Second pass: logic and edge cases. Third pass: style and nitpicks. If you comment on indentation before questioning whether the entire approach is sound, you've wasted everyone's time.
+
+- Pass 1 - Architecture: Does this belong here? Is the abstraction appropriate? Will this scale?
+- Pass 2 - Correctness: Edge cases, error handling, race conditions, off-by-one errors
+- Pass 3 - Quality: Readability, naming, tests, documentation, style consistency
+- Pass 4 - Nitpicks: Only if you have time and energy, and always marked as non-blocking
+
+Receiving Feedback: Defend Your Code, Not Your Ego
+
+When someone questions your PR, you have two options: defend the code with technical reasoning, or defend your ego with emotional reasoning. I've been guilty of the latter more times than I'd like to admit. The trick I use now: wait 10 minutes before responding to any comment that triggers defensiveness. Usually, after that pause, I realize the reviewer has a point. If I still disagree, I respond with data: benchmarks, links to docs, or examples of similar patterns in the codebase.
+
+// Reviewer: "Why not use Promise.all here?"
+// ❌ Defensive response: "This works fine, we don't need to optimize everything"
+
+// ✅ Technical response with reasoning:
+// "Good question. These API calls need to be sequential because 
+// each depends on the previous response's data. Here's the flow:"
+
+async function processUserData(userId: string) {
+  // Step 1: Get user - needed for step 2
+  const user = await fetchUser(userId);
+  
+  // Step 2: Get permissions - requires user.organizationId from step 1
+  const permissions = await fetchPermissions(user.organizationId);
+  
+  // Step 3: Get resources - filtered by permissions from step 2
+  const resources = await fetchResources(permissions.allowedResourceIds);
+  
+  return { user, permissions, resources };
+}
+
+// If they WERE independent, I'd absolutely use Promise.all:
+// const [user, settings, preferences] = await Promise.all([
+//   fetchUser(userId),
+//   fetchSettings(userId),
+//   fetchPreferences(userId)
+// ]);
+
+Reality check: If you find yourself getting defensive about code reviews regularly, that's a signal. Either you're working with jerks (possible), or you're tying your self-worth to your code (more likely). Your code is not you. It's a draft document that gets better with editing.
+
+The 24-Hour Rule for Big Changes
+
+Here's a rule that's saved me countless hours of rework: if a reviewer suggests a significant architectural change, I don't implement it immediately. I sleep on it. I've found that about 30% of the time, the suggestion doesn't actually fit once I think through all the implications. In those cases, I respond with a detailed explanation of why I'm keeping the current approach. The other 70% of the time, the suggestion is good, and having thought it through means I implement it properly the first time rather than rushing a half-baked version just to appease the reviewer.
+
+Code reviews are the highest-leverage activity in software engineering. They catch bugs, spread knowledge, enforce standards, and mentor junior engineers—all at once. But only if you approach them with the right mindset: collaborative, curious, and focused on the code rather than the coder. Master this, and you'll not only write better code, you'll build better teams.
+
+# React Native Mobile Architecture: Lessons from Production
+URL: https://anthonysdigital.net/blog/posts/react-native-mobile-architecture-lessons-from-production.html
+Date: 2026-04-13
+
+Architecture decisions made early decide whether a React Native app stays easy to change or drowns in structural debt. The ecosystem talks about the bridge and JSI. The practical battle is how the codebase is structured: modules, native boundaries, navigation, and where state lives.
+
+The Module Layer Pattern
+
+Most React Native apps start as a monolith and die as a monolith. The biggest architectural win I've implemented is treating major features as isolated modules with explicit dependency contracts. Each module owns its navigation, state, and native bridges. This isn't about microservices—it's about cognitive load and parallel development.
+
+// modules/payments/index.ts
+export interface PaymentsModule {
+  screens: {
+    CheckoutScreen: React.ComponentType<CheckoutProps>;
+    PaymentMethodsScreen: React.ComponentType;
+  };
+  hooks: {
+    usePaymentMethods: () => PaymentMethod[];
+    useCheckout: () => CheckoutAPI;
+  };
+  services: {
+    processPayment: (params: PaymentParams) => Promise<PaymentResult>;
+  };
+}
+
+// modules/payments/PaymentsModule.tsx
+class PaymentsModuleImpl implements PaymentsModule {
+  constructor(
+    private analytics: AnalyticsService,
+    private api: APIClient
+  ) {}
+
+  screens = {
+    CheckoutScreen: lazy(() => import('./screens/CheckoutScreen')),
+    PaymentMethodsScreen: lazy(() => import('./screens/PaymentMethodsScreen')),
+  };
+
+  hooks = {
+    usePaymentMethods: () => {
+      // Module-scoped hook implementation
+      return useQuery(['payment-methods'], () => 
+        this.api.get('/payment-methods')
+      );
+    },
+    useCheckout: () => createCheckoutHook(this.api, this.analytics),
+  };
+
+  services = {
+    processPayment: async (params) => {
+      this.analytics.track('payment_initiated', params);
+      return this.api.post('/payments', params);
+    },
+  };
+}
+
+Key insight: Modules should communicate through well-defined interfaces, never by importing components or hooks directly from other modules. This lets you refactor internals without breaking the rest of the app.
+
+Native Bridge Organization
+
+The new architecture (Fabric + TurboModules) is great, but you still need a coherent strategy for native code. I organize native modules by capability, not by platform. Each capability gets a TypeScript interface, platform-specific implementations, and a unified JS API. This makes mocking trivial for testing and keeps platform differences contained.
+
+// native/capabilities/biometrics/index.ts
+export interface BiometricsCapability {
+  isAvailable(): Promise<boolean>;
+  authenticate(reason: string): Promise<BiometricResult>;
+  getSupportedTypes(): Promise<BiometricType[]>;
+}
+
+// native/capabilities/biometrics/BiometricsModule.ts
+import { NativeModules } from 'react-native';
+
+const { RNBiometrics } = NativeModules;
+
+export class BiometricsModule implements BiometricsCapability {
+  async isAvailable(): Promise<boolean> {
+    if (!RNBiometrics) return false;
+    const { available } = await RNBiometrics.isSensorAvailable();
+    return available;
+  }
+
+  async authenticate(reason: string): Promise<BiometricResult> {
+    const { success, error } = await RNBiometrics.simplePrompt({
+      promptMessage: reason,
+      cancelButtonText: 'Cancel',
+    });
+    
+    return {
+      authenticated: success,
+      error: error ? this.mapNativeError(error) : undefined,
+    };
+  }
+
+  async getSupportedTypes(): Promise<BiometricType[]> {
+    const { biometryType } = await RNBiometrics.isSensorAvailable();
+    return biometryType ? [biometryType as BiometricType] : [];
+  }
+
+  private mapNativeError(error: string): BiometricError {
+    // Map platform-specific errors to unified error types
+    if (error.includes('cancelled')) return 'USER_CANCELLED';
+    if (error.includes('lockout')) return 'LOCKED_OUT';
+    return 'UNKNOWN';
+  }
+}
+
+Navigation as Infrastructure
+
+React Navigation is the de facto standard, but treat it as infrastructure, not application code. I create a routing layer that decouples navigation logic from screens. This means you can deep link to any screen with type-safe parameters, and navigation logic lives in one place instead of scattered across 50 navigation.navigate() calls.
+
+// navigation/Router.ts
+export class Router {
+  constructor(private navRef: NavigationContainerRef) {}
+
+  // Type-safe navigation methods
+  goToCheckout(params: { cartId: string; promoCode?: string }) {
+    this.navRef.navigate('Payments', {
+      screen: 'Checkout',
+      params,
+    });
+  }
+
+  goToProductDetails(productId: string) {
+    this.navRef.navigate('Catalog', {
+      screen: 'ProductDetails',
+      params: { productId },
+    });
+  }
+
+  // Deep linking handled centrally
+  handleDeepLink(url: string) {
+    const route = this.parseDeepLink(url);
+    
+    if (route.path === '/products/:id') {
+      this.goToProductDetails(route.params.id);
+    } else if (route.path === '/checkout') {
+      this.goToCheckout({ cartId: route.params.cartId });
+    }
+  }
+
+  private parseDeepLink(url: string): ParsedRoute {
+    // Centralized deep link parsing logic
+    return parseURL(url, this.routeConfig);
+  }
+}
+
+Warning: Don't pass navigation objects down through props. Use a router singleton or context. Passing navigation as props creates tight coupling and makes testing painful.
+
+Performance Boundaries
+
+React Native performance issues are almost always about unnecessary re-renders or bridge congestion. I establish performance boundaries using React.memo aggressively at the screen level and use separate bridge channels for high-frequency events. For lists, FlatList with proper keyExtractor and getItemLayout is non-negotiable.
+
+- Screen-level memoization: Wrap every screen component in React.memo with a custom comparison function that checks route params
+- Bridge batching: Never send individual bridge calls in loops—batch them or use a dedicated high-frequency channel
+- Image optimization: Use FastImage with aggressive caching and always specify dimensions to prevent layout thrashing
+- Hermes + RAM bundles: Enable Hermes and use RAM bundle format for faster startup on Android
+- Monitor with Flipper: Use Flipper's performance plugins in development to catch bridge bottlenecks before they hit production
+
+The Build System
+
+Your CI/CD pipeline will make or break your velocity. I use Fastlane for both platforms with environment-specific build configurations managed through .env files and react-native-config. The key is making builds reproducible and keeping build times under 15 minutes. Cache your Gradle/CocoaPods dependencies aggressively, and use EAS Build if you can't maintain your own build infrastructure.
+
+The architecture patterns that matter in React Native aren't exotic—they're the boring fundamentals applied consistently. Modular boundaries, explicit interfaces, centralized infrastructure, and performance monitoring. Get these right early, and you'll spend your time shipping features instead of untangling dependencies.
+
+Where state should live
+
+A module that owns its state still has to pick a tool. Start with what the framework already gives you. Local component state is enough for one screen. Context is enough when a few children share a value that changes rarely. A dedicated store earns its place when many screens read and update the same session or domain data and those updates are getting hard to follow.
+
+Redux, MobX, Recoil, and a small hook-based store are the usual later options. Adopting one before the app has shown the need adds ceremony. The failure mode is extra indirection and re-renders that cost more than the feature did.
+
+const UserProfile = () => {
+  const [profile, setProfile] = useState({
+    name: '',
+    email: '',
+    preferences: {}
+  });
+
+  const updateProfile = (updates) => {
+    setProfile(current => ({ ...current, ...updates }));
+  };
+};
+
+When a store is justified, keep each update narrow so one slice does not re-render the whole tree. Measure that before adding another layer. The progression is local state, then context, then a store.
+
+# TypeScript Patterns for Large Codebases
+URL: https://anthonysdigital.net/blog/posts/typescript-patterns-for-large-codebases.html
+Date: 2026-04-11
+
+The patterns that work for a small TypeScript project often become liabilities once the codebase is large. The type system that once felt like a safety net starts to slow the editor down, builds get heavier, and any shows up because it is the fastest way to ship. These are the patterns that still hold after the tutorial phase.
+
+Nominal Types Over Structural Typing
+
+TypeScript's structural typing is elegant until you accidentally pass a UserId where an OrderId was expected—both are strings, so TypeScript happily compiles. In large codebases with dozens of domain entities, this becomes a real problem. The solution is to implement nominal typing using branded types.
+
+// Create branded types for domain primitives
+type Brand<K, T> = K & { __brand: T };
+
+type UserId = Brand<string, 'UserId'>;
+type OrderId = Brand<string, 'OrderId'>;
+type EmailAddress = Brand<string, 'EmailAddress'>;
+
+// Factory functions enforce validation
+function createUserId(id: string): UserId {
+  if (!id.startsWith('usr_')) throw new Error('Invalid user ID format');
+  return id as UserId;
+}
+
+function createOrderId(id: string): OrderId {
+  if (!id.startsWith('ord_')) throw new Error('Invalid order ID format');
+  return id as OrderId;
+}
+
+// Now this won't compile - type safety across your domain
+function getOrder(orderId: OrderId) { /* ... */ }
+const userId = createUserId('usr_123');
+getOrder(userId); // Error: Argument of type 'UserId' is not assignable to 'OrderId'
+
+Pro tip: Use branded types for any primitive that has domain meaning. IDs, email addresses, currency amounts, and timestamps are all excellent candidates. The upfront cost is minimal, but you'll catch entire classes of bugs at compile time.
+
+Strategic Use of Type Assertions
+
+Type assertions (as) get a bad rap, but they're essential in large codebases—you just need to be disciplined about where you use them. I follow a simple rule: assertions are allowed at system boundaries (API responses, database queries, external libraries) but banned everywhere else. Create a dedicated validation layer where runtime checks and type assertions live together.
+
+// validation.ts - centralized validation with runtime checks
+import { z } from 'zod';
+
+const UserSchema = z.object({
+  id: z.string().refine(id => id.startsWith('usr_')),
+  email: z.string().email(),
+  createdAt: z.string().datetime(),
+});
+
+type User = z.infer<typeof UserSchema>;
+
+// Safe assertion at the boundary
+export function parseUser(data: unknown): User {
+  return UserSchema.parse(data); // Throws if invalid
+}
+
+// In your API layer
+async function fetchUser(id: string): Promise<User> {
+  const response = await fetch(`/api/users/${id}`);
+  const data = await response.json();
+  return parseUser(data); // Single point of assertion with validation
+}
+
+// Rest of your codebase works with properly typed User objects
+function processUser(user: User) {
+  // No assertions needed - type is guaranteed
+  console.log(user.email.toLowerCase());
+}
+
+Discriminated Unions for State Machines
+
+One of TypeScript's most underutilized features is discriminated unions, especially for modeling state machines. Instead of optional fields that may or may not be present depending on state, make impossible states unrepresentable. This pattern eliminates entire categories of runtime errors.
+
+// Bad: Optional fields lead to invalid states
+type BadRequest = {
+  status: 'idle' | 'loading' | 'success' | 'error';
+  data?: User;
+  error?: Error;
+};
+
+// Good: Discriminated union makes invalid states impossible
+type RequestState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; data: User }
+  | { status: 'error'; error: Error };
+
+function handleRequest(state: RequestState) {
+  switch (state.status) {
+    case 'idle':
+      return 'Ready to start';
+    case 'loading':
+      return 'Loading...';
+    case 'success':
+      // TypeScript knows data exists here
+      return `Welcome ${state.data.email}`;
+    case 'error':
+      // TypeScript knows error exists here
+      return `Failed: ${state.error.message}`;
+  }
+}
+
+Discriminated unions combined with exhaustive switch statements give you compile-time guarantees that you've handled every case. When you add a new state, TypeScript will show you every place in your codebase that needs updating. This is invaluable in large teams.
+
+Module Boundaries and Barrel Files
+
+As your codebase grows, managing imports becomes a nightmare. Barrel files (index.ts) can help, but they're often misused. The key is to use them to enforce module boundaries, not just to make imports prettier. Each major domain or feature should have a single public API surface.
+
+- Do: Use barrel files to export only the public API of a module. Internal implementation details stay private.
+- Do: Structure folders by feature/domain, not by technical layer. features/orders/ is better than models/, services/, utils/.
+- Don't: Create barrel files that re-export everything. This defeats tree-shaking and creates circular dependencies.
+- Don't: Import across feature boundaries at the file level. Only import from the feature's public index.ts.
+- Use: TypeScript's path mapping in tsconfig.json to create clean import aliases: @features/orders instead of ../../../features/orders.
+
+Generic Constraints That Actually Help
+
+Generics are powerful, but unconstrained generics are nearly useless in large codebases. Every generic should have meaningful constraints that encode business rules. This makes your APIs self-documenting and catches errors at compile time rather than runtime.
+
+// Weak: Too generic, allows anything
+function processEntity<T>(entity: T): void {
+  // What can we actually do with T here?
+}
+
+// Better: Constrain to entities with required fields
+interface Entity {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+function processEntity<T extends Entity>(entity: T): void {
+  console.log(`Processing entity ${entity.id}`);
+  // TypeScript knows these fields exist
+}
+
+// Best: Constrain with branded types for domain safety
+interface DomainEntity<ID extends string> extends Entity {
+  id: Brand<string, ID>;
+}
+
+interface User extends DomainEntity<'UserId'> {
+  email: EmailAddress;
+}
+
+function updateEntity<T extends DomainEntity<string>>(
+  entity: T,
+  updates: Partial<Omit<T, 'id' | 'createdAt'>>
+): T {
+  return { ...entity, ...updates, updatedAt: new Date() };
+}
+
+These patterns aren't theoretical—they're born from pain points in real production systems. The initial investment in setting up branded types, validation layers, and proper module boundaries pays dividends as your team and codebase scale. TypeScript's type system is powerful enough to encode your business rules and prevent entire classes of bugs, but only if you use it strategically. Start with these patterns early, and your future self will thank you when you're refactoring a feature that touches 50 files across 10 teams.
+
+Related reading: choices the team will have to defend belong in Architecture Decision Records. Changing the code while features still ship is The Art of Incremental Refactoring.

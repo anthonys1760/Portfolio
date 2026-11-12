@@ -1099,6 +1099,7 @@ Defense
 Style
 - Vary the shape to fit the format above. Do not use a fixed outline.
 - Do not start the title with "How I Test".
+- Keep the title at 44 characters or fewer, so the page title plus " — Anthony Smith" stays within 60 characters.
 - Do not start the post, or any sentence, with "Most APIs", "Most apps", "Most applications", "Most organizations", or "The most common mistake I see".
 - Never use the phrase "case study".
 - Short, direct sentences. No em dashes. No exclamation points. No emoji.
@@ -1109,7 +1110,7 @@ Output
 Respond with valid JSON only. No markdown fences. No text before or after the JSON.
 {
   "title": "specific title that does not start with How I Test",
-  "excerpt": "plain text, max 200 characters, no HTML",
+  "excerpt": "plain text, max 160 characters, no HTML",
   "category": "${topic.category}",
   "readTime": "6 min",
   "keywords": "6-10 comma separated keywords",
@@ -1205,27 +1206,24 @@ function fixtureLead(topic, openingKey) {
 }
 
 function fixtureTitle(topic, formatKey) {
-  switch (formatKey) {
-    case 'checklist':
-      return `A ${topic.short} Checklist for One Feature`
-    case 'mistakes':
-      return `${topic.short} Gaps to Close Before Shipping`
-    case 'explainer':
-      return `Where ${topic.short} Sits in the Request`
-    case 'review':
-      return `A Defensive Pass for ${topic.short}`
-    case 'walkthrough':
-      return `Implementing a ${topic.short} Control`
-    case 'essay':
-      return `${topic.short} Is a Design Constraint`
-    default:
-      return topic.short
+  const labels = {
+    checklist: 'Checklist',
+    mistakes: 'Gaps',
+    explainer: 'Explained',
+    review: 'Review',
+    walkthrough: 'Control',
+    essay: 'Constraint',
   }
+  const titled = `${topic.short}: ${labels[formatKey] || 'Note'}`
+  if (`${titled} — Anthony Smith`.length <= 60) return titled
+  if (topic.short.length <= 44) return topic.short
+  return topic.short.slice(0, 44).replace(/\s+\S*$/, '').trim()
 }
 
 function fixtureExcerpt(topic) {
-  if (topic.summary.length <= 200) return topic.summary
-  return `${topic.summary.slice(0, 197).replace(/\s+\S*$/, '').trim()}...`
+  if (topic.summary.length <= 160) return topic.summary
+  const trimmed = topic.summary.slice(0, 160).replace(/\s+\S*$/, '').trim()
+  return trimmed || topic.summary.slice(0, 160).trim()
 }
 
 function pointsFor(topic) {
@@ -1377,11 +1375,14 @@ function validatePost(post, topic, format, corpus) {
   if (/^how i test\b/i.test(title.trim())) {
     problems.push('The title must not start with "How I Test".')
   }
-  if (title.length > 110) problems.push(`Title is ${title.length} characters. Keep it under 110.`)
+  const documentTitle = `${title.trim()} — Anthony Smith`
+  if (documentTitle.length > 60) {
+    problems.push(`Document title is ${documentTitle.length} characters ("${documentTitle}"). Maximum is 60, including " — Anthony Smith".`)
+  }
 
   const excerpt = visible(post.excerpt || '')
   if (!excerpt) problems.push('Excerpt is missing.')
-  if (excerpt.length > 200) problems.push(`Excerpt is ${excerpt.length} characters. Maximum is 200.`)
+  if (excerpt.length > 160) problems.push(`Excerpt is ${excerpt.length} characters. Maximum is 160.`)
   if (excerptHasMetaNote(excerpt)) {
     problems.push('Excerpt reads like an editor note. Write a reader-facing summary without illustration labels, placeholders, TODOs, or bracketed instructions.')
   }
@@ -1539,8 +1540,63 @@ function escapeCode(str) {
 
 // ── Build post HTML page ──────────────────────────────────────────────────────
 
+function documentTitle(title) {
+  const suffix = ' — Anthony Smith'
+  const full = `${String(title || '').trim()}${suffix}`
+  if (full.length <= 60) return full
+  const budget = 60 - suffix.length
+  let trimmed = String(title || '').trim().slice(0, budget).replace(/\s+\S*$/, '').replace(/[:\-,]\s*$/, '').trim()
+  if (!trimmed) trimmed = String(title || '').trim().slice(0, budget).trim()
+  return `${trimmed}${suffix}`
+}
+
+function documentDescription(excerpt) {
+  const text = visible(excerpt)
+  if (text.length <= 160) return text
+  const trimmed = text.slice(0, 160).replace(/\s+\S*$/, '').trim()
+  return trimmed || text.slice(0, 160).trim()
+}
+
+function inlineText(value) {
+  return String(value || '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function plainBody(post) {
+  const parts = []
+  for (const block of post.body || []) {
+    if (block.type === 'heading' || block.type === 'paragraph' || block.type === 'callout') {
+      parts.push(inlineText(block.text))
+    } else if (block.type === 'list' || block.type === 'orderedlist') {
+      parts.push((block.items || []).map(item => `- ${inlineText(item)}`).join('\n'))
+    } else if (block.type === 'code') {
+      parts.push(String(block.code || '').replace(/\s+$/, ''))
+    }
+  }
+  return parts.filter(Boolean).join('\n\n')
+}
+
 function buildPostHtml(post) {
   const bodyHtml = (post.body || []).map(renderBlock).join('\n\n')
+  const seoTitle = documentTitle(post.title)
+  const seoDescription = documentDescription(post.excerpt)
+  const pageUrl = `https://anthonysdigital.net/blog/posts/${post.slug}.html`
+  const breadcrumbJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://anthonysdigital.net/' },
+      { '@type': 'ListItem', position: 2, name: 'Field Notes', item: 'https://anthonysdigital.net/blog/' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: pageUrl },
+    ],
+  }, null, 2).replace(/</g, '\\u003c')
 
   return `<!doctype html>
 <html lang="en-US">
@@ -1552,28 +1608,28 @@ function buildPostHtml(post) {
 
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="${escapeHtml(post.excerpt)}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="${escapeHtml(seoDescription)}">
   <meta name="keywords" content="${escapeHtml(post.keywords || '')}">
   <meta name="author" content="Anthony Smith">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://anthonysdigital.net/blog/posts/${post.slug}.html">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://anthonysdigital.net/blog/posts/${post.slug}.html">
-  <meta property="og:title" content="${escapeHtml(post.title)} — Anthony Smith">
-  <meta property="og:description" content="${escapeHtml(post.excerpt)}">
+  <meta property="og:title" content="${escapeHtml(seoTitle)}">
+  <meta property="og:description" content="${escapeHtml(seoDescription)}">
   <meta property="og:image" content="${post.image}">
-  <meta property="og:site_name" content="Anthony Smith — Full Stack Engineer">
+  <meta property="og:site_name" content="Anthony Smith — Senior Software Engineer">
   <meta property="article:published_time" content="${post.dateISO}">
   <meta property="article:author" content="Anthony Smith">
   <meta property="article:section" content="${escapeHtml(post.category)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anthonys1760">
-  <meta name="twitter:title" content="${escapeHtml(post.title)}">
-  <meta name="twitter:description" content="${escapeHtml(post.excerpt)}">
+  <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
+  <meta name="twitter:description" content="${escapeHtml(seoDescription)}">
   <meta name="twitter:image" content="${post.image}">
 
-  <title>${escapeHtml(post.title)} — Anthony Smith</title>
+  <title>${escapeHtml(seoTitle)}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/basic.css">
@@ -1601,7 +1657,7 @@ function buildPostHtml(post) {
       "@id": "https://anthonysdigital.net/blog/posts/${post.slug}.html"
     },
     "headline": "${escapeHtml(post.title)}",
-    "description": "${escapeHtml(post.excerpt)}",
+    "description": "${escapeHtml(seoDescription)}",
     "keywords": "${escapeHtml(post.keywords || '')}",
     "articleSection": "${escapeHtml(post.category)}",
     "image": {
@@ -1611,15 +1667,10 @@ function buildPostHtml(post) {
     "datePublished": "${post.dateISO}",
     "dateModified": "${post.dateISO}",
     "author": {
-      "@type": "Person",
-      "name": "Anthony Smith",
-      "url": "https://anthonysdigital.net",
-      "jobTitle": "Senior Full Stack Engineer & Solutions Architect"
+      "@id": "https://anthonysdigital.net/#person"
     },
     "publisher": {
-      "@type": "Person",
-      "name": "Anthony Smith",
-      "url": "https://anthonysdigital.net"
+      "@id": "https://anthonysdigital.net/#person"
     },
     "url": "https://anthonysdigital.net/blog/posts/${post.slug}.html",
     "isPartOf": {
@@ -1628,6 +1679,10 @@ function buildPostHtml(post) {
       "url": "https://anthonysdigital.net/blog/"
     }
   }
+  </script>
+
+  <script type="application/ld+json">
+  ${breadcrumbJson}
   </script>
 
   <style>
@@ -1925,6 +1980,39 @@ function updateSitemap(slug, dateISO) {
   writeFileSync(sitemapPath, xml, 'utf8')
   console.log(`[Blog] Updated sitemap.xml with ${postUrl}`)
 }
+
+function updateLlmsFiles(post) {
+  const llmsPath = path.join(ROOT, 'llms.txt')
+  const fullPath = path.join(ROOT, 'llms-full.txt')
+  const url = `https://anthonysdigital.net/blog/posts/${post.slug}.html`
+  const link = `- [${String(post.title).replace(/[\[\]]/g, '')}](${url})`
+
+  let llms = readFileSync(llmsPath, 'utf8')
+  if (!llms.includes(url)) {
+    const heading = '## API security writing\n'
+    const index = llms.indexOf(heading)
+    if (index === -1) {
+      throw new BlogError('llms.txt is missing the "## API security writing" section.')
+    }
+    const insertAt = index + heading.length
+    llms = `${llms.slice(0, insertAt)}${link}\n${llms.slice(insertAt)}`
+    writeFileSync(llmsPath, llms, 'utf8')
+    console.log(`[Blog] Added ${url} to llms.txt`)
+  } else {
+    console.log('[Blog] llms.txt already lists this post, skipping')
+  }
+
+  let full = readFileSync(fullPath, 'utf8')
+  if (!full.includes(url)) {
+    const block = `# ${post.title}\nURL: ${url}\nDate: ${post.dateISO}\n\n${plainBody(post)}\n`
+    if (!full.endsWith('\n')) full += '\n'
+    if (!full.endsWith('\n\n')) full += '\n'
+    writeFileSync(fullPath, `${full}${block}`, 'utf8')
+    console.log(`[Blog] Appended ${url} to llms-full.txt`)
+  } else {
+    console.log('[Blog] llms-full.txt already contains this post, skipping')
+  }
+}
 function toMeta(post) {
   // Strip body from listing JSON. series, topicKey, format, and tags are
   // extra keys the index ignores. format is how the next run avoids the
@@ -2041,6 +2129,7 @@ async function main() {
   posts.unshift(toMeta(post))
   savePosts(posts)
   updateSitemap(post.slug, post.dateISO)
+  updateLlmsFiles(post)
   writeRunFile(post, topic, format, opening)
 
   const openingText = visible(post.body?.[0]?.text || (post.body?.[0]?.items || [])[0] || '')
