@@ -305,13 +305,19 @@ body.home .trust-split .trust-val {
 	font-size: 14px;
 	line-height: 1.5;
 }
-body.home .trust-split .trust-val .trust-note {
-	color: rgba(255, 255, 255, 0.55);
+body.home .trust-split .trust-val a {
+	color: #4bffa5;
 	white-space: nowrap;
 }
-/* The value column is ~300px beside the chat bubble. Stack Google Play
-   so "(coming soon)" stays with it instead of splitting mid-phrase.
-   Under 900px the row is full width and the separator stays inline. */
+body.home .trust-split .trust-val a:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: #4bffa5;
+}
+body.home .trust-split .trust-val a:is(:hover, :focus, :focus-visible) {
+	color: #d9ffe9;
+}
+/* The value column is ~300px beside the chat bubble. Keep "Android open beta"
+   on its own line so the phrase stays together. Under 900px the row is full
+   width and the separator stays inline. */
 @media (min-width: 900px) {
 	body.home .trust-split .trust-val .trust-more {
 		display: block;
@@ -512,6 +518,9 @@ body.home .trust-split .trust-val .trust-note {
 	margin: 0 6px 6px 0;
 	color: rgba(255, 255, 255, 0.72);
 }
+.case-card > div {
+	min-width: 0;
+}
 .case-links {
 	display: flex;
 	gap: 12px;
@@ -523,12 +532,16 @@ body.home .trust-split .trust-val .trust-note {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	max-width: 100%;
 	min-height: 46px;
-	padding: 0 18px;
+	padding: 10px 18px;
 	border-radius: 12px;
 	font-weight: 700;
 	font-size: 15px;
+	line-height: 1.25;
+	text-align: center;
 	text-decoration: none;
+	white-space: normal;
 }
 .case-links a.primary {
 	background: #4bffa5;
