@@ -352,6 +352,9 @@ body.home .trust-split .trust-val a:is(:hover, :focus, :focus-visible) {
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 0.62);
 }
+.case-kicker .os-name {
+	text-transform: none;
+}
 .status-pill {
 	display: inline-flex;
 	align-items: center;
@@ -1785,6 +1788,8 @@ body.home .work-status {
 	font-size: 12.5px;
 	line-height: 1.4;
 	color: rgba(255, 255, 255, 0.48);
+	text-transform: none;
+	letter-spacing: normal;
 }
 body.home .work-status a {
 	color: rgba(255, 255, 255, 0.52);
