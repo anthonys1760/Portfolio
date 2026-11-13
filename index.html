@@ -48,7 +48,6 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preload" as="image" href="images/projects/castlog-devices.webp" fetchpriority="high">
 	<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
@@ -317,21 +316,11 @@
 										</ul>
 										<div class="hero-cta-wrap" id="hero-cta-wrap">
 											<a class="hero-cta hero-cta-primary" href="mailto:anthony.smith1760@gmail.com?subject=Project%20or%20role">Email me about a project</a>
-											<a class="hero-text-link" href="portfolio.html">See the products<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+											<a class="hero-text-link" href="#selected-work">See my work<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 										</div>
 										<p class="hero-proof"><strong>Lead Systems Engineer</strong>, SpartanNash · <strong>PenTest+</strong> certified</p>
 										<p class="hero-availability">Open to full-time roles and contract or freelance work.</p>
 									</div>
-									<a class="feat-card" href="portfolio.html#castlog">
-										<div class="stage-top">
-											<div class="lbl">Featured product</div>
-											<div class="status"><i></i>Live on the App Store · Android beta</div>
-										</div>
-										<h2>CastLog</h2>
-										<p class="deck">Fishing journal you log by voice. Built solo, offline-first.</p>
-										<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, landscape iPad and phone" fetchpriority="high">
-										<span class="more">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-									</a>
 								</div>
 
 								<div class="hero-band">
@@ -394,6 +383,34 @@
 							<p>Google Ads and Analytics certified. Open to full-time roles and to contract or freelance work.</p>
 						</li>
 					</ul>
+				</div>
+			</section>
+
+			<section class="section home-panel selected-work" id="selected-work" aria-labelledby="selected-work-title">
+				<div class="home-panel-inner">
+					<h2 id="selected-work-title">Selected work</h2>
+					<div class="work-grid">
+						<article class="work-card" id="home-castlog">
+							<div class="mark" aria-hidden="true">CL</div>
+							<h3>CastLog</h3>
+							<p class="work-status">iOS App Store · <a href="https://castlogapp.com/#android-invite" target="_blank" rel="noopener">Android beta</a></p>
+							<p class="work-deck">React Native / Expo + TypeScript fishing journal. Voice-first catch logging, offline-first (lake, weather, and moon phase, including with no signal), Supabase. Built solo.</p>
+							<figure class="work-media">
+								<img src="images/projects/castlog-devices.webp" width="1600" height="1000" alt="CastLog website shown on a laptop, tablet and phone" loading="eager" decoding="async">
+							</figure>
+							<a class="work-link" href="portfolio.html#castlog">See CastLog<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+						</article>
+						<article class="work-card" id="home-nutrilogix">
+							<div class="mark" aria-hidden="true">NL</div>
+							<h3>Nutrilogix</h3>
+							<p class="work-status">iOS · <a href="https://testflight.apple.com/join/7tFSghHS" target="_blank" rel="noopener">TestFlight beta</a></p>
+							<p class="work-deck">React Native / Expo + TypeScript nutrition app. Photo or voice meal logging, barcode lookup, Apple Health sync, Supabase. Built solo.</p>
+							<figure class="work-media">
+								<img src="images/projects/nutrilogix-devices.webp" width="1600" height="1000" alt="Nutrilogix website shown on a laptop, tablet and phone" loading="eager" decoding="async">
+							</figure>
+							<a class="work-link" href="portfolio.html#nutrilogix">See Nutrilogix<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+						</article>
+					</div>
 				</div>
 			</section>
 

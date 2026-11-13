@@ -14,6 +14,14 @@ CallCatch (https://anthonys1760.github.io/callcatch-landing/) answers from a bus
 
 Google Ads and Analytics certified. Open to full-time roles and to contract or freelance work.
 
+## Selected work
+
+CastLog: React Native / Expo + TypeScript fishing journal with voice-first logging, offline-first (lake, weather, and moon phase, including with no signal), and Supabase. iOS is on the App Store, and an Android beta is open at https://castlogapp.com/#android-invite.
+
+Nutrilogix: React Native / Expo + TypeScript nutrition app with photo or voice meal logging, barcode lookup, Apple Health sync, and Supabase. The iOS TestFlight beta is open.
+
+https://anthonysdigital.net/#selected-work
+
 ## FAQ
 
 What kind of work does Anthony Smith do?
