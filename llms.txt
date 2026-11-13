@@ -11,6 +11,9 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 - [CallCatch](https://anthonys1760.github.io/callcatch-landing/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. [Rogue River Labs](https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
 - Open to full-time roles and to contract or freelance work.
 
+## Selected work
+- [Selected work](https://anthonysdigital.net/#selected-work): CastLog — React Native / Expo + TypeScript fishing journal with voice-first logging, offline-first (lake, weather, and moon phase, including with no signal), and Supabase. iOS is on the App Store, and an [Android beta](https://castlogapp.com/#android-invite) is open. Nutrilogix — React Native / Expo + TypeScript nutrition app with photo or voice meal logging, barcode lookup, Apple Health sync, and Supabase. The iOS TestFlight beta is open.
+
 ## FAQ
 - [FAQ](https://anthonysdigital.net/#faq): What kind of work does Anthony Smith do? He has 15+ years building production systems across web, iOS, SaaS, and databases. He ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs.
 - Is he open to full-time work or contract work? Both. He is open to full-time roles and to contract or freelance work.

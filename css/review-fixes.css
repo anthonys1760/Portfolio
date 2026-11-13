@@ -89,6 +89,7 @@ body.home .hero-tagline strong {
 }
 body.home .hero-copy {
 	padding-top: 20px;
+	max-width: 720px;
 }
 .hire-chips {
 	display: flex;
@@ -155,96 +156,8 @@ body.home .hero-proof strong {
 }
 
 body.home .hero-top {
-	display: grid;
-	grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.15fr);
-	gap: 48px;
-	align-items: start;
-	padding-bottom: 32px;
-}
-
-body.home a.feat-card,
-body.home a.feat-card:hover {
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	margin-top: 0;
-	min-width: 0;
-	border: 1px solid rgba(255, 255, 255, 0.1);
-	border-radius: 22px;
-	background: rgba(255, 255, 255, 0.04);
-	padding: 18px 18px 8px;
-	text-decoration: none;
-	color: inherit;
-	overflow: hidden;
-}
-body.home .feat-card .stage-top {
-	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	gap: 8px 12px;
-	padding: 2px 6px 0;
-}
-body.home .feat-card .lbl {
-	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
-	font-size: 12px;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	color: rgba(255, 255, 255, 0.66);
-}
-body.home .feat-card h2 {
-	font-size: 28px;
-	font-weight: 700;
-	line-height: 1.15;
-	margin: 8px 6px 0;
-	color: #fff;
-}
-body.home .feat-card .deck {
-	margin: 4px 6px 0;
-	max-width: none;
-	font-size: 15px;
-	line-height: 1.4;
-	color: rgba(255, 255, 255, 0.78);
-}
-body.home .feat-card .status {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	margin: 0;
-	font-size: 12.5px;
-	font-weight: 500;
-	color: #4bffa5;
-	letter-spacing: 0;
-	text-transform: none;
-}
-body.home .feat-card .status i {
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: #4bffa5;
-	display: inline-block;
-	font-style: normal;
-}
-body.home .feat-card .more {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	min-height: 44px;
-	margin: 4px 6px 8px;
-	font-size: 14px;
-	font-weight: 500;
-	color: #4bffa5;
-}
-body.home .feat-card img {
 	display: block;
-	width: calc(100% + 12px);
-	max-width: none;
-	height: auto;
-	margin: 8px -6px 0;
-	border-radius: 0;
-	aspect-ratio: auto;
-	object-fit: contain;
-	flex: none;
+	padding-bottom: 32px;
 }
 
 body.home .hero-band {
@@ -350,23 +263,11 @@ body.home .trust-split .trust-val a:is(:hover, :focus, :focus-visible) {
 		font-size: 34px;
 	}
 	body.home .hero-top {
-		grid-template-columns: 1fr;
-		gap: 24px;
 		padding-bottom: 16px;
 	}
 	body.home .hero-cta.hero-cta-primary {
 		width: 100%;
 		align-self: stretch;
-	}
-	body.home a.feat-card,
-	body.home a.feat-card:hover {
-		padding: 16px 14px 6px;
-	}
-	body.home .feat-card h2 {
-		font-size: 24px;
-	}
-	body.home .feat-card img {
-		margin-top: 4px;
 	}
 	body.home .hero-band {
 		grid-template-columns: 1fr;
@@ -983,7 +884,7 @@ body.hero-themed .header.active .menu-btn:after {
 	}
 }
 
-/* Project-card shots. Same rounded frame as the featured CastLog image. */
+/* Project-card shots. Same rounded frame as the homepage selected-work images. */
 .case-row .case-media {
 	margin: 0 0 14px;
 	padding: 0;
@@ -1017,7 +918,6 @@ svg.ico {
 	display: inline-flex;
 	align-items: center;
 }
-.feat-card .more,
 .blog-card-arrow {
 	display: inline-flex;
 	align-items: center;
@@ -1837,16 +1737,105 @@ body.home .faq-list a:is(:hover, :focus-visible) {
 	color: #d9ffe9;
 }
 body.home .do-list a:focus-visible,
-body.home .faq-list a:focus-visible {
+body.home .faq-list a:focus-visible,
+body.home .work-card a:focus-visible {
 	outline: 2px solid #4bffa5;
 	outline-offset: 3px;
 	border-radius: 2px;
+}
+
+body.home .work-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	margin: 0;
+}
+body.home .work-card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	margin: 0;
+	padding: 20px 20px 16px;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+body.home .work-card .mark {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: rgba(75, 255, 165, 0.1);
+	border: 1px solid rgba(75, 255, 165, 0.3);
+	display: grid;
+	place-items: center;
+	color: #4bffa5;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 13px;
+	margin: 0 0 12px;
+}
+body.home .work-card h3 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #fff;
+}
+body.home .work-status {
+	margin: 6px 0 0;
+	font-size: 12.5px;
+	line-height: 1.4;
+	color: rgba(255, 255, 255, 0.48);
+}
+body.home .work-status a {
+	color: rgba(255, 255, 255, 0.52);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+body.home .work-status a:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: rgba(255, 255, 255, 0.62);
+}
+body.home .work-deck {
+	margin: 10px 0 0;
+	font-size: 15px;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.78);
+}
+body.home .work-media {
+	margin: 14px 0 0;
+	padding: 0;
+}
+body.home .work-media img {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	aspect-ratio: 1600 / 1000;
+	object-fit: contain;
+	border-radius: 14px;
+}
+body.home .work-link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	margin-top: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #4bffa5;
+	text-decoration: none;
+}
+body.home .work-link:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: #4bffa5;
+}
+body.home .work-link:is(:hover, :focus-visible) {
+	color: #d9ffe9;
 }
 @media (max-width: 899px) {
 	body.home .home-panel-inner {
 		width: calc(100% - 32px);
 	}
-	body.home .do-list {
+	body.home .do-list,
+	body.home .work-grid {
 		grid-template-columns: 1fr;
 	}
 	body.home .do-list > li,
