@@ -10,7 +10,7 @@ Ships React Native and TypeScript apps on Supabase that use the OpenAI, Anthropi
 
 API and application security focus: BOLA, rate limiting, and prompt injection, with OWASP-aligned secure coding. CompTIA PenTest+ certified.
 
-CallCatch (https://anthonys1760.github.io/callcatch-landing/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. Rogue River Labs (https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
+CallCatch (https://callcatch-api-neon.vercel.app/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. Rogue River Labs (https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
 
 Google Ads and Analytics certified. Open to full-time roles and to contract or freelance work.
 

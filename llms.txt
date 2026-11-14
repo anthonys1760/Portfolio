@@ -8,7 +8,7 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 - [What I do](https://anthonysdigital.net/#what-i-do): 15+ years building production systems across web, iOS, SaaS, and databases.
 - Ships React Native and TypeScript mobile apps on Supabase that use the OpenAI, Anthropic, and Gemini APIs, including [CastLog](https://castlogapp.com/), [Nutrilogix](https://nutrilogix-ai.com/), and [VoiceLift](https://voicelift.app/).
 - API and application security focus: BOLA, rate limiting, and prompt injection, with OWASP-aligned secure coding.
-- [CallCatch](https://anthonys1760.github.io/callcatch-landing/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. [Rogue River Labs](https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
+- [CallCatch](https://callcatch-api-neon.vercel.app/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. [Rogue River Labs](https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
 - Open to full-time roles and to contract or freelance work.
 
 ## Selected work
@@ -32,7 +32,7 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 - [CastLog](https://castlogapp.com/): Voice-first fishing journal. Say the catch and it logs the lake, weather, and moon phase, including offline. iOS is on the App Store, and an Android test is open.
 - [Nutrilogix](https://nutrilogix-ai.com/): AI nutrition tracking. Snap a plate or say what you ate to log calories and macros, and sync workouts from Apple Health. The iOS beta is open.
 - [VoiceLift](https://voicelift.app/): Voice-first workout logging. Say a set and it is logged, including gym slang, supersets, and partials. A waitlist is open.
-- [CallCatch](https://anthonys1760.github.io/callcatch-landing/): Answers from a business's own website, does not invent a price, and turns unanswered questions into leads. A Rogue River Labs product for HVAC, plumbing, and electrical companies.
+- [CallCatch](https://callcatch-api-neon.vercel.app/): Answers from a business's own website, does not invent a price, and turns unanswered questions into leads. A Rogue River Labs product for HVAC, plumbing, and electrical companies.
 - [Rogue River Labs](https://rogueriverlabs.dev/): Builds mobile apps and the APIs behind them, and finds where access checks break. Founded by Anthony Smith.
 - [Portfolio](https://anthonysdigital.net/portfolio.html): Selected work, including CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs.
 
