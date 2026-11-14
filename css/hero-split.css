@@ -1,0 +1,266 @@
+/* Homepage split hero (Variant A). Loaded after review-fixes.css.
+   Scoped to body.home so inner pages stay untouched. */
+
+body.home .section.started .started-content.started-chat {
+	padding: 72px 0 0; /* was 108px; header clearance only */
+}
+
+body.home .hero-top {
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+	gap: 56px;
+	align-items: center;
+	min-height: calc(100vh - 72px); /* fills the first screen; band starts below the fold */
+	padding: 24px 0 40px;
+}
+
+body.home .hero-copy {
+	padding-top: 0;
+	max-width: 540px; /* was 720px */
+}
+
+body.home p.hero-eyebrow {
+	margin: 0 0 16px;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 12px;
+	line-height: 1.4;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.72); /* was 0.66; do not go back down */
+}
+
+body.home.hero-themed .hero-role {
+	margin: 0;
+	font-size: clamp(44px, 4.6vw, 68px); /* was clamp(34px, 4.2vw, 56px) */
+	font-weight: 700;
+	line-height: 1.05; /* was 1.1 */
+	letter-spacing: -0.03em; /* was -0.5px */
+	color: #ffffff;
+}
+
+body.home .hero-role strong {
+	color: #4bffa5;
+	font-weight: 700;
+}
+
+body.home .hero-tagline {
+	margin: 20px 0 0;
+	max-width: 34em; /* was 640px */
+	font-size: 17px; /* was 16.5px */
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.82); /* was 0.78 */
+	font-weight: 400;
+}
+
+body.home .hero-tagline strong {
+	color: #ffffff;
+	font-weight: 500;
+}
+
+/* CTA row — the live wrap is a column; make it a row */
+body.home .hero-cta-wrap,
+body.home #hero-cta-wrap {
+	opacity: 1 !important;
+	transform: none !important;
+	margin-top: 28px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 20px;
+	max-width: none;
+}
+
+body.home .hero-cta.hero-cta-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-width: 0; /* was min-width: 280px */
+	align-self: auto;
+	min-height: 52px;
+	padding: 0 22px;
+	border-radius: 14px;
+	background: #4bffa5;
+	color: #071a10;
+	font-weight: 700;
+	font-size: 17px;
+	text-decoration: none;
+	white-space: nowrap;
+	box-shadow: 0 10px 28px -12px rgba(75, 255, 165, 0.7);
+}
+
+body.home a.hero-cta.hero-cta-primary,
+body.home a.hero-cta.hero-cta-primary:hover {
+	color: #071a10;
+}
+
+body.home .hero-text-link,
+body.home a.hero-text-link:hover {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 44px;
+	color: #4bffa5;
+	font-weight: 500;
+	font-size: 15px;
+	text-decoration: none;
+	align-self: auto;
+}
+
+body.home .hero-text-link .ico,
+body.home .hero-text-link svg {
+	width: 18px;
+	height: 18px;
+	flex: none;
+}
+
+body.home .hero-proof,
+body.home .hero-availability {
+	margin: 10px 0 0;
+	font-size: 14px;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, 0.72);
+}
+
+body.home .hero-proof {
+	margin-top: 22px;
+}
+
+body.home .hero-proof strong {
+	color: #f0f0f5;
+	font-weight: 500;
+}
+
+body.home .hero-stage {
+	position: relative;
+	margin: 0;
+	min-width: 0;
+}
+
+body.home .hero-stage::before {
+	content: "";
+	position: absolute;
+	inset: 8% 6% 18% 6%;
+	background: radial-gradient(ellipse at 50% 50%, rgba(75, 255, 165, 0.16), transparent 70%);
+	filter: blur(24px);
+	pointer-events: none;
+}
+
+body.home .hero-stage img {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: auto;
+	filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+}
+
+body.home .hero-stage-cap {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 8px 14px;
+	margin-top: 4px;
+	padding: 0 8px;
+}
+
+body.home .hero-stage-kicker {
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 11px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.72);
+}
+
+body.home .hero-stage-cap a {
+	color: #4bffa5;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+body.home .hero-stage-cap a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+}
+
+/* The arrow SVG must be capped. An unsized 24×24 viewBox in this flex row
+   rendered at viewport size in the first mock pass. */
+body.home .hero-stage-cap a svg,
+body.home .hero-stage-cap a .ico {
+	width: 16px;
+	height: 16px;
+	flex: none;
+	display: inline-block;
+	vertical-align: -2px;
+	margin-left: 4px;
+}
+
+@media (max-width: 1024px) {
+	body.home .hero-top {
+		gap: 36px; /* was 56px */
+	}
+
+	body.home .hero-copy {
+		max-width: none; /* fill the 0.95fr column (~450px) */
+	}
+
+	body.home .hero-cta.hero-cta-primary {
+		width: auto; /* still a row, not full-bleed */
+	}
+}
+
+@media (max-width: 768px) {
+	body.home .section.started .started-content.started-chat {
+		padding-top: 60px; /* 60px fixed header */
+	}
+
+	body.home .hero-chat-wrap {
+		width: calc(100% - 32px);
+	}
+
+	body.home .hero-top {
+		grid-template-columns: 1fr;
+		gap: 28px;
+		min-height: 0; /* do not force a tall fold on a phone or small tablet */
+		padding: 16px 0 40px;
+		align-items: start;
+	}
+
+	body.home .hero-copy {
+		max-width: none;
+	}
+
+	body.home.hero-themed .hero-role {
+		font-size: 40px;
+		letter-spacing: -0.03em;
+	}
+
+	body.home .hero-tagline {
+		font-size: 16px;
+	}
+
+	body.home .hero-cta-wrap,
+	body.home #hero-cta-wrap {
+		margin-top: 22px;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+
+	body.home .hero-cta.hero-cta-primary {
+		width: 100%;
+		align-self: stretch;
+	}
+
+	body.home .hero-stage-cap {
+		padding: 0;
+	}
+}
+
+@media (max-width: 480px) {
+	body.home.hero-themed .hero-role {
+		font-size: 36px;
+		letter-spacing: -0.03em;
+	}
+}
