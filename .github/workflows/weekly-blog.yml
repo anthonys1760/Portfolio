@@ -2,8 +2,8 @@ name: Weekly Blog Post
 
 on:
   schedule:
-    # Mondays at 14:00 UTC, about 9:00 AM Eastern.
-    - cron: '0 14 * * 1'
+    # Mondays and Thursdays at 14:00 UTC, about 9:00 AM Eastern.
+    - cron: '0 14 * * 1,4'
   workflow_dispatch:
 
 # One draft at a time. A second run waits instead of racing the same posts.json.
