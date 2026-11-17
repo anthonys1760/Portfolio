@@ -186,4 +186,10 @@
 		<changefreq>never</changefreq>
 		<priority>0.7</priority>
 	</url>
+	<url>
+		<loc>https://anthonysdigital.net/blog/posts/user-text-cannot-select-a-tool.html</loc>
+		<lastmod>2026-11-15</lastmod>
+		<changefreq>never</changefreq>
+		<priority>0.7</priority>
+	</url>
 </urlset>
