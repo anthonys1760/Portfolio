@@ -1699,11 +1699,11 @@ body.hero-themed .skills-group.featured .group-label {
 }
 
 /* ── Back-to-top button ───────────────────────────────────────────────────── */
-/* Sit above the CallCatch launcher (bottom-right, ~48px tall, 12–20px inset). */
+/* Sit to the left of the CallCatch launcher (bottom-right, ~52px, 12px inset). */
 #back-to-top {
 	position: fixed;
-	bottom: 84px;
-	right: 32px;
+	bottom: 16px;
+	right: 76px;
 	z-index: 999;
 	width: 44px;
 	height: 44px;
@@ -1731,6 +1731,57 @@ body.hero-themed .skills-group.featured .group-label {
 #back-to-top:hover {
 	background: rgba(75,255,165,0.2);
 	box-shadow: 0 0 18px rgba(75,255,165,0.35);
+}
+#back-to-top:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+}
+@media (max-width: 480px) {
+	#back-to-top {
+		right: 76px;
+		bottom: 16px;
+	}
+}
+
+/* Resume links stay hidden until html[data-resume-ready="true"]. */
+html:not([data-resume-ready="true"]) .resume-link,
+html:not([data-resume-ready="true"]) .resume-ready-copy {
+	display: none !important;
+}
+html[data-resume-ready="true"] .resume-pending-copy {
+	display: none !important;
+}
+
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+}
+.footer-links a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: #4bffa5;
+	font-size: 14px;
+	text-decoration: none;
+}
+.footer-links a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+}
+.footer-links a:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+}
+body.hero-themed:not(.home) .footer .copy {
+	height: auto;
+	line-height: 1.2;
+}
+body.hero-themed:not(.home) .footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 14px;
 }
 
 /* ── Blog post code blocks ────────────────────────────────────────────────

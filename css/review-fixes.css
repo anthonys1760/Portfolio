@@ -1749,7 +1749,7 @@ body.home .work-card a:focus-visible {
 
 body.home .work-grid {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 16px;
 	margin: 0;
 }
@@ -1845,17 +1845,19 @@ body.home .work-link:is(:link, :visited, :hover, :focus, :focus-visible, :active
 body.home .work-link:is(:hover, :focus-visible) {
 	color: #d9ffe9;
 }
-@media (max-width: 899px) {
-	body.home .home-panel-inner {
-		width: calc(100% - 32px);
-	}
+@media (max-width: 1024px) {
 	body.home .do-list,
 	body.home .work-grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 	body.home .do-list > li,
 	body.home .do-list > li:nth-child(n) {
 		grid-column: auto;
+	}
+}
+@media (max-width: 899px) {
+	body.home .home-panel-inner {
+		width: calc(100% - 32px);
 	}
 }
 @media (max-width: 720px) {
@@ -1866,8 +1868,15 @@ body.home .work-link:is(:hover, :focus-visible) {
 		padding-bottom: 48px;
 	}
 	body.home .do-list > li,
-	body.home .faq-list > li {
+	body.home .faq-list > li,
+	body.home .faq-list details {
 		padding: 20px;
+	}
+}
+@media (max-width: 599px) {
+	body.home .do-list,
+	body.home .work-grid {
+		grid-template-columns: 1fr;
 	}
 }
 body.about .section:not(.started) {
@@ -2031,4 +2040,379 @@ body.about .adr {
 .post-hero-img {
 	height: auto;
 	background: #111;
+}
+
+/* Resume links: hidden until html[data-resume-ready="true"]. */
+html:not([data-resume-ready="true"]) .resume-link,
+html:not([data-resume-ready="true"]) .resume-ready-copy {
+	display: none !important;
+}
+html[data-resume-ready="true"] .resume-pending-copy {
+	display: none !important;
+}
+
+/* In-page anchors clear the sticky header. */
+body.home .section.home-panel,
+body.home #selected-work,
+body.home #what-i-do,
+body.home #faq,
+body.home #next,
+body.home #callcatch-demo {
+	scroll-margin-top: 88px;
+}
+@media (max-width: 1199px) {
+	body.home .section.home-panel,
+	body.home #selected-work,
+	body.home #what-i-do,
+	body.home #faq,
+	body.home #next,
+	body.home #callcatch-demo {
+		scroll-margin-top: 76px;
+	}
+}
+
+/* Compact mono receipt strip under the hero (replaces the anthony.ai bubble). */
+body.home .hero-receipt {
+	margin: 0;
+	padding: 18px 0 28px;
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+	display: grid;
+	gap: 10px;
+}
+body.home .hero-receipt p {
+	display: grid;
+	grid-template-columns: minmax(9.5em, 140px) minmax(0, 1fr);
+	column-gap: 16px;
+	row-gap: 2px;
+	align-items: baseline;
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+}
+body.home .hero-receipt .receipt-label,
+body.home .mono-label {
+	margin: 0;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 12px;
+	line-height: 1.4;
+	letter-spacing: 0.04em;
+	color: #4bffa5;
+	white-space: nowrap;
+}
+body.home .hero-receipt .receipt-val {
+	color: rgba(255, 255, 255, 0.78);
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 13px;
+	line-height: 1.55;
+}
+body.home .hero-receipt .receipt-val a {
+	color: #4bffa5;
+	text-decoration: none;
+	text-underline-offset: 2px;
+}
+body.home .hero-receipt .receipt-val a:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: #4bffa5;
+}
+body.home .hero-receipt .receipt-val a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+	text-decoration: underline;
+}
+body.home .hero-receipt .receipt-val a:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+@media (max-width: 599px) {
+	body.home .hero-receipt p {
+		grid-template-columns: 1fr;
+		gap: 2px;
+		margin: 0 0 8px;
+	}
+}
+
+/* Work card outcome + arch + consistent action buttons */
+body.home .work-arch {
+	margin: 8px 0 0;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 12px;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.62);
+}
+body.home .work-arch span {
+	color: #4bffa5;
+}
+body.home .work-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+}
+body.home .work-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0 14px;
+	border-radius: 10px;
+	border: 1px solid rgba(75, 255, 165, 0.35);
+	background: rgba(75, 255, 165, 0.1);
+	color: #4bffa5;
+	font-size: 13px;
+	font-weight: 500;
+	text-decoration: none;
+}
+body.home .work-btn:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: #4bffa5;
+	text-decoration: none;
+}
+body.home .work-btn:is(:hover, :focus-visible) {
+	background: rgba(75, 255, 165, 0.18);
+	color: #d9ffe9;
+}
+body.home .work-btn:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+}
+body.home .work-btn-ghost {
+	background: transparent;
+	border-color: rgba(255, 255, 255, 0.16);
+	color: rgba(255, 255, 255, 0.82);
+}
+body.home .work-btn-ghost:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: rgba(255, 255, 255, 0.82);
+}
+body.home .work-btn-ghost:is(:hover, :focus-visible) {
+	border-color: rgba(75, 255, 165, 0.4);
+	color: #4bffa5;
+}
+
+/* Brighten CastLog device shot so it matches Nutrilogix on the dark card. */
+body.home #home-castlog .work-media {
+	background:
+		radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.22), transparent 68%),
+		linear-gradient(180deg, #1c2a24 0%, #141c1a 100%);
+	border-radius: 14px;
+	padding: 6px;
+}
+body.home #home-castlog .work-media img {
+	filter: brightness(1.2) contrast(1.04) saturate(1.06);
+	background: transparent;
+}
+body.home #home-nutrilogix .work-media,
+body.home #home-callcatch .work-media {
+	background: radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.08), transparent 70%);
+	border-radius: 14px;
+}
+@media (prefers-reduced-motion: reduce) {
+	body.home #home-castlog .work-media img {
+		filter: brightness(1.16) contrast(1.02);
+	}
+}
+
+/* FAQ accordions */
+body.home .faq-list {
+	display: grid;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+}
+body.home .faq-list details {
+	margin: 0;
+	padding: 4px 20px 12px;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-left: 3px solid #4bffa5;
+}
+body.home .faq-list summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 44px;
+	margin: 0;
+	padding: 8px 0;
+	cursor: pointer;
+	list-style: none;
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #fff;
+}
+body.home .faq-list summary::-webkit-details-marker {
+	display: none;
+}
+body.home .faq-list summary::after {
+	content: "+";
+	flex: none;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 18px;
+	font-weight: 500;
+	color: #4bffa5;
+	line-height: 1;
+}
+body.home .faq-list details[open] summary::after {
+	content: "−";
+}
+body.home .faq-list summary:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+body.home .faq-list details p {
+	margin: 0 0 8px;
+	padding-bottom: 4px;
+	font-size: 15px;
+	line-height: 1.55;
+	color: rgba(255, 255, 255, 0.78);
+}
+body.home .faq-list details a {
+	color: #4bffa5;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+body.home .faq-list details a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+}
+body.home .faq-list details a:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Closing CTA */
+body.home .home-next {
+	padding-bottom: 24px;
+}
+body.home .home-next .mono-label {
+	margin: 0 0 16px;
+}
+body.home .next-cta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 20px;
+}
+body.home .home-next .hero-cta.hero-cta-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 52px;
+	padding: 0 22px;
+	border-radius: 14px;
+	background: #4bffa5;
+	color: #071a10;
+	font-weight: 700;
+	font-size: 17px;
+	text-decoration: none;
+	box-shadow: 0 10px 28px -12px rgba(75, 255, 165, 0.7);
+}
+body.home .home-next a.hero-cta.hero-cta-primary,
+body.home .home-next a.hero-cta.hero-cta-primary:hover {
+	color: #071a10;
+}
+body.home .home-next .hero-text-link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: #4bffa5;
+	font-weight: 500;
+	font-size: 15px;
+	text-decoration: none;
+}
+body.home .home-next .hero-cta:focus-visible,
+body.home .home-next .hero-text-link:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+}
+
+/* Footer email + resume */
+body.home .footer {
+	flex-wrap: wrap;
+	row-gap: 10px;
+}
+body.home .footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin: 0 auto 0 8px;
+}
+body.home .footer-links a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: #4bffa5;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+}
+body.home .footer-links a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+body.home .footer-links a:focus-visible {
+	outline: 2px solid #4bffa5;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+@media (max-width: 899px) {
+	body.home .footer-links {
+		margin: 0;
+	}
+}
+
+/* CallCatch demo fragment: visually hidden, still a valid in-page target. */
+body.home .callcatch-demo-anchor {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Keep FAQ / cards / closing CTA clear of floating buttons. */
+body.home .section.home-faq {
+	padding-bottom: 96px;
+}
+body.home .home-next {
+	padding-bottom: 48px;
+}
+body.home .footer {
+	padding: 22px 132px 40px max(24px, calc((100% - 1200px) / 2));
+}
+@media (max-width: 1024px) {
+	body.home .home-panel-inner {
+		width: calc(100% - 24px - 80px);
+		margin-left: 16px;
+		margin-right: 88px;
+	}
+}
+@media (max-width: 899px) {
+	body.home .footer {
+		padding: 22px 88px 40px 16px;
+	}
+}
+@media (max-width: 480px) {
+	body.home .home-panel-inner {
+		width: calc(100% - 24px - 68px);
+		margin-left: 16px;
+		margin-right: 76px;
+	}
+	body.home .section.home-faq {
+		padding-bottom: 120px;
+	}
+	body.home .footer {
+		padding: 22px 16px 96px;
+		padding-right: 88px;
+	}
+	body.home .next-cta .hero-cta.hero-cta-primary {
+		width: 100%;
+	}
 }

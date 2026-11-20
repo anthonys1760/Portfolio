@@ -11,7 +11,7 @@ body.home .hero-top {
 	grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
 	gap: 56px;
 	align-items: center;
-	min-height: calc(100vh - 72px); /* fills the first screen; band starts below the fold */
+	min-height: calc(100vh - 72px); /* fills the first screen; receipt strip starts below the fold */
 	padding: 24px 0 40px;
 }
 
@@ -278,6 +278,10 @@ body.home .term-cursor {
 		animation: none;
 		opacity: 0.85;
 	}
+}
+
+body.page-404 .hero-top {
+	min-height: calc(100vh - 160px);
 }
 
 @media (max-width: 1024px) {
