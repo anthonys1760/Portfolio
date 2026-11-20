@@ -1800,6 +1800,16 @@ body.home .work-status a {
 body.home .work-status a:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
 	color: rgba(255, 255, 255, 0.62);
 }
+body.home #home-castlog .work-status a {
+	color: #4bffa5;
+	text-decoration: none;
+}
+body.home #home-castlog .work-status a:is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+	color: #4bffa5;
+}
+body.home #home-castlog .work-status a:is(:hover, :focus-visible) {
+	color: #d9ffe9;
+}
 body.home .work-deck {
 	margin: 10px 0 0;
 	font-size: 15px;
