@@ -139,6 +139,19 @@ body.home .hero-stage {
 	min-width: 0;
 }
 
+/* Accessible name for the decorative terminal. Visually hidden; referenced by aria-labelledby. */
+body.home .hero-stage-caption {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
 body.home .hero-stage::before {
 	content: "";
 	position: absolute;
@@ -202,13 +215,15 @@ body.home .hero-term-body {
 	font-size: 14px;
 	line-height: 1.7;
 	color: rgba(255, 255, 255, 0.78);
-	white-space: pre;
-	overflow: hidden;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	overflow: auto;
 	max-width: none;
 }
 
 /* basic.css sets code { white-space: nowrap; display: inline-block } and
-   pre { background: #f6f6f6 }. Reset both so the terminal keeps its lines. */
+   pre { background: #f6f6f6 }. Reset both so the terminal keeps its lines
+   and can wrap or scroll under browser text zoom. */
 body.home .hero-term-body code {
 	display: block;
 	padding: 0;
@@ -218,10 +233,10 @@ body.home .hero-term-body code {
 	font-style: normal;
 	line-height: inherit;
 	color: inherit;
-	white-space: pre;
+	white-space: pre-wrap;
 	overflow: visible;
-	overflow-wrap: normal;
-	word-break: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 	max-width: none;
 	vertical-align: baseline;
 }
@@ -290,14 +305,18 @@ body.home .term-cursor {
 
 	body.home .hero-top {
 		grid-template-columns: 1fr;
-		gap: 28px;
+		gap: 16px;
 		min-height: 0; /* do not force a tall fold on a phone or small tablet */
-		padding: 16px 0 40px;
+		padding: 8px 0 24px;
 		align-items: start;
 	}
 
 	body.home .hero-copy {
 		max-width: none;
+	}
+
+	body.home p.hero-eyebrow {
+		margin-bottom: 10px;
 	}
 
 	body.home.hero-themed .hero-role {
@@ -306,15 +325,16 @@ body.home .term-cursor {
 	}
 
 	body.home .hero-tagline {
+		margin-top: 12px;
 		font-size: 16px;
 	}
 
 	body.home .hero-cta-wrap,
 	body.home #hero-cta-wrap {
-		margin-top: 22px;
+		margin-top: 16px;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 4px;
+		gap: 2px;
 	}
 
 	body.home .hero-cta.hero-cta-primary {
@@ -322,10 +342,22 @@ body.home .term-cursor {
 		align-self: stretch;
 	}
 
+	body.home .hero-proof {
+		margin-top: 14px;
+	}
+
+	body.home .hero-availability {
+		margin-top: 6px;
+	}
+
+	body.home .hero-term-bar {
+		padding: 10px 14px;
+	}
+
 	body.home .hero-term-body {
-		padding: 18px 16px 20px;
+		padding: 14px 16px 16px;
 		font-size: 13px;
-		line-height: 1.65;
+		line-height: 1.6;
 	}
 
 	body.home .hero-term-title {
@@ -341,5 +373,16 @@ body.home .term-cursor {
 
 	body.home .hero-term-body {
 		font-size: 12.5px;
+	}
+
+	/* CallCatch circle launcher is 52×52, 12px from the bottom-right.
+	   Keep the terminal box out of that corner on phones. */
+	body.home .hero-top {
+		padding-bottom: 76px;
+	}
+
+	body.home .hero-stage {
+		margin-right: 64px;
+		scroll-margin-bottom: 76px;
 	}
 }
