@@ -81,7 +81,41 @@
   }, { passive: true });
 
   btn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+})();
+
+// ── CallCatch live demo link (#callcatch-demo) ────────────────────────────────
+(function () {
+  function findLauncher() {
+    var nodes = document.querySelectorAll('button, a, [role="button"]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var label = ((el.getAttribute('aria-label') || '') + ' ' + (el.getAttribute('title') || '')).toLowerCase();
+      if (label.indexOf('callcatch') !== -1) {
+        var style = window.getComputedStyle(el);
+        if (style.position === 'fixed' || style.position === 'absolute') return el;
+      }
+    }
+    var candidates = document.querySelectorAll('[class*="callcatch" i], [id*="callcatch" i], [class*="CallCatch"]');
+    for (var j = 0; j < candidates.length; j++) {
+      var node = candidates[j];
+      if (node.tagName === 'BUTTON' || node.getAttribute('role') === 'button') return node;
+      var btn = node.querySelector('button, [role="button"]');
+      if (btn) return btn;
+    }
+    return null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href="#callcatch-demo"]');
+    if (!link) return;
+    var launcher = findLauncher();
+    if (!launcher) return;
+    e.preventDefault();
+    if (typeof launcher.focus === 'function') launcher.focus();
+    if (typeof launcher.click === 'function') launcher.click();
   });
 })();
 
