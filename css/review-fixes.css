@@ -2456,3 +2456,31 @@ body.home .footer {
 		width: 100%;
 	}
 }
+
+
+/* Terminal logo mark, left of the name. Same SVG/colors as the existing favicon. */
+body.hero-themed .header .logo {
+	overflow: visible;
+}
+body.hero-themed .header .logo a {
+	gap: 10px;
+}
+body.hero-themed .header .logo .logo-mark {
+	width: 30px;
+	height: 30px;
+	flex: none;
+	display: block;
+	border-radius: 8px;
+	/* Keep the mark's own mint-on-dark colors. layout.css inverts
+	   .header .logo img when a page background is enabled. */
+	filter: none;
+}
+
+/* The logo used to swap to "Download CV" on hover via hover-masks-logo.
+   That hover text is gone, and the new mark should stay put with the name. */
+body.hero-themed .header .logo.hover-masks-logo .mask-lnk,
+body.hero-themed .header .logo.hover-masks-logo a:hover .mask-lnk,
+body.hero-themed .header .logo.hover-masks-logo a:focus .mask-lnk {
+	transform: none;
+	opacity: 1;
+}
