@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 700" role="img" aria-label="VoiceLift system architecture diagram" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4bffa5" opacity="0.75"/>
+    </marker>
+    <filter id="glowSm">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#4bffa5" flood-opacity="0.18"/>
+    </filter>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#4bffa5" flood-opacity="0.25"/>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(75,255,165,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="320" height="700" rx="16" fill="#0d0c14"/>
+  <rect width="320" height="700" rx="16" fill="url(#grid)"/>
+  <text x="176" y="28" text-anchor="middle" fill="#ffffff" fill-opacity="0.82" font-size="14" font-weight="600">VoiceLift — System Architecture</text>
+
+  <rect x="52" y="44" width="248" height="54" rx="9" fill="#4bffa5" fill-opacity="0.07" stroke="#4bffa5" stroke-opacity="0.6" stroke-width="1.5" filter="url(#glowSm)"/>
+  <text x="176" y="66" text-anchor="middle" fill="#4bffa5" font-size="13" font-weight="700">React Native Client</text>
+  <text x="176" y="84" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">Expo SDK · voice button</text>
+  <line x1="176" y1="98" x2="176" y2="116" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="52" y="120" width="248" height="54" rx="9" fill="#4bffa5" fill-opacity="0.07" stroke="#4bffa5" stroke-opacity="0.55" stroke-width="1.5" filter="url(#glowSm)"/>
+  <text x="176" y="142" text-anchor="middle" fill="#4bffa5" font-size="13" font-weight="700">OpenAI Whisper</text>
+  <text x="176" y="160" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">speech-to-text · streaming</text>
+  <line x1="176" y1="174" x2="176" y2="192" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="52" y="196" width="248" height="54" rx="9" fill="#4bffa5" fill-opacity="0.07" stroke="#4bffa5" stroke-opacity="0.55" stroke-width="1.5" filter="url(#glowSm)"/>
+  <text x="176" y="218" text-anchor="middle" fill="#4bffa5" font-size="13" font-weight="700">GPT-4o Structured Outputs</text>
+  <text x="176" y="236" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">gym slang · supersets</text>
+  <line x1="176" y1="250" x2="176" y2="268" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="52" y="272" width="248" height="54" rx="9" fill="#ffffff" fill-opacity="0.04" stroke="#4bffa5" stroke-opacity="0.28" stroke-width="1.2"/>
+  <text x="176" y="294" text-anchor="middle" fill="#ffffff" fill-opacity="0.88" font-size="13" font-weight="600">Set / Superset State Machine</text>
+  <text x="176" y="312" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">exercise · weight · reps</text>
+  <line x1="176" y1="326" x2="176" y2="344" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="52" y="348" width="248" height="54" rx="9" fill="#ffffff" fill-opacity="0.04" stroke="#4bffa5" stroke-opacity="0.28" stroke-width="1.2"/>
+  <text x="176" y="370" text-anchor="middle" fill="#ffffff" fill-opacity="0.88" font-size="13" font-weight="600">Confirmation Sheet</text>
+  <text x="176" y="388" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">verify · edit before save</text>
+
+  <path d="M 52 375 C 16 375 16 71 52 71" stroke="#4bffa5" stroke-opacity="0.3" stroke-width="1.2" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+  <text x="14" y="230" text-anchor="middle" fill="#4bffa5" fill-opacity="0.45" font-size="9.5" font-weight="600" letter-spacing="0.08em" transform="rotate(-90 14 230)">re-record</text>
+
+  <line x1="176" y1="402" x2="176" y2="424" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="52" y="428" width="248" height="58" rx="9" fill="#4bffa5" fill-opacity="0.06" stroke="#4bffa5" stroke-opacity="0.48" stroke-width="1.5" filter="url(#glow)"/>
+  <text x="176" y="452" text-anchor="middle" fill="#ffffff" fill-opacity="0.9" font-size="13" font-weight="700">Supabase</text>
+  <text x="176" y="470" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">Postgres · RLS · Auth (JWT)</text>
+  <line x1="176" y1="486" x2="176" y2="508" stroke="#4bffa5" stroke-opacity="0.5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="52" y="512" width="248" height="54" rx="9" fill="#ffffff" fill-opacity="0.04" stroke="#4bffa5" stroke-opacity="0.28" stroke-width="1.2"/>
+  <text x="176" y="534" text-anchor="middle" fill="#ffffff" fill-opacity="0.88" font-size="13" font-weight="600">RevenueCat</text>
+  <text x="176" y="552" text-anchor="middle" fill="#ffffff" fill-opacity="0.42" font-size="10.5">subscription · entitlement</text>
+</svg>

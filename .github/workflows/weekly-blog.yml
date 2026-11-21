@@ -1,9 +1,9 @@
 name: Weekly Blog Post
 
+# Paused on the Astro redesign. The generator still writes the old HTML
+# layout and checks out gh-pages. Run it by hand only, and do not re-enable
+# the Monday schedule until it targets the markdown collection.
 on:
-  schedule:
-    # Mondays at 14:00 UTC, about 9:00 AM Eastern.
-    - cron: '0 14 * * 1'
   workflow_dispatch:
 
 # One draft at a time. A second run waits instead of racing the same posts.json.

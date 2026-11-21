@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import Terminal from "../components/Terminal";
+import { CALENDLY, HOME_NOTES, entryId } from "../lib/site";
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+const posts = await getCollection("blog");
+const notes = HOME_NOTES.map((slug) => posts.find((post) => entryId(post) === slug)).filter((post) => post != null);
+---
+
+<Base
+  title="Anthony Smith — I ship secure apps. Then I break them."
+  description="Senior Software Engineer with 15+ years building production systems. Application and API security, React Native, and AI apps. Grand Rapids, Michigan."
+  path="/"
+  jsonLd
+>
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <p class="eyebrow">Senior Software Engineer · Solutions Architect</p>
+        <h1 style="margin-top:16px">I ship secure apps.<br /><span class="l2">Then I break them.</span></h1>
+        <p class="lead">I'm <b>Anthony Smith</b>. <b>15+ years</b> building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10.</p>
+        <div class="ctas">
+          <a class="btn pri" href="/contact">Contact</a>
+          <a class="btn sec" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call <span class="ic" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <dl class="facts">
+          <div><dt>Now</dt><dd>Lead Systems Eng., SpartanNash</dd></div>
+          <div><dt>Cert</dt><dd>CompTIA PenTest+</dd></div>
+          <div><dt>Based</dt><dd>Grand Rapids, MI</dd></div>
+          <div><dt>Open to</dt><dd><span class="dot" aria-hidden="true"></span>Full-time · contract</dd></div>
+        </dl>
+      </div>
+      <Terminal client:idle />
+    </div>
+  </section>
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="kick">// selected work</p><h2>Shipped, solo, to real users</h2></div>
+        <a class="btn ghost" href="/projects">All projects →</a>
+      </div>
+      <div class="cards">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div>
+          <p class="kick">// field notes · api security series</p>
+          <h2>How I test APIs</h2>
+          <p>Methods, not client findings. Each post walks one OWASP API Top 10 risk.</p>
+        </div>
+        <a class="btn ghost" href="/blog">All writing →</a>
+      </div>
+      <div class="posts">
+        {notes.map((post) => (
+          <a class="post" href={`/blog/${entryId(post)}`}>
+            <p class="m">{post.data.homeKicker}</p>
+            <h4>{post.data.title}</h4>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:24px">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <p class="kick">// next step</p>
+          <h2>Hiring a senior engineer or solutions architect?</h2>
+          <p>Send the role and a link, or book a call. I reply within a day.</p>
+        </div>
+        <div class="ctas">
+          <a class="btn pri" href="/contact">Contact</a>
+          <a class="btn sec" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call <span class="ic" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

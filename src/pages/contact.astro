@@ -1,0 +1,106 @@
+---
+export const prerender = false;
+
+import Base from "../layouts/Base.astro";
+import ContactForm from "../components/ContactForm";
+import { qaInitial, type ContactInitial, type FormMode } from "../components/ContactForm";
+import { resolveSecret, signRenderedAt } from "../lib/contact/challenge";
+import { CALENDLY, EMAIL } from "../lib/site";
+import type { FieldErrors } from "../lib/contact/validation";
+
+Astro.response.headers.set("Cache-Control", "no-store");
+
+const secret = resolveSecret();
+const rendered = "error" in secret ? "" : signRenderedAt(Date.now(), secret.secret);
+const params = Astro.url.searchParams;
+const previewState = process.env.VERCEL_ENV !== "production" ? params.get("state") : null;
+const qa = previewState ? qaInitial(previewState, rendered) : null;
+
+function readCookie(name: string): Record<string, unknown> | null {
+  const raw = Astro.cookies.get(name)?.value;
+  if (!raw) return null;
+  try {
+    const data = JSON.parse(raw);
+    return data && typeof data === "object" ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+function fieldsFrom(data: Record<string, unknown> | null) {
+  const errors = (data?.errors && typeof data.errors === "object" ? data.errors : {}) as FieldErrors;
+  return {
+    name: typeof data?.name === "string" ? data.name : "",
+    email: typeof data?.email === "string" ? data.email : "",
+    message: typeof data?.message === "string" ? data.message : "",
+    errors,
+  };
+}
+
+let initial: ContactInitial = {
+  mode: "default",
+  name: "",
+  email: "",
+  message: "",
+  errors: {},
+  question: "",
+  token: "",
+  answer: "",
+  rendered,
+};
+
+if (qa) {
+  initial = qa;
+} else if (params.get("sent") === "1") {
+  const ack = fieldsFrom(readCookie("contact_ack"));
+  initial = { ...initial, mode: "success", name: ack.name, email: ack.email };
+} else if (params.get("challenge") === "1") {
+  const draft = fieldsFrom(readCookie("contact_draft"));
+  const mode: FormMode = "spam";
+  initial = {
+    ...initial,
+    ...draft,
+    mode,
+    question: params.get("q") || "What is 3 + 4?",
+    token: params.get("token") || "",
+    errors: params.get("mismatch") === "1" ? { ...draft.errors, challenge: draft.errors.challenge || "That answer doesn’t match. Try again, or email me." } : draft.errors,
+  };
+} else if (params.get("error") === "rate") {
+  initial = { ...initial, ...fieldsFrom(readCookie("contact_draft")), mode: "rate" };
+} else if (params.get("error") === "send") {
+  initial = { ...initial, ...fieldsFrom(readCookie("contact_draft")), mode: "error" };
+} else if (params.get("error") === "invalid") {
+  initial = { ...initial, ...fieldsFrom(readCookie("contact_draft")), mode: "default" };
+}
+---
+
+<Base
+  title="Contact Anthony Smith | Senior Software Engineer"
+  description="Contact Anthony Smith in Grand Rapids, Michigan. Open to full-time roles and contract or freelance work. Include the role or project, a timeline, and a link."
+  path="/contact"
+  current="contact"
+>
+  <section class="hero">
+    <div class="wrap cgrid">
+      <div>
+        <p class="kick">~/contact</p>
+        <h1 class="h1-52 contact-title">Tell me about <span class="role-line">the role.</span></h1>
+        <p class="lead" style="margin-top:16px">Include the role or project, a timeline, and a link. I reply within a day. Open to full-time roles and to contract or freelance work.</p>
+        <p class="sline">inbox open · replies within a day</p>
+        <dl class="cinfo d-only">
+          <div><dt>Email</dt><dd class="mint"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
+          <div><dt>Based</dt><dd>Grand Rapids, MI</dd></div>
+          <div><dt>Call</dt><dd><a class="mint" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call ↗</a></dd></div>
+        </dl>
+      </div>
+      <div>
+        <ContactForm client:idle initial={initial} />
+        <dl class="cinfo m-only">
+          <div><dt>Email</dt><dd class="mint"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
+          <div><dt>Based</dt><dd>Grand Rapids, MI</dd></div>
+          <div><dt>Call</dt><dd><a class="mint" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call ↗</a></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</Base>

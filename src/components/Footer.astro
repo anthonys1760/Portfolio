@@ -1,0 +1,17 @@
+---
+import { CALENDLY, DEVTO, EMAIL, GITHUB, LINKEDIN } from "../lib/site";
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <span class="pr"><span class="p" aria-hidden="true">$</span> status --open-to roles</span>
+    <a class="mint" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    <div class="r">
+      <a href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call ↗<span class="sr-only"> (opens in a new tab)</span></a>
+      <a href={GITHUB}>GitHub</a>
+      <a href={LINKEDIN}>LinkedIn</a>
+      <a href={DEVTO}>Dev.to</a>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>

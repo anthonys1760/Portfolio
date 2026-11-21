@@ -1,0 +1,109 @@
+---
+import Base from "../layouts/Base.astro";
+import { CALENDLY } from "../lib/site";
+
+const roles = [
+  {
+    now: true,
+    date: "Nov 2025 — Present · Remote",
+    title: "Lead Systems Engineer",
+    org: "SpartanNash",
+    body: "Systems engineering across e-commerce, consumer apps and marketing/SEO stacks. Product data modeling and cloud DB architecture (GCP/Azure), CommerceTools and Snowflake integration, CI/CD standardization.",
+  },
+  {
+    date: "Nov 2021 — Jul 2024 · Remote",
+    title: "Senior Full Stack Software Engineer",
+    org: "Intelligent Waves LLC",
+    body: "Secure VPN statistics dashboard for a classified client (Node, Express, MongoDB). OWASP-aligned secure coding (SQLi, XSS, BOLA) and CI/CD for government and commercial clients.",
+  },
+  {
+    date: "May 2021 — Nov 2021 · Remote",
+    title: "Associate Director of Technology (Tech Lead)",
+    org: "VMLY&R — Ford Motor Company",
+    body: "Led the Ford.com Global Owner Project: personalized experiences across Ford.com with Adobe Experience Cloud, AEM and Adobe Analytics.",
+  },
+  {
+    date: "Jan 2021 — May 2022 · Remote",
+    title: "Full Stack Software Developer",
+    org: "Skymint",
+    body: "Led the development team; shipped web apps supporting 15 retail locations.",
+  },
+  {
+    date: "Jan 2020 — Jan 2021 · Remote",
+    title: "Front-End Web Developer",
+    org: "SoundOff Signal",
+    body: "Built the EOS product configurator and M2M Advanced Configurator front ends.",
+  },
+];
+
+const skills = [
+  ["// architecture", ["Solutions architecture", "Distributed systems", "Data modeling", "API contracts", "ADRs"]],
+  ["// mobile", ["React Native", "Expo / EAS", "TypeScript", "HealthKit", "TestFlight"]],
+  ["// back end & data", ["Node.js", "Supabase", "PostgreSQL", "Python", "Snowflake"]],
+  ["// cloud & delivery", ["GCP", "Azure", "Docker", "GitHub Actions", "CI/CD"]],
+  ["// ai systems", ["OpenAI", "Anthropic", "Gemini", "Grok", "OpenRouter", "Multi-agent"]],
+  ["// security", ["OWASP API Top 10", "BOLA", "Rate limiting", "Prompt injection", "Burp Suite", "Kali"]],
+];
+---
+
+<Base
+  title="Anthony Smith, Senior Software Engineer | About"
+  description="Anthony Smith is a Senior Software Engineer with 15+ years in application and API security, React Native, and AI apps. Grand Rapids, Michigan."
+  path="/about"
+  current="about"
+  jsonLd
+>
+  <section class="hero">
+    <div class="wrap agrid">
+      <div>
+        <p class="kick">~/about</p>
+        <p class="eyebrow">Senior Software Engineer · Solutions Architect</p>
+        <h1 class="h1-54" style="margin-top:12px">Anthony Smith</h1>
+        <p class="lead" style="margin-top:18px">I specialize in <b>application and API security</b>, with <b>15+ years</b> building production systems and breaking them before attackers do. I ship React Native apps to the App Store, design multi-agent AI systems, and build secure web platforms for e-commerce and enterprise.</p>
+        <img class="sig" src="/images/signature/anthony-smith-signature.png" alt="Anthony Smith, solutions architect and software engineer" width="664" height="152" />
+        <div class="ctas" style="margin-top:26px">
+          <a class="btn pri" href="/contact">Contact</a>
+          <a class="btn sec" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call <span class="ic" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <p class="sline">open to full-time roles and contract · Grand Rapids, MI</p>
+      </div>
+      <div>
+        <p class="kick">// credentials</p>
+        <div class="cred" style="grid-template-columns:1fr 1fr">
+          <div><b>CompTIA PenTest+</b><span>Offensive security</span></div>
+          <div><b>HackerOne</b><span>Security researcher</span></div>
+          <div><b>TryHackMe</b><span>Pen-testing labs</span></div>
+          <div><b>HackerNoon</b><span>Author</span></div>
+          <div style="grid-column:span 2"><b>B.S. Computer Information Systems</b><span>Baker College · 2012</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="experience" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-hd"><div><p class="kick">// experience</p><h2>Experience highlights</h2></div></div>
+      <div class="tl">
+        {roles.map((role) => (
+          <div class:list={["tli", { now: role.now }]}>
+            <p class="d">{role.date}</p>
+            <h3>{role.title} <span>· {role.org}</span></h3>
+            <p>{role.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:8px">
+    <div class="wrap">
+      <div class="sec-hd"><div><p class="kick">// skills</p><h2>Skills, grouped</h2></div></div>
+      <div class="skills">
+        {skills.map(([label, tags]) => (
+          <div class="sk">
+            <p class="kick">{label}</p>
+            <div class="tags">{tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

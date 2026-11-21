@@ -1,0 +1,150 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { entryId } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({ params: { slug: project.data.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const all = await getCollection("projects");
+const next = all.find((item) => item.data.slug === project.data.next);
+const data = project.data;
+const frames = data.screens?.length ? data.screens : [data.title];
+const web = data.thumbnailKind === "web";
+
+function hostLabel(url: string) {
+  return new URL(url).host.replace(/^www\./, "");
+}
+
+const links: { href: string; label: string; external: boolean }[] = [];
+if (data.links.appStore) links.push({ href: data.links.appStore, label: "App Store", external: true });
+if (data.links.testFlight) links.push({ href: data.links.testFlight, label: "TestFlight", external: true });
+if (data.links.androidBeta) links.push({ href: data.links.androidBeta, label: "Android beta", external: true });
+if (data.links.playStore) links.push({ href: data.links.playStore, label: "Google Play", external: true });
+if (data.links.demo) links.push({ href: data.links.demo, label: data.links.demoLabel || "Live demo", external: true });
+if (data.links.website) links.push({ href: data.links.website, label: hostLabel(data.links.website), external: true });
+if (data.links.github) links.push({ href: data.links.github, label: "GitHub", external: true });
+if (data.links.caseStudy) links.push({ href: data.links.caseStudy, label: "Case study", external: false });
+
+const primaryLink = links.find((link) => link.label === "App Store" || link.label === "TestFlight" || link.label === (data.links.demoLabel || "Live demo"));
+const siteLink = data.links.website ? links.find((link) => link.href === data.links.website) : undefined;
+const compact = [primaryLink, siteLink].filter((link) => link != null);
+const showPending = data.slug === "castlog" && !data.links.github;
+---
+
+<Base
+  title={`${data.title} · Projects — Anthony Smith`}
+  description={data.summary}
+  path={`/projects/${data.slug}`}
+  current="work"
+>
+  <section class="hero" style="padding-bottom:0">
+    <div class="wrap">
+      <p class="crumb"><a href="/projects">~/projects</a> <span class="p">/</span> {data.slug}</p>
+      <div class="dgrid">
+        <div>
+          <span class:list={["status", { dev: data.statusKind === "development" }]}>{data.status}</span>
+          <h1 class="h1-56" style="margin-top:10px">{data.title}</h1>
+          <p class="lead" style="margin-top:14px;max-width:640px">{data.summary}</p>
+          {compact.length ? (
+            <div class="ctas m-only" style="margin-top:18px">
+              {compact.map((link, index) => (
+                <a class:list={["btn", "sm", index === 0 ? "pri" : "sec"]} href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+              ))}
+            </div>
+          ) : null}
+          <details class="glance">
+            <summary>At a glance</summary>
+            <dl class="aside" style="position:static;border:0;padding:0;background:transparent">
+              <dt>Role</dt><dd>{data.role}</dd>
+              {data.showYear ? <><dt>Year</dt><dd>{data.year}</dd></> : null}
+              <dt>Platform</dt><dd>{data.platform}</dd>
+              <dt>Status</dt><dd class={data.statusKind === "development" ? "" : "mint"}>{data.statusKind === "development" ? "In development" : "Live"}</dd>
+            </dl>
+            <div class="links" style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              {links.map((link) => (
+                <a class="btn sm sec" href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+                  <span>{link.label}</span><span aria-hidden="true">{link.external ? "↗" : "→"}</span>
+                </a>
+              ))}
+              {showPending ? <span class="tbd-row">GitHub <span class="tbd">link TBD</span></span> : null}
+              {showPending ? <span class="tbd-row">Case study <span class="tbd">TBD</span></span> : null}
+            </div>
+          </details>
+          <div class={`media g-${data.gradient}`}>
+            <div class="stage" role="img" aria-label={`Screenshot placeholder for ${data.title}`}>
+              <span class="ph">placeholder · screenshots need Anthony's OK</span>
+              {frames.map((label) => (
+                <div class:list={["dev", { web }]}><span>{label}</span></div>
+              ))}
+            </div>
+          </div>
+          <div class="dsec">
+            <p class="kick">// 01 problem</p>
+            <h2>{data.problem.title}</h2>
+            <p>{data.problem.body}</p>
+          </div>
+          <div class="dsec" id="architecture">
+            <p class="kick">// 02 architecture</p>
+            <h2>{data.architecture.title}</h2>
+            <p>{data.architecture.body}</p>
+            {data.architecture.confirmed && data.architecture.diagram ? (
+              <div class="diagram">
+                <img class="dg-d" src={data.architecture.diagram} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="760" height="420" />
+                {data.architecture.diagramMobile ? (
+                  <img class="dg-m" src={data.architecture.diagramMobile} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="320" height="748" />
+                ) : null}
+                {data.architecture.caption ? <p class="cap">{data.architecture.caption}</p> : null}
+              </div>
+            ) : (
+              <p class="cap">{data.architecture.caption}</p>
+            )}
+          </div>
+          <div class="dsec">
+            <p class="kick">// 03 stack</p>
+            <h2>Stack</h2>
+            <div class="tags" style="margin-top:6px">{data.stack.map((item) => <span class="tag">{item}</span>)}</div>
+          </div>
+          <div class="dsec">
+            <p class="kick">// 04 results</p>
+            <h2>What shipped</h2>
+            <div class="results">
+              {data.results.map((result) => (
+                <div class:list={["res", { ph: result.placeholder }]}>
+                  <p class="m">{result.label}</p>
+                  <p>{result.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {next ? (
+            <a class="nextp" href={`/projects/${next.data.slug}`}>
+              <span><span class="kick" style="display:block;margin:0">next project</span><b style="font-size:19px">{next.data.title}</b></span>
+              <span class="mint" aria-hidden="true">→</span>
+            </a>
+          ) : null}
+        </div>
+        <aside class="aside" aria-label="Project facts">
+          <dl>
+            <dt>Role</dt><dd>{data.role}</dd>
+            {data.showYear ? <><dt>Year</dt><dd>{data.year}</dd></> : null}
+            <dt>Platform</dt><dd>{data.platform}</dd>
+            <dt>Status</dt><dd class={data.statusKind === "development" ? "" : "mint"}>{data.statusKind === "development" ? "In development" : "Live"}</dd>
+          </dl>
+          <div class="links">
+            {links.map((link, index) => (
+              <a class:list={["btn", "sm", index === 0 ? "pri" : "sec"]} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+                <span>{link.label}</span><span aria-hidden="true">{link.external ? "↗" : "→"}</span>
+              </a>
+            ))}
+            {showPending ? <span class="tbd-row"><span>GitHub <span class="tbd">link TBD</span></span></span> : null}
+            {showPending ? <span class="tbd-row"><span>Case study <span class="tbd">TBD</span></span></span> : null}
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>

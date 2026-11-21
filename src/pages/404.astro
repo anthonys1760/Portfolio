@@ -1,0 +1,26 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="404 — no such file or directory"
+  description="That page is not on this site. Back to Anthony Smith's portfolio."
+  path="/404"
+  noindex
+>
+  <section class="hero page-404">
+    <div class="wrap" style="max-width:760px">
+      <p class="kick">~/404</p>
+      <h1 class="h1-52">404 — no such file or directory</h1>
+      <p class="lead" style="margin:16px 0 28px">No such file or directory. That path is not on this host.</p>
+      <div class="term" role="region" aria-label="Terminal output">
+        <div class="bar"><span class="t">~/anthony</span><span>— ship &amp;&amp; break</span></div>
+        <div class="body"><span class="p">$</span> <span class="cmd">ls</span>{"\n"}<span class="dim">command not found on this host</span></div>
+      </div>
+      <div class="ctas" style="margin-top:28px">
+        <a class="btn pri" href="/">Home</a>
+        <a class="btn sec" href="/projects">Projects</a>
+      </div>
+    </div>
+  </section>
+</Base>
