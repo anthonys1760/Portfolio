@@ -380,13 +380,14 @@ body.page-404 .hero-top {
 	}
 
 	/* CallCatch circle launcher is 52×52, 12px from the bottom-right.
-	   Keep the terminal box out of that corner on phones. */
+	   Keep vertical clearance under the hero; the floating bubble may
+	   overlap the terminal horizontally — do not reserve right margin. */
 	body.home .hero-top {
 		padding-bottom: 76px;
 	}
 
 	body.home .hero-stage {
-		margin-right: 64px;
+		margin-right: 0;
 		scroll-margin-bottom: 76px;
 	}
 }
