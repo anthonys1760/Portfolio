@@ -1,0 +1,29 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.anthonysdigital.net" }],
+      "destination": "https://anthonysdigital.net/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.anthonysdigital.net" }],
+      "destination": "https://anthonysdigital.net/:path*",
+      "statusCode": 301
+    },
+    { "source": "/index.html", "destination": "/", "statusCode": 301 },
+    { "source": "/about.html", "destination": "/about", "statusCode": 301 },
+    { "source": "/portfolio.html", "destination": "/projects", "statusCode": 301 },
+    { "source": "/contact.html", "destination": "/contact", "statusCode": 301 },
+    { "source": "/works_creative.html", "destination": "/projects", "statusCode": 301 },
+    { "source": "/contacts_image.html", "destination": "/contact", "statusCode": 301 },
+    { "source": "/blog/index.html", "destination": "/blog", "statusCode": 301 },
+    { "source": "/blog/", "destination": "/blog", "statusCode": 301 },
+    { "source": "/blog/posts/edge-functions-the-future-of-serverless-architecture.html", "destination": "/blog", "statusCode": 301 },
+    { "source": "/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html", "destination": "/blog/react-native-mobile-architecture-lessons-from-production", "statusCode": 301 },
+    { "source": "/blog/posts/the-engineering-ladder-trap-why-promotion-chasing-hurts-your.html", "destination": "/blog/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen", "statusCode": 301 },
+    { "source": "/blog/posts/:slug.html", "destination": "/blog/:slug", "statusCode": 301 },
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "statusCode": 301 }
+  ]
+}

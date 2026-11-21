@@ -1,0 +1,86 @@
+---
+import { CALENDLY } from "../lib/site";
+
+interface Props {
+  current?: "work" | "about" | "writing" | "contact";
+}
+const { current } = Astro.props;
+const items = [
+  { id: "work", href: "/projects", label: "Work" },
+  { id: "about", href: "/about", label: "About" },
+  { id: "writing", href: "/blog", label: "Writing" },
+  { id: "contact", href: "/contact", label: "Contact" },
+] as const;
+---
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="/"><span class="mk" aria-hidden="true">&gt;_</span><span>Anthony <b>Smith</b></span></a>
+    <nav class="nav" aria-label="Primary">
+      {items.map((item) => (
+        <a href={item.href} class={current === item.id ? "on" : ""} aria-current={current === item.id ? "page" : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="acts">
+      <a class="btn sm pri" href="/contact">Contact</a>
+      <a class="btn sm sec sec-h" href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call <span class="ic" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+      <button class="menu" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><i></i></button>
+    </div>
+  </div>
+</header>
+<div class="backdrop" id="site-backdrop" hidden></div>
+<nav id="site-menu" class="drawer" aria-label="Primary" hidden>
+  {items.map((item) => (
+    <a href={item.href} class={current === item.id ? "on" : ""}>{item.label}</a>
+  ))}
+  <a href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a call ↗<span class="sr-only"> (opens in a new tab)</span></a>
+</nav>
+<script>
+  const button = document.querySelector<HTMLButtonElement>(".menu");
+  const drawer = document.getElementById("site-menu");
+  const backdrop = document.getElementById("site-backdrop");
+  if (button && drawer && backdrop) {
+    const focusable = () => Array.from(drawer.querySelectorAll<HTMLElement>("a"));
+    function close() {
+      button.setAttribute("aria-expanded", "false");
+      drawer.hidden = true;
+      drawer.setAttribute("inert", "");
+      backdrop.hidden = true;
+      document.body.style.overflow = "";
+      button.focus();
+    }
+    function open() {
+      button.setAttribute("aria-expanded", "true");
+      drawer.hidden = false;
+      drawer.removeAttribute("inert");
+      backdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      focusable()[0]?.focus();
+    }
+    button.addEventListener("click", () => {
+      if (button.getAttribute("aria-expanded") === "true") close();
+      else open();
+    });
+    backdrop.addEventListener("click", close);
+    document.addEventListener("keydown", (event) => {
+      if (button.getAttribute("aria-expanded") !== "true") return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
+</script>

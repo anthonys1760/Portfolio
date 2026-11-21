@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { entryId } from "../../lib/site";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+
+<Base
+  title="Field Notes — Anthony Smith"
+  description="Field notes from Anthony Smith on API security, React Native, TypeScript, and shipping production systems."
+  path="/blog"
+  current="writing"
+>
+  <section class="hero" style="padding-bottom:8px">
+    <div class="wrap">
+      <p class="kick">~/field notes</p>
+      <h1 class="h1-52">How I test, and how I build</h1>
+      <p class="lead" style="margin:14px 0 8px;max-width:640px">Methods, not client findings. The API security series walks the OWASP API Top 10. The rest is what production systems taught me.</p>
+    </div>
+  </section>
+  <section style="padding-top:24px">
+    <div class="wrap">
+      <div class="posts">
+        {posts.map((post) => (
+          <a class="post" href={`/blog/${entryId(post)}`}>
+            <p class="m">{post.data.category}{post.data.readTime ? ` · ${post.data.readTime}` : ""}</p>
+            <h4>{post.data.title}</h4>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

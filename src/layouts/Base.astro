@@ -1,0 +1,94 @@
+---
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-500.css";
+import "@fontsource/roboto/latin-600.css";
+import "@fontsource/roboto/latin-700.css";
+import "@fontsource/roboto-mono/latin-400.css";
+import "@fontsource/roboto-mono/latin-500.css";
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { DEVTO, EMAIL, GITHUB, LINKEDIN, SITE } from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  current?: "work" | "about" | "writing" | "contact";
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  noindex?: boolean;
+  jsonLd?: boolean;
+}
+const {
+  title,
+  description,
+  path,
+  current,
+  image = "/images/og-card.jpg",
+  imageAlt = "Anthony Smith, Senior Software Engineer. Mobile apps, APIs and AppSec. 15+ years.",
+  imageWidth = 1200,
+  imageHeight = 630,
+  noindex = false,
+  jsonLd = false,
+} = Astro.props;
+const canonical = new URL(path, SITE).href;
+const ogImage = new URL(image, SITE).href;
+const person = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "Anthony Smith",
+      jobTitle: "Senior Software Engineer",
+      url: SITE,
+      email: EMAIL,
+      address: { "@type": "PostalAddress", addressLocality: "Grand Rapids", addressRegion: "MI", addressCountry: "US" },
+      sameAs: [GITHUB, LINKEDIN, DEVTO],
+    },
+    { "@type": "WebSite", name: "Anthony Smith", url: SITE },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? "noindex" : "index, follow"} />
+    <meta name="theme-color" content="#4bffa5" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    {imageWidth ? <meta property="og:image:width" content={String(imageWidth)} /> : null}
+    {imageHeight ? <meta property="og:image:height" content={String(imageHeight)} /> : null}
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {jsonLd ? <script type="application/ld+json" set:html={JSON.stringify(person)} /> : null}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
