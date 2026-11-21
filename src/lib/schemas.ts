@@ -36,6 +36,7 @@ export const projectSchema = z.object({
     body: z.string(),
     caption: z.string().optional(),
     diagram: z.string().optional(),
+    diagramMobile: z.string().optional(),
     diagramAlt: z.string().optional(),
     confirmed: z.boolean().default(false),
   }),

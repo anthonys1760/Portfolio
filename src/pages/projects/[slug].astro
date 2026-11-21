@@ -93,9 +93,10 @@ const showPending = data.slug === "castlog" && !data.links.github;
             <p>{data.architecture.body}</p>
             {data.architecture.confirmed && data.architecture.diagram ? (
               <div class="diagram">
-                <div class="diagram-scroll">
-                  <img src={data.architecture.diagram} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="760" height="420" />
-                </div>
+                <img class="dg-d" src={data.architecture.diagram} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="760" height="420" />
+                {data.architecture.diagramMobile ? (
+                  <img class="dg-m" src={data.architecture.diagramMobile} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="320" height="748" />
+                ) : null}
                 {data.architecture.caption ? <p class="cap">{data.architecture.caption}</p> : null}
               </div>
             ) : (

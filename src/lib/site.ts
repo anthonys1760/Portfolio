@@ -16,6 +16,12 @@ export const PROJECT_TAGS = [
 
 export type ProjectTag = (typeof PROJECT_TAGS)[number];
 
+export function matchProjectTag(raw: string | null | undefined, names: readonly string[] = PROJECT_TAGS): string | null {
+  const value = raw?.trim();
+  if (!value) return null;
+  return names.find((name) => name.toLowerCase() === value.toLowerCase()) ?? null;
+}
+
 export const HOME_NOTES = [
   "how-i-test-for-broken-object-level-authorization",
   "how-i-test-for-broken-function-level-authorization",

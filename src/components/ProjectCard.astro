@@ -5,13 +5,14 @@ import { outcomeParts } from "../lib/site";
 interface Props {
   project: CollectionEntry<"projects">;
   activeTag?: string | null;
+  hidden?: boolean;
 }
-const { project, activeTag = null } = Astro.props;
+const { project, activeTag = null, hidden = false } = Astro.props;
 const { lead, rest } = outcomeParts(project.data.outcome);
 const web = project.data.thumbnailKind === "web";
 ---
 
-<article class="card" data-project data-tags={project.data.tags.join("|")}>
+<article class="card" data-project data-tags={project.data.tags.join("|")} hidden={hidden ? true : undefined}>
   <div class={`thumb g-${project.data.gradient}`} role="img" aria-label={`${project.data.title} placeholder thumbnail`}>
     <span class="ph">placeholder</span>
     <div class:list={["dev", { web }]}><span>{project.data.title}</span></div>

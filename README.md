@@ -16,7 +16,7 @@ npm run preview
 
 ## Contact form
 
-`POST /api/contact` is the only dynamic API. `/contact` is server-rendered so the signed render timestamp stays fresh and a no-JS submit can come back as HTML. Every other page is static.
+`POST /api/contact` is the only dynamic API. `/contact` is server-rendered so the signed render timestamp stays fresh and a no-JS submit can come back as HTML. `/projects` is server-rendered so `?tag=` filters the grid, the active chip, and the count without JavaScript. Every other page is static.
 
 `CONTACT_DELIVERY` is `resend` or `stub`. **Stub is the default** and does not send mail. Resend is the approved sender. Set it only after the keys exist:
 

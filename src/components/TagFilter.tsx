@@ -1,13 +1,28 @@
 import { useEffect, useState } from "react";
+import { matchProjectTag } from "../lib/site";
 
 type TagCount = { name: string; count: number };
 
-export default function TagFilter({ tags, total }: { tags: TagCount[]; total: number }) {
-  const [active, setActive] = useState<string | null>(null);
-  const [shown, setShown] = useState(total);
+function countFor(tag: string | null, tags: TagCount[], total: number) {
+  if (!tag) return total;
+  return tags.find((item) => item.name === tag)?.count ?? total;
+}
 
-  function apply(tag: string | null) {
-    const match = tag && tags.some((item) => item.name === tag) ? tag : null;
+export default function TagFilter({
+  tags,
+  total,
+  initialTag = null,
+}: {
+  tags: TagCount[];
+  total: number;
+  initialTag?: string | null;
+}) {
+  const names = tags.map((tag) => tag.name);
+  const [active, setActive] = useState<string | null>(initialTag);
+  const [shown, setShown] = useState(countFor(initialTag, tags, total));
+
+  function apply(raw: string | null) {
+    const match = matchProjectTag(raw, names);
     setActive(match);
     let visible = 0;
     document.querySelectorAll<HTMLElement>("[data-project]").forEach((card) => {
@@ -20,7 +35,8 @@ export default function TagFilter({ tags, total }: { tags: TagCount[]; total: nu
     const row = document.querySelector<HTMLElement>(".filters");
     const current = row?.querySelector<HTMLElement>(".fchip.on");
     if (row && current && window.matchMedia("(max-width: 767px)").matches) {
-      current.scrollIntoView({ inline: "nearest", block: "nearest" });
+      const left = current.offsetLeft - (row.clientWidth - current.offsetWidth) / 2;
+      row.scrollTo({ left: Math.max(0, left) });
     }
   }
 
@@ -29,11 +45,12 @@ export default function TagFilter({ tags, total }: { tags: TagCount[]; total: nu
     read();
     window.addEventListener("popstate", read);
     return () => window.removeEventListener("popstate", read);
-    // The project list is static HTML; apply reads it once on load and on history.
+    // Cards are server-rendered. This only syncs the query after load and history.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function go(tag: string | null, event: React.MouseEvent) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
     const url = tag ? `/projects?tag=${encodeURIComponent(tag)}` : "/projects";
     window.history.pushState({}, "", url);

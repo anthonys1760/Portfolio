@@ -22,6 +22,7 @@ export default defineConfig({
     mdx(),
     sitemap({
       filter: (page) => !page.includes("/404"),
+      customPages: ["https://anthonysdigital.net/projects"],
     }),
   ],
   redirects: {
