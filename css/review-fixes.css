@@ -2403,7 +2403,9 @@ body.home .callcatch-demo-anchor {
 	border: 0;
 }
 
-/* Keep FAQ / cards / closing CTA clear of floating buttons. */
+/* Keep FAQ / cards / closing CTA clear of floating buttons on tablet+.
+   On phones the CallCatch bubble may overlap — match the hero content
+   width (same as .hero-chat-wrap / Email CTA) instead of reserving space. */
 body.home .section.home-faq {
 	padding-bottom: 96px;
 }
@@ -2425,18 +2427,18 @@ body.home .footer {
 		padding: 22px 88px 40px 16px;
 	}
 }
-@media (max-width: 480px) {
+@media (max-width: 767px) {
 	body.home .home-panel-inner {
-		width: calc(100% - 24px - 68px);
-		margin-left: 16px;
-		margin-right: 76px;
-	}
-	body.home .section.home-faq {
-		padding-bottom: 120px;
+		width: calc(100% - 32px);
+		max-width: none;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	body.home .footer {
 		padding: 22px 16px 96px;
-		padding-right: 88px;
+	}
+	body.home .section.home-faq {
+		padding-bottom: 120px;
 	}
 	body.home .footer-meta {
 		flex-wrap: nowrap;
