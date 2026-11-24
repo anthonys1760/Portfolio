@@ -1818,7 +1818,11 @@ body.home .work-deck {
 }
 body.home .work-media {
 	margin: 14px 0 0;
-	padding: 0;
+	padding: 6px;
+	border-radius: 14px;
+	background:
+		radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.22), transparent 68%),
+		linear-gradient(180deg, #1c2a24 0%, #141c1a 100%);
 }
 body.home .work-media img {
 	display: block;
@@ -2187,22 +2191,10 @@ body.home .work-btn-ghost:is(:hover, :focus-visible) {
 	color: #4bffa5;
 }
 
-/* Brighten CastLog device shot so it matches Nutrilogix on the dark card. */
-body.home #home-castlog .work-media {
-	background:
-		radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.22), transparent 68%),
-		linear-gradient(180deg, #1c2a24 0%, #141c1a 100%);
-	border-radius: 14px;
-	padding: 6px;
-}
+/* Brighten the darker CastLog device shot slightly. The green panel is shared. */
 body.home #home-castlog .work-media img {
 	filter: brightness(1.2) contrast(1.04) saturate(1.06);
 	background: transparent;
-}
-body.home #home-nutrilogix .work-media,
-body.home #home-callcatch .work-media {
-	background: radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.08), transparent 70%);
-	border-radius: 14px;
 }
 @media (prefers-reduced-motion: reduce) {
 	body.home #home-castlog .work-media img {
