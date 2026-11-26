@@ -1,5 +1,26 @@
 [
   {
+    "slug": "person-approval-before-write-or-send",
+    "title": "Person Approval Before Write or Send",
+    "excerpt": "A state-changing tool call waits for a person. The model may propose the write or send. Only a person can confirm it, and the application enforces that wait.",
+    "category": "AI",
+    "readTime": "6 min",
+    "date": "November 26, 2026",
+    "dateISO": "2026-11-26",
+    "image": "/blog/images/person-approval-before-write-or-send.webp",
+    "imageAlt": "An open hard drive with the platter and read arm exposed",
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1597852074816-d933c7d2b988",
+    "series": "agent-security",
+    "topicKey": "human-approval-gates",
+    "format": "mistakes",
+    "tags": [
+      "llm",
+      "appsec"
+    ]
+  },
+  {
     "slug": "user-text-cannot-select-a-tool",
     "title": "User Text Cannot Select a Tool",
     "excerpt": "User text belongs in a data field the model can read. The application owns the instruction and refuses any tool name that is not on its allowlist.",
