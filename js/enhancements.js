@@ -76,14 +76,56 @@
   btn.innerHTML = '&#8679;';
   document.body.appendChild(btn);
 
-  window.addEventListener('scroll', function () {
-    btn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
+  var chatOpen = false;
+
+  function syncVisible() {
+    var show = window.scrollY > 400 && !chatOpen;
+    btn.classList.toggle('visible', show);
+    btn.classList.toggle('chat-open', chatOpen);
+  }
+
+  window.addEventListener('scroll', syncVisible, { passive: true });
+  syncVisible();
 
   btn.addEventListener('click', function () {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
+
+  // Hide while the CallCatch panel is open so the control never overlaps
+  // the chat dialog or the close-state launcher.
+  function bindPanel(root) {
+    var panel = root.querySelector('#cc-panel, .panel');
+    var bubble = root.querySelector('button.bubble[aria-controls="cc-panel"]');
+    if (!panel) return false;
+
+    function syncChat() {
+      chatOpen = panel.classList.contains('open') ||
+        (bubble && (bubble.classList.contains('is-open') || bubble.getAttribute('aria-expanded') === 'true'));
+      syncVisible();
+    }
+
+    var mo = new MutationObserver(syncChat);
+    mo.observe(panel, { attributes: true, attributeFilter: ['class', 'aria-hidden'] });
+    if (bubble) mo.observe(bubble, { attributes: true, attributeFilter: ['class', 'aria-expanded'] });
+    syncChat();
+    return true;
+  }
+
+  function scan() {
+    var children = document.body.children;
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].shadowRoot && bindPanel(children[i].shadowRoot)) return true;
+    }
+    return false;
+  }
+
+  if (!scan()) {
+    var observer = new MutationObserver(function () {
+      if (scan()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true });
+  }
 })();
 
 // ── CallCatch live demo link (#callcatch-demo) ────────────────────────────────

@@ -1699,47 +1699,75 @@ body.hero-themed .skills-group.featured .group-label {
 }
 
 /* ── Back-to-top button ───────────────────────────────────────────────────── */
-/* Sit to the left of the CallCatch launcher (bottom-right, ~52px, 12px inset). */
+/* Stacked directly above the CallCatch octopus, centered on the same axis.
+   Desktop octopus is 62x68 at right 16px / bottom 14px; this 36px control
+   is inset by (62-36)/2 so its midpoint matches the mascot. Gap is 14px
+   above the launcher (enough room for the hover float). Safe-area insets
+   stay in the same calc as the widget wrap. */
 #back-to-top {
 	position: fixed;
-	bottom: 16px;
-	right: 76px;
+	right: calc(16px + (62px - 36px) / 2 + env(safe-area-inset-right, 0px));
+	bottom: calc(14px + 68px + 14px + env(safe-area-inset-bottom, 0px));
 	z-index: 999;
-	width: 44px;
-	height: 44px;
+	width: 36px;
+	height: 36px;
 	border-radius: 50%;
-	background: rgba(75,255,165,0.1);
-	border: 1px solid rgba(75,255,165,0.3);
-	color: #4bffa5;
-	font-size: 24px;
-	line-height: 44px;
+	background: rgba(15, 20, 18, 0.42);
+	border: 1px solid rgba(75, 255, 165, 0.18);
+	color: rgba(75, 255, 165, 0.72);
+	font-size: 18px;
+	line-height: 34px;
 	text-align: center;
 	cursor: pointer;
 	opacity: 0;
-	transform: translateY(12px);
-	transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease;
+	transform: translateY(8px);
+	transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 	pointer-events: none;
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	padding: 0;
+	margin: 0;
 }
 #back-to-top.visible {
-	opacity: 1;
+	opacity: 0.9;
 	transform: translateY(0);
 	pointer-events: auto;
 }
-#back-to-top:hover {
-	background: rgba(75,255,165,0.2);
-	box-shadow: 0 0 18px rgba(75,255,165,0.35);
+#back-to-top.chat-open,
+#back-to-top.chat-open.visible {
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(8px);
+}
+#back-to-top:hover,
+#back-to-top:focus-visible {
+	background: rgba(15, 20, 18, 0.62);
+	border-color: rgba(75, 255, 165, 0.38);
+	color: #4bffa5;
+	box-shadow: 0 0 10px rgba(75, 255, 165, 0.16);
 }
 #back-to-top:focus-visible {
 	outline: 2px solid #4bffa5;
 	outline-offset: 3px;
 }
 @media (max-width: 480px) {
+	/* Mobile octopus is 56x62 at right 12px / bottom 12px; 32px control, 12px gap. */
 	#back-to-top {
-		right: 76px;
-		bottom: 16px;
+		width: 32px;
+		height: 32px;
+		font-size: 16px;
+		line-height: 30px;
+		right: calc(12px + (56px - 32px) / 2 + env(safe-area-inset-right, 0px));
+		bottom: calc(12px + 62px + 12px + env(safe-area-inset-bottom, 0px));
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	#back-to-top,
+	#back-to-top.visible,
+	#back-to-top.chat-open,
+	#back-to-top.chat-open.visible {
+		transition: none;
+		transform: none;
 	}
 }
 
