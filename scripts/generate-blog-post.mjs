@@ -23,6 +23,10 @@
  * 1600px wide under blog/images/ with width and height. It does not reuse a
  * photo when the pool is empty. New posts are also written into the static
  * list in blog/index.html.
+ *
+ * Topics are picked in TOPICS order. AI agent security topics come first.
+ * `node scripts/preview-topics.mjs` prints the next picks without calling
+ * the model or writing files.
  */
 
 import { execFile } from 'child_process'
@@ -195,6 +199,216 @@ const TOPICS = [
     tags: ['llm', 'appsec'],
     keywords: 'human approval, tool confirmation, excessive agency, agent security, write actions',
   },
+  // ── AI agent security focus ───────────────────────────────────────────────
+  // Agent security posts get the most reaction, so these come before the
+  // general appsec topics below. Every citation was checked to load (HTTP 200)
+  // and to cover the topic. Add new agent topics here, above the appsec list.
+  {
+    key: 'tool-result-injection',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Untrusted Tool Results',
+    label: 'Treating tool results and retrieved documents as data',
+    summary: 'A web page, a search hit, an email body, or a file an agent reads is data from whoever wrote it. It does not get to add instructions, pick the next tool, or widen what the agent may do.',
+    illustration: 'one support agent that reads a customer email while a send-reply tool is available',
+    phrases: ['tool result', 'retrieved content', 'indirect injection', 'retrieval augmented'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm01-prompt-injection/',
+      'https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'indirect prompt injection, tool results, retrieved content, RAG security, agent security, untrusted data',
+    image: '1569784210445-990e7e44ccfe',
+  },
+  {
+    key: 'agent-credential-handling',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Credentials',
+    label: 'Keeping credentials out of the model context',
+    summary: 'An API key or OAuth token belongs to the tool runtime, not to the prompt. The model asks for an action by name, and the server attaches the credential for the signed-in caller after the call is approved.',
+    illustration: 'one calendar tool that needs the signed-in user\'s OAuth token to create an event',
+    phrases: ['agent credential', 'credential handling', 'secrets in the prompt', 'model context'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/',
+      'https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/',
+    ],
+    tags: ['llm', 'agents', 'secrets'],
+    keywords: 'agent credentials, secrets management, API keys, OAuth tokens, system prompt leakage, agent security',
+    image: '1550527882-b71dea5f8089',
+  },
+  {
+    key: 'mcp-server-trust',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'MCP Server Trust',
+    label: 'Treating MCP servers and connectors as outside code',
+    summary: 'An MCP server or connector is code and data from someone else. Pin what you install, scope what each server can reach, and never pass a user token through to a server it was not issued for.',
+    illustration: 'one assistant with a third-party MCP server added for project management',
+    phrases: ['mcp server', 'model context protocol', 'connector security', 'token passthrough'],
+    citations: [
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices',
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization',
+    ],
+    tags: ['llm', 'agents', 'mcp'],
+    keywords: 'MCP security, Model Context Protocol, connectors, token passthrough, scope minimization, agent security',
+    image: '1771065999830-8b6762df3354',
+  },
+  {
+    key: 'agent-audit-logging',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Audit Logs',
+    label: 'Audit logging for agent tool calls',
+    summary: 'Every tool call an agent makes needs a record a person can read later: who asked, which tool, which arguments, who approved it, and what came back. The log must not become a second copy of the secrets.',
+    illustration: 'one refund tool call that a support lead asks about a week later',
+    phrases: ['audit log', 'audit trail', 'agent logging'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html',
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+    ],
+    tags: ['llm', 'agents', 'logging'],
+    keywords: 'audit logging, agent tool calls, audit trail, observability, approvals, agent security',
+    image: '1496368077930-c1e31b4e5b44',
+  },
+  {
+    key: 'agent-output-exfiltration',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Output Exfiltration',
+    label: 'Stopping agent output from leaking data through links',
+    summary: 'Model output that renders as a link, an image, or a fetch can carry data to a host the user never chose. Render output against an allowlist of hosts and encode it for the place it lands.',
+    illustration: 'one chat reply rendered as Markdown that includes an image URL',
+    phrases: ['exfiltration', 'markdown image', 'output handling'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/',
+      'https://genai.owasp.org/llmrisk/llm01-prompt-injection/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'data exfiltration, improper output handling, Markdown rendering, URL allowlist, LLM output, agent security',
+    image: '1768720407298-1b24a0f6749d',
+  },
+  {
+    key: 'scoped-agent-tokens',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Scoped Agent Tokens',
+    label: 'Short-lived, narrowly scoped tokens for agents',
+    summary: 'An agent should act with a token issued for this user, this resource, and this task, that expires soon. A long-lived key shared by every run turns one bad tool call into access to everything that key can reach.',
+    illustration: 'one nightly agent run that files tickets in a single project',
+    phrases: ['scoped token', 'token exchange', 'resource indicator', 'audience restriction'],
+    citations: [
+      'https://www.rfc-editor.org/rfc/rfc8707',
+      'https://www.rfc-editor.org/rfc/rfc8693',
+      'https://www.rfc-editor.org/rfc/rfc9700',
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization',
+    ],
+    tags: ['llm', 'agents', 'oauth'],
+    keywords: 'OAuth scopes, token exchange, RFC 8693, resource indicators, RFC 8707, short-lived tokens, agent security',
+    image: '1685886069739-c1b96bba7953',
+  },
+  {
+    key: 'confused-deputy-agents',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Confused Deputy Agents',
+    label: 'Agents acting as confused deputies',
+    summary: 'An agent that holds broader access than the person it works for can be steered into using that access for them. Authorize each tool call as the requesting user, not as the agent.',
+    illustration: 'one shared workspace assistant whose service account can read every team\'s documents',
+    phrases: ['confused deputy'],
+    citations: [
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices',
+      'https://genai.owasp.org/llmrisk/llm062025-excessive-agency/',
+    ],
+    tags: ['llm', 'agents', 'authorization'],
+    keywords: 'confused deputy, agent authorization, service accounts, per-user authorization, excessive agency, agent security',
+    image: '1793217391692-af68e574e1b8',
+  },
+  {
+    key: 'agent-code-sandbox',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Sandboxing Agent Code',
+    label: 'Sandboxing code an agent writes and runs',
+    summary: 'Code an agent generates is untrusted code. Run it with no ambient credentials, a throwaway filesystem, no network by default, and hard limits on time and memory.',
+    illustration: 'one data-analysis agent that writes and runs a script against an uploaded CSV',
+    phrases: ['sandbox', 'code execution', 'code interpreter'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/',
+    ],
+    tags: ['llm', 'agents', 'sandboxing'],
+    keywords: 'sandboxing, code execution, agent-generated code, isolation, least privilege, agent security',
+    image: '1634224147987-95d2b7679fb0',
+  },
+  {
+    key: 'agent-kill-switch',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Budgets and Kill Switches',
+    label: 'Budgets, step caps, and a kill switch for agents',
+    summary: 'An agent loop needs limits the model cannot change: a step cap, a spend cap, per-tool call limits, and a switch an operator can flip to stop every run.',
+    illustration: 'one research agent that keeps calling a paid search tool in a loop',
+    phrases: ['kill switch', 'step cap', 'spend cap', 'unbounded consumption'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/',
+      'https://genai.owasp.org/llmrisk/llm062025-excessive-agency/',
+    ],
+    tags: ['llm', 'agents', 'operations'],
+    keywords: 'agent budgets, kill switch, step limits, unbounded consumption, cost controls, agent security',
+    image: '1758873263914-230f8ff60569',
+  },
+  {
+    key: 'agent-memory-poisoning',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Memory Poisoning',
+    label: 'Keeping long-term agent memory from being poisoned',
+    summary: 'Whatever an agent saves to memory comes back as context in a later session. Decide what may be written, record where it came from, keep it per user, and let people see and delete it.',
+    illustration: 'one assistant that saves a "preference" it read inside a shared document',
+    phrases: ['memory poisoning', 'agent memory', 'long-term memory'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'memory poisoning, agent memory, persistent context, provenance, per-user isolation, agent security',
+  },
+  {
+    key: 'multi-agent-trust',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Multi-Agent Trust Boundaries',
+    label: 'Trust boundaries between cooperating agents',
+    summary: 'A message from another agent is input, not authority. Each agent keeps its own tool scope and approval rules, and a subagent cannot grant itself the orchestrator\'s permissions.',
+    illustration: 'one orchestrator that hands a browsing task to a subagent and acts on its summary',
+    phrases: ['multi agent', 'subagent', 'orchestrator agent', 'agent to agent'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+    ],
+    tags: ['llm', 'agents', 'architecture'],
+    keywords: 'multi-agent security, trust boundaries, subagents, orchestration, privilege escalation, agent security',
+    image: '1764195287345-2086f504cb0b',
+  },
+  {
+    key: 'agent-security-evals',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Security Evals',
+    label: 'Regression tests for agent security controls',
+    summary: 'Agent defenses need tests that run on every change: a fixed set of hostile documents and tool results, with assertions on which tools the agent was allowed to call. A demo that behaved once is not a test.',
+    illustration: 'one pull request that changes the system prompt of a support agent',
+    phrases: ['security eval', 'adversarial test', 'red team'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf',
+    ],
+    tags: ['llm', 'agents', 'testing'],
+    keywords: 'agent security testing, evals, adversarial testing, regression tests, CI, agent security',
+  },
+  // ── General application security (fallback once agent topics are used) ──
   {
     key: 'sensitive-business-flows',
     area: 'appsec',
@@ -494,6 +708,14 @@ const IMAGE_POOL = [
   { id: '1485827404703-89b55fcc595e', topics: ['ai'], alt: 'A white robot with a round face and illuminated eyes, photographed indoors' },
   { id: '1758873263914-230f8ff60569', topics: ['ai'], alt: 'A yellow selector switch with a key beside an amber warning light on a machine control panel' },
   { id: '1771065999830-8b6762df3354', topics: ['ai'], alt: 'A row of metal toggle switches, each with its own label, on a brushed steel plate' },
+  { id: '1496368077930-c1e31b4e5b44', topics: ['ai', 'security'], alt: 'Two bullet surveillance cameras mounted on a gray concrete wall' },
+  { id: '1550527882-b71dea5f8089', topics: ['ai', 'security'], alt: 'A ring of old black skeleton keys hanging on a wooden wall' },
+  { id: '1569784210445-990e7e44ccfe', topics: ['ai', 'security'], alt: 'A row of electronic ticket gates with status lights in a station hall' },
+  { id: '1634224147987-95d2b7679fb0', topics: ['ai', 'security'], alt: 'A vault room lined with numbered steel safe deposit drawers, a few left open' },
+  { id: '1685886069739-c1b96bba7953', topics: ['ai', 'security'], alt: 'A key in a cylinder lock with other keys hanging from the same ring' },
+  { id: '1764195287345-2086f504cb0b', topics: ['ai', 'engineering'], alt: 'An empty control room with consoles, phones, and rows of indicator lights' },
+  { id: '1768720407298-1b24a0f6749d', topics: ['ai', 'security'], alt: 'A closed blue steel door with a heavy lock and latch' },
+  { id: '1793217391692-af68e574e1b8', topics: ['ai', 'security'], alt: 'Stainless steel turnstiles with green and red status lights at a building entrance' },
   { id: '1597852074816-d933c7d2b988', topics: ['backend', 'security'], alt: 'An open hard drive with the platter and read arm exposed' },
   { id: '1501139083538-0139583c060f', topics: ['security'], alt: 'An hourglass with blue sand standing on a bed of small stones' },
   { id: '1450101499163-c8848c66ca85', topics: ['security', 'engineering'], alt: 'A person signing a printed document with a pen' },
@@ -846,16 +1068,26 @@ function failImagePool(message) {
 }
 
 // Photos on open draft pull requests count as used (see pendingDraftImageIds).
+// A topic's `image` (a pool id) is tried first when it is still unused.
 // Prefer an unused pool photo in the topic group. If that group is used up,
 // take any other unused pool photo. If none remain, fail instead of reusing.
 async function assignImage(posts, topic, pendingIds = []) {
   const used = usedImageIds(posts, pendingIds)
   const group = topicGroup(topic)
   const unused = IMAGE_POOL.filter(item => !used.has(item.id))
-  const primary = unused.filter(item => item.topics[0] === group)
+  // A topic may name a preferred pool photo. It is used only while unused.
+  const preferred = unused.filter(item => item.id === topic?.image)
+  const primary = unused.filter(item => item.topics[0] === group && item.id !== topic?.image)
   const secondary = unused.filter(item => item.topics[0] !== group && item.topics.includes(group))
   const rest = unused.filter(item => !item.topics.includes(group))
-  const candidates = [...primary, ...secondary, ...rest]
+  // Photos another topic prefers go to the back, so they stay free for it.
+  const reserved = new Set(TOPICS.filter(item => item.image && item.key !== topic?.key).map(item => item.image))
+  const ordered = [...primary, ...secondary, ...rest]
+  const candidates = [
+    ...preferred,
+    ...ordered.filter(item => !reserved.has(item.id)),
+    ...ordered.filter(item => reserved.has(item.id)),
+  ]
 
   if (!candidates.length) {
     failImagePool(
@@ -1254,6 +1486,14 @@ function failTopicsExhausted(skipped) {
 
 // ── Model ────────────────────────────────────────────────────────────────────
 
+// Extra direction for the AI agent security series. Reader and angle only:
+// it does not loosen the accuracy rules below.
+const AGENT_SECURITY_FOCUS = `Series: AI agent security
+- Readers are engineers adding agents, tool calling, connectors, and MCP servers to production apps. Write as a senior full-stack engineer who ships these features: the controls the application owns, what to check in code review, and what the system refuses.
+- Put the boundary in application terms: the tool registry, the approval queue, the token broker, the renderer, the sandbox, the audit log. Do not rely on the model choosing to behave.
+- Give at least one concrete control a team could build this week.
+- Do not claim that a vendor, model, or product behaves a certain way unless an allowed URL in the same block says so. Do not name real incidents or CVEs.`
+
 function buildPrompt(topic, format, opening, priorTitles, problems) {
   const priorList = priorTitles.length
     ? priorTitles.map((title, index) => `${index + 1}. ${title}`).join('\n')
@@ -1270,6 +1510,8 @@ What the post has to say: ${topic.summary}
 Area: ${topic.area}
 Category must be exactly: ${topic.category}
 
+Suggested illustration (label it as an illustration if you use it): ${topic.illustration || 'choose one small feature that fits the topic'}
+${topic.area === 'agent-security' ? `${AGENT_SECURITY_FOCUS}\n` : ''}
 Format: ${format.label}
 ${format.instruction}
 
@@ -2478,7 +2720,17 @@ if (invokedDirectly) {
 }
 
 export {
+  FORMATS,
   IMAGE_POOL,
+  TOPICS,
+  buildCorpus,
+  buildPrompt,
+  pickFormat,
+  pickOpening,
+  loadExistingPosts,
+  loadOpenBlogSignals,
+  loadRetiredStubs,
+  pickTopic,
   assignImage,
   pendingDraftImageIds,
   authorBoxHtml,
