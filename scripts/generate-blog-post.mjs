@@ -18,7 +18,8 @@
  * is set, the failure is also written there for the Actions job summary.
  *
  * Featured images come from IMAGE_POOL. The script assigns a photo that is
- * not already used in posts.json, downloads it, and saves a WebP at most
+ * not already used in posts.json or in an open draft pull request into
+ * gh-pages, downloads it, and saves a WebP at most
  * 1600px wide under blog/images/ with width and height. It does not reuse a
  * photo when the pool is empty. New posts are also written into the static
  * list in blog/index.html.
@@ -491,6 +492,8 @@ const TOPICS = [
 // pool runs low. Do not add an id that posts.json already uses.
 const IMAGE_POOL = [
   { id: '1485827404703-89b55fcc595e', topics: ['ai'], alt: 'A white robot with a round face and illuminated eyes, photographed indoors' },
+  { id: '1758873263914-230f8ff60569', topics: ['ai'], alt: 'A yellow selector switch with a key beside an amber warning light on a machine control panel' },
+  { id: '1771065999830-8b6762df3354', topics: ['ai'], alt: 'A row of metal toggle switches, each with its own label, on a brushed steel plate' },
   { id: '1597852074816-d933c7d2b988', topics: ['backend', 'security'], alt: 'An open hard drive with the platter and read arm exposed' },
   { id: '1501139083538-0139583c060f', topics: ['security'], alt: 'An hourglass with blue sand standing on a bed of small stones' },
   { id: '1450101499163-c8848c66ca85', topics: ['security', 'engineering'], alt: 'A person signing a printed document with a pen' },
@@ -768,8 +771,55 @@ function topicGroup(topic) {
   return 'engineering'
 }
 
-function usedImageIds(posts) {
-  return new Set(posts.flatMap(post => [post.unsplashId, imageId(post.image)]).filter(Boolean))
+function usedImageIds(posts, pendingIds = []) {
+  return new Set([
+    ...posts.flatMap(post => [post.unsplashId, imageId(post.image)]),
+    ...pendingIds,
+  ].filter(Boolean))
+}
+
+// Draft posts wait in open pull requests until Anthony merges them, so a new
+// run cannot see their images in this checkout's posts.json. Read posts.json
+// on every open pull request into gh-pages and treat those photos as used.
+// Without this, two drafts opened before either merges get the same photo.
+async function pendingDraftImageIds() {
+  const inActions = process.env.GITHUB_ACTIONS === 'true'
+  let prs
+  try {
+    const { stdout } = await execFileAsync('gh', [
+      'pr', 'list', '--repo', REPO, '--base', 'gh-pages', '--state', 'open',
+      '--limit', '100', '--json', 'number,headRefName,isCrossRepository',
+    ], { timeout: 30000 })
+    prs = JSON.parse(stdout)
+  } catch (err) {
+    if (inActions) {
+      throw new BlogError(`Could not list open draft pull requests to avoid reusing their images (${err.message}).`)
+    }
+    console.warn(`[Blog] Skipping the open pull request image check outside Actions (${err.message})`)
+    return []
+  }
+  const ids = []
+  for (const pr of prs) {
+    if (pr.isCrossRepository) continue
+    let stdout
+    try {
+      ;({ stdout } = await execFileAsync('gh', [
+        'api', '-H', 'Accept: application/vnd.github.raw',
+        `repos/${REPO}/contents/blog/data/posts.json?ref=${encodeURIComponent(pr.headRefName)}`,
+      ], { timeout: 30000, maxBuffer: 20 * 1024 * 1024 }))
+    } catch (err) {
+      console.warn(`[Blog] PR #${pr.number}: could not read blog/data/posts.json (${err.message})`)
+      continue
+    }
+    try {
+      for (const post of JSON.parse(stdout)) ids.push(post.unsplashId, imageId(post.image))
+    } catch {
+      console.warn(`[Blog] PR #${pr.number}: blog/data/posts.json is not valid JSON`)
+    }
+  }
+  const found = unique(ids)
+  console.log(`[Blog] ${prs.length} open pull request(s) into gh-pages checked for images`)
+  return found
 }
 
 async function verifyImageUrl(url) {
@@ -795,10 +845,11 @@ function failImagePool(message) {
   throw new BlogError(summary, summary)
 }
 
+// Photos on open draft pull requests count as used (see pendingDraftImageIds).
 // Prefer an unused pool photo in the topic group. If that group is used up,
 // take any other unused pool photo. If none remain, fail instead of reusing.
-async function assignImage(posts, topic) {
-  const used = usedImageIds(posts)
+async function assignImage(posts, topic, pendingIds = []) {
+  const used = usedImageIds(posts, pendingIds)
   const group = topicGroup(topic)
   const unused = IMAGE_POOL.filter(item => !used.has(item.id))
   const primary = unused.filter(item => item.topics[0] === group)
@@ -2375,7 +2426,7 @@ async function main() {
     )
   }
 
-  const chosen = await assignImage(posts, topic)
+  const chosen = await assignImage(posts, topic, await pendingDraftImageIds())
   post.unsplashId = imageId(chosen.image)
   const localHero = await materializeHero(chosen.image, post.slug)
   post.image = localHero.image
@@ -2429,6 +2480,7 @@ if (invokedDirectly) {
 export {
   IMAGE_POOL,
   assignImage,
+  pendingDraftImageIds,
   authorBoxHtml,
   blogFontLinks,
   bylineHtml,
