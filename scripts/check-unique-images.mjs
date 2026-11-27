@@ -5,9 +5,16 @@
  * are each an identity. Also checks that each post HTML file uses that same
  * image in the hero, Open Graph, Twitter, and JSON-LD tags, with the
  * recorded width and height on the hero.
+ *
+ * In-body figures (posts.json "inlineImages") are part of the same check:
+ * each file's sha256 and any Unsplash id must be unique across every cover
+ * and every figure, the file must match its recorded hash, the post must show
+ * it in a <figure> with the recorded alt text, and an SVG must not contain
+ * script, event handlers, foreignObject, or external references.
  */
 
-import { readFileSync } from 'fs'
+import { createHash } from 'crypto'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -83,6 +90,62 @@ for (const post of posts) {
   }
 }
 
+function unescapeAttr(value) {
+  return String(value)
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+}
+
+function addKey(key, label) {
+  if (!groups.has(key)) groups.set(key, [])
+  groups.get(key).push(label)
+}
+
+let figureCount = 0
+for (const post of posts) {
+  if (post.inlineImages === undefined) continue
+  if (!Array.isArray(post.inlineImages)) {
+    problems.push(`${post.slug}: inlineImages must be an array`)
+    continue
+  }
+  let html = ''
+  try {
+    html = readFileSync(path.join(postsDir, `${post.slug}.html`), 'utf8')
+  } catch {
+    continue
+  }
+  post.inlineImages.forEach((item, index) => {
+    figureCount++
+    const label = `${post.slug} figure ${index + 1}`
+    const src = String(item?.src || '')
+    if (!/^\/blog\/images\/[a-z0-9-]+-fig\d+\.(svg|webp)$/.test(src)) {
+      problems.push(`${label}: unexpected src ${src || '(missing)'}`)
+      return
+    }
+    const file = path.join(root, src.slice(1))
+    if (!existsSync(file)) {
+      problems.push(`${label}: missing ${src}`)
+      return
+    }
+    const bytes = readFileSync(file)
+    const hash = createHash('sha256').update(bytes).digest('hex')
+    if (item.sha256 !== hash) problems.push(`${label}: sha256 in posts.json does not match ${src}`)
+    addKey(`sha256:${hash}`, label)
+    addKey(src, label)
+    if (item.unsplashId) addKey(`unsplash:${item.unsplashId}`, label)
+    if (src.endsWith('.svg')) {
+      const text = bytes.toString('utf8')
+      if (/<script|\son[a-z]+\s*=|<foreignObject|(?:xlink:)?href\s*=\s*["'](?!#)|url\((?!#)/i.test(text)) {
+        problems.push(`${label}: SVG contains script, an event handler, foreignObject, or an external reference`)
+      }
+    }
+    const escapedSrc = src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const tag = html.match(new RegExp(`<figure class="post-figure">(?:(?!</figure>)[\\s\\S])*?<img src="${escapedSrc}" alt="([^"]*)"[^>]*>(?:(?!</figure>)[\\s\\S])*?<figcaption>([^<]+)</figcaption>`))
+    if (!tag) problems.push(`${label}: ${src} is not shown in a <figure class="post-figure"> with an img and figcaption`)
+    else if (unescapeAttr(tag[1]) !== String(item.alt || '')) problems.push(`${label}: alt text in the page does not match posts.json`)
+    else if (!unescapeAttr(tag[1]).trim()) problems.push(`${label}: alt text is empty`)
+  })
+}
+
 for (const [key, slugs] of groups) {
   if (slugs.length > 1) {
     problems.push(`shared image ${key}: ${slugs.join(', ')}`)
@@ -95,4 +158,4 @@ if (problems.length) {
   process.exit(1)
 }
 
-console.log(`Unique images: ${posts.length} posts, ${groups.size} distinct images`)
+console.log(`Unique images: ${posts.length} posts, ${figureCount} in-body figures, ${groups.size} distinct image keys`)

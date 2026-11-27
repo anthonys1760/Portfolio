@@ -34,6 +34,7 @@ import { appendFileSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkS
 import path from 'path'
 import { promisify } from 'util'
 import { fileURLToPath } from 'url'
+import { FIGURE_CSS, INLINE_PHOTO_POOL, figureHtml, figureSpecProblems, renderDiagramSvg, sha256 } from './blog-figures.mjs'
 
 const execFileAsync = promisify(execFile)
 
@@ -993,9 +994,16 @@ function topicGroup(topic) {
   return 'engineering'
 }
 
+function inlineImageKeys(post) {
+  return (Array.isArray(post?.inlineImages) ? post.inlineImages : [])
+    .flatMap(item => [item.unsplashId, item.sha256 ? `sha256:${item.sha256}` : ''])
+}
+
+// Cover ids, in-body photo ids, and in-body file hashes ("sha256:<hex>") for
+// every published post and every open draft. Covers and figures share it.
 function usedImageIds(posts, pendingIds = []) {
   return new Set([
-    ...posts.flatMap(post => [post.unsplashId, imageId(post.image)]),
+    ...posts.flatMap(post => [post.unsplashId, imageId(post.image), ...inlineImageKeys(post)]),
     ...pendingIds,
   ].filter(Boolean))
 }
@@ -1034,7 +1042,7 @@ async function pendingDraftImageIds() {
       continue
     }
     try {
-      for (const post of JSON.parse(stdout)) ids.push(post.unsplashId, imageId(post.image))
+      for (const post of JSON.parse(stdout)) ids.push(post.unsplashId, imageId(post.image), ...inlineImageKeys(post))
     } catch {
       console.warn(`[Blog] PR #${pr.number}: blog/data/posts.json is not valid JSON`)
     }
@@ -1555,6 +1563,9 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
   "readTime": "6 min",
   "keywords": "6-10 comma separated keywords",
   "tags": ${JSON.stringify(topic.tags)},
+  "figures": [
+    { "kind": "sequence", "afterHeading": "exact heading text", "title": "...", "alt": "...", "caption": "...", "actors": ["...", "..."], "steps": [{ "from": "...", "to": "...", "label": "..." }, { "actor": "...", "note": "..." }] }
+  ],
   "body": [
     { "type": "paragraph", "text": "..." },
     { "type": "heading", "text": "..." },
@@ -1564,6 +1575,17 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
     { "type": "code", "lang": "javascript", "code": "..." }
   ]
 }
+
+Figures
+- Add 1 or 2 in-body figures in "figures". The script draws each diagram from your spec. Do not write SVG, HTML, or image URLs.
+- Prefer diagrams that show the control in this post: who proposes, where the application checks, what it refuses.
+- kind "sequence": 2 to 5 "actors" (max 18 characters each) and 3 to 8 "steps". A step is { "from", "to", "label" } with label max 46 characters, or a note on one actor { "actor", "note" } with note max 40 characters. Add "refused": true to a step the application refuses.
+- kind "flow": 3 to 5 "stages" as { "label" (max 26), "detail" (max 44, optional) }, an optional "gate" (the 0-based index of the stage that checks), and an optional "refuse" (max 40) for what the gate refuses.
+- kind "filter": "source", "gate", and "target" (max 26 each) and 3 to 6 "items" as { "label" (max 28), "allowed": true or false }, with at least one allowed and one refused item.
+- kind "photo": at most one, only when a photo helps more than a diagram. Give only "afterHeading". The script picks an unused stock photo and writes its alt text and caption.
+- Every diagram needs "title" (max 60), "alt" (one or two plain sentences that describe the whole diagram, max 400), and "caption" (max 200) that starts with "Illustration:". Plain text only, no URLs, and no names of real companies or products.
+- "afterHeading" is the exact text of a heading in "body". The figure goes at the end of that section. Two figures go under different headings.
+- Do not reuse a figure from another post. Use labels from this post's own illustration.
 
 Block rules
 - paragraph, callout, heading, list, orderedlist, and code are the only types.
@@ -1769,9 +1791,42 @@ function bodyForFormat(topic, formatKey, lead, points) {
   ]
 }
 
+function fixtureFigures(topic) {
+  const name = topic.short
+  return [
+    {
+      kind: 'sequence',
+      title: `${name}: where the check sits`,
+      alt: `Sequence diagram for ${name}. The model proposes a tool call, the application checks it against rules it owns, and only an allowed call reaches the tool. A refused call stops at the application.`,
+      caption: `Illustration: the application, not the model, decides whether a call goes through (${name.toLowerCase()}).`,
+      actors: ['Model', 'Application', 'Tool'],
+      steps: [
+        { from: 'Model', to: 'Application', label: 'proposes a tool call' },
+        { actor: 'Application', note: `checks: ${name}`.slice(0, 40) },
+        { from: 'Application', to: 'Tool', label: 'runs only the allowed call' },
+        { from: 'Application', to: 'Model', label: 'refuses anything else', refused: true },
+      ],
+    },
+    {
+      kind: 'flow',
+      title: `The ${name} check, step by step`.slice(0, 60),
+      alt: `Flow diagram for ${name}. Untrusted input reaches an application check. An allowed action continues and is logged with the actor. Anything else is refused before a side effect starts.`,
+      caption: 'Illustration: the check runs in application code before any side effect.',
+      stages: [
+        { label: 'Untrusted input', detail: 'model output or tool data' },
+        { label: 'Application check', detail: name.slice(0, 44) },
+        { label: 'Allowed action', detail: 'logged with the actor' },
+      ],
+      gate: 1,
+      refuse: 'Refused before any side effect',
+    },
+  ]
+}
+
 function buildFixture(topic, format, opening) {
   const lead = fixtureLead(topic, opening.key)
   return {
+    figures: fixtureFigures(topic),
     title: fixtureTitle(topic, format.key),
     excerpt: fixtureExcerpt(topic),
     category: topic.category,
@@ -1804,6 +1859,114 @@ function findUrls(text) {
 
 function normalizeUrl(url) {
   return String(url || '').replace(/[.,;:]+$/, '').replace(/\/$/, '')
+}
+
+// ── In-body figures ──────────────────────────────────────────────────────────
+
+function figureProblems(post, usedKeys) {
+  const figures = Array.isArray(post.figures) ? post.figures : []
+  if (figures.length < 1 || figures.length > 2) return ['Add 1 or 2 figures in "figures".']
+  const problems = []
+  if (figures.filter(figure => figure?.kind === 'photo').length > 1) problems.push('Use at most one photo figure.')
+  const headings = (post.body || []).filter(block => block.type === 'heading').map(block => visible(block.text))
+  const anchors = []
+  const hashes = new Set()
+  figures.forEach((figure, index) => {
+    const specProblems = figureSpecProblems(figure, index)
+    problems.push(...specProblems)
+    const anchor = visible(figure?.afterHeading || '')
+    if (anchor && !headings.includes(anchor)) problems.push(`Figure ${index + 1}: afterHeading "${anchor}" is not a heading in body.`)
+    if (anchor && anchors.includes(anchor)) problems.push('Put the two figures under different headings.')
+    anchors.push(anchor)
+    if (figure?.kind !== 'photo' && !/^illustration:/i.test(String(figure?.caption || '').trim())) {
+      problems.push(`Figure ${index + 1}: the caption must start with "Illustration:".`)
+    }
+    if (figure?.kind === 'photo' || specProblems.length) return
+    const hash = sha256(Buffer.from(renderDiagramSvg(figure).svg))
+    if (usedKeys.has(`sha256:${hash}`) || hashes.has(hash)) problems.push(`Figure ${index + 1} is identical to a figure already used. Use labels from this post.`)
+    hashes.add(hash)
+  })
+  return problems
+}
+
+// End of the section under `heading`, or a spread-out default.
+function figureInsertIndex(body, heading, ordinal) {
+  const headingIndexes = body.map((block, index) => (block.type === 'heading' ? index : -1)).filter(index => index >= 0)
+  let start = headingIndexes.find(index => visible(body[index].text) === visible(heading || ''))
+  if (start === undefined) {
+    if (!headingIndexes.length) return Math.min(body.length, 2 + ordinal * 3)
+    start = headingIndexes[Math.min(headingIndexes.length - 1, ordinal === 0 ? 0 : Math.floor(headingIndexes.length / 2))]
+  }
+  const next = headingIndexes.find(index => index > start)
+  return next === undefined ? body.length : next
+}
+
+function pickInlinePhoto(topic, usedKeys) {
+  const group = topicGroup(topic)
+  const unused = INLINE_PHOTO_POOL.filter(item => !usedKeys.has(item.id))
+  const ranked = [...unused.filter(item => item.topics.includes(group)), ...unused.filter(item => !item.topics.includes(group))]
+  return ranked[0] || null
+}
+
+async function materializeInlinePhoto(item, slug, name) {
+  const dest = path.join(HERO_DIR, `${name}.webp`)
+  const tmp = path.join(HERO_DIR, `.${name}.download`)
+  const source = `https://images.unsplash.com/photo-${item.id}?auto=format&fit=crop&w=1200&h=800&q=70&fm=webp`
+  const response = await fetch(source, { signal: AbortSignal.timeout(20000) })
+  if (!response.ok) throw new BlogError(`In-body photo download failed (${response.status}) for ${source}`)
+  writeFileSync(tmp, Buffer.from(await response.arrayBuffer()))
+  try {
+    await execFileAsync('ffmpeg', ['-y', '-i', tmp, '-vf', "scale='min(1200,iw)':-2", '-c:v', 'libwebp', '-quality', '68', '-compression_level', '6', dest], { timeout: 30000 })
+  } catch (err) {
+    throw new BlogError(`Could not convert the in-body photo to WebP (${err.message}).`)
+  } finally {
+    try { unlinkSync(tmp) } catch { /* already removed */ }
+  }
+  const probe = await execFileAsync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=s=x:p=0', dest], { timeout: 10000 })
+  const [width, height] = probe.stdout.trim().split('x').map(Number)
+  return { file: dest, src: `/blog/images/${name}.webp`, width, height }
+}
+
+// Writes blog/images/<slug>-figN.svg (or .webp for a photo), inserts figure
+// blocks into post.body, and records post.inlineImages for posts.json.
+async function materializeFigures(post, topic, usedKeys) {
+  const used = new Set(usedKeys)
+  const placed = []
+  post.inlineImages = []
+  for (const [index, spec] of post.figures.entries()) {
+    const name = `${post.slug}-fig${index + 1}`
+    let block
+    let record
+    if (spec.kind === 'photo') {
+      const item = pickInlinePhoto(topic, used)
+      if (!item) {
+        console.warn('[Blog] No unused in-body photo is left. Skipping the photo figure.')
+        continue
+      }
+      const saved = await materializeInlinePhoto(item, post.slug, name)
+      const hash = sha256(readFileSync(saved.file))
+      used.add(item.id)
+      used.add(`sha256:${hash}`)
+      block = { type: 'figure', src: saved.src, alt: item.alt, caption: item.caption, width: saved.width, height: saved.height }
+      record = { src: saved.src, kind: 'photo', unsplashId: item.id, sha256: hash, width: saved.width, height: saved.height, alt: item.alt }
+    } else {
+      const { svg, width, height } = renderDiagramSvg(spec)
+      const hash = sha256(Buffer.from(svg))
+      if (used.has(`sha256:${hash}`)) throw new BlogError(`Figure ${index + 1} duplicates an existing figure.`)
+      used.add(`sha256:${hash}`)
+      writeFileSync(path.join(HERO_DIR, `${name}.svg`), svg, 'utf8')
+      const src = `/blog/images/${name}.svg`
+      block = { type: 'figure', src, alt: visible(spec.alt), caption: visible(spec.caption), width, height }
+      record = { src, kind: 'diagram', sha256: hash, width, height, alt: block.alt }
+    }
+    post.inlineImages.push(record)
+    placed.push({ block, at: figureInsertIndex(post.body, spec.afterHeading, index) })
+    console.log(`[Blog] figure ${index + 1}: ${record.kind} -> ${record.src}`)
+  }
+  // Insert from the end so earlier indexes stay valid.
+  placed.sort((a, b) => b.at - a.at)
+  for (const { block, at } of placed) post.body.splice(at, 0, block)
+  if (!post.inlineImages.length) throw new BlogError('The draft has no in-body figure.')
 }
 
 function validatePost(post, topic, format, corpus) {
@@ -1898,6 +2061,7 @@ function validatePost(post, topic, format, corpus) {
   }
   const clash = similarTitle(title, corpus.titles)
   if (clash) problems.push(`The title is too close to "${clash}". Choose a title that is distinct at a glance.`)
+  problems.push(...figureProblems(post, corpus.usedImageKeys || new Set()))
 
   return unique(problems)
 }
@@ -1959,6 +2123,8 @@ function renderBlock(block) {
       return `<ol>${(block.items || []).map(i => `<li>${i}</li>`).join('')}</ol>`
     case 'code':
       return `<pre><code class="language-${codeLanguage(block.lang)}">${escapeCode(block.code || '')}</code></pre>`
+    case 'figure':
+      return figureHtml(block)
     default:
       return ''
   }
@@ -2018,6 +2184,8 @@ function plainBody(post) {
       parts.push((block.items || []).map(item => `- ${inlineText(item)}`).join('\n'))
     } else if (block.type === 'code') {
       parts.push(String(block.code || '').replace(/\s+$/, ''))
+    } else if (block.type === 'figure') {
+      parts.push(`Figure: ${block.alt}`)
     }
   }
   return parts.filter(Boolean).join('\n\n')
@@ -2279,6 +2447,7 @@ function buildPostHtml(post) {
       font-size: 0.95rem;
       line-height: 1.7;
     }
+${FIGURE_CSS}
     .post-footer-nav {
       margin-top: 64px;
       padding-top: 32px;
@@ -2583,6 +2752,7 @@ function toMeta(post) {
   if (post.topicKey) meta.topicKey = post.topicKey
   if (post.format) meta.format = post.format
   if (Array.isArray(post.tags) && post.tags.length) meta.tags = post.tags
+  if (Array.isArray(post.inlineImages) && post.inlineImages.length) meta.inlineImages = post.inlineImages
   return meta
 }
 
@@ -2639,6 +2809,8 @@ async function main() {
 
   const dateISO = today()
   const corpus = buildCorpus(posts, stubs, openPrs)
+  const pendingImageIds = await pendingDraftImageIds()
+  corpus.usedImageKeys = usedImageIds(posts, pendingImageIds)
   let post
   let problems = []
 
@@ -2668,7 +2840,7 @@ async function main() {
     )
   }
 
-  const chosen = await assignImage(posts, topic, await pendingDraftImageIds())
+  const chosen = await assignImage(posts, topic, pendingImageIds)
   post.unsplashId = imageId(chosen.image)
   const localHero = await materializeHero(chosen.image, post.slug)
   post.image = localHero.image
@@ -2676,6 +2848,8 @@ async function main() {
   post.imageHeight = localHero.imageHeight
   post.imageAlt = chosen.imageAlt
   console.log(`[Blog] image: ${post.unsplashId} -> ${post.image} ${post.imageWidth}x${post.imageHeight} (${topicGroup(topic)})`)
+  await materializeFigures(post, topic, new Set([...corpus.usedImageKeys, post.unsplashId]))
+  delete post.figures
 
   const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
   writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
@@ -2721,6 +2895,10 @@ if (invokedDirectly) {
 
 export {
   FORMATS,
+  figureProblems,
+  fixtureFigures,
+  materializeFigures,
+  usedImageIds,
   IMAGE_POOL,
   TOPICS,
   buildCorpus,
