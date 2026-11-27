@@ -277,6 +277,25 @@
       font-size: 0.95rem;
       line-height: 1.7;
     }
+    .post-figure {
+      margin: 32px 0;
+    }
+    .post-figure a { display: block; }
+    .post-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #14111f;
+    }
+    .post-figure figcaption {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.62);
+      text-align: center;
+    }
     .post-footer-nav {
       margin-top: 64px;
       padding-top: 32px;
@@ -398,9 +417,13 @@
 
 <p>Write permission is the third bound. A write tool is registered only by an explicit choice for this call. An illustration only: a caller who may read <code>GET /api/orders/4021</code> does not receive a write tool for that order unless the application registered one.</p>
 
+<figure class="post-figure"><a href="/blog/images/the-app-decides-the-tool-set-fig1.svg"><img src="/blog/images/the-app-decides-the-tool-set-fig1.svg" alt="Flow diagram. The actor and task feed a catalog of which tools exist for this call, then a schema check on the arguments, then a write check, and only then does the handler run. An unknown name or invalid arguments are refused at the schema check." width="1000" height="496" loading="lazy" decoding="async"></a><figcaption>Illustration: existence, arguments, and write permission are separate checks in application code, not lines in the prompt.</figcaption></figure>
+
 <p>The <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP excessive agency note</a> describes the risk of giving an agent functions, permissions, or autonomy beyond what the task needs. The matching control is to reduce those three in the application. A warning in the prompt does not remove a registered write tool.</p>
 
 <p>Dispatch is a lookup, not a negotiation. The application reads the proposed name, finds it in the catalog for this call, and parses arguments with that tool's schema. Unknown names stop there. Invalid arguments stop there. A name that exists in another module, or that appeared in user text, is still unknown if this catalog does not contain it.</p>
+
+<figure class="post-figure"><a href="/blog/images/the-app-decides-the-tool-set-fig2.svg"><img src="/blog/images/the-app-decides-the-tool-set-fig2.svg" alt="Filter diagram. The model proposes four tool names. The catalog built for this call lets readOrder(orderId) through to the handler. updateOrderStatus is refused because it was not registered for this task, refundOrder is refused, and a tool name taken from user text is refused." width="1000" height="446" loading="lazy" decoding="async"></a><figcaption>Illustration: a name the model proposes runs only if the application registered it for this actor and task.</figcaption></figure>
 
 <p>The snippet below is an illustration of the control, not a trace from a live system. Unknown names are refused before any handler runs, and write tools are added only when the task and the actor both allow a write.</p>
 

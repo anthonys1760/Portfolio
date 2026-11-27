@@ -18,6 +18,24 @@
     "tags": [
       "llm",
       "appsec"
+    ],
+    "inlineImages": [
+      {
+        "src": "/blog/images/person-approval-before-write-or-send-fig1.svg",
+        "kind": "diagram",
+        "sha256": "d64211b339e95db049b149df1eee0a69bcef352384535a5443258887b4c3c511",
+        "width": 1000,
+        "height": 690,
+        "alt": "Sequence diagram. The model proposes a send_email call to the application. The application classifies it as state-changing and holds it. It shows the person the tool and exact arguments. The person approves, creating a record bound to the argument hash. The application checks the tool and hash match, then executes the call once in the tool runner."
+      },
+      {
+        "src": "/blog/images/person-approval-before-write-or-send-fig2.svg",
+        "kind": "diagram",
+        "sha256": "b8b41ef282084086b16516cfb0d53a928a86813bc9f6bbc84d9aff14efa89836",
+        "width": 1000,
+        "height": 496,
+        "alt": "Flow diagram. A person approves one proposal. The application stores a record of the tool name and argument hash. Later the call changes, for example a new recipient. The executor compares the hash, and on a mismatch it refuses and asks for a new approval."
+      }
     ]
   },
   {
@@ -39,6 +57,24 @@
     "tags": [
       "llm",
       "appsec"
+    ],
+    "inlineImages": [
+      {
+        "src": "/blog/images/the-app-decides-the-tool-set-fig1.svg",
+        "kind": "diagram",
+        "sha256": "dbadb574dc270da55cb62ca4d011e096d1185275d4da74c279b00f143b8f3970",
+        "width": 1000,
+        "height": 496,
+        "alt": "Flow diagram. The actor and task feed a catalog of which tools exist for this call, then a schema check on the arguments, then a write check, and only then does the handler run. An unknown name or invalid arguments are refused at the schema check."
+      },
+      {
+        "src": "/blog/images/the-app-decides-the-tool-set-fig2.svg",
+        "kind": "diagram",
+        "sha256": "0600e9972e58f90204d7b58f476a2d9b2c02933c43288f57c205737ab3e93522",
+        "width": 1000,
+        "height": 446,
+        "alt": "Filter diagram. The model proposes four tool names. The catalog built for this call lets readOrder(orderId) through to the handler. updateOrderStatus is refused because it was not registered for this task, refundOrder is refused, and a tool name taken from user text is refused."
+      }
     ]
   },
   {
@@ -342,7 +378,7 @@
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
-    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle\u2014and the ones that didn't.",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
     "category": "Backend",
     "readTime": "3 min",
     "date": "July 6, 2026",

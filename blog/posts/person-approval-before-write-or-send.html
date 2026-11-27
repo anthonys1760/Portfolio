@@ -277,6 +277,25 @@
       font-size: 0.95rem;
       line-height: 1.7;
     }
+    .post-figure {
+      margin: 32px 0;
+    }
+    .post-figure a { display: block; }
+    .post-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #14111f;
+    }
+    .post-figure figcaption {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.62);
+      text-align: center;
+    }
     .post-footer-nav {
       margin-top: 64px;
       padding-top: 32px;
@@ -396,6 +415,8 @@
 
 <ul><li>The tool is classified as read-only or state-changing.</li><li>A state-changing call carries a person approval record, not a model flag.</li><li>The approval names the same tool and the same argument hash the person saw.</li><li>No side effect has started. The call is still a proposal.</li></ul>
 
+<figure class="post-figure"><a href="/blog/images/person-approval-before-write-or-send-fig1.svg"><img src="/blog/images/person-approval-before-write-or-send-fig1.svg" alt="Sequence diagram. The model proposes a send_email call to the application. The application classifies it as state-changing and holds it. It shows the person the tool and exact arguments. The person approves, creating a record bound to the argument hash. The application checks the tool and hash match, then executes the call once in the tool runner." width="1000" height="690" loading="lazy" decoding="async"></a><figcaption>Illustration: the model proposes, the application holds the call, a person approves that exact call, and only then does the application execute it.</figcaption></figure>
+
 <h2>Confirmation read from model text</h2>
 
 <p>Reading confirmation from the same channel that proposed the action points the control at model output. The fix is to ignore that output. The application does not parse the transcript for a yes, does not honor a consent field on the tool call, and does not treat a system reminder the model can quote as a signature. Approval arrives on a channel the model cannot invoke: a person control bound to an authenticated session, stored as its own record. As an illustration, chat text that says the message may be sent does not authorize the mail tool. The executor still refuses.</p>
@@ -430,6 +451,8 @@
 <h2>One approval reused after the call changes</h2>
 
 <p>Storing a bare boolean for the conversation lets a later call inherit an earlier yes. The person approved one proposal. A changed recipient, body, amount, path, or tool is a different proposal. The fix is to bind the record to the tool name and a hash of the arguments shown to the person. On mismatch, the application refuses and shows the new proposal. It does not stretch the old record to fit. As an illustration, approval to save a draft to one address does not confirm a send to a second address, even in the same thread.</p>
+
+<figure class="post-figure"><a href="/blog/images/person-approval-before-write-or-send-fig2.svg"><img src="/blog/images/person-approval-before-write-or-send-fig2.svg" alt="Flow diagram. A person approves one proposal. The application stores a record of the tool name and argument hash. Later the call changes, for example a new recipient. The executor compares the hash, and on a mismatch it refuses and asks for a new approval." width="1000" height="496" loading="lazy" decoding="async"></a><figcaption>Illustration: a changed recipient, body, amount, or tool is a different proposal, so the old approval no longer matches.</figcaption></figure>
 
 <div class="post-callout">The model may propose. A person confirms. The application refuses the state change until those roles stay apart.</div>
         </div>
