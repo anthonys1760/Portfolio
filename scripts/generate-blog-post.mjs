@@ -24,9 +24,11 @@
  * photo when the pool is empty. New posts are also written into the static
  * list in blog/index.html.
  *
- * Topics are picked in TOPICS order. AI agent security topics come first.
+ * Topics are picked in TOPICS order. AI agent security topics come first,
+ * with a shipped-work case study inserted every fourth remaining slot.
  * `node scripts/preview-topics.mjs` prints the next picks without calling
- * the model or writing files.
+ * the model or writing files. The page template appends a short hire-me
+ * call to action that links to /contact.html#contact-form.
  */
 
 import { execFile } from 'child_process'
@@ -200,10 +202,11 @@ const TOPICS = [
     tags: ['llm', 'appsec'],
     keywords: 'human approval, tool confirmation, excessive agency, agent security, write actions',
   },
-  // ── AI agent security focus ───────────────────────────────────────────────
-  // Agent security posts get the most reaction, so these come before the
-  // general appsec topics below. Every citation was checked to load (HTTP 200)
-  // and to cover the topic. Add new agent topics here, above the appsec list.
+  // ── AI agent security focus, with occasional shipped-work case studies ──
+  // Agent security posts come first. A case-study topic is inserted after
+  // every three remaining agent-security topics (every fourth slot). Keep
+  // this interleave if you add more agent topics. Every citation was checked
+  // to load (HTTP 200) and to cover the topic.
   {
     key: 'tool-result-injection',
     area: 'agent-security',
@@ -256,6 +259,40 @@ const TOPICS = [
     tags: ['llm', 'agents', 'mcp'],
     keywords: 'MCP security, Model Context Protocol, connectors, token passthrough, scope minimization, agent security',
     image: '1771065999830-8b6762df3354',
+  },
+  {
+    key: 'castlog-offline-voice-logging',
+    area: 'case-study',
+    category: 'Engineering',
+    short: 'CastLog Voice Logging',
+    label: 'Building CastLog voice logging that works offline',
+    summary: 'CastLog is a voice-first fishing journal that can log a catch by voice or in 3 taps, including when there is no signal. Voice captures save locally and sync when the phone is back in range.',
+    illustration: 'one voice capture saved on the phone at a lake with no cell signal, then synced later',
+    phrases: ['castlog voice', 'offline voice logging', 'voice-first fishing journal'],
+    citations: [
+      'https://castlogapp.com/',
+      'https://castlogapp.com/privacy',
+      'https://anthonysdigital.net/portfolio.html#castlog',
+    ],
+    tags: ['mobile', 'castlog', 'offline'],
+    keywords: 'CastLog, voice logging, offline-first, React Native, fishing journal, shipped app',
+    facts: [
+      'Anthony built CastLog as a solo founder and engineer. It is a voice-first, offline, private-first fishing journal.',
+      'CastLog is live on the iOS App Store, and an Android test is open.',
+      'The public site says you can log a catch in 3 taps or by voice, including with no signal, and that the app is built for wet hands.',
+      'The logging flow on the site is: say the species, CastLog attaches lake, weather, and moon phase, then the angler confirms and logs. The site uses "Largemouth bass" as a species example. Do not name a real lake.',
+      'Voice captures save locally and sync when the phone is back in range.',
+      'The portfolio lists the stack as React Native, Expo, TypeScript, and Supabase, and describes the app as offline-first.',
+      'The CastLog privacy policy (updated July 10, 2026) says that when Voice Log is used, the audio is sent to OpenAI (Whisper) for transcription, then the transcript is sent to Anthropic (Claude) via OpenRouter to fill in catch details. Do not claim that transcription always runs on the device.',
+      'AI features send data to those providers only when the person actively uses the feature, not continuously in the background.',
+      'The core journal, voice logging, and export are free. Angler Pro is optional.',
+      'The product site is https://castlogapp.com/. The portfolio write-up is at https://anthonysdigital.net/portfolio.html#castlog.',
+    ],
+    points: [
+      'The product problem is a catch log that has to work with wet hands and no signal, not a form that assumes a dry phone and a network.',
+      'A voice capture is saved on the device and synced when the phone is back in range, so the log can be finished without waiting for a signal.',
+      'When Voice Log later uses a network, the privacy policy says the audio goes to OpenAI Whisper and the transcript goes to Anthropic via OpenRouter. Do not describe an on-device transcription path that the public sources do not state.',
+    ],
   },
   {
     key: 'agent-audit-logging',
@@ -311,6 +348,40 @@ const TOPICS = [
     image: '1685886069739-c1b96bba7953',
   },
   {
+    key: 'castlog-private-first-design',
+    area: 'case-study',
+    category: 'Engineering',
+    short: 'CastLog Private by Default',
+    label: 'Building CastLog so fishing spots stay private',
+    summary: 'CastLog keeps spots private by default: there is no public social feed, data is not sold, and the angler can export or delete their journal. Location is attached only when they choose to include it.',
+    illustration: 'one saved fishing spot that stays on the angler account and is not shown on a public map',
+    phrases: ['castlog private', 'private-first fishing', 'spots stay private'],
+    citations: [
+      'https://castlogapp.com/',
+      'https://castlogapp.com/privacy',
+      'https://anthonysdigital.net/portfolio.html#castlog',
+    ],
+    tags: ['mobile', 'castlog', 'privacy'],
+    keywords: 'CastLog, private by default, fishing spots, data export, privacy policy, shipped app',
+    facts: [
+      'Anthony built CastLog as a solo founder and engineer. It is a fishing journal that is private by default.',
+      'CastLog is live on the iOS App Store, and an Android test is open.',
+      'The site and privacy policy say there is no public social feed. Spots and locations the angler saves are private to their account by default and are not shared with other users or shown publicly.',
+      'CastLog does not sell personal data and does not run a third-party advertising network in the app.',
+      'Location is stored when the angler chooses to attach it to a catch or a spot. The angler controls that choice and the device location permission. Do not include real coordinates or real lake names.',
+      'Account and fishing data are stored on cloud infrastructure and synced to the angler\'s devices. Do not claim that all journal data lives only on the device.',
+      'CSV and JSON export are part of the product. The core journal and export are free. The angler can request deletion of the account and associated data.',
+      'The privacy policy says AI features, including Fish ID, Bite Coach, and Voice Log, send the listed inputs to third-party AI providers only when the person actively uses that feature.',
+      'The portfolio lists the stack as React Native, Expo, TypeScript, and Supabase.',
+      'The product site is https://castlogapp.com/. The privacy policy is at https://castlogapp.com/privacy. The portfolio write-up is at https://anthonysdigital.net/portfolio.html#castlog.',
+    ],
+    points: [
+      'Spots are private by default: CastLog has no public social feed, and saved locations are not shared with other users.',
+      'The product does not sell personal data and does not run a third-party advertising network in the app. Export and account deletion are available.',
+      'Journal data is stored on cloud infrastructure and synced to the angler\'s devices. Location is attached only when the angler chooses to include it.',
+    ],
+  },
+  {
     key: 'confused-deputy-agents',
     area: 'agent-security',
     category: 'AI',
@@ -362,6 +433,39 @@ const TOPICS = [
     image: '1758873263914-230f8ff60569',
   },
   {
+    key: 'nutrilogix-ai-food-logging',
+    area: 'case-study',
+    category: 'Engineering',
+    short: 'Nutrilogix Meal Logging',
+    label: 'Building Nutrilogix meal logging from a photo or voice',
+    summary: 'Nutrilogix lets a person log a meal from a photo or by voice, then edit the estimate before saving. The iOS app is in TestFlight. Photo estimates are presented as estimates, not lab results.',
+    illustration: 'one plate photo that becomes an editable calorie and macro estimate before the meal is saved',
+    phrases: ['nutrilogix meal', 'photo meal logging', 'ai food logging'],
+    citations: [
+      'https://nutrilogix-ai.com/',
+      'https://nutrilogix-ai.com/privacy',
+      'https://anthonysdigital.net/portfolio.html#nutrilogix',
+    ],
+    tags: ['mobile', 'nutrilogix', 'ai'],
+    keywords: 'Nutrilogix, AI food logging, photo meal log, voice logging, TestFlight, shipped app',
+    facts: [
+      'Spell the product name Nutrilogix. Anthony built it solo, including the product, the app, and the back end.',
+      'Nutrilogix is an AI nutrition app. A person can log a meal from a photo or by voice, look up a barcode, and sync workouts with Apple Health.',
+      'The app is in an iOS TestFlight beta. The public site describes Android as coming soon.',
+      'The public site says photo estimates can be edited before they are saved, and that they are estimates, not a lab result.',
+      'Other public features include scanning a fridge or pantry to generate recipes and a shopping list, and connecting Apple Health and Google Fit for calories burned, with the user\'s permission.',
+      'The portfolio lists the stack as React Native, Expo, TypeScript, and Supabase.',
+      'The Nutrilogix privacy policy (updated February 2, 2026) says health and fitness data from Apple HealthKit and Google Fit is accessed only with explicit permission and is never sold to third parties.',
+      'The privacy policy says images are processed to identify ingredients and estimate portions. It also says images may be stored anonymously to improve AI models, and that the user can opt out in settings.',
+      'The product site is https://nutrilogix-ai.com/. The portfolio write-up is at https://anthonysdigital.net/portfolio.html#nutrilogix.',
+    ],
+    points: [
+      'The product problem is meal logging that people abandon when every ingredient has to be typed.',
+      'A photo or a voice clip becomes an editable estimate. The site is explicit that the result is an estimate, not a lab result, and that the person can adjust it before save.',
+      'Health data from Apple Health or Google Fit is used only with permission, and the privacy policy says it is never sold to third parties.',
+    ],
+  },
+  {
     key: 'agent-memory-poisoning',
     area: 'agent-security',
     category: 'AI',
@@ -408,6 +512,38 @@ const TOPICS = [
     ],
     tags: ['llm', 'agents', 'testing'],
     keywords: 'agent security testing, evals, adversarial testing, regression tests, CI, agent security',
+  },
+  {
+    key: 'portfolio-blog-writer-pipeline',
+    area: 'case-study',
+    category: 'Engineering',
+    short: 'Portfolio Blog Writer',
+    label: 'How the Portfolio blog writer drafts posts for review',
+    summary: 'The Portfolio blog is drafted by a scheduled script that opens a pull request for review. The script does not publish. A post goes live only after that pull request is merged.',
+    illustration: 'one Monday morning run that opens a Blog draft pull request and waits for a review',
+    phrases: ['blog writer pipeline', 'blog draft pull request', 'scheduled blog writer'],
+    citations: [
+      'https://anthonysdigital.net/blog/',
+      'https://anthonysdigital.net/scripts/generate-blog-post.mjs',
+      'https://anthonysdigital.net/scripts/blog-figures.mjs',
+    ],
+    tags: ['engineering', 'automation', 'blog'],
+    keywords: 'blog pipeline, draft pull request, GitHub Actions, scheduled writing, anthonysdigital.net',
+    facts: [
+      'Anthony\'s public portfolio and blog live at https://anthonysdigital.net/.',
+      'The weekly writer is the public script at https://anthonysdigital.net/scripts/generate-blog-post.mjs. In-body diagrams are drawn by https://anthonysdigital.net/scripts/blog-figures.mjs.',
+      'A GitHub Actions workflow on the default branch runs Monday and Thursday, checks out the gh-pages branch, runs that script, and opens a "Blog draft" pull request into gh-pages. The script itself does not push or publish.',
+      'A draft is reviewed in the pull request. The post is published when that pull request is merged.',
+      'Topics are picked in a fixed order from a list in the script. A topic already used in a published post, a retired stub, or an open blog pull request is skipped.',
+      'Each draft gets a featured photo from a curated pool of unused Unsplash photos, and one or two in-body figures. The script draws diagrams from a spec and does not reuse a photo that is already used.',
+      'The topic list focuses on AI agent security, with occasional posts about shipped products interleaved.',
+      'Do not invent traffic, engagement, open rates, or other unpublished metrics. Do not mention a number of years of experience.',
+    ],
+    points: [
+      'The writer opens a draft pull request. It does not publish the post on its own.',
+      'Topics are taken in a fixed order, and a topic already used in a published post or an open draft is skipped.',
+      'Covers and in-body figures are assigned from unused photos and generated diagrams, so two posts do not share an image.',
+    ],
   },
   // ── General application security (fallback once agent topics are used) ──
   {
@@ -770,6 +906,9 @@ const BANNED_PROSE = [
   [/\bi have seen\b/i, 'Remove "I have seen". Do not invent a first-person anecdote.'],
   [/\bin my \d+\s+years\b/i, 'Remove career-year claims. Do not invent numbers about Anthony.'],
   [/\b\d+\s+years of experience\b/i, 'Remove career-year claims. Do not invent numbers about Anthony.'],
+  [/\b15\+?\s+years\b/i, 'Remove "15 years" and "15+ years". Do not mention a number of years of experience.'],
+  [/\bfifteen\s+years\b/i, 'Remove career-year claims. Do not mention a number of years of experience.'],
+  [/\bscott lake\b/i, 'Do not use real lake names. Use a labeled illustration such as "Example Lake".'],
   [/\bover my career\b/i, 'Remove career anecdotes.'],
   [/\bmy clients\b/i, 'Do not invent clients or engagements.'],
   [/\bi once\b/i, 'Do not invent a first-person anecdote.'],
@@ -904,10 +1043,16 @@ function blogFontLinks() {
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">`
 }
 
-function authorBoxHtml() {
-  return `<aside class="post-author">
-          <p><strong>Anthony Smith</strong>, software engineer with 15+ years building production systems, is open to full-time and contract work. <a href="/about.html">About</a> · <a href="/contact.html">Contact</a></p>
+const HIRE_CTA_HREF = '/contact.html#contact-form'
+
+function hireCtaHtml() {
+  return `<aside class="post-cta" aria-label="Get in touch">
+          <p><strong>Want to work together?</strong> I am open to full-time roles and to contract or freelance work. <a href="${HIRE_CTA_HREF}">Get in touch</a> about a role or a project.</p>
         </aside>`
+}
+
+function authorBoxHtml() {
+  return hireCtaHtml()
 }
 
 function bylineHtml(post) {
@@ -1502,6 +1647,23 @@ const AGENT_SECURITY_FOCUS = `Series: AI agent security
 - Give at least one concrete control a team could build this week.
 - Do not claim that a vendor, model, or product behaves a certain way unless an allowed URL in the same block says so. Do not name real incidents or CVEs.`
 
+// Extra direction for shipped-work case studies. Facts come only from the
+// topic.facts list, which was taken from public product and portfolio pages.
+function caseStudyFocus(topic) {
+  const facts = (topic.facts || []).map((fact, index) => `${index + 1}. ${fact}`).join('\n')
+  return `Series: Shipped work
+- Readers are recruiters and engineers who want to see how a shipped product was built. Write as the engineer who built this product. Stay inside the allowed facts.
+- You may use first person about this product only ("I built", "I chose"). Do not invent other projects, clients, jobs, quotes, or career history.
+- Allowed facts (use only these, plus the allowed URLs). Do not add metrics, user counts, revenue, quotes, timelines, or implementation details that are not in this list:
+${facts || '(none listed)'}
+- If a detail is not in the list, leave it out. Do not guess at databases, queues, model names, latency, accuracy, or user counts.
+- Spell the product name Nutrilogix exactly when you name that app. Never write NutriLogix, Nutri Logix, or Nutri-logix.
+- Never mention a number of years of experience, including "15 years" or "15+ years".
+- Never include real GPS coordinates or real lake names. If you need a location example, say "the lake the angler is on" or use a clearly labeled illustration with a fake name such as "Example Lake".
+- Do not write a hire-me or contact call to action in the body. The page template already adds one that links to the contact form.
+- Prefer flow or sequence diagrams of the product path. At most one photo. No lake names, GPS coordinates, or personal data in figure labels.`
+}
+
 function buildPrompt(topic, format, opening, priorTitles, problems) {
   const priorList = priorTitles.length
     ? priorTitles.map((title, index) => `${index + 1}. ${title}`).join('\n')
@@ -1520,6 +1682,7 @@ Category must be exactly: ${topic.category}
 
 Suggested illustration (label it as an illustration if you use it): ${topic.illustration || 'choose one small feature that fits the topic'}
 ${topic.area === 'agent-security' ? `${AGENT_SECURITY_FOCUS}\n` : ''}
+${topic.area === 'case-study' ? `${caseStudyFocus(topic)}\n` : ''}
 Format: ${format.label}
 ${format.instruction}
 
@@ -1531,11 +1694,14 @@ ${priorList}
 
 Accuracy
 - Do not invent statistics, counts, percentages, incidents, quotes, company names, CVEs, or payouts.
-- Do not write first-person anecdotes. Never write "I've seen", "I have seen", "in my 15 years", or any number of years, clients, or incidents about Anthony.
+- Do not write first-person anecdotes, except in a shipped-work post, where first person is allowed only about that product and only using the allowed facts. Never write "I've seen", "I have seen", "in my 15 years", "15+ years", or any number of years, clients, or incidents about Anthony.
+- Spell the product name Nutrilogix exactly when you name that app. Never write NutriLogix, Nutri Logix, or Nutri-logix.
+- Never include real GPS coordinates or real lake names.
+- Do not write a hire-me or contact call to action in the body. The page template already adds one.
 - If you name a standard, an RFC, or a vendor behavior, put one of the allowed URLs in that same block. If you are not sure, describe the mechanism with no number and no citation.
 - You may use only these URLs, copied exactly:
 ${urls}
-- Label every example as an illustration in the body. Do not present an illustration as something that happened.
+- Label every example as an illustration in the body, unless it is an allowed fact about the shipped product in a case-study post. Do not present a made-up example as something that happened.
 - The excerpt is the reader-facing summary. Do not write "illustration", "labeled as", "placeholder", "TODO", "note:", "editor note", "as an AI", or a bracketed instruction in the excerpt.
 
 Defense
@@ -1650,6 +1816,9 @@ async function callModel(prompt) {
 // use the old "How I Test" / mistake / why-it-hides / single ordered list shape.
 
 function fixtureLead(topic, openingKey) {
+  if (topic.area === 'case-study') {
+    return `I built this as a shipped product. ${topic.summary}`
+  }
   const name = topic.short.toLowerCase()
   switch (openingKey) {
     case 'concrete-object':
@@ -1699,10 +1868,16 @@ function pointsFor(topic) {
 
 function citationCallout(topic) {
   const url = topic.citations[0]
+  if (topic.area === 'case-study') {
+    return `The public write-up for this product is <a href="${url}">${url}</a>. This post stays inside the facts listed for the topic.`
+  }
   return `Illustration, not a discovered incident. The reference for this topic is <a href="${url}">${url}</a>. This post does not add counts, quotes, or a personal story on top of that page.`
 }
 
 function closingLine(topic) {
+  if (topic.area === 'case-study') {
+    return `That is the part of ${topic.short} this post covers. Details that are not in the public sources are left out.`
+  }
   return `${topic.short} holds when the application, not the untrusted input, decides what happens next. The example above is an illustration of that boundary.`
 }
 
@@ -2018,6 +2193,16 @@ function validatePost(post, topic, format, corpus) {
       if (!/https?:\/\//.test(part)) {
         problems.push('A percentage or a study claim needs one of the allowed URLs in the same block.')
       }
+    }
+    if (/\bnutri[\s-]?logix\b/i.test(plain)) {
+      const allowed = (plain.match(/\bNutrilogix\b/g) || []).length
+      const all = (plain.match(/\bnutri[\s-]?logix\b/gi) || []).length
+      if (all !== allowed) {
+        problems.push('Spell the product name "Nutrilogix".')
+      }
+    }
+    if (/\b-?\d{1,3}\.\d{3,}\s*,\s*-?\d{1,3}\.\d{3,}\b/.test(plain) || /\b\d{1,3}\.\d{3,}\s*°/.test(plain)) {
+      problems.push('Remove real GPS coordinates. Do not include coordinates in the post.')
     }
   }
 
@@ -2370,21 +2555,25 @@ function buildPostHtml(post) {
       line-height: 1.6;
       font-size: 0.98rem;
     }
-    .post-author {
+    .post-author,
+    .post-cta {
       margin-top: 48px;
       padding: 18px 20px;
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
       background: rgba(255,255,255,0.04);
     }
-    .post-author p {
+    .post-author p,
+    .post-cta p {
       margin: 0;
       color: rgba(255,255,255,0.78);
       line-height: 1.65;
       font-size: 0.95rem;
     }
-    .post-author a { color: #4bffa5; text-decoration: none; }
-    .post-author a:hover { text-decoration: underline; }
+    .post-author a,
+    .post-cta a { color: #4bffa5; text-decoration: none; }
+    .post-author a:hover,
+    .post-cta a:hover { text-decoration: underline; }
     .post-body h2 {
       font-size: 1.45rem;
       font-weight: 600;
@@ -2912,6 +3101,8 @@ export {
   assignImage,
   pendingDraftImageIds,
   authorBoxHtml,
+  hireCtaHtml,
+  HIRE_CTA_HREF,
   blogFontLinks,
   bylineHtml,
   deferGtmInHtml,
