@@ -23,6 +23,10 @@
  * 1600px wide under blog/images/ with width and height. It does not reuse a
  * photo when the pool is empty. New posts are also written into the static
  * list in blog/index.html.
+ *
+ * Topics are picked in TOPICS order. AI agent security topics come first.
+ * `node scripts/preview-topics.mjs` prints the next picks without calling
+ * the model or writing files.
  */
 
 import { execFile } from 'child_process'
@@ -30,6 +34,7 @@ import { appendFileSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkS
 import path from 'path'
 import { promisify } from 'util'
 import { fileURLToPath } from 'url'
+import { FIGURE_CSS, INLINE_PHOTO_POOL, figureHtml, figureSpecProblems, renderDiagramSvg, sha256 } from './blog-figures.mjs'
 
 const execFileAsync = promisify(execFile)
 
@@ -195,6 +200,216 @@ const TOPICS = [
     tags: ['llm', 'appsec'],
     keywords: 'human approval, tool confirmation, excessive agency, agent security, write actions',
   },
+  // ── AI agent security focus ───────────────────────────────────────────────
+  // Agent security posts get the most reaction, so these come before the
+  // general appsec topics below. Every citation was checked to load (HTTP 200)
+  // and to cover the topic. Add new agent topics here, above the appsec list.
+  {
+    key: 'tool-result-injection',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Untrusted Tool Results',
+    label: 'Treating tool results and retrieved documents as data',
+    summary: 'A web page, a search hit, an email body, or a file an agent reads is data from whoever wrote it. It does not get to add instructions, pick the next tool, or widen what the agent may do.',
+    illustration: 'one support agent that reads a customer email while a send-reply tool is available',
+    phrases: ['tool result', 'retrieved content', 'indirect injection', 'retrieval augmented'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm01-prompt-injection/',
+      'https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'indirect prompt injection, tool results, retrieved content, RAG security, agent security, untrusted data',
+    image: '1569784210445-990e7e44ccfe',
+  },
+  {
+    key: 'agent-credential-handling',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Credentials',
+    label: 'Keeping credentials out of the model context',
+    summary: 'An API key or OAuth token belongs to the tool runtime, not to the prompt. The model asks for an action by name, and the server attaches the credential for the signed-in caller after the call is approved.',
+    illustration: 'one calendar tool that needs the signed-in user\'s OAuth token to create an event',
+    phrases: ['agent credential', 'credential handling', 'secrets in the prompt', 'model context'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/',
+      'https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/',
+    ],
+    tags: ['llm', 'agents', 'secrets'],
+    keywords: 'agent credentials, secrets management, API keys, OAuth tokens, system prompt leakage, agent security',
+    image: '1550527882-b71dea5f8089',
+  },
+  {
+    key: 'mcp-server-trust',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'MCP Server Trust',
+    label: 'Treating MCP servers and connectors as outside code',
+    summary: 'An MCP server or connector is code and data from someone else. Pin what you install, scope what each server can reach, and never pass a user token through to a server it was not issued for.',
+    illustration: 'one assistant with a third-party MCP server added for project management',
+    phrases: ['mcp server', 'model context protocol', 'connector security', 'token passthrough'],
+    citations: [
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices',
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization',
+    ],
+    tags: ['llm', 'agents', 'mcp'],
+    keywords: 'MCP security, Model Context Protocol, connectors, token passthrough, scope minimization, agent security',
+    image: '1771065999830-8b6762df3354',
+  },
+  {
+    key: 'agent-audit-logging',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Audit Logs',
+    label: 'Audit logging for agent tool calls',
+    summary: 'Every tool call an agent makes needs a record a person can read later: who asked, which tool, which arguments, who approved it, and what came back. The log must not become a second copy of the secrets.',
+    illustration: 'one refund tool call that a support lead asks about a week later',
+    phrases: ['audit log', 'audit trail', 'agent logging'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html',
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+    ],
+    tags: ['llm', 'agents', 'logging'],
+    keywords: 'audit logging, agent tool calls, audit trail, observability, approvals, agent security',
+    image: '1496368077930-c1e31b4e5b44',
+  },
+  {
+    key: 'agent-output-exfiltration',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Output Exfiltration',
+    label: 'Stopping agent output from leaking data through links',
+    summary: 'Model output that renders as a link, an image, or a fetch can carry data to a host the user never chose. Render output against an allowlist of hosts and encode it for the place it lands.',
+    illustration: 'one chat reply rendered as Markdown that includes an image URL',
+    phrases: ['exfiltration', 'markdown image', 'output handling'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/',
+      'https://genai.owasp.org/llmrisk/llm01-prompt-injection/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'data exfiltration, improper output handling, Markdown rendering, URL allowlist, LLM output, agent security',
+    image: '1768720407298-1b24a0f6749d',
+  },
+  {
+    key: 'scoped-agent-tokens',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Scoped Agent Tokens',
+    label: 'Short-lived, narrowly scoped tokens for agents',
+    summary: 'An agent should act with a token issued for this user, this resource, and this task, that expires soon. A long-lived key shared by every run turns one bad tool call into access to everything that key can reach.',
+    illustration: 'one nightly agent run that files tickets in a single project',
+    phrases: ['scoped token', 'token exchange', 'resource indicator', 'audience restriction'],
+    citations: [
+      'https://www.rfc-editor.org/rfc/rfc8707',
+      'https://www.rfc-editor.org/rfc/rfc8693',
+      'https://www.rfc-editor.org/rfc/rfc9700',
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization',
+    ],
+    tags: ['llm', 'agents', 'oauth'],
+    keywords: 'OAuth scopes, token exchange, RFC 8693, resource indicators, RFC 8707, short-lived tokens, agent security',
+    image: '1685886069739-c1b96bba7953',
+  },
+  {
+    key: 'confused-deputy-agents',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Confused Deputy Agents',
+    label: 'Agents acting as confused deputies',
+    summary: 'An agent that holds broader access than the person it works for can be steered into using that access for them. Authorize each tool call as the requesting user, not as the agent.',
+    illustration: 'one shared workspace assistant whose service account can read every team\'s documents',
+    phrases: ['confused deputy'],
+    citations: [
+      'https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices',
+      'https://genai.owasp.org/llmrisk/llm062025-excessive-agency/',
+    ],
+    tags: ['llm', 'agents', 'authorization'],
+    keywords: 'confused deputy, agent authorization, service accounts, per-user authorization, excessive agency, agent security',
+    image: '1793217391692-af68e574e1b8',
+  },
+  {
+    key: 'agent-code-sandbox',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Sandboxing Agent Code',
+    label: 'Sandboxing code an agent writes and runs',
+    summary: 'Code an agent generates is untrusted code. Run it with no ambient credentials, a throwaway filesystem, no network by default, and hard limits on time and memory.',
+    illustration: 'one data-analysis agent that writes and runs a script against an uploaded CSV',
+    phrases: ['sandbox', 'code execution', 'code interpreter'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/',
+    ],
+    tags: ['llm', 'agents', 'sandboxing'],
+    keywords: 'sandboxing, code execution, agent-generated code, isolation, least privilege, agent security',
+    image: '1634224147987-95d2b7679fb0',
+  },
+  {
+    key: 'agent-kill-switch',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Budgets and Kill Switches',
+    label: 'Budgets, step caps, and a kill switch for agents',
+    summary: 'An agent loop needs limits the model cannot change: a step cap, a spend cap, per-tool call limits, and a switch an operator can flip to stop every run.',
+    illustration: 'one research agent that keeps calling a paid search tool in a loop',
+    phrases: ['kill switch', 'step cap', 'spend cap', 'unbounded consumption'],
+    citations: [
+      'https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/',
+      'https://genai.owasp.org/llmrisk/llm062025-excessive-agency/',
+    ],
+    tags: ['llm', 'agents', 'operations'],
+    keywords: 'agent budgets, kill switch, step limits, unbounded consumption, cost controls, agent security',
+    image: '1758873263914-230f8ff60569',
+  },
+  {
+    key: 'agent-memory-poisoning',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Memory Poisoning',
+    label: 'Keeping long-term agent memory from being poisoned',
+    summary: 'Whatever an agent saves to memory comes back as context in a later session. Decide what may be written, record where it came from, keep it per user, and let people see and delete it.',
+    illustration: 'one assistant that saves a "preference" it read inside a shared document',
+    phrases: ['memory poisoning', 'agent memory', 'long-term memory'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/',
+    ],
+    tags: ['llm', 'agents', 'appsec'],
+    keywords: 'memory poisoning, agent memory, persistent context, provenance, per-user isolation, agent security',
+  },
+  {
+    key: 'multi-agent-trust',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Multi-Agent Trust Boundaries',
+    label: 'Trust boundaries between cooperating agents',
+    summary: 'A message from another agent is input, not authority. Each agent keeps its own tool scope and approval rules, and a subagent cannot grant itself the orchestrator\'s permissions.',
+    illustration: 'one orchestrator that hands a browsing task to a subagent and acts on its summary',
+    phrases: ['multi agent', 'subagent', 'orchestrator agent', 'agent to agent'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+    ],
+    tags: ['llm', 'agents', 'architecture'],
+    keywords: 'multi-agent security, trust boundaries, subagents, orchestration, privilege escalation, agent security',
+    image: '1764195287345-2086f504cb0b',
+  },
+  {
+    key: 'agent-security-evals',
+    area: 'agent-security',
+    category: 'AI',
+    short: 'Agent Security Evals',
+    label: 'Regression tests for agent security controls',
+    summary: 'Agent defenses need tests that run on every change: a fixed set of hostile documents and tool results, with assertions on which tools the agent was allowed to call. A demo that behaved once is not a test.',
+    illustration: 'one pull request that changes the system prompt of a support agent',
+    phrases: ['security eval', 'adversarial test', 'red team'],
+    citations: [
+      'https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html',
+      'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf',
+    ],
+    tags: ['llm', 'agents', 'testing'],
+    keywords: 'agent security testing, evals, adversarial testing, regression tests, CI, agent security',
+  },
+  // ── General application security (fallback once agent topics are used) ──
   {
     key: 'sensitive-business-flows',
     area: 'appsec',
@@ -494,6 +709,14 @@ const IMAGE_POOL = [
   { id: '1485827404703-89b55fcc595e', topics: ['ai'], alt: 'A white robot with a round face and illuminated eyes, photographed indoors' },
   { id: '1758873263914-230f8ff60569', topics: ['ai'], alt: 'A yellow selector switch with a key beside an amber warning light on a machine control panel' },
   { id: '1771065999830-8b6762df3354', topics: ['ai'], alt: 'A row of metal toggle switches, each with its own label, on a brushed steel plate' },
+  { id: '1496368077930-c1e31b4e5b44', topics: ['ai', 'security'], alt: 'Two bullet surveillance cameras mounted on a gray concrete wall' },
+  { id: '1550527882-b71dea5f8089', topics: ['ai', 'security'], alt: 'A ring of old black skeleton keys hanging on a wooden wall' },
+  { id: '1569784210445-990e7e44ccfe', topics: ['ai', 'security'], alt: 'A row of electronic ticket gates with status lights in a station hall' },
+  { id: '1634224147987-95d2b7679fb0', topics: ['ai', 'security'], alt: 'A vault room lined with numbered steel safe deposit drawers, a few left open' },
+  { id: '1685886069739-c1b96bba7953', topics: ['ai', 'security'], alt: 'A key in a cylinder lock with other keys hanging from the same ring' },
+  { id: '1764195287345-2086f504cb0b', topics: ['ai', 'engineering'], alt: 'An empty control room with consoles, phones, and rows of indicator lights' },
+  { id: '1768720407298-1b24a0f6749d', topics: ['ai', 'security'], alt: 'A closed blue steel door with a heavy lock and latch' },
+  { id: '1793217391692-af68e574e1b8', topics: ['ai', 'security'], alt: 'Stainless steel turnstiles with green and red status lights at a building entrance' },
   { id: '1597852074816-d933c7d2b988', topics: ['backend', 'security'], alt: 'An open hard drive with the platter and read arm exposed' },
   { id: '1501139083538-0139583c060f', topics: ['security'], alt: 'An hourglass with blue sand standing on a bed of small stones' },
   { id: '1450101499163-c8848c66ca85', topics: ['security', 'engineering'], alt: 'A person signing a printed document with a pen' },
@@ -771,9 +994,16 @@ function topicGroup(topic) {
   return 'engineering'
 }
 
+function inlineImageKeys(post) {
+  return (Array.isArray(post?.inlineImages) ? post.inlineImages : [])
+    .flatMap(item => [item.unsplashId, item.sha256 ? `sha256:${item.sha256}` : ''])
+}
+
+// Cover ids, in-body photo ids, and in-body file hashes ("sha256:<hex>") for
+// every published post and every open draft. Covers and figures share it.
 function usedImageIds(posts, pendingIds = []) {
   return new Set([
-    ...posts.flatMap(post => [post.unsplashId, imageId(post.image)]),
+    ...posts.flatMap(post => [post.unsplashId, imageId(post.image), ...inlineImageKeys(post)]),
     ...pendingIds,
   ].filter(Boolean))
 }
@@ -812,7 +1042,7 @@ async function pendingDraftImageIds() {
       continue
     }
     try {
-      for (const post of JSON.parse(stdout)) ids.push(post.unsplashId, imageId(post.image))
+      for (const post of JSON.parse(stdout)) ids.push(post.unsplashId, imageId(post.image), ...inlineImageKeys(post))
     } catch {
       console.warn(`[Blog] PR #${pr.number}: blog/data/posts.json is not valid JSON`)
     }
@@ -846,16 +1076,26 @@ function failImagePool(message) {
 }
 
 // Photos on open draft pull requests count as used (see pendingDraftImageIds).
+// A topic's `image` (a pool id) is tried first when it is still unused.
 // Prefer an unused pool photo in the topic group. If that group is used up,
 // take any other unused pool photo. If none remain, fail instead of reusing.
 async function assignImage(posts, topic, pendingIds = []) {
   const used = usedImageIds(posts, pendingIds)
   const group = topicGroup(topic)
   const unused = IMAGE_POOL.filter(item => !used.has(item.id))
-  const primary = unused.filter(item => item.topics[0] === group)
+  // A topic may name a preferred pool photo. It is used only while unused.
+  const preferred = unused.filter(item => item.id === topic?.image)
+  const primary = unused.filter(item => item.topics[0] === group && item.id !== topic?.image)
   const secondary = unused.filter(item => item.topics[0] !== group && item.topics.includes(group))
   const rest = unused.filter(item => !item.topics.includes(group))
-  const candidates = [...primary, ...secondary, ...rest]
+  // Photos another topic prefers go to the back, so they stay free for it.
+  const reserved = new Set(TOPICS.filter(item => item.image && item.key !== topic?.key).map(item => item.image))
+  const ordered = [...primary, ...secondary, ...rest]
+  const candidates = [
+    ...preferred,
+    ...ordered.filter(item => !reserved.has(item.id)),
+    ...ordered.filter(item => reserved.has(item.id)),
+  ]
 
   if (!candidates.length) {
     failImagePool(
@@ -1254,6 +1494,14 @@ function failTopicsExhausted(skipped) {
 
 // ── Model ────────────────────────────────────────────────────────────────────
 
+// Extra direction for the AI agent security series. Reader and angle only:
+// it does not loosen the accuracy rules below.
+const AGENT_SECURITY_FOCUS = `Series: AI agent security
+- Readers are engineers adding agents, tool calling, connectors, and MCP servers to production apps. Write as a senior full-stack engineer who ships these features: the controls the application owns, what to check in code review, and what the system refuses.
+- Put the boundary in application terms: the tool registry, the approval queue, the token broker, the renderer, the sandbox, the audit log. Do not rely on the model choosing to behave.
+- Give at least one concrete control a team could build this week.
+- Do not claim that a vendor, model, or product behaves a certain way unless an allowed URL in the same block says so. Do not name real incidents or CVEs.`
+
 function buildPrompt(topic, format, opening, priorTitles, problems) {
   const priorList = priorTitles.length
     ? priorTitles.map((title, index) => `${index + 1}. ${title}`).join('\n')
@@ -1270,6 +1518,8 @@ What the post has to say: ${topic.summary}
 Area: ${topic.area}
 Category must be exactly: ${topic.category}
 
+Suggested illustration (label it as an illustration if you use it): ${topic.illustration || 'choose one small feature that fits the topic'}
+${topic.area === 'agent-security' ? `${AGENT_SECURITY_FOCUS}\n` : ''}
 Format: ${format.label}
 ${format.instruction}
 
@@ -1313,6 +1563,9 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
   "readTime": "6 min",
   "keywords": "6-10 comma separated keywords",
   "tags": ${JSON.stringify(topic.tags)},
+  "figures": [
+    { "kind": "sequence", "afterHeading": "exact heading text", "title": "...", "alt": "...", "caption": "...", "actors": ["...", "..."], "steps": [{ "from": "...", "to": "...", "label": "..." }, { "actor": "...", "note": "..." }] }
+  ],
   "body": [
     { "type": "paragraph", "text": "..." },
     { "type": "heading", "text": "..." },
@@ -1322,6 +1575,17 @@ Respond with valid JSON only. No markdown fences. No text before or after the JS
     { "type": "code", "lang": "javascript", "code": "..." }
   ]
 }
+
+Figures
+- Add 1 or 2 in-body figures in "figures". The script draws each diagram from your spec. Do not write SVG, HTML, or image URLs.
+- Prefer diagrams that show the control in this post: who proposes, where the application checks, what it refuses.
+- kind "sequence": 2 to 5 "actors" (max 18 characters each) and 3 to 8 "steps". A step is { "from", "to", "label" } with label max 46 characters, or a note on one actor { "actor", "note" } with note max 40 characters. Add "refused": true to a step the application refuses.
+- kind "flow": 3 to 5 "stages" as { "label" (max 26), "detail" (max 44, optional) }, an optional "gate" (the 0-based index of the stage that checks), and an optional "refuse" (max 40) for what the gate refuses.
+- kind "filter": "source", "gate", and "target" (max 26 each) and 3 to 6 "items" as { "label" (max 28), "allowed": true or false }, with at least one allowed and one refused item.
+- kind "photo": at most one, only when a photo helps more than a diagram. Give only "afterHeading". The script picks an unused stock photo and writes its alt text and caption.
+- Every diagram needs "title" (max 60), "alt" (one or two plain sentences that describe the whole diagram, max 400), and "caption" (max 200) that starts with "Illustration:". Plain text only, no URLs, and no names of real companies or products.
+- "afterHeading" is the exact text of a heading in "body". The figure goes at the end of that section. Two figures go under different headings.
+- Do not reuse a figure from another post. Use labels from this post's own illustration.
 
 Block rules
 - paragraph, callout, heading, list, orderedlist, and code are the only types.
@@ -1527,9 +1791,42 @@ function bodyForFormat(topic, formatKey, lead, points) {
   ]
 }
 
+function fixtureFigures(topic) {
+  const name = topic.short
+  return [
+    {
+      kind: 'sequence',
+      title: `${name}: where the check sits`,
+      alt: `Sequence diagram for ${name}. The model proposes a tool call, the application checks it against rules it owns, and only an allowed call reaches the tool. A refused call stops at the application.`,
+      caption: `Illustration: the application, not the model, decides whether a call goes through (${name.toLowerCase()}).`,
+      actors: ['Model', 'Application', 'Tool'],
+      steps: [
+        { from: 'Model', to: 'Application', label: 'proposes a tool call' },
+        { actor: 'Application', note: `checks: ${name}`.slice(0, 40) },
+        { from: 'Application', to: 'Tool', label: 'runs only the allowed call' },
+        { from: 'Application', to: 'Model', label: 'refuses anything else', refused: true },
+      ],
+    },
+    {
+      kind: 'flow',
+      title: `The ${name} check, step by step`.slice(0, 60),
+      alt: `Flow diagram for ${name}. Untrusted input reaches an application check. An allowed action continues and is logged with the actor. Anything else is refused before a side effect starts.`,
+      caption: 'Illustration: the check runs in application code before any side effect.',
+      stages: [
+        { label: 'Untrusted input', detail: 'model output or tool data' },
+        { label: 'Application check', detail: name.slice(0, 44) },
+        { label: 'Allowed action', detail: 'logged with the actor' },
+      ],
+      gate: 1,
+      refuse: 'Refused before any side effect',
+    },
+  ]
+}
+
 function buildFixture(topic, format, opening) {
   const lead = fixtureLead(topic, opening.key)
   return {
+    figures: fixtureFigures(topic),
     title: fixtureTitle(topic, format.key),
     excerpt: fixtureExcerpt(topic),
     category: topic.category,
@@ -1562,6 +1859,114 @@ function findUrls(text) {
 
 function normalizeUrl(url) {
   return String(url || '').replace(/[.,;:]+$/, '').replace(/\/$/, '')
+}
+
+// ── In-body figures ──────────────────────────────────────────────────────────
+
+function figureProblems(post, usedKeys) {
+  const figures = Array.isArray(post.figures) ? post.figures : []
+  if (figures.length < 1 || figures.length > 2) return ['Add 1 or 2 figures in "figures".']
+  const problems = []
+  if (figures.filter(figure => figure?.kind === 'photo').length > 1) problems.push('Use at most one photo figure.')
+  const headings = (post.body || []).filter(block => block.type === 'heading').map(block => visible(block.text))
+  const anchors = []
+  const hashes = new Set()
+  figures.forEach((figure, index) => {
+    const specProblems = figureSpecProblems(figure, index)
+    problems.push(...specProblems)
+    const anchor = visible(figure?.afterHeading || '')
+    if (anchor && !headings.includes(anchor)) problems.push(`Figure ${index + 1}: afterHeading "${anchor}" is not a heading in body.`)
+    if (anchor && anchors.includes(anchor)) problems.push('Put the two figures under different headings.')
+    anchors.push(anchor)
+    if (figure?.kind !== 'photo' && !/^illustration:/i.test(String(figure?.caption || '').trim())) {
+      problems.push(`Figure ${index + 1}: the caption must start with "Illustration:".`)
+    }
+    if (figure?.kind === 'photo' || specProblems.length) return
+    const hash = sha256(Buffer.from(renderDiagramSvg(figure).svg))
+    if (usedKeys.has(`sha256:${hash}`) || hashes.has(hash)) problems.push(`Figure ${index + 1} is identical to a figure already used. Use labels from this post.`)
+    hashes.add(hash)
+  })
+  return problems
+}
+
+// End of the section under `heading`, or a spread-out default.
+function figureInsertIndex(body, heading, ordinal) {
+  const headingIndexes = body.map((block, index) => (block.type === 'heading' ? index : -1)).filter(index => index >= 0)
+  let start = headingIndexes.find(index => visible(body[index].text) === visible(heading || ''))
+  if (start === undefined) {
+    if (!headingIndexes.length) return Math.min(body.length, 2 + ordinal * 3)
+    start = headingIndexes[Math.min(headingIndexes.length - 1, ordinal === 0 ? 0 : Math.floor(headingIndexes.length / 2))]
+  }
+  const next = headingIndexes.find(index => index > start)
+  return next === undefined ? body.length : next
+}
+
+function pickInlinePhoto(topic, usedKeys) {
+  const group = topicGroup(topic)
+  const unused = INLINE_PHOTO_POOL.filter(item => !usedKeys.has(item.id))
+  const ranked = [...unused.filter(item => item.topics.includes(group)), ...unused.filter(item => !item.topics.includes(group))]
+  return ranked[0] || null
+}
+
+async function materializeInlinePhoto(item, slug, name) {
+  const dest = path.join(HERO_DIR, `${name}.webp`)
+  const tmp = path.join(HERO_DIR, `.${name}.download`)
+  const source = `https://images.unsplash.com/photo-${item.id}?auto=format&fit=crop&w=1200&h=800&q=70&fm=webp`
+  const response = await fetch(source, { signal: AbortSignal.timeout(20000) })
+  if (!response.ok) throw new BlogError(`In-body photo download failed (${response.status}) for ${source}`)
+  writeFileSync(tmp, Buffer.from(await response.arrayBuffer()))
+  try {
+    await execFileAsync('ffmpeg', ['-y', '-i', tmp, '-vf', "scale='min(1200,iw)':-2", '-c:v', 'libwebp', '-quality', '68', '-compression_level', '6', dest], { timeout: 30000 })
+  } catch (err) {
+    throw new BlogError(`Could not convert the in-body photo to WebP (${err.message}).`)
+  } finally {
+    try { unlinkSync(tmp) } catch { /* already removed */ }
+  }
+  const probe = await execFileAsync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=s=x:p=0', dest], { timeout: 10000 })
+  const [width, height] = probe.stdout.trim().split('x').map(Number)
+  return { file: dest, src: `/blog/images/${name}.webp`, width, height }
+}
+
+// Writes blog/images/<slug>-figN.svg (or .webp for a photo), inserts figure
+// blocks into post.body, and records post.inlineImages for posts.json.
+async function materializeFigures(post, topic, usedKeys) {
+  const used = new Set(usedKeys)
+  const placed = []
+  post.inlineImages = []
+  for (const [index, spec] of post.figures.entries()) {
+    const name = `${post.slug}-fig${index + 1}`
+    let block
+    let record
+    if (spec.kind === 'photo') {
+      const item = pickInlinePhoto(topic, used)
+      if (!item) {
+        console.warn('[Blog] No unused in-body photo is left. Skipping the photo figure.')
+        continue
+      }
+      const saved = await materializeInlinePhoto(item, post.slug, name)
+      const hash = sha256(readFileSync(saved.file))
+      used.add(item.id)
+      used.add(`sha256:${hash}`)
+      block = { type: 'figure', src: saved.src, alt: item.alt, caption: item.caption, width: saved.width, height: saved.height }
+      record = { src: saved.src, kind: 'photo', unsplashId: item.id, sha256: hash, width: saved.width, height: saved.height, alt: item.alt }
+    } else {
+      const { svg, width, height } = renderDiagramSvg(spec)
+      const hash = sha256(Buffer.from(svg))
+      if (used.has(`sha256:${hash}`)) throw new BlogError(`Figure ${index + 1} duplicates an existing figure.`)
+      used.add(`sha256:${hash}`)
+      writeFileSync(path.join(HERO_DIR, `${name}.svg`), svg, 'utf8')
+      const src = `/blog/images/${name}.svg`
+      block = { type: 'figure', src, alt: visible(spec.alt), caption: visible(spec.caption), width, height }
+      record = { src, kind: 'diagram', sha256: hash, width, height, alt: block.alt }
+    }
+    post.inlineImages.push(record)
+    placed.push({ block, at: figureInsertIndex(post.body, spec.afterHeading, index) })
+    console.log(`[Blog] figure ${index + 1}: ${record.kind} -> ${record.src}`)
+  }
+  // Insert from the end so earlier indexes stay valid.
+  placed.sort((a, b) => b.at - a.at)
+  for (const { block, at } of placed) post.body.splice(at, 0, block)
+  if (!post.inlineImages.length) throw new BlogError('The draft has no in-body figure.')
 }
 
 function validatePost(post, topic, format, corpus) {
@@ -1656,6 +2061,7 @@ function validatePost(post, topic, format, corpus) {
   }
   const clash = similarTitle(title, corpus.titles)
   if (clash) problems.push(`The title is too close to "${clash}". Choose a title that is distinct at a glance.`)
+  problems.push(...figureProblems(post, corpus.usedImageKeys || new Set()))
 
   return unique(problems)
 }
@@ -1717,6 +2123,8 @@ function renderBlock(block) {
       return `<ol>${(block.items || []).map(i => `<li>${i}</li>`).join('')}</ol>`
     case 'code':
       return `<pre><code class="language-${codeLanguage(block.lang)}">${escapeCode(block.code || '')}</code></pre>`
+    case 'figure':
+      return figureHtml(block)
     default:
       return ''
   }
@@ -1776,6 +2184,8 @@ function plainBody(post) {
       parts.push((block.items || []).map(item => `- ${inlineText(item)}`).join('\n'))
     } else if (block.type === 'code') {
       parts.push(String(block.code || '').replace(/\s+$/, ''))
+    } else if (block.type === 'figure') {
+      parts.push(`Figure: ${block.alt}`)
     }
   }
   return parts.filter(Boolean).join('\n\n')
@@ -2037,6 +2447,7 @@ function buildPostHtml(post) {
       font-size: 0.95rem;
       line-height: 1.7;
     }
+${FIGURE_CSS}
     .post-footer-nav {
       margin-top: 64px;
       padding-top: 32px;
@@ -2341,6 +2752,7 @@ function toMeta(post) {
   if (post.topicKey) meta.topicKey = post.topicKey
   if (post.format) meta.format = post.format
   if (Array.isArray(post.tags) && post.tags.length) meta.tags = post.tags
+  if (Array.isArray(post.inlineImages) && post.inlineImages.length) meta.inlineImages = post.inlineImages
   return meta
 }
 
@@ -2397,6 +2809,8 @@ async function main() {
 
   const dateISO = today()
   const corpus = buildCorpus(posts, stubs, openPrs)
+  const pendingImageIds = await pendingDraftImageIds()
+  corpus.usedImageKeys = usedImageIds(posts, pendingImageIds)
   let post
   let problems = []
 
@@ -2426,7 +2840,7 @@ async function main() {
     )
   }
 
-  const chosen = await assignImage(posts, topic, await pendingDraftImageIds())
+  const chosen = await assignImage(posts, topic, pendingImageIds)
   post.unsplashId = imageId(chosen.image)
   const localHero = await materializeHero(chosen.image, post.slug)
   post.image = localHero.image
@@ -2434,6 +2848,8 @@ async function main() {
   post.imageHeight = localHero.imageHeight
   post.imageAlt = chosen.imageAlt
   console.log(`[Blog] image: ${post.unsplashId} -> ${post.image} ${post.imageWidth}x${post.imageHeight} (${topicGroup(topic)})`)
+  await materializeFigures(post, topic, new Set([...corpus.usedImageKeys, post.unsplashId]))
+  delete post.figures
 
   const htmlPath = path.join(POSTS_DIR, `${post.slug}.html`)
   writeFileSync(htmlPath, buildPostHtml(post), 'utf8')
@@ -2478,7 +2894,21 @@ if (invokedDirectly) {
 }
 
 export {
+  FORMATS,
+  figureProblems,
+  fixtureFigures,
+  materializeFigures,
+  usedImageIds,
   IMAGE_POOL,
+  TOPICS,
+  buildCorpus,
+  buildPrompt,
+  pickFormat,
+  pickOpening,
+  loadExistingPosts,
+  loadOpenBlogSignals,
+  loadRetiredStubs,
+  pickTopic,
   assignImage,
   pendingDraftImageIds,
   authorBoxHtml,
