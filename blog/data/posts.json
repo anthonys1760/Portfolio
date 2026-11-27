@@ -21,6 +21,27 @@
     ]
   },
   {
+    "slug": "the-app-decides-the-tool-set",
+    "title": "The App Decides the Tool Set",
+    "excerpt": "The application decides which tools exist, which arguments they accept, and which can write. The model does not widen that list.",
+    "category": "AI",
+    "readTime": "6 min",
+    "date": "November 24, 2026",
+    "dateISO": "2026-11-24",
+    "image": "/blog/images/the-app-decides-the-tool-set.webp",
+    "imageAlt": "An open hard drive with the platter and read arm exposed",
+    "imageWidth": 1600,
+    "imageHeight": 1068,
+    "unsplashId": "1597852074816-d933c7d2b988",
+    "series": "agent-security",
+    "topicKey": "agent-tool-scoping",
+    "format": "essay",
+    "tags": [
+      "llm",
+      "appsec"
+    ]
+  },
+  {
     "slug": "user-text-cannot-select-a-tool",
     "title": "User Text Cannot Select a Tool",
     "excerpt": "User text belongs in a data field the model can read. The application owns the instruction and refuses any tool name that is not on its allowlist.",
@@ -321,7 +342,7 @@
   {
     "slug": "nodejs-backend-patterns-and-performance-what-actually-matter",
     "title": "Node.js Backend Patterns and Performance: What Actually Matters in Production",
-    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle—and the ones that didn't.",
+    "excerpt": "After scaling Node.js services to millions of requests, here are the patterns and optimizations that moved the needle\u2014and the ones that didn't.",
     "category": "Backend",
     "readTime": "3 min",
     "date": "July 6, 2026",
