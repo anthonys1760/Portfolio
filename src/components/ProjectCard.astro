@@ -6,25 +6,84 @@ interface Props {
   project: CollectionEntry<"projects">;
   activeTag?: string | null;
   hidden?: boolean;
+  variant?: "card" | "spotlight";
 }
-const { project, activeTag = null, hidden = false } = Astro.props;
+const { project, activeTag = null, hidden = false, variant = "card" } = Astro.props;
 const { lead, rest } = outcomeParts(project.data.outcome);
 const web = project.data.thumbnailKind === "web";
+const realThumb = project.data.thumbnail !== "placeholder";
+const [thumbW, thumbH] = project.data.thumbnailSize ?? [1276, 808];
+const thumbAlt = project.data.thumbnailAlt ?? `${project.data.title} screenshot`;
+const productHref = `/projects/${project.data.slug}`;
 ---
 
-<article class="card" data-project data-tags={project.data.tags.join("|")} hidden={hidden ? true : undefined}>
-  <div class={`thumb g-${project.data.gradient}`} role="img" aria-label={`${project.data.title} placeholder thumbnail`}>
-    <span class="ph">placeholder</span>
-    <div class:list={["dev", { web }]}><span>{project.data.title}</span></div>
-    <span class="nm">{project.data.slug}.mdx</span>
-  </div>
-  <div class="cb">
-    <span class:list={["status", { dev: project.data.statusKind === "development" }]}>{project.data.status}</span>
-    <h3>{project.data.title}</h3>
-    <p class="outcome">{lead ? <b>{lead}</b> : null}{lead ? " " : ""}{rest}</p>
-    <div class="tags">
-      {project.data.tags.map((tag) => <span class:list={["tag", { hit: activeTag === tag }]}>{tag}</span>)}
+{variant === "spotlight" ? (
+  <div class="spot">
+    <div class={`thumb img g-${project.data.gradient}`}>
+      {realThumb ? (
+        <>
+          <span class="oss">Open source</span>
+          <img
+            src={project.data.thumbnail}
+            alt={thumbAlt}
+            width={thumbW}
+            height={thumbH}
+            loading="lazy"
+            decoding="async"
+          />
+        </>
+      ) : (
+        <>
+          <span class="ph">placeholder</span>
+          <div class:list={["dev", { web }]}><span>{project.data.title}</span></div>
+          <span class="nm">{project.data.slug}.mdx</span>
+        </>
+      )}
     </div>
-    <a class="lnk" href={`/projects/${project.data.slug}`}>Case study →</a>
+    <div class="cb">
+      <span class:list={["status", { dev: project.data.statusKind === "development" }]}>{project.data.status}</span>
+      <h3>{project.data.title}</h3>
+      <p class="outcome">{lead ? <b>{lead}</b> : null}{lead ? " " : ""}{rest}</p>
+      <div class="mini">
+        <span>MCP 2026-07-28</span>
+        <span>TypeScript</span>
+        <span>Replay runs in the browser</span>
+      </div>
+      <div class="ctas">
+        <a class="btn pri" href={productHref}>View product →</a>
+        <a class="btn sec" href="/drawbridge/replay/index.html">Try the replay <span class="ic" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
   </div>
-</article>
+) : (
+  <article class="card" data-project data-tags={project.data.tags.join("|")} hidden={hidden ? true : undefined}>
+    {realThumb ? (
+      <div class={`thumb img g-${project.data.gradient}`}>
+        <span class="oss">Open source</span>
+        <img
+          src={project.data.thumbnail}
+          alt={thumbAlt}
+          width={thumbW}
+          height={thumbH}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    ) : (
+      <div class={`thumb g-${project.data.gradient}`} role="img" aria-label={`${project.data.title} placeholder thumbnail`}>
+        <span class="ph">placeholder</span>
+        <div class:list={["dev", { web }]}><span>{project.data.title}</span></div>
+        <span class="nm">{project.data.slug}.mdx</span>
+      </div>
+    )}
+    <div class="cb">
+      <span class:list={["status", { dev: project.data.statusKind === "development" }]}>{project.data.status}</span>
+      <h3>{project.data.title}</h3>
+      <p class="outcome">{lead ? <b>{lead}</b> : null}{lead ? " " : ""}{rest}</p>
+      <div class="tags">
+        {project.data.tags.map((tag) => <span class:list={["tag", { hit: activeTag === tag }]}>{tag}</span>)}
+      </div>
+      <a class="lnk" href={productHref}>View product →</a>
+    </div>
+  </article>
+)}

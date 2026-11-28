@@ -1,0 +1,44 @@
+---
+import attacks from "../../data/drawbridge-attacks.json";
+
+interface Props {
+  source: string;
+  caveat: string;
+  threatHref: string;
+}
+const { source, caveat, threatHref } = Astro.props;
+const { score, scenarios } = attacks;
+const label = `${score.passed}/${score.total}`;
+---
+
+<div class="score">
+  <span class="big" aria-hidden="true">{label}</span>
+  <p>The recorded run in <code class="mono" style="font-size:13px">docs/attack-results.md</code>. Every scenario matched its expected outcome.</p>
+</div>
+<table class="atk" role="table">
+  <caption class="sr-only">Attack results, {score.passed} of {score.total} scenarios pass</caption>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th role="columnheader" scope="col">Scenario</th>
+      <th role="columnheader" scope="col">Expected</th>
+      <th role="columnheader" scope="col">Result</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+    {scenarios.map((row) => (
+      <tr role="row">
+        <td role="cell">{row.title}</td>
+        <td role="cell">{row.expected}</td>
+        <td role="cell">
+          {row.pass ? <span class="pass">Pass</span> : <span>Fail</span>}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+<p class="honest">
+  {caveat}{" "}
+  <a href={source} target="_blank" rel="noopener noreferrer">Recorded scorecard<span class="sr-only"> (opens in a new tab)</span></a>
+  {" · "}
+  <a href={threatHref} target="_blank" rel="noopener noreferrer">Threat model<span class="sr-only"> (opens in a new tab)</span></a>
+</p>

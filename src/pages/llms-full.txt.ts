@@ -6,7 +6,11 @@ export const GET: APIRoute = async () => {
   const posts = (await getCollection("blog")).sort((a, b) => b.data.date.localeCompare(a.data.date));
   const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
   const projectBlock = projects
-    .map((project) => `### ${project.data.title}\n${project.data.summary}\n${SITE}/projects/${project.data.slug}\n`)
+    .map((project) => {
+      const repo = project.data.links.github ? `\nRepo: ${project.data.links.github}` : "";
+      const license = project.data.slug === "drawbridge" ? "\nLicense: Apache-2.0" : "";
+      return `### ${project.data.title}\n${project.data.summary}\n${SITE}/projects/${project.data.slug}${repo}${license}\n`;
+    })
     .join("\n");
   const postBlock = posts
     .map((post) => {

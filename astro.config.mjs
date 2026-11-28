@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
@@ -17,11 +18,18 @@ export default defineConfig({
   output: "static",
   adapter: vercel(),
   trailingSlash: "never",
+  vite: {
+    resolve: {
+      alias: {
+        "case-study": fileURLToPath(new URL("./src/layouts/MdxPassthrough.astro", import.meta.url)),
+      },
+    },
+  },
   integrations: [
     react(),
     mdx(),
     sitemap({
-      filter: (page) => !page.includes("/404"),
+      filter: (page) => !page.includes("/404") && !page.includes("/drawbridge/"),
       customPages: ["https://anthonysdigital.net/projects"],
     }),
   ],

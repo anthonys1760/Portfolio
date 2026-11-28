@@ -24,6 +24,25 @@
     { "source": "/blog/posts/mastering-mobile-app-state-management-a-pragmatic-guide.html", "destination": "/blog/react-native-mobile-architecture-lessons-from-production", "statusCode": 301 },
     { "source": "/blog/posts/the-engineering-ladder-trap-why-promotion-chasing-hurts-your.html", "destination": "/blog/the-myth-of-the-10x-engineer-what-actually-makes-someone-sen", "statusCode": 301 },
     { "source": "/blog/posts/:slug.html", "destination": "/blog/:slug", "statusCode": 301 },
-    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "statusCode": 301 }
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "statusCode": 301 },
+    { "source": "/drawbridge/replay", "destination": "/drawbridge/replay/", "statusCode": 308 },
+    { "source": "/drawbridge", "destination": "/projects/drawbridge", "statusCode": 308 }
+  ],
+  "headers": [
+    {
+      "source": "/drawbridge/replay/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self'" },
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    },
+    {
+      "source": "/drawbridge/fonts/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    }
   ]
 }

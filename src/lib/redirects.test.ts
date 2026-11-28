@@ -19,6 +19,7 @@ const specSources = [
 describe("vercel redirects", () => {
   const config = JSON.parse(readFileSync(new URL("../../vercel.json", import.meta.url), "utf8")) as {
     redirects: { source: string; destination: string; statusCode: number }[];
+    headers?: { source: string; headers: { key: string; value: string }[] }[];
   };
 
   it("covers every old path in the spec with a 301", () => {
@@ -41,5 +42,17 @@ describe("vercel redirects", () => {
     for (const rule of config.redirects) {
       expect(rule.destination.toLowerCase()).not.toContain("resume");
     }
+  });
+
+  it("forces a trailing slash on the vendored Drawbridge replay", () => {
+    const rule = config.redirects.find((item) => item.source === "/drawbridge/replay");
+    expect(rule?.destination).toBe("/drawbridge/replay/");
+    expect(rule?.statusCode).toBe(308);
+  });
+
+  it("redirects /drawbridge to the product page", () => {
+    const rule = config.redirects.find((item) => item.source === "/drawbridge");
+    expect(rule?.destination).toBe("/projects/drawbridge");
+    expect(rule?.statusCode).toBe(308);
   });
 });

@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import dashboard1440 from "../../assets/drawbridge/dashboard-1440.png";
+import dashboard390 from "../../assets/drawbridge/dashboard-390.png";
+import Frame from "./Frame.astro";
+
+interface Item {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+  kind: "wide" | "phone";
+}
+interface Props {
+  items: Item[];
+}
+const { items } = Astro.props;
+const sources = {
+  "dashboard-1440": dashboard1440,
+  "dashboard-390": dashboard390,
+} as const;
+---
+
+<div class="dash">
+  {items.map((item) => {
+    const image = sources[item.src as keyof typeof sources];
+    if (!image) return null;
+    return (
+      <figure class={item.kind === "wide" ? "wide" : "phone"}>
+        <Frame>
+          <Image
+            src={image}
+            alt={item.alt}
+            formats={["avif", "webp"]}
+            widths={[item.width, item.width * 2]}
+            sizes={item.kind === "wide" ? "(min-width: 1024px) 840px, 100vw" : "(min-width: 1024px) 260px, 300px"}
+            loading="lazy"
+            decoding="async"
+          />
+        </Frame>
+        <figcaption class="cap">{item.caption}</figcaption>
+      </figure>
+    );
+  })}
+</div>

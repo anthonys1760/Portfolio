@@ -1,0 +1,29 @@
+---
+interface Props {
+  bar?: string;
+  barNote?: string;
+  caption?: string;
+  fullHref?: string;
+  fullLabel?: string;
+  class?: string;
+}
+const { bar, barNote, caption, fullHref, fullLabel = "Open full screen", class: className } = Astro.props;
+---
+
+<div class={className}>
+  <div class="dbframe">
+    {bar ? (
+      <div class="bar">
+        <b>{bar}</b>
+        {barNote ? <span>{barNote}</span> : null}
+        {fullHref ? (
+          <span class="sp">
+            <a class="replay-full" href={fullHref}>{fullLabel} <span aria-hidden="true">↗</span></a>
+          </span>
+        ) : null}
+      </div>
+    ) : null}
+    <slot />
+  </div>
+  {caption ? <p class="cap">{caption}</p> : null}
+</div>

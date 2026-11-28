@@ -1,7 +1,7 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { EMAIL } from "../lib/site";
 
-const COMMANDS = ["help", "projects", "experience", "contact", "whoami", "clear"] as const;
+const COMMANDS = ["help", "projects", "drawbridge", "experience", "contact", "whoami", "clear"] as const;
 
 type Line = { kind: "cmd" | "text" | "dim" | "link"; text: string; href?: string; k?: string };
 
@@ -9,6 +9,7 @@ const HELP: Line[] = [
   { kind: "cmd", text: "help" },
   { kind: "dim", text: "available commands" },
   { kind: "text", k: "projects", text: "featured work, with outcomes" },
+  { kind: "text", k: "drawbridge", text: "open-source MCP gateway" },
   { kind: "text", k: "experience", text: "jump to experience" },
   { kind: "text", k: "contact", text: "email or send a message" },
   { kind: "text", k: "whoami", text: "role, focus, availability" },
@@ -24,7 +25,17 @@ const PROJECTS: Line[] = [
   { kind: "link", text: "/projects/nutrilogix", href: "/projects/nutrilogix" },
   { kind: "text", text: "CallCatch — Live. Answers from a business's own site, never invents a price, and turns unanswered questions into leads." },
   { kind: "link", text: "/projects/callcatch", href: "/projects/callcatch" },
+  { kind: "text", text: "Drawbridge — open source. 8/8 scripted attacks pass. An MCP gateway that wraps untrusted tool results." },
+  { kind: "link", text: "/projects/drawbridge", href: "/projects/drawbridge" },
   { kind: "link", text: "All projects", href: "/projects" },
+];
+
+const DRAWBRIDGE: Line[] = [
+  { kind: "cmd", text: "drawbridge" },
+  { kind: "text", text: "open-source MCP security gateway · pre-release · Apache-2.0" },
+  { kind: "text", text: "8/8 scripted attacks pass. Treats every tool result as untrusted." },
+  { kind: "link", text: "/projects/drawbridge", href: "/projects/drawbridge" },
+  { kind: "link", text: "/drawbridge/replay/", href: "/drawbridge/replay/index.html" },
 ];
 
 const WHOAMI: Line[] = [
@@ -97,6 +108,7 @@ export default function Terminal() {
     }
     if (command === "help") push(HELP);
     else if (command === "projects") push(PROJECTS);
+    else if (command === "drawbridge") push(DRAWBRIDGE);
     else if (command === "experience") {
       push(
         [
