@@ -66,7 +66,7 @@
 	<link rel="stylesheet" href="/css/solid.css" />
 	<link rel="stylesheet" href="/css/hero-theme.css?v=20261125b" />
 	<link rel="stylesheet" href="/css/review-fixes.css?v=20261128a" />
-	<link rel="stylesheet" href="/css/drawbridge.css?v=20261128d" />
+	<link rel="stylesheet" href="/css/drawbridge.css?v=20261128e" />
 
 	<script type="application/ld+json">
 {
@@ -150,9 +150,9 @@
 					<p class="db-crumb"><a href="/portfolio.html">~/projects</a> <span aria-hidden="true">/</span> drawbridge</p>
 
 					<section class="db-hero" aria-labelledby="drawbridge-title">
-						<span class="status-pill"><i></i>Open source · Apache-2.0</span>
 						<div class="dhero">
 							<div>
+								<span class="status-pill"><i></i>Open source · Apache-2.0</span>
 								<div class="titlerow">
 									<span class="marktile">
 										<img src="/images/drawbridge/drawbridge-mark.svg" width="32" height="32" alt="">
@@ -396,6 +396,10 @@
 		var loadBtn = document.getElementById('replay-load');
 		if (!poster || !loadBtn) return;
 		loadBtn.hidden = false;
+		var fallback = document.getElementById('replay-fallback');
+		if (fallback && !window.matchMedia('(min-width: 768px)').matches) {
+			fallback.removeAttribute('href');
+		}
 		loadBtn.addEventListener('click', function () {
 			if (!window.matchMedia('(min-width: 768px)').matches) return;
 			var iframe = document.createElement('iframe');
@@ -403,7 +407,6 @@
 			iframe.title = 'Drawbridge audit replay (interactive, sample data)';
 			iframe.setAttribute('referrerpolicy', 'no-referrer');
 			iframe.setAttribute('loading', 'eager');
-			iframe.tabIndex = -1;
 			poster.replaceWith(iframe);
 			iframe.focus();
 			var live = document.getElementById('replay-status');

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Run: node --test scripts/drawbridge-attacks.test.mjs
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
