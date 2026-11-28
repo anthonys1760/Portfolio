@@ -1884,13 +1884,31 @@ body.home .work-link:is(:hover, :focus-visible) {
 	}
 }
 body.about .section:not(.started) {
-	padding: var(--portfolio-section-gap) 0 0;
+	/* Top + bottom so cards aren't flush with the next section band. */
+	padding: var(--portfolio-section-gap) 0;
 }
 body.about .section.started + .section {
 	padding-top: var(--portfolio-hero-gap);
 }
 body.about #section-skills {
 	padding-bottom: var(--portfolio-page-end);
+}
+@media (max-width: 767px) {
+	body.about .section:not(.started) {
+		padding-bottom: 48px;
+	}
+	body.about #section-skills {
+		padding-bottom: max(48px, var(--portfolio-page-end));
+	}
+}
+/* AI intro (and any multi-paragraph about-tldr) needs space between paras. */
+body.about .about-tldr {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+body.about .about-tldr p {
+	margin: 0;
 }
 body.about .section .title {
 	margin: 0 0 var(--portfolio-card-gap);
