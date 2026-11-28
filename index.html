@@ -59,8 +59,8 @@
 	<link rel="stylesheet" href="css/brands.css?v=20261120c" />
 	<link rel="stylesheet" href="css/solid.css?v=20261120c" />
 	<link rel="stylesheet" href="css/hero-theme.css?v=20261125b">
-	<link rel="stylesheet" href="/css/review-fixes.css?v=20261128b">
-	<link rel="stylesheet" href="/css/hero-split.css?v=20261120c">
+	<link rel="stylesheet" href="/css/review-fixes.css?v=20261128e">
+	<link rel="stylesheet" href="/css/hero-split.css?v=20261128c">
 	<link rel="stylesheet" href="/css/drawbridge.css?v=20261128e">
 
 	<!-- Favicon -->
@@ -282,46 +282,81 @@
 							<div class="hero-chat-wrap">
 								<div class="hero-top">
 									<div class="hero-copy">
-										<p class="hero-eyebrow">Senior Software Engineer · Solutions Architect · <span class="place">Grand Rapids, MI</span></p>
+										<p class="hero-eyebrow">Senior Software Engineer · <span class="eyebrow-omit">Solutions Architect · </span><span class="place">Grand Rapids, MI</span></p>
 										<h1 class="hero-role">I build secure apps.<br /><strong>And test them like an attacker.</strong></h1>
 										<p class="hero-tagline"><strong>15+ years</strong> building production systems. React Native, TypeScript and Supabase apps with AI APIs, plus API security testing against the OWASP API Top 10.</p>
 										<div class="hero-cta-wrap" id="hero-cta-wrap">
 											<a class="hero-cta hero-cta-primary" href="mailto:anthony.smith1760@gmail.com?subject=About%20a%20role">Email me about a role</a>
-											<a class="hero-text-link" href="#selected-work">See my work<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+											<a class="hero-text-link" href="#open-source">See my work<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 										</div>
 										<p class="hero-proof"><strong>Lead Systems Engineer</strong>, SpartanNash · <strong>PenTest+</strong> certified</p>
 										<p class="hero-availability">Open to full-time roles and contract or freelance work.</p>
 									</div>
-									<figure class="hero-stage" role="img" aria-labelledby="hero-term-caption">
-										<div class="hero-term" aria-hidden="true">
+									<figure class="hero-stage">
+										<div class="hero-term" role="region" aria-labelledby="hero-term-title">
 											<div class="hero-term-bar">
-												<span class="hero-term-dots">
-													<span></span><span></span><span></span>
-												</span>
-												<span class="hero-term-title">ship &amp;&amp; break</span>
+												<span class="hero-term-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+												<span class="hero-term-title" id="hero-term-title">drawbridge · audit</span>
 											</div>
-											<pre class="hero-term-body"><code><span class="term-prompt">$</span> <span class="term-cmd">whoami</span>
-<span class="term-out">senior software engineer
-application &amp; API security</span>
-
-<span class="term-prompt">$</span> <span class="term-cmd">audit --owasp-api</span>
-<span class="term-ok">[+]</span> <span class="term-out">BOLA</span>
-<span class="term-ok">[+]</span> <span class="term-out">Rate limiting</span>
-<span class="term-ok">[+]</span> <span class="term-out">Prompt injection</span>
-<span class="term-ok">[+]</span> <span class="term-out">OWASP API Top 10</span>
-
-<span class="term-prompt">$</span> <span class="term-cmd">certs</span>
-<span class="term-out">CompTIA PenTest+</span>
-<span class="term-prompt">$</span> <span class="term-cursor"> </span></code></pre>
+											<div class="hero-term-body-a">
+												<p class="term-cmdrow">
+													<span class="term-prompt" aria-hidden="true">$</span>
+													<span class="term-cmd">drawbridge audit</span>
+												</p>
+												<ul class="term-log">
+													<li>
+														<span class="tool">notes__read</span>
+														<span class="stat stat-ok">wrapped</span>
+														<span class="detail">&lt;&lt;untrusted&gt;&gt; … &lt;&lt;end untrusted&gt;&gt;</span>
+													</li>
+													<li>
+														<span class="tool">session</span>
+														<span class="stat stat-warn">tainted</span>
+													</li>
+													<li>
+														<span class="tool">mail__send</span>
+														<span class="stat stat-warn">held</span>
+														<span class="reason">Untrusted content entered this session</span>
+													</li>
+												</ul>
+												<div class="term-actions">
+													<a class="term-cta solid" href="/projects/drawbridge/">View product →</a>
+													<a class="term-cta" href="/drawbridge/replay/" aria-label="Try the Drawbridge replay">Try the replay <span aria-hidden="true">↗</span></a>
+												</div>
+												<p class="term-cmdrow">
+													<span class="term-prompt" aria-hidden="true">$</span>
+													<span class="term-cmd">open</span>
+												</p>
+												<nav class="term-links" aria-label="Writing and apps">
+													<div class="term-linkrow">
+														<span class="name">HackerNoon</span>
+														<a class="dest" href="https://hackernoon.com/u/Gh0st2059" target="_blank" rel="noopener" aria-label="HackerNoon author profile (opens in a new tab)">Profile <span aria-hidden="true">↗</span></a>
+													</div>
+													<div class="term-linkrow">
+														<span class="name">CastLog</span>
+														<span class="dests">
+															<a href="https://apps.apple.com/app/id6766137949" target="_blank" rel="noopener" aria-label="CastLog on the App Store (opens in a new tab)">App Store <span aria-hidden="true">↗</span></a>
+															<a href="https://castlogapp.com/#android-invite" target="_blank" rel="noopener" aria-label="CastLog Android open beta (opens in a new tab)">Android <span aria-hidden="true">↗</span></a>
+														</span>
+													</div>
+													<div class="term-linkrow">
+														<span class="name">Nutrilogix</span>
+														<a class="dest" href="https://testflight.apple.com/join/7tFSghHS" target="_blank" rel="noopener" aria-label="Nutrilogix on TestFlight (opens in a new tab)">TestFlight <span aria-hidden="true">↗</span></a>
+													</div>
+												</nav>
+											</div>
+											<div class="term-foot">
+												<span class="ok">8/8 scripted attacks pass</span>
+												<span>Open source · Apache-2.0</span>
+											</div>
 										</div>
-										<figcaption id="hero-term-caption" class="hero-stage-caption">Terminal showing API security work: BOLA, rate limiting, prompt injection, and the OWASP API Top 10. CompTIA PenTest+ certified.</figcaption>
 									</figure>
 								</div>
 
 								<div class="hero-receipt" aria-label="Worked with, writing, and availability">
-									<p><span class="receipt-label">// worked-with</span><span class="receipt-val">SpartanNash · Ford (via VMLY&amp;R) · DoD contractor work (via Intelligent Waves)</span></p>
-									<p><span class="receipt-label">// writing-on</span><span class="receipt-val">HackerNoon</span></p>
-									<p><span class="receipt-label">// available-on</span><span class="receipt-val"><a href="https://apps.apple.com/app/id6766137949" target="_blank" rel="noopener">iOS App Store</a> · <a href="https://testflight.apple.com/join/7tFSghHS" target="_blank" rel="noopener">TestFlight</a> · <a href="https://castlogapp.com/#android-invite" target="_blank" rel="noopener">Android open beta</a></span></p>
+									<p><span class="receipt-label">// worked-with</span><span class="receipt-val"><span class="receipt-list"><span class="receipt-item">SpartanNash</span><span class="receipt-item">Ford (via VMLY&amp;R)</span><span class="receipt-item">DoD contractor work (via Intelligent Waves)</span></span></span></p>
+									<p><span class="receipt-label">// writing-on</span><span class="receipt-val"><span class="receipt-list"><a class="receipt-item" href="https://hackernoon.com/u/Gh0st2059" target="_blank" rel="noopener" aria-label="HackerNoon author profile (opens in a new tab)">HackerNoon <span aria-hidden="true">↗</span></a></span></span></p>
+									<p><span class="receipt-label">// available-on</span><span class="receipt-val receipt-stores"><span class="receipt-list"><a class="receipt-item" href="https://apps.apple.com/app/id6766137949" target="_blank" rel="noopener" aria-label="CastLog on the App Store (opens in a new tab)">iOS App Store</a><a class="receipt-item" href="https://testflight.apple.com/join/7tFSghHS" target="_blank" rel="noopener" aria-label="Nutrilogix on TestFlight (opens in a new tab)">TestFlight</a><a class="receipt-item" href="https://castlogapp.com/#android-invite" target="_blank" rel="noopener" aria-label="CastLog Android open beta (opens in a new tab)">Android open beta</a></span></span></p>
 								</div>
 							</div>
 						</div>

@@ -8,7 +8,7 @@ body.home .section.started .started-content.started-chat {
 
 body.home .hero-top {
 	display: grid;
-	grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+	grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
 	gap: 56px;
 	align-items: start;
 	min-height: 0;
@@ -77,6 +77,7 @@ body.home .hero-cta.hero-cta-primary {
 	align-items: center;
 	justify-content: center;
 	width: auto;
+	max-width: 360px;
 	min-width: 0; /* was min-width: 280px */
 	align-self: auto;
 	min-height: 52px;
@@ -162,11 +163,20 @@ body.home .hero-stage::before {
 }
 
 body.home .hero-term {
+	--term-bg: #0b1118;
+	--term-fg: #f0f0f5;
+	--term-muted: rgba(255, 255, 255, 0.78);
+	--term-faint: rgba(255, 255, 255, 0.62);
+	--term-mint: #4bffa5;
+	--term-title: rgba(75, 255, 165, 0.92);
+	--term-warn: #f5c56b;
+	--term-border: rgba(75, 255, 165, 0.22);
+	--term-line: rgba(255, 255, 255, 0.1);
 	position: relative;
 	overflow: hidden;
 	border-radius: 16px;
-	background: #0b1118;
-	border: 1px solid rgba(75, 255, 165, 0.18);
+	background: var(--term-bg);
+	border: 1px solid var(--term-border);
 	box-shadow:
 		0 24px 48px rgba(0, 0, 0, 0.45),
 		inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -176,8 +186,8 @@ body.home .hero-term-bar {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	padding: 12px 16px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	padding: 12px;
+	border-bottom: 1px solid var(--term-line);
 }
 
 body.home .hero-term-dots {
@@ -202,9 +212,10 @@ body.home .hero-term-title {
 	text-align: center;
 	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 	font-size: 12px;
-	letter-spacing: 0.08em;
+	font-weight: 500;
+	letter-spacing: 0.1em;
 	text-transform: uppercase;
-	color: rgba(255, 255, 255, 0.55);
+	color: var(--term-title);
 }
 
 body.home .hero-term-body {
@@ -224,8 +235,9 @@ body.home .hero-term-body {
 /* basic.css sets code { white-space: nowrap; display: inline-block } and
    pre { background: #f6f6f6 }. Reset both so the terminal keeps its lines
    and can wrap or scroll under browser text zoom. */
-body.home .hero-term-body code {
-	display: block;
+body.home .hero-term-body code,
+body.home .hero-term .tool {
+	display: inline;
 	padding: 0;
 	background: transparent;
 	font-family: inherit;
@@ -233,12 +245,202 @@ body.home .hero-term-body code {
 	font-style: normal;
 	line-height: inherit;
 	color: inherit;
-	white-space: pre-wrap;
+	white-space: inherit;
 	overflow: visible;
 	overflow-wrap: anywhere;
 	word-break: break-word;
 	max-width: none;
 	vertical-align: baseline;
+}
+
+body.home .hero-term-body-a {
+	margin: 0;
+	padding: 14px 16px 12px;
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 13px;
+	line-height: 1.5;
+	color: var(--term-muted);
+}
+
+body.home .hero-term p {
+	margin: 0;
+	padding: 0;
+	font-size: inherit;
+}
+
+body.home .term-cmdrow {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	margin: 0 0 8px;
+	font-size: inherit;
+	color: var(--term-fg);
+}
+
+body.home .term-cmdrow .term-prompt {
+	color: var(--term-mint);
+	font-weight: 500;
+}
+
+body.home .term-cmdrow .term-cmd {
+	color: var(--term-fg);
+}
+
+body.home .term-log {
+	list-style: none;
+	margin: 0 0 10px;
+	padding: 0;
+	display: grid;
+	gap: 2px;
+}
+
+body.home .term-log li {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	column-gap: 12px;
+	align-items: baseline;
+}
+
+body.home .term-log .tool {
+	color: var(--term-fg);
+	font-family: inherit;
+	font-size: inherit;
+	background: none;
+	padding: 0;
+}
+
+body.home .term-log .stat {
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	text-transform: lowercase;
+}
+
+body.home .term-log .stat-ok {
+	color: var(--term-mint);
+}
+
+body.home .term-log .stat-warn {
+	color: var(--term-warn);
+}
+
+body.home .term-log .detail,
+body.home .term-log .reason {
+	grid-column: 1 / -1;
+	color: var(--term-faint);
+	font-size: 12px;
+	margin: 0 0 2px;
+}
+
+body.home .term-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 10px;
+	margin: 2px 0 12px;
+}
+
+body.home a.term-cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0 14px;
+	border: 1px solid rgba(75, 255, 165, 0.45);
+	background: rgba(75, 255, 165, 0.08);
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 12.5px;
+	font-weight: 500;
+	color: var(--term-mint);
+	text-decoration: none;
+	border-radius: 10px;
+	white-space: nowrap;
+}
+
+body.home a.term-cta.solid {
+	background: var(--term-mint);
+	color: #071a10;
+	border-color: var(--term-mint);
+	font-weight: 700;
+}
+
+body.home a.term-cta:hover {
+	color: #d9ffe9;
+	text-decoration: none;
+	background: rgba(75, 255, 165, 0.14);
+}
+
+body.home a.term-cta.solid:hover {
+	color: #071a10;
+	background: #6dffb8;
+	text-decoration: none;
+}
+
+body.home a.term-cta:focus-visible,
+body.home .term-linkrow a:focus-visible {
+	outline: 2px solid var(--term-mint);
+	outline-offset: 3px;
+}
+
+body.home .term-links {
+	display: grid;
+	gap: 0;
+	margin: 0;
+}
+
+body.home .term-linkrow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 0;
+	font-size: 13px;
+	line-height: 1.25;
+}
+
+body.home .term-linkrow .name {
+	color: var(--term-fg);
+}
+
+body.home .term-linkrow .dests {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+}
+
+body.home .term-linkrow a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: var(--term-mint);
+	font-size: 12.5px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+body.home .term-linkrow a:hover {
+	color: #d9ffe9;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+body.home .term-foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	row-gap: 2px;
+	padding: 8px 16px;
+	min-height: 36px;
+	border-top: 1px solid var(--term-line);
+	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+	font-size: 11px;
+	letter-spacing: 0.04em;
+	color: var(--term-faint);
+}
+
+body.home .term-foot .ok {
+	color: var(--term-mint);
+	font-weight: 500;
 }
 
 body.home .term-prompt {
@@ -341,11 +543,6 @@ body.page-404 .hero-top {
 		gap: 2px;
 	}
 
-	body.home .hero-cta.hero-cta-primary {
-		width: 100%;
-		align-self: stretch;
-	}
-
 	body.home .hero-proof {
 		margin-top: 14px;
 	}
@@ -364,12 +561,35 @@ body.page-404 .hero-top {
 		line-height: 1.6;
 	}
 
+	body.home .hero-term-body-a {
+		padding: 12px 14px 8px;
+		font-size: 12.5px;
+	}
+
 	body.home .hero-term-title {
 		font-size: 11px;
 	}
 }
 
+@media (min-width: 1025px) {
+	body.home .term-linkrow a {
+		margin-block: -8px;
+	}
+}
+
+@media (max-width: 599px) {
+	body.home .hero-cta.hero-cta-primary {
+		width: 100%;
+		max-width: none;
+		align-self: stretch;
+	}
+}
+
 @media (max-width: 480px) {
+	body.home p.hero-eyebrow .eyebrow-omit {
+		display: none;
+	}
+
 	body.home.hero-themed .hero-role {
 		font-size: 36px;
 		letter-spacing: -0.03em;
