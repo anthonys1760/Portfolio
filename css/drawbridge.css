@@ -570,10 +570,7 @@ body.drawbridge-page .poster .veil a.hero-cta.outline:is(:link, :visited, :hover
 	white-space: nowrap;
 }
 
-/* Home spotlight */
-body.home .db-spotlight-sec {
-	padding-top: 24px;
-}
+/* Home spotlight — use the same home-panel padding as sibling sections */
 body.home .db-spot-hd {
 	display: flex;
 	align-items: flex-end;
