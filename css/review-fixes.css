@@ -2127,7 +2127,13 @@ body.home .hero-receipt .receipt-val {
 	font-size: 13px;
 	line-height: 1.55;
 }
+body.home .hero-receipt p:has(a) {
+	align-items: center;
+}
 body.home .hero-receipt .receipt-val a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
 	color: #4bffa5;
 	text-decoration: none;
 	text-underline-offset: 2px;
