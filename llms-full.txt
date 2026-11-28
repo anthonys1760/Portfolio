@@ -12,6 +12,8 @@ API and application security focus: BOLA, rate limiting, and prompt injection, w
 
 CallCatch (https://callcatch-api-neon.vercel.app/) answers from a business's own website, does not invent a price, and turns unanswered questions into leads. Rogue River Labs (https://rogueriverlabs.dev/) builds mobile apps and the APIs behind them, and finds where access checks break.
 
+Drawbridge (https://anthonysdigital.net/projects/drawbridge/): open-source MCP security gateway (Apache-2.0). An MCP gateway that treats every tool result as untrusted, and asks you before an agent sends anything out. Repository: https://github.com/anthonys1760/drawbridge
+
 Google Ads and Analytics certified. Open to full-time roles and to contract or freelance work.
 
 ## Selected work
@@ -19,6 +21,8 @@ Google Ads and Analytics certified. Open to full-time roles and to contract or f
 CastLog: React Native / Expo + TypeScript fishing journal with voice-first logging, offline-first (lake, weather, and moon phase, including with no signal), and Supabase. iOS is on the App Store, and an Android beta is open at https://castlogapp.com/#android-invite.
 
 Nutrilogix: React Native / Expo + TypeScript nutrition app with photo or voice meal logging, barcode lookup, Apple Health sync, and Supabase. The iOS TestFlight beta is open.
+
+Drawbridge: open-source MCP security gateway. https://anthonysdigital.net/projects/drawbridge/ · https://github.com/anthonys1760/drawbridge · Apache-2.0
 
 https://anthonysdigital.net/#selected-work
 

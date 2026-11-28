@@ -1,0 +1,198 @@
+/* Drawbridge design tokens.
+   Fluid type and space from v0.2. Color, type families, radius, duration,
+   and the focus color are Direction A from main@5b0ff23.
+   v0.2 names that the landing, replay, and dashboard already use are aliases
+   of those Direction A variables.
+
+   Drop-in for:
+     docs/design/tokens.css
+     site/tokens.css
+     site/replay/tokens.css
+*/
+
+:root {
+  color-scheme: dark;
+
+  --db-font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --db-font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --db-font: var(--db-font-sans);
+
+  /* Fluid type. Anchored at 360 and 1440. Mid-width (around 1024) stays
+     within 1px of the v0.1 sizes. Line-heights are unitless. */
+  --db-text-xs:  clamp(0.6875rem, 0.6667rem + 0.0926vw, 0.75rem);     /* 11–12 */
+  --db-text-sm:  clamp(0.75rem,    0.7292rem + 0.0926vw, 0.8125rem);  /* 12–13 */
+  --db-text-md:  clamp(0.8125rem,  0.7917rem + 0.0926vw, 0.875rem);   /* 13–14 */
+  --db-text-lg:  clamp(0.9375rem,  0.9167rem + 0.0926vw, 1rem);       /* 15–16 */
+  --db-text-xl:  clamp(1.125rem,   1.0417rem + 0.3704vw, 1.375rem);   /* 18–22 */
+  --db-text-2xl: clamp(1.375rem,   1.2083rem + 0.7407vw, 1.875rem);   /* 22–30 */
+  --db-text-3xl: clamp(1.75rem,    1.1667rem + 2.5926vw, 3.5rem);     /* 28–56, landing only */
+  --db-lh-xs: 1.35;
+  --db-lh-sm: 1.45;
+  --db-lh-md: 1.5;
+  --db-lh-lg: 1.45;
+  --db-lh-xl: 1.3;
+  --db-lh-2xl: 1.2;
+  --db-lh-3xl: 1.1;
+  --db-tracking-tight: -0.03em;
+  --db-tracking-mono: 0.01em;
+
+  /* Fluid space. space-1/2 stay fixed so hairlines and tight rows don't drift. */
+  --db-space-1: 4px;
+  --db-space-2: 8px;
+  --db-space-3: clamp(0.625rem, 0.5833rem + 0.1852vw, 0.75rem);       /* 10–12 */
+  --db-space-4: clamp(0.75rem,  0.6667rem + 0.3704vw, 1rem);          /* 12–16 */
+  --db-space-5: clamp(0.875rem, 0.7500rem + 0.5556vw, 1.25rem);       /* 14–20 */
+  --db-space-6: clamp(1rem,     0.8333rem + 0.7407vw, 1.5rem);        /* 16–24 */
+  --db-space-8: clamp(1.25rem,  1.0000rem + 1.1111vw, 2rem);          /* 20–32 */
+  --db-space-10: clamp(1.5rem,  1.1667rem + 1.4815vw, 2.5rem);        /* 24–40 */
+  --db-space-12: clamp(2rem,    1.6667rem + 1.4815vw, 3rem);          /* 32–48 */
+  --db-space-16: clamp(3rem,    2.3333rem + 2.9630vw, 5rem);          /* 48–80, section gap */
+
+  --db-radius-sm: 4px;
+  --db-radius-md: 6px;
+  --db-radius-lg: 10px;
+  --db-radius-pill: 999px;
+  --db-border-width: 1px;
+  --db-focus-width: 2px;
+  --db-focus-offset: 2px;
+
+  /* Chrome heights stay fixed so sticky math is predictable. */
+  --db-topbar-h: 56px;
+  --db-row-h: 48px;
+  --db-btn-h: 36px;
+  --db-btn-h-touch: 44px;
+
+  --db-ease: cubic-bezier(0.2, 0, 0, 1);
+  --db-dur-fast: 120ms;
+  --db-dur-base: 180ms;
+  --db-dur-slow: 280ms;
+  --db-duration-fast: var(--db-dur-fast);
+  --db-duration: var(--db-dur-base);
+
+  /* ---------- color: dark (default), Direction A ---------- */
+  --db-bg: #0B0D10;
+  --db-surface: #111418;
+  --db-raised: #171B21;
+  --db-overlay: rgba(5, 6, 8, 0.72);
+  --db-border: #2A3039;
+  --db-border-control: #5F6873;
+  --db-text: #E7E9EC;
+  --db-text-muted: #A1A9B3;
+  --db-text-subtle: #808996;
+  --db-text-on-accent: #0B0D10;
+
+  --db-accent: #5EE6A8;
+  --db-accent-soft: #0F2A1F;
+  --db-accent-hover: #7AEDB9;
+  --db-warn: #F2B84B;
+  --db-warn-soft: #2A2110;
+  --db-taint-mark: #3A2E12;
+  --db-danger: #F7797B;
+  --db-danger-soft: #2A1416;
+  --db-info: #86B0FF;
+  --db-info-soft: #13203A;
+  --db-focus: #86B0FF;
+
+  --db-code-key: #A1A9B3;
+  --db-code-string: #C9D1D9;
+  --db-code-number: #86B0FF;
+  --db-code-punct: #808996;
+
+  /* Names the v0.2 CSS already uses. They follow the theme variables above. */
+  --db-bg-elevated: var(--db-raised);
+  --db-bg-sunken: var(--db-bg);
+  --db-surface-hover: var(--db-raised);
+  --db-border-strong: var(--db-border-control);
+  --db-text-faint: var(--db-text-subtle);
+  --db-accent-muted: var(--db-accent-soft);
+  --db-accent-on: var(--db-text-on-accent);
+  --db-warn-muted: var(--db-warn-soft);
+  --db-danger-muted: var(--db-danger-soft);
+
+  /* Named breakpoints (use in comments and JS; CSS media queries still need literals). */
+  --db-bp-xs: 360px;
+  --db-bp-sm: 480px;     /* sticky chrome collapses at max-width or max-height 480 */
+  --db-bp-md: 768px;
+  --db-bp-lg: 1024px;    /* replay stacks below this */
+  --db-bp-xl: 1200px;    /* dashboard three-column split */
+  --db-container: 72rem; /* 1152px */
+  --db-container-pad: var(--db-space-6);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --db-bg: #F7F7F5;
+  --db-surface: #FFFFFF;
+  --db-raised: #F0F0EC;
+  --db-overlay: rgba(16, 19, 24, 0.40);
+  --db-border: #D9DAD5;
+  --db-border-control: #8A8E88;
+  --db-text: #101318;
+  --db-text-muted: #4F5864;
+  --db-text-subtle: #646D79;
+  --db-text-on-accent: #FFFFFF;
+  --db-accent: #08774A;
+  --db-accent-soft: #E3F4EB;
+  --db-accent-hover: #066640;
+  --db-warn: #8A5600;
+  --db-warn-soft: #FDF3DC;
+  --db-taint-mark: #FCE9B8;
+  --db-danger: #B3261E;
+  --db-danger-soft: #FBE7E5;
+  --db-info: #1F5FD1;
+  --db-info-soft: #E6EEFC;
+  --db-focus: #1F5FD1;
+  --db-code-key: #4F5864;
+  --db-code-string: #101318;
+  --db-code-number: #1F5FD1;
+  --db-code-punct: #646D79;
+}
+
+/* Follow the OS when the user has not picked a theme (data-theme unset). */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]):not([data-theme="light"]) {
+    color-scheme: light;
+    --db-bg: #F7F7F5;
+    --db-surface: #FFFFFF;
+    --db-raised: #F0F0EC;
+    --db-overlay: rgba(16, 19, 24, 0.40);
+    --db-border: #D9DAD5;
+    --db-border-control: #8A8E88;
+    --db-text: #101318;
+    --db-text-muted: #4F5864;
+    --db-text-subtle: #646D79;
+    --db-text-on-accent: #FFFFFF;
+    --db-accent: #08774A;
+    --db-accent-soft: #E3F4EB;
+    --db-accent-hover: #066640;
+    --db-warn: #8A5600;
+    --db-warn-soft: #FDF3DC;
+    --db-taint-mark: #FCE9B8;
+    --db-danger: #B3261E;
+    --db-danger-soft: #FBE7E5;
+    --db-info: #1F5FD1;
+    --db-info-soft: #E6EEFC;
+    --db-focus: #1F5FD1;
+    --db-code-key: #4F5864;
+    --db-code-string: #101318;
+    --db-code-number: #1F5FD1;
+    --db-code-punct: #646D79;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --db-dur-fast: 0ms;
+    --db-dur-base: 0ms;
+    --db-dur-slow: 0ms;
+  }
+}
+
+/* Shared page shell for the landing (and any future marketing page). */
+.db-container {
+  width: 100%;
+  max-width: var(--db-container);
+  margin-inline: auto;
+  padding-inline: var(--db-container-pad);
+  box-sizing: border-box;
+}
