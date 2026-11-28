@@ -570,10 +570,7 @@ body.drawbridge-page .poster .veil a.hero-cta.outline:is(:link, :visited, :hover
 	white-space: nowrap;
 }
 
-/* Home spotlight */
-body.home .db-spotlight-sec {
-	padding-top: 24px;
-}
+/* Home spotlight — use the same home-panel padding as sibling sections */
 body.home .db-spot-hd {
 	display: flex;
 	align-items: flex-end;
@@ -602,18 +599,30 @@ body.home .db-ghost {
 }
 .db-spot-art {
 	position: relative;
-	min-height: 340px;
+	min-height: 0;
 	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 18px 14px 10px;
+	/* Match Selected work device-card backdrop (no amber crop frame). */
+	background:
+		radial-gradient(ellipse at 50% 42%, rgba(75, 255, 165, 0.22), transparent 68%),
+		linear-gradient(180deg, #1c2a24 0%, #141c1a 100%);
+}
+.db-spot-art picture {
+	display: block;
+	width: 100%;
 }
 .db-spot-art img {
-	position: absolute;
-	left: 8%;
-	top: 14%;
-	width: 84%;
+	display: block;
+	position: static;
+	width: 100%;
 	height: auto;
-	border-radius: 12px 12px 0 0;
-	border: 1px solid rgba(255, 255, 255, 0.14);
-	border-bottom: 0;
+	aspect-ratio: 1600 / 1000;
+	object-fit: contain;
+	border: 0;
+	border-radius: 0;
 }
 .db-spot .oss,
 .case-row#drawbridge .oss {
@@ -696,7 +705,7 @@ body.portfolio .case-row#drawbridge .case-media img {
 	.dfacts div:nth-child(2n) { border-right: 0; }
 	.dfacts div:nth-child(-n+2) { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 	.db-spot { grid-template-columns: 1fr; }
-	.db-spot-art { min-height: 0; aspect-ratio: 16 / 9; }
+	.db-spot-art { min-height: 0; }
 	.dh1 { font-size: 48px; }
 	.replay-host iframe { height: min(78svh, 720px); }
 }

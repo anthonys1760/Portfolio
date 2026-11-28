@@ -6,6 +6,8 @@ package. Regenerates the WebP files the portfolio cards use:
 
     python3 scripts/device-mockups.py
     python3 scripts/device-mockups.py callcatch rogueriverlabs
+    DRAWBRIDGE_MOCKUP_URL=http://127.0.0.1:8765/projects/drawbridge/ \\
+      python3 scripts/device-mockups.py drawbridge
 
 Nothing here is a placeholder. Each screen is an above-the-fold capture of
 the project's own site.
@@ -16,6 +18,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
+import os
 import re
 import subprocess
 import sys
@@ -23,7 +26,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, features as pil_features
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "images" / "projects"
@@ -38,6 +41,14 @@ def callcatch_url() -> str:
     return match.group(1)
 
 
+def drawbridge_url() -> str:
+    """Prefer DRAWBRIDGE_MOCKUP_URL (e.g. a local static server) when set."""
+    override = os.environ.get("DRAWBRIDGE_MOCKUP_URL", "").strip()
+    if override:
+        return override
+    return "https://anthonysdigital.net/projects/drawbridge/"
+
+
 def all_projects() -> tuple[dict, ...]:
     return (
         {"slug": "castlog", "url": "https://castlogapp.com/"},
@@ -46,6 +57,7 @@ def all_projects() -> tuple[dict, ...]:
         {"slug": "voicelift", "url": "https://voicelift.app/"},
         {"slug": "callcatch", "url": callcatch_url()},
         {"slug": "rogueriverlabs", "url": "https://rogueriverlabs.dev/"},
+        {"slug": "drawbridge", "url": drawbridge_url()},
     )
 
 # Above-the-fold viewports. The composed canvas is identical for every project.
@@ -270,9 +282,19 @@ def compose(shots: dict[str, dict[str, Image.Image]], projects: tuple[dict, ...]
         canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
         for name in ("laptop", "tablet", "phone"):
             draw_device(canvas, shots[project["slug"]][name], LAYOUT[name])
-        dest = OUT_DIR / f"{project['slug']}-devices.webp"
-        canvas.save(dest, "WEBP", quality=82, method=6)
-        print(f"wrote {dest.relative_to(ROOT)} {canvas.size} {dest.stat().st_size} bytes")
+        stem = OUT_DIR / f"{project['slug']}-devices"
+        webp = stem.with_suffix(".webp")
+        canvas.save(webp, "WEBP", quality=82, method=6)
+        print(f"wrote {webp.relative_to(ROOT)} {canvas.size} {webp.stat().st_size} bytes")
+        png = stem.with_suffix(".png")
+        canvas.save(png, "PNG", optimize=True)
+        print(f"wrote {png.relative_to(ROOT)} {png.stat().st_size} bytes")
+        if pil_features.check("avif"):
+            avif = stem.with_suffix(".avif")
+            canvas.save(avif, "AVIF", quality=70)
+            print(f"wrote {avif.relative_to(ROOT)} {avif.stat().st_size} bytes")
+        else:
+            print(f"skip {project['slug']}-devices.avif (Pillow has no AVIF encoder)")
 
 
 def main() -> None:
