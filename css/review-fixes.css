@@ -1884,13 +1884,31 @@ body.home .work-link:is(:hover, :focus-visible) {
 	}
 }
 body.about .section:not(.started) {
-	padding: var(--portfolio-section-gap) 0 0;
+	/* Top + bottom so cards aren't flush with the next section band. */
+	padding: var(--portfolio-section-gap) 0;
 }
 body.about .section.started + .section {
 	padding-top: var(--portfolio-hero-gap);
 }
 body.about #section-skills {
 	padding-bottom: var(--portfolio-page-end);
+}
+@media (max-width: 767px) {
+	body.about .section:not(.started) {
+		padding-bottom: 48px;
+	}
+	body.about #section-skills {
+		padding-bottom: max(48px, var(--portfolio-page-end));
+	}
+}
+/* AI intro (and any multi-paragraph about-tldr) needs space between paras. */
+body.about .about-tldr {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+body.about .about-tldr p {
+	margin: 0;
 }
 body.about .section .title {
 	margin: 0 0 var(--portfolio-card-gap);
@@ -2145,6 +2163,14 @@ body.home .work-arch {
 body.home .work-arch span {
 	color: #4bffa5;
 }
+/* Align media + action rows across home selected-work cards in a row. */
+body.home #selected-work .work-card {
+	display: flex;
+	flex-direction: column;
+}
+body.home #selected-work .work-media {
+	margin-top: auto;
+}
 body.home .work-actions {
 	display: flex;
 	flex-wrap: wrap;
@@ -2273,9 +2299,16 @@ body.home .faq-list details a:focus-visible {
 	border-radius: 2px;
 }
 
-/* Closing CTA */
-body.home .home-next {
-	padding-bottom: 24px;
+/* Closing CTA — room between the email button and the footer. */
+body.home .home-next,
+body.home #next {
+	padding-bottom: 80px;
+}
+@media (max-width: 767px) {
+	body.home .home-next,
+	body.home #next {
+		padding-bottom: 48px;
+	}
 }
 body.home .home-next .mono-label {
 	margin: 0 0 10px;
@@ -2400,9 +2433,6 @@ body.home .callcatch-demo-anchor {
    width (same as .hero-chat-wrap / Email CTA) instead of reserving space. */
 body.home .section.home-faq {
 	padding-bottom: 96px;
-}
-body.home .home-next {
-	padding-bottom: 48px;
 }
 body.home .footer {
 	padding: 22px 132px 40px max(24px, calc((100% - 1200px) / 2));
