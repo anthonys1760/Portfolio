@@ -397,8 +397,10 @@
 		if (!poster || !loadBtn) return;
 		loadBtn.hidden = false;
 		var fallback = document.getElementById('replay-fallback');
-		if (fallback && !window.matchMedia('(min-width: 768px)').matches) {
+		if (fallback) {
 			fallback.removeAttribute('href');
+			fallback.removeAttribute('tabindex');
+			fallback.removeAttribute('role');
 		}
 		loadBtn.addEventListener('click', function () {
 			if (!window.matchMedia('(min-width: 768px)').matches) return;
