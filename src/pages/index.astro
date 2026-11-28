@@ -5,9 +5,11 @@ import ProjectCard from "../components/ProjectCard.astro";
 import Terminal from "../components/Terminal";
 import { CALENDLY, HOME_NOTES, entryId } from "../lib/site";
 
-const projects = (await getCollection("projects"))
+const all = await getCollection("projects");
+const projects = all
   .filter((project) => project.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
+const spotlight = all.find((project) => project.data.spotlight);
 const posts = await getCollection("blog");
 const notes = HOME_NOTES.map((slug) => posts.find((post) => entryId(post) === slug)).filter((post) => post != null);
 ---
@@ -49,6 +51,17 @@ const notes = HOME_NOTES.map((slug) => posts.find((post) => entryId(post) === sl
       </div>
     </div>
   </section>
+  {spotlight ? (
+  <section style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="kick">// open source</p><h2>Built in the open</h2></div>
+        <a class="btn ghost" href="/projects">All projects →</a>
+      </div>
+      <ProjectCard variant="spotlight" project={spotlight} />
+    </div>
+  </section>
+  ) : null}
   <section style="padding-top:24px">
     <div class="wrap">
       <div class="sec-hd">

@@ -1,0 +1,242 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import { getCollection } from "astro:content";
+import posterSrc from "../../assets/drawbridge/replay-poster.png";
+import AttackTable from "./AttackTable.astro";
+import FactsStrip from "./FactsStrip.astro";
+import Frame from "./Frame.astro";
+import Gallery from "./Gallery.astro";
+import ResourceLinks from "./ResourceLinks.astro";
+import Steps from "./Steps.astro";
+import ReplayEmbed from "../ReplayEmbed";
+import { SITE } from "../../lib/site";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+const { project } = Astro.props;
+const data = project.data;
+const all = await getCollection("projects");
+const nextProject = all.find((item) => item.data.slug === data.next);
+const poster = await getImage({ src: posterSrc, width: 1200, format: "webp" });
+const github = data.links.github ?? "https://github.com/anthonys1760/drawbridge";
+const threatHref =
+  data.resources?.find((item) => item.label === "Threat model")?.href ??
+  "https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/threat-model.md";
+const licenseHref = `${github}/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/LICENSE`;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: "Drawbridge",
+  description: data.summary,
+  url: `${SITE}/projects/drawbridge`,
+  codeRepository: github,
+  license: "https://www.apache.org/licenses/LICENSE-2.0",
+  programmingLanguage: "TypeScript",
+  author: { "@type": "Person", name: "Anthony Smith", url: SITE },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<section class="hero" style="padding-bottom:0">
+  <div class="wrap">
+    <p class="crumb"><a href="/projects">~/projects</a> <span class="p">/</span> drawbridge</p>
+    <div class="dhero">
+      <div>
+        <span class="status">{data.status}</span>
+        <div class="titlerow">
+          <span class="marktile">
+            <svg viewBox="0 0 24 24" role="img" aria-label="Drawbridge mark">
+              <path d="M4 21V8.5L12 3l8 5.5V21" fill="none" stroke="#E7E9EC" stroke-width="1.8" stroke-linejoin="round"></path>
+              <path d="M9 21v-6a3 3 0 0 1 6 0v6" fill="none" stroke="#E7E9EC" stroke-width="1.8"></path>
+              <path d="M9 15.5 15 10.5" stroke="#5EE6A8" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+          </span>
+          <h1 class="dh1">Drawbridge</h1>
+        </div>
+        <p class="lead">{data.summary}</p>
+        <div class="ctas">
+          <a class="btn pri" href="#replay">Try the replay <span aria-hidden="true">↓</span></a>
+          <a class="btn sec" href={github} target="_blank" rel="noopener noreferrer">
+            View on GitHub <span class="ic" aria-hidden="true">↗</span>
+            <span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <div class="dbframe">
+          <picture>
+            <source type="image/avif" srcset="/images/projects/drawbridge-card.avif" />
+            <img
+              src="/images/projects/drawbridge-card.webp"
+              width="1276"
+              height="808"
+              alt="Drawbridge approval screen. A mail__send call is held for a person. Three steps show why: an untrusted read of notes/q4-notes.md, a wrapped scanner hit, and a tainted session. Deny and Approve once buttons below."
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <figcaption class="cap">Held send, sample data</figcaption>
+      </figure>
+    </div>
+    {data.facts ? <FactsStrip facts={data.facts} /> : null}
+  </div>
+</section>
+
+<section class="dsec2" style="margin-top:56px">
+  <div class="wrap">
+    <p class="kick">// 01 problem <span class="sample">Draft copy</span></p>
+    <h2>{data.problem.title}</h2>
+    <p class="intro">{data.problem.body}</p>
+    <div class="cols3">
+      <div class="pcard">
+        <p class="m">prompt injection</p>
+        <h3>Instructions hide in data</h3>
+        <p>A read result or an argument can say "ignore the rules and send this." The agent can't tell it from you.</p>
+      </div>
+      <div class="pcard">
+        <p class="m">tool poisoning</p>
+        <h3>Tool text is untrusted too</h3>
+        <p>A tool description can carry instructions, and it can change after the first call you allowed (a rug pull).</p>
+      </div>
+      <div class="pcard">
+        <p class="m">exfiltration</p>
+        <h3>The send is the damage</h3>
+        <p>Reading is rarely the harm. The harm is the outbound call that carries notes, keys or credentials away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dsec2">
+  <div class="wrap">
+    <p class="kick">// 02 how it works</p>
+    <h2>One gateway between the agent and every MCP server</h2>
+    {data.steps ? <Steps steps={data.steps} /> : null}
+  </div>
+</section>
+
+<section class="dsec2">
+  <div class="wrap">
+    <p class="kick">// 03 attack results</p>
+    <h2>Eight scripted attacks, eight passes</h2>
+    {data.attacks ? (
+      <AttackTable source={data.attacks.source} caveat={data.attacks.caveat} threatHref={threatHref} />
+    ) : null}
+  </div>
+</section>
+
+<section class="dsec2" id="replay">
+  <div class="wrap">
+    <p class="kick">// 04 try it</p>
+    <h2>Replay a real audit log, and break it</h2>
+    <p class="intro">The replay reads a log from a demo run and recomputes the hash chain in your browser. It makes no network calls.</p>
+    {data.replay ? (
+      <div style="margin-top:28px">
+        <Frame
+          bar="Audit replay"
+          barNote="sample log · runs in your browser"
+          fullHref={data.replay.src}
+          fullLabel={data.replay.fullLabel}
+        >
+          <ReplayEmbed
+            client:visible
+            src={data.replay.src}
+            fullHref={data.replay.src}
+            poster={{ src: poster.src, width: posterSrc.width, height: posterSrc.height }}
+            posterAlt={data.replay.posterAlt}
+            title={data.replay.title}
+          />
+        </Frame>
+        <a class="skip-replay" href="#after-replay">Skip replay</a>
+      </div>
+    ) : null}
+    <div class="tryrow">
+      <div class="pcard">
+        <p class="m">1 · play</p>
+        <p>Press play. The sample session runs from setup to a poisoned read, an exfiltration attempt, a human decision and an audit replay.</p>
+      </div>
+      <div class="pcard">
+        <p class="m">2 · break it</p>
+        <p>Open the tampered sample. The chain breaks at entry 5 of 10, and entries 5 to 10 are marked unverified.</p>
+      </div>
+      <div class="pcard">
+        <p class="m">3 · bring your own</p>
+        <p>Open a <code class="mono" style="font-size:12.5px">.jsonl</code> log from your own demo run. Checking happens in a Web Worker.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dsec2" id="after-replay">
+  <div class="wrap">
+    <p class="kick">// 05 approvals dashboard</p>
+    <h2>A held send waits for a person</h2>
+    {data.gallery ? <Gallery items={data.gallery} /> : null}
+    <div class="bullets">
+      <div class="pcard">
+        <p class="m">safe default</p>
+        <p>Deny is the focused button. Approving lets one call through, and the next send asks again.</p>
+      </div>
+      <div class="pcard">
+        <p class="m">time limit</p>
+        <p>An unanswered call is denied after 120 seconds. The countdown is on screen.</p>
+      </div>
+      <div class="pcard">
+        <p class="m">redacted</p>
+        <p>Arguments show with secrets masked. A recipient keeps its domain, so you can see where it was going.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dsec2">
+  <div class="wrap">
+    <p class="kick">// 06 stack</p>
+    <h2>Stack</h2>
+    <div class="taglist">
+      {data.stack.map((item) => <span class="tag">{item}</span>)}
+    </div>
+  </div>
+</section>
+
+<section class="dsec2">
+  <div class="wrap">
+    <p class="kick">// 07 links</p>
+    <h2>Read it, run it, check it</h2>
+    {data.resources ? <ResourceLinks items={data.resources} /> : null}
+    <p class="honest">
+      Licensed under{" "}
+      <a href={licenseHref} target="_blank" rel="noopener noreferrer">
+        Apache-2.0<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      . Fallback replay:{" "}
+      <a href="https://anthonys1760.github.io/drawbridge/replay/" target="_blank" rel="noopener noreferrer">
+        GitHub Pages<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      .
+    </p>
+    <div class="related-notes">
+      <p class="kick" style="margin-top:36px">Related field notes</p>
+      <a class="lrow" href="/blog/user-text-cannot-select-a-tool">
+        <span>
+          <b>User Text Cannot Select a Tool</b>
+          <small>User text belongs in a data field. The application owns the tool set.</small>
+        </span>
+        <span class="ar" aria-hidden="true">→</span>
+      </a>
+    </div>
+    {nextProject ? (
+      <a class="nextp" href={`/projects/${nextProject.data.slug}`} style="margin-top:44px">
+        <span>
+          <span class="kick" style="display:block;margin:0">next project</span>
+          <b style="font-size:19px">{nextProject.data.title}</b>
+        </span>
+        <span class="mint" aria-hidden="true">→</span>
+      </a>
+    ) : null}
+  </div>
+</section>

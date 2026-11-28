@@ -1,0 +1,112 @@
+---
+title: Drawbridge
+slug: drawbridge
+summary: An MCP gateway that treats every tool result as untrusted, and asks you before an agent sends anything out.
+outcome: "**8/8 scripted attacks pass.** An MCP gateway that wraps untrusted tool results, holds sends for a person, and keeps a hash-chained audit log."
+status: Open source · Apache-2.0
+statusKind: live
+tags:
+  - Security
+  - TypeScript
+  - AI
+stack:
+  - TypeScript
+  - Node.js 22
+  - pnpm workspace
+  - MCP 2026-07-28
+  - Zod
+  - YAML policy
+  - SHA-256 hash chain
+  - JSONL audit log
+  - Web Worker verifier
+  - Vitest
+thumbnail: /images/projects/drawbridge-card.webp
+thumbnailAlt: "Drawbridge approval screen: a mail__send call held for a person, with the reasons it was held."
+thumbnailSize: [1276, 808]
+thumbnailKind: web
+gradient: drawbridge
+featured: false
+spotlight: true
+order: 4
+year: 2026
+showYear: false
+role: Author and maintainer
+platform: MCP gateway · Node.js 22
+layout: "case-study"
+links:
+  github: https://github.com/anthonys1760/drawbridge
+next: voicelift
+problem:
+  title: Agents with tool access read text they can't trust
+  body: Notes, tickets and web pages go straight into the model's context. Some of it carries instructions. If the same agent can send mail or post, a confused note can tell it to send the keys.
+architecture:
+  title: One gateway between the agent and every MCP server
+  body: One process sits between the agent and every MCP server. Stdio in, a namespaced catalog out.
+  confirmed: false
+results:
+  - label: attacks
+    body: Eight scripted attacks, eight passes.
+  - label: replay
+    body: The replay recomputes the hash chain in the browser from a demo log.
+facts:
+  - label: Role
+    value: Author and maintainer
+  - label: Status
+    value: Open source · pre-release
+  - label: Protocol
+    value: MCP 2026-07-28 · stdio
+  - label: Language
+    value: TypeScript · Node.js 22
+steps:
+  - title: Gateway
+    body: One process sits between the agent and every MCP server. Stdio in, a namespaced catalog out.
+  - title: Policy, taint, wrap
+    body: "First-match policy decides the scanner. Untrusted results come back between `<<untrusted>>` and `<<end untrusted>>`, and the session is tainted."
+  - title: Approvals
+    body: After untrusted content, a send waits for a person. Approve once, or deny. Unanswered calls are denied after 120 seconds.
+  - title: Audit chain
+    body: Every event is hashed to the one before it. The replay recomputes the chain in your browser, so nothing is trusted just because it is on disk.
+attacks:
+  source: https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/attack-results.md
+  data: src/data/drawbridge-attacks.json
+  caveat: These are scripted sessions against the demo upstreams. They show the checks work as designed, not that every real-world attack is covered.
+replay:
+  src: /drawbridge/replay/index.html
+  poster: replay-poster
+  posterAlt: ""
+  title: Drawbridge audit replay (interactive, sample data)
+  fullLabel: Open full screen
+gallery:
+  - src: dashboard-1440
+    alt: "Approvals dashboard at desktop width. A queue on the left, the held mail__send call in the middle with the reason it was held and its redacted arguments, and Deny and Approve once buttons at the bottom."
+    caption: Desktop · sample data
+    width: 1440
+    height: 900
+    kind: wide
+  - src: dashboard-390
+    alt: The same dashboard on a 390 pixel wide phone.
+    caption: 390 wide · sample data
+    width: 390
+    height: 844
+    kind: phone
+resources:
+  - label: GitHub repository
+    href: https://github.com/anthonys1760/drawbridge
+    note: anthonys1760/drawbridge · Apache-2.0
+    primary: true
+  - label: Audit replay
+    href: /drawbridge/replay/
+    note: /drawbridge/replay/
+  - label: Threat model
+    href: https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/threat-model.md
+    note: docs/threat-model.md
+  - label: Attack results
+    href: https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/attack-results.md
+    note: docs/attack-results.md
+  - label: Audit log schema
+    href: https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/audit-schema.md
+    note: docs/audit-schema.md
+  - label: Quick start and demo script
+    href: https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/README.md
+    note: README · docs/demo-script.md
+---

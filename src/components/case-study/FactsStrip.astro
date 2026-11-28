@@ -1,0 +1,23 @@
+---
+interface Fact {
+  label: string;
+  value: string;
+  sample?: boolean;
+}
+interface Props {
+  facts: Fact[];
+}
+const { facts } = Astro.props;
+---
+
+<dl class="dfacts">
+  {facts.map((fact) => (
+    <div>
+      <dt>{fact.label}</dt>
+      <dd>
+        {fact.value}
+        {fact.sample ? <span class="sample">Sample</span> : null}
+      </dd>
+    </div>
+  ))}
+</dl>

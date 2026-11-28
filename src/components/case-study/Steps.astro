@@ -1,0 +1,28 @@
+---
+interface Step {
+  title: string;
+  body: string;
+}
+interface Props {
+  steps: Step[];
+}
+const { steps } = Astro.props;
+
+function bodyParts(body: string) {
+  return body.split(/(`[^`]+`)/g).filter((part) => part.length > 0);
+}
+---
+
+<div class="cols4">
+  {steps.map((step, index) => (
+    <div class="pcard step">
+      <div class="n">{index + 1}</div>
+      <h3>{step.title}</h3>
+      <p>
+        {bodyParts(step.body).map((part) =>
+          part.startsWith("`") ? <code>{part.slice(1, -1)}</code> : part,
+        )}
+      </p>
+    </div>
+  ))}
+</div>

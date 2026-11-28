@@ -20,7 +20,7 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 - Open to full-time roles and to contract or freelance work.
 
 ## Selected work
-- [Projects](${SITE}/projects): CastLog, Nutrilogix, CallCatch, VoiceLift, and Rogue River Labs.
+- [Projects](${SITE}/projects): CastLog, Nutrilogix, CallCatch, Drawbridge, VoiceLift, and Rogue River Labs.
 
 ## About
 - [About](${SITE}/about): Senior Software Engineer with 15+ years building production systems, specializing in application and API security. Grand Rapids, Michigan.
@@ -34,6 +34,7 @@ Knows about application security, API security, the OWASP API Security Top 10, R
 - [VoiceLift](https://voicelift.app/): Voice-first workout logging. Say a set and it is logged, including gym slang, supersets, and partials. [Project page](${SITE}/projects/voicelift).
 - [CallCatch](https://callcatch-api-neon.vercel.app/): Answers from a business's own website, does not invent a price, and turns unanswered questions into leads. [Project page](${SITE}/projects/callcatch).
 - [Rogue River Labs](https://rogueriverlabs.dev/): Builds mobile apps and the APIs behind them, and finds where access checks break. [Project page](${SITE}/projects/rogue-river-labs).
+- [Drawbridge](https://github.com/anthonys1760/drawbridge): Open-source MCP security gateway (Apache-2.0, pre-release). Treats every tool result as untrusted and asks before an agent sends anything out. [Project page](${SITE}/projects/drawbridge). Replay: ${SITE}/drawbridge/replay/.
 
 ## Field notes
 ${writing}

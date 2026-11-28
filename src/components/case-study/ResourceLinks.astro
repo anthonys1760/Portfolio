@@ -1,0 +1,37 @@
+---
+interface Resource {
+  label: string;
+  href: string;
+  note: string;
+  primary?: boolean;
+}
+interface Props {
+  items: Resource[];
+}
+const { items } = Astro.props;
+
+function external(href: string) {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
+---
+
+<div class="links2">
+  {items.map((item) => {
+    const offsite = external(item.href);
+    return (
+      <a
+        class:list={["lrow", { pri: item.primary }]}
+        href={item.href}
+        target={offsite ? "_blank" : undefined}
+        rel={offsite ? "noopener noreferrer" : undefined}
+      >
+        <span>
+          <b>{item.label}</b>
+          <small>{item.note}</small>
+        </span>
+        <span class="ar" aria-hidden="true">{offsite ? "↗" : "→"}</span>
+        {offsite ? <span class="sr-only"> (opens in a new tab)</span> : null}
+      </a>
+    );
+  })}
+</div>

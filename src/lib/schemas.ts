@@ -19,9 +19,12 @@ export const projectSchema = z.object({
   tags: z.array(projectTags).min(1),
   stack: z.array(z.string()).min(1),
   thumbnail: z.string(),
+  thumbnailAlt: z.string().optional(),
+  thumbnailSize: z.tuple([z.number(), z.number()]).optional(),
   thumbnailKind: z.enum(["phone", "web"]).default("phone"),
-  gradient: z.enum(["castlog", "nutri", "voice", "call", "rogue"]),
+  gradient: z.enum(["castlog", "nutri", "voice", "call", "rogue", "drawbridge"]),
   featured: z.boolean().default(false),
+  spotlight: z.boolean().default(false),
   order: z.number().int(),
   year: z.number().int(),
   showYear: z.boolean().default(false),
@@ -31,15 +34,66 @@ export const projectSchema = z.object({
     title: z.string(),
     body: z.string(),
   }),
-  architecture: z.object({
-    title: z.string(),
-    body: z.string(),
-    caption: z.string().optional(),
-    diagram: z.string().optional(),
-    diagramMobile: z.string().optional(),
-    diagramAlt: z.string().optional(),
-    confirmed: z.boolean().default(false),
-  }),
+  layout: z.enum(["standard", "case-study"]).default("standard"),
+  architecture: z
+    .object({
+      title: z.string(),
+      body: z.string(),
+      caption: z.string().optional(),
+      diagram: z.string().optional(),
+      diagramMobile: z.string().optional(),
+      diagramAlt: z.string().optional(),
+      confirmed: z.boolean().default(false),
+    })
+    .optional(),
+  facts: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+        sample: z.boolean().default(false),
+      }),
+    )
+    .optional(),
+  steps: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
+  attacks: z
+    .object({
+      source: z.string().url(),
+      data: z.string(),
+      caveat: z.string(),
+    })
+    .optional(),
+  replay: z
+    .object({
+      src: z.string(),
+      poster: z.string(),
+      posterAlt: z.string().default(""),
+      title: z.string(),
+      fullLabel: z.string().default("Open full screen"),
+    })
+    .optional(),
+  gallery: z
+    .array(
+      z.object({
+        src: z.string(),
+        alt: z.string(),
+        caption: z.string(),
+        width: z.number(),
+        height: z.number(),
+        kind: z.enum(["wide", "phone"]),
+      }),
+    )
+    .optional(),
+  resources: z
+    .array(
+      z.object({
+        label: z.string(),
+        href: z.string().url().or(z.string().startsWith("/")),
+        note: z.string(),
+        primary: z.boolean().default(false),
+      }),
+    )
+    .optional(),
   results: z.array(
     z.object({
       label: z.string(),

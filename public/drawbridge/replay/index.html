@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drawbridge audit replay</title>
+    <meta
+      name="description"
+      content="Read-only replay of a Drawbridge audit log. A Web Worker recomputes the hash chain in the browser. This page does not call the network."
+    />
+    <script>
+      (function () {
+        var stored = "dark";
+        try {
+          stored = localStorage.getItem("drawbridge-theme") || "dark";
+        } catch (e) {}
+        if (stored !== "light" && stored !== "dark" && stored !== "system") stored = "dark";
+        var resolved = stored === "system"
+          ? (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")
+          : stored;
+        document.documentElement.setAttribute("data-theme", resolved);
+        document.documentElement.setAttribute("data-theme-choice", stored);
+      })();
+    </script>
+    <link rel="stylesheet" href="./tokens.css" />
+    <link rel="stylesheet" href="./replay.css" />
+  </head>
+  <body>
+    <a class="skip" href="#inspector">Skip to inspector</a>
+    <header class="topbar">
+      <div class="brand">Drawbridge <span>Audit replay</span> <span class="pill">Sample</span></div>
+      <p class="sample-note" id="sample-note"></p>
+      <div class="tools">
+        <button type="button" id="sample-verified">Sample</button>
+        <button type="button" id="sample-tampered">Tampered sample</button>
+        <label class="file"><span class="file-label">Open a log</span><span class="file-short">File</span><input id="file" type="file" accept=".jsonl,.txt,text/plain,application/json" /></label>
+        <div class="theme" role="group" aria-label="Theme">
+          <button type="button" data-theme-value="system">System</button>
+          <button type="button" data-theme-value="dark">Dark</button>
+          <button type="button" data-theme-value="light">Light</button>
+        </div>
+        <button type="button" id="theme" class="theme-icon" aria-label="Theme">◐</button>
+      </div>
+    </header>
+    <div class="chrome">
+    <div id="chain" class="chain" role="status" tabindex="-1"></div>
+    <div class="stepper">
+      <div class="transport">
+        <button type="button" id="prev" aria-label="Previous">‹</button>
+        <button type="button" id="play" aria-label="Play">▶</button>
+        <button type="button" id="next" aria-label="Next">›</button>
+        <button type="button" id="speed" aria-label="Playback speed">1×</button>
+      </div>
+      <div id="chapters" class="chapters" role="tablist" aria-label="Demo chapters"></div>
+    </div>
+    </div>
+    <div class="layout">
+      <div class="table-scroll">
+        <table>
+          <caption id="table-caption">Audit events</caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Call</th>
+              <th scope="col">Policy</th>
+              <th scope="col" class="col-scanner">Scanner</th>
+              <th scope="col">Chain</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <aside id="inspector" class="inspector" tabindex="-1" aria-label="Event inspector"></aside>
+    </div>
+    <script type="module" src="./replay.js"></script>
+  </body>
+</html>

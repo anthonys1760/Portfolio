@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "score": {
+    "passed": 8,
+    "total": 8
+  },
+  "scenarios": [
+    {
+      "id": "indirect-injection-exfil",
+      "title": "Indirect prompt injection to exfiltration",
+      "expected": "fixture wrapped, then held and not sent",
+      "actual": "fixture wrapped, then held and not sent",
+      "pass": true
+    },
+    {
+      "id": "direct-injection",
+      "title": "Direct prompt injection to exfiltration",
+      "expected": "argument echoed wrapped, then held and not sent",
+      "actual": "argument echoed wrapped, then held and not sent",
+      "pass": true
+    },
+    {
+      "id": "tool-description-poisoning",
+      "title": "Tool-description poisoning",
+      "expected": "tool description wrapped",
+      "actual": "tool description wrapped",
+      "pass": true
+    },
+    {
+      "id": "rug-pull",
+      "title": "Rug pull after the first tools/list",
+      "expected": "first call allowed, changed description denied",
+      "actual": "first call allowed, changed description denied",
+      "pass": true
+    },
+    {
+      "id": "confused-deputy",
+      "title": "Confused deputy (client credentials)",
+      "expected": "client credentials stripped and not forwarded",
+      "actual": "client credentials stripped and not forwarded",
+      "pass": true
+    },
+    {
+      "id": "secret-leakage",
+      "title": "Secret leakage",
+      "expected": "secret absent from audit, stderr, and dashboard",
+      "actual": "secret absent from audit, stderr, and dashboard",
+      "pass": true
+    },
+    {
+      "id": "audit-tampering",
+      "title": "Audit tampering",
+      "expected": "audit verify exits 1",
+      "actual": "audit verify exits 1",
+      "pass": true
+    },
+    {
+      "id": "kill-switch",
+      "title": "Kill switch",
+      "expected": "new call denied while paused",
+      "actual": "new call denied while paused",
+      "pass": true
+    }
+  ],
+  "sourceCommit": "8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8",
+  "sourceUrl": "https://github.com/anthonys1760/drawbridge/blob/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8/docs/attack-results.json",
+  "fetchedAt": "2026-11-28T14:49:06.920Z"
+}

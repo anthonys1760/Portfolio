@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import { entryId } from "../../lib/site";
+import CaseStudy from "../../components/case-study/CaseStudy.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -27,14 +27,29 @@ if (data.links.playStore) links.push({ href: data.links.playStore, label: "Googl
 if (data.links.demo) links.push({ href: data.links.demo, label: data.links.demoLabel || "Live demo", external: true });
 if (data.links.website) links.push({ href: data.links.website, label: hostLabel(data.links.website), external: true });
 if (data.links.github) links.push({ href: data.links.github, label: "GitHub", external: true });
-if (data.links.caseStudy) links.push({ href: data.links.caseStudy, label: "Case study", external: false });
+if (data.links.caseStudy) links.push({ href: data.links.caseStudy, label: "Product details", external: false });
 
 const primaryLink = links.find((link) => link.label === "App Store" || link.label === "TestFlight" || link.label === (data.links.demoLabel || "Live demo"));
 const siteLink = data.links.website ? links.find((link) => link.href === data.links.website) : undefined;
 const compact = [primaryLink, siteLink].filter((link) => link != null);
 const showPending = data.slug === "castlog" && !data.links.github;
+const architecture = data.architecture;
 ---
 
+{data.layout === "case-study" ? (
+<Base
+  title="Drawbridge: open-source MCP security gateway · Anthony Smith"
+  description={data.summary}
+  path={`/projects/${data.slug}`}
+  current="work"
+  image="/images/og-drawbridge.jpg"
+  imageAlt="Drawbridge held-send card on a dark background"
+  imageWidth={1200}
+  imageHeight={630}
+>
+  <CaseStudy project={project} />
+</Base>
+) : architecture ? (
 <Base
   title={`${data.title} · Projects — Anthony Smith`}
   description={data.summary}
@@ -71,7 +86,7 @@ const showPending = data.slug === "castlog" && !data.links.github;
                 </a>
               ))}
               {showPending ? <span class="tbd-row">GitHub <span class="tbd">link TBD</span></span> : null}
-              {showPending ? <span class="tbd-row">Case study <span class="tbd">TBD</span></span> : null}
+              {showPending ? <span class="tbd-row">Product page <span class="tbd">TBD</span></span> : null}
             </div>
           </details>
           <div class={`media g-${data.gradient}`}>
@@ -89,18 +104,18 @@ const showPending = data.slug === "castlog" && !data.links.github;
           </div>
           <div class="dsec" id="architecture">
             <p class="kick">// 02 architecture</p>
-            <h2>{data.architecture.title}</h2>
-            <p>{data.architecture.body}</p>
-            {data.architecture.confirmed && data.architecture.diagram ? (
+            <h2>{architecture.title}</h2>
+            <p>{architecture.body}</p>
+            {architecture.confirmed && architecture.diagram ? (
               <div class="diagram">
-                <img class="dg-d" src={data.architecture.diagram} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="760" height="420" />
-                {data.architecture.diagramMobile ? (
-                  <img class="dg-m" src={data.architecture.diagramMobile} alt={data.architecture.diagramAlt || `${data.title} architecture diagram`} width="320" height="748" />
+                <img class="dg-d" src={architecture.diagram} alt={architecture.diagramAlt || `${data.title} architecture diagram`} width="760" height="420" />
+                {architecture.diagramMobile ? (
+                  <img class="dg-m" src={architecture.diagramMobile} alt={architecture.diagramAlt || `${data.title} architecture diagram`} width="320" height="748" />
                 ) : null}
-                {data.architecture.caption ? <p class="cap">{data.architecture.caption}</p> : null}
+                {architecture.caption ? <p class="cap">{architecture.caption}</p> : null}
               </div>
             ) : (
-              <p class="cap">{data.architecture.caption}</p>
+              <p class="cap">{architecture.caption}</p>
             )}
           </div>
           <div class="dsec">
@@ -141,10 +156,11 @@ const showPending = data.slug === "castlog" && !data.links.github;
               </a>
             ))}
             {showPending ? <span class="tbd-row"><span>GitHub <span class="tbd">link TBD</span></span></span> : null}
-            {showPending ? <span class="tbd-row"><span>Case study <span class="tbd">TBD</span></span></span> : null}
+            {showPending ? <span class="tbd-row"><span>Product page <span class="tbd">TBD</span></span></span> : null}
           </div>
         </aside>
       </div>
     </div>
   </section>
 </Base>
+) : null}
