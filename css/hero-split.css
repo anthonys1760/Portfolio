@@ -571,6 +571,14 @@ body.page-404 .hero-top {
 	}
 }
 
+@media (min-width: 1024px) {
+	/* Align terminal top with the headline, not the eyebrow.
+	   Offset = eyebrow line box (12px × 1.4) + margin-bottom (16px). */
+	body.home .hero-stage {
+		margin-top: calc(12px * 1.4 + 16px);
+	}
+}
+
 @media (min-width: 1025px) {
 	body.home .term-linkrow a {
 		margin-block: -8px;
