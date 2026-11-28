@@ -77,6 +77,7 @@ body.home .hero-cta.hero-cta-primary {
 	align-items: center;
 	justify-content: center;
 	width: auto;
+	max-width: 360px;
 	min-width: 0; /* was min-width: 280px */
 	align-self: auto;
 	min-height: 52px;
@@ -542,11 +543,6 @@ body.page-404 .hero-top {
 		gap: 2px;
 	}
 
-	body.home .hero-cta.hero-cta-primary {
-		width: 100%;
-		align-self: stretch;
-	}
-
 	body.home .hero-proof {
 		margin-top: 14px;
 	}
@@ -578,6 +574,14 @@ body.page-404 .hero-top {
 @media (min-width: 1025px) {
 	body.home .term-linkrow a {
 		margin-block: -8px;
+	}
+}
+
+@media (max-width: 599px) {
+	body.home .hero-cta.hero-cta-primary {
+		width: 100%;
+		max-width: none;
+		align-self: stretch;
 	}
 }
 
