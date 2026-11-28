@@ -2099,14 +2099,14 @@ body.home .hero-receipt {
 	padding: 18px 0 28px;
 	border-top: 1px solid rgba(255, 255, 255, 0.06);
 	display: grid;
-	gap: 10px;
+	gap: 4px;
 }
 body.home .hero-receipt p {
 	display: grid;
 	grid-template-columns: minmax(9.5em, 140px) minmax(0, 1fr);
 	column-gap: 16px;
 	row-gap: 2px;
-	align-items: baseline;
+	align-items: start;
 	margin: 0;
 	font-size: 13px;
 	line-height: 1.5;
@@ -2122,18 +2122,40 @@ body.home .mono-label {
 	white-space: nowrap;
 }
 body.home .hero-receipt .receipt-val {
+	overflow: hidden;
 	color: rgba(255, 255, 255, 0.78);
 	font-family: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 	font-size: 13px;
 	line-height: 1.55;
 }
-body.home .hero-receipt p:has(a) {
+body.home .hero-receipt .receipt-list {
+	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
+	column-gap: 0;
+	row-gap: 4px;
+	margin-left: -24px;
+}
+body.home .hero-receipt .receipt-item {
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+	margin-left: 12px;
+	padding-left: 12px;
+	max-width: 100%;
+}
+body.home .hero-receipt .receipt-item::before {
+	content: "·";
+	position: absolute;
+	left: 0;
+	color: rgba(255, 255, 255, 0.78);
+	pointer-events: none;
 }
 body.home .hero-receipt .receipt-val a {
 	display: inline-flex;
 	align-items: center;
 	min-height: 44px;
+	margin-block: -10px;
 	color: #4bffa5;
 	text-decoration: none;
 	text-underline-offset: 2px;
@@ -2153,8 +2175,9 @@ body.home .hero-receipt .receipt-val a:focus-visible {
 @media (max-width: 599px) {
 	body.home .hero-receipt p {
 		grid-template-columns: 1fr;
-		gap: 2px;
-		margin: 0 0 8px;
+		column-gap: 0;
+		row-gap: 2px;
+		margin: 0;
 	}
 }
 

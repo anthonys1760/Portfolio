@@ -390,8 +390,9 @@ body.home .term-linkrow {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-	min-height: 44px;
+	min-height: 0;
 	font-size: 13px;
+	line-height: 1.25;
 }
 
 body.home .term-linkrow .name {
@@ -574,7 +575,17 @@ body.page-404 .hero-top {
 	}
 }
 
+@media (min-width: 1025px) {
+	body.home .term-linkrow a {
+		margin-block: -8px;
+	}
+}
+
 @media (max-width: 480px) {
+	body.home p.hero-eyebrow .eyebrow-omit {
+		display: none;
+	}
+
 	body.home.hero-themed .hero-role {
 		font-size: 36px;
 		letter-spacing: -0.03em;
