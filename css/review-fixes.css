@@ -2476,3 +2476,12 @@ body.hero-themed .header .logo.hover-masks-logo a:focus .mask-lnk {
 	transform: none;
 	opacity: 1;
 }
+
+/* Keep the wordmark on one line at tablet widths without clipping. */
+body.hero-themed .header .logo a,
+body.hero-themed .header .logo .mask-lnk {
+	white-space: nowrap;
+}
+body.hero-themed .header .logo {
+	overflow: visible;
+}

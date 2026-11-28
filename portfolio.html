@@ -25,7 +25,7 @@
 	<!-- Meta -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security." />
+	<meta name="description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, Drawbridge, and Rogue River Labs. React Native, AI apps, and API security." />
 	<meta name="keywords" content="anthony smith portfolio, react native projects, ai apps, full stack projects, senior engineer portfolio" />
 	<meta name="author" content="Anthony Smith" />
 	<meta name="robots" content="index, follow">
@@ -40,14 +40,14 @@
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://anthonysdigital.net/portfolio.html">
 	<meta property="og:title" content="Portfolio — Anthony Smith | Selected Work">
-	<meta property="og:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security.">
+	<meta property="og:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, Drawbridge, and Rogue River Labs. React Native, AI apps, and API security.">
 	<meta property="og:image" content="https://anthonysdigital.net/images/og-card.jpg">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="630">
 	<meta property="og:image:alt" content="Anthony Smith, Senior Software Engineer. Mobile apps, APIs and AppSec. 15+ years.">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Portfolio — Anthony Smith | Selected Work">
-	<meta name="twitter:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, and Rogue River Labs. React Native, AI apps, and API security.">
+	<meta name="twitter:description" content="Selected work by Anthony Smith: CastLog, Nutrilogix, VoiceLift, CallCatch, Drawbridge, and Rogue River Labs. React Native, AI apps, and API security.">
 	<meta name="twitter:image" content="https://anthonysdigital.net/images/og-card.jpg">
 
 	<!-- Title -->
@@ -70,7 +70,8 @@
 	<link rel="stylesheet" href="css/brands.css" />
 	<link rel="stylesheet" href="css/solid.css" />
 	<link rel="stylesheet" href="css/hero-theme.css?v=20261125b" />
-	<link rel="stylesheet" href="/css/review-fixes.css?v=20261121a" />
+	<link rel="stylesheet" href="/css/review-fixes.css?v=20261128a" />
+	<link rel="stylesheet" href="/css/drawbridge.css?v=20261128e" />
 
 	<!-- Theme Colors
 	<link rel="stylesheet" href="css/theme-colors/blue.css" />
@@ -140,7 +141,7 @@
       "@id": "https://anthonysdigital.net/portfolio.html#work",
       "name": "Selected work",
       "itemListOrder": "https://schema.org/ItemListOrderAscending",
-      "numberOfItems": 4,
+      "numberOfItems": 5,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -191,6 +192,19 @@
             "name": "CallCatch",
             "url": "https://callcatch-api-neon.vercel.app/",
             "description": "Answers questions on a business website using that business's own pages, does not invent a price, and turns questions it cannot answer into leads. A Rogue River Labs product for HVAC, plumbing, and electrical companies in West Michigan.",
+            "creator": {
+              "@id": "https://anthonysdigital.net/#person"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "Drawbridge",
+            "url": "https://anthonysdigital.net/projects/drawbridge/",
+            "description": "An MCP gateway that treats every tool result as untrusted, and asks you before an agent sends anything out.",
             "creator": {
               "@id": "https://anthonysdigital.net/#person"
             }
@@ -361,7 +375,7 @@
 										<a class="primary" href="https://apps.apple.com/app/id6766137949" target="_blank" rel="noopener">View on the App Store<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 										<a class="secondary" href="https://castlogapp.com/#android-invite" target="_blank" rel="noopener">Join the Android beta<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 										<a class="secondary" href="https://castlogapp.com/" target="_blank" rel="noopener">Website<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-										<a class="textish" href="#castlog">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+										<a class="textish" href="#castlog">View product →</a>
 									</div>
 								</div>
 							</article>
@@ -430,7 +444,35 @@
 									</dl>
 									<!-- CallCatch Vercel site. Change this href only; scripts/device-mockups.py reads it. -->
 									<div class="row-links">
-										<a class="row-link" href="https://callcatch-api-neon.vercel.app/" target="_blank" rel="noopener">See the product<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+										<a class="row-link" href="https://callcatch-api-neon.vercel.app/" target="_blank" rel="noopener">View product →</a>
+									</div>
+								</article>
+
+								<article class="case-row" id="drawbridge">
+									<figure class="case-media g-drawbridge">
+										<span class="oss">Open source</span>
+										<picture>
+											<source type="image/avif" srcset="images/projects/drawbridge-card.avif">
+											<source type="image/webp" srcset="images/projects/drawbridge-card.webp">
+											<img src="images/projects/drawbridge-card.png" width="1276" height="808" alt="Drawbridge approval screen: a mail__send call held for a person, with the reasons it was held." loading="lazy" decoding="async" />
+										</picture>
+									</figure>
+									<div class="mark" aria-hidden="true">DB</div>
+									<h3>Drawbridge</h3>
+									<span class="status-pill"><i></i>Open source · Apache-2.0</span>
+									<p><b>8/8 scripted attacks pass.</b> An MCP gateway that wraps untrusted tool results, holds sends for a person, and keeps a hash-chained audit log.</p>
+									<dl class="case-dl">
+										<dt>Problem</dt>
+										<dd>Agents with tool access read text they can't trust.</dd>
+										<dt>My role</dt>
+										<dd>Author and maintainer.</dd>
+										<dt>Stack</dt>
+										<dd><span class="tag">Security</span><span class="tag">TypeScript</span><span class="tag">AI</span></dd>
+										<dt>Outcome</dt>
+										<dd>8/8 scripted attacks pass. Open source, pre-release.</dd>
+									</dl>
+									<div class="row-links">
+										<a class="row-link" href="/projects/drawbridge/">View product →</a>
 									</div>
 								</article>
 

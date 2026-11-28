@@ -1,0 +1,8 @@
+repo: https://github.com/anthonys1760/drawbridge
+sha: 8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8
+url: https://github.com/anthonys1760/drawbridge/tree/8ef15ffc4a4dcfbf31414dcb6480016f1701b3e8
+date: 2026-11-28
+copied: site/replay/** → /drawbridge/replay/
+copied: site/fonts/** → /drawbridge/fonts/
+edit: robots noindex meta was applied to drawbridge/replay/index.html after copy
+note: relative asset paths (./ and ../fonts/) are preserved; do not iframe github.io
